@@ -3,6 +3,7 @@ package com.klinik.controller;
 import com.klinik.entity.Record_patient;
 import com.klinik.service.RecordPatientService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,5 +33,20 @@ public class RecordPatientController {
     })
     public List<Record_patient> allListRecordPatient() throws Exception{
         return service.allListRecordPatient();
+    }
+
+    @PostMapping (value = "/addRecordPatient")
+    @Operation( description = "Добавить запись к пациенту", summary = "Добавить запись к пациенту")
+    @ApiResponses(value = {
+            @ApiResponse( responseCode = "200", description = "Found the Records Patients", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = Record_patient.class))) }),
+            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( ))) }),
+            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( ))) })
+    })
+    public Record_patient addRecordPatient(Record_patient record_patient,
+                                           @Parameter( description = "Ид доктора") Long doctor_id,
+                                           @Parameter( description = "Ид карты пациента") Long card_patient_id) throws Exception{
+        record_patient.setDoctor_id( doctor_id );
+        record_patient.setCard_patient_id( card_patient_id );
+        return service.saveRecordPatient( record_patient);
     }
 }

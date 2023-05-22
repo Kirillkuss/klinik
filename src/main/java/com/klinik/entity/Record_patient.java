@@ -1,5 +1,6 @@
 package com.klinik.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -46,5 +47,21 @@ public class Record_patient {
             example     = "1102",
             required    = true )
     private Long number_room;
+
+    @Hidden
+    @Column( name = "doctor_id")
+    @Schema( name        = "doctor_id",
+            description = "ИД доктора",
+            example     = "1",
+            required    = true )
+    private Long doctor_id;
+
+    @Hidden
+    @Column( name = "card_patient_id")
+    @Schema( name        = "card_patient_id",
+            description = "ИД карты",
+            example     = "1",
+            required    = true )
+    private Long card_patient_id;
 
 }

@@ -16,4 +16,8 @@ public class RecordPatientService {
     public List<Record_patient> allListRecordPatient() throws Exception{
         return repository.findAll();
     }
+
+    public Record_patient saveRecordPatient( Record_patient record_patient ) throws Exception{
+        return repository.save( record_patient );
+    }
 }
