@@ -2,7 +2,6 @@ package com.klinik.controller;
 
 import com.klinik.entity.Document;
 import com.klinik.excep.MyException;
-import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
 import com.klinik.response.ResponseDocument;
 import com.klinik.service.DocumentService;
@@ -52,11 +51,11 @@ public class DocumentController {
             @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
             @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
-    @RequestMapping( method = RequestMethod.PUT , value = "/addDocument")
+    @RequestMapping( method = RequestMethod.POST , value = "/addDocument")
     public ResponseDocument addDocument( Document document ) throws Exception, MyException{
         ResponseDocument response = new ResponseDocument(200, "success");
         try{
-            if ( service.findById( document.getId_document()) != null ) throw new MyException( 410, "Документ с таким ИД уже существует, используйте другой ИД");
+            if ( service.findById( document.getId_document()) != null ) throw new MyException( 410, "Карта с таким ИД документа уже существует, используйте другой ИД");
             List<Document> list = new ArrayList<>();
             list.add(0, service.addDocument( document ));
             response.setDocument(list);

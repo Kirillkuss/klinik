@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @EqualsAndHashCode
 @ToString
-@RequiredArgsConstructor
+@Data
 public class Сomplaint {
 
     @Id

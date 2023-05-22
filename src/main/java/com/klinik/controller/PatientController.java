@@ -47,7 +47,7 @@ public class PatientController {
 
     }
 
-    @PutMapping( value = "/addPatient")
+    @PostMapping( value = "/addPatient")
     @Operation( description = "Добавить пациента", summary = "Добавить пациента")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Add patient",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponsePatient.class ))) }),
