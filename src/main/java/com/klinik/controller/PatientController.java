@@ -71,20 +71,6 @@ public class PatientController {
         }
     }
 
-
- /**    public BaseResponse addPatient(Patient patient, @Parameter( description = "ИД документа") Long id ) throws Exception, MyException{
-        BaseResponse response = new BaseResponse( 200, "success");
-        try{
-            if( service.findByIdDocument( id ) != null ) throw new MyException( 410, "Не верное значение ИД документа, попробуйте другой");
-           
-            patient.setDocument_id( id );
-            service.addPatient( patient );
-            return response;
-        }catch( MyException ex ){
-             return BaseResponse.error( ex.getCode(), ex );
-        }
-    }*/
-
     @RequestMapping( method = RequestMethod.GET, value = "/findByWord")
     @Operation( description = "Поиск пациента по ФИО или номеру телефона", summary = "Поиск пациента по ФИО или номеру телефона")
     @ApiResponses(value = {
@@ -101,9 +87,4 @@ public class PatientController {
            return  ResponsePatient.error( ex.getCode() , ex);
         }
     }
-
-    @RequestMapping( method = RequestMethod.GET, value = "/findById")
-    public Patient getByID( Long id ) throws Exception{
-        return service.findById( id );
-    } 
  }
