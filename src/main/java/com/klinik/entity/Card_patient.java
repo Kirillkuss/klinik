@@ -39,7 +39,7 @@ public class Card_patient {
             required    = true )
     private Boolean allergy;
 
-    @Column( name = "time_prm_patient")
+  /**   @Column( name = "time_prm_patient")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Schema( name        = "time_prm_patient",
             description = "2023-05-19T12:47:07.605Z",
@@ -53,7 +53,7 @@ public class Card_patient {
             description = "2023-05-19T12:47:07.605Z",
             example     = "1",
             required    = true )
-    private LocalDateTime date_next_prm;
+    private LocalDateTime date_next_prm;*/
 
     @Column( name = "note")
     @Schema( name        = "note",

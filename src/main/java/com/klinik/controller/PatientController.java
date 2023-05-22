@@ -1,9 +1,7 @@
 package com.klinik.controller;
 
-import com.klinik.entity.Document;
 import com.klinik.entity.Patient;
 import com.klinik.excep.MyException;
-import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
 import com.klinik.response.ResponsePatient;
 import com.klinik.service.DocumentService;

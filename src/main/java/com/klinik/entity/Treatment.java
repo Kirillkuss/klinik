@@ -1,5 +1,6 @@
 package com.klinik.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -38,5 +39,21 @@ public class Treatment {
             example     = "Способ лечения",
             required    = true )
     private String method_of_treatment;
+
+    @Hidden
+    @Column( name = "card_patient_id")
+    @Schema( name        = "card_patient_id",
+            description = "ИД карты пациента",
+            example     = "1",
+            required    = true )
+    private Long card_patient_id;
+
+    @Hidden
+    @Column( name = "rehabilitation_solution_id")
+    @Schema( name        = "rehabilitation_solution_id",
+            description = "ИД реабилитационного лечения",
+            example     = "1",
+            required    = true )
+    private Long rehabilitation_solution_id;
 
 }

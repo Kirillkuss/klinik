@@ -16,4 +16,8 @@ public class TreatmentService {
     public List<Treatment> allListTreatment() throws Exception{
         return repository.findAll();
     }
+
+    public Treatment addTreatment( Treatment treatment ) throws Exception{
+        return repository.save( treatment );
+    }
 }
