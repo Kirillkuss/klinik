@@ -2,10 +2,8 @@ package com.klinik.response;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Getter
@@ -29,5 +27,9 @@ public class BaseResponse<T> {
 
     public static BaseResponse success() {
         return new BaseResponse( 0, "success");
-    } 
+    }
+    
+    public static BaseResponse error( int code, Throwable e ){
+        return new BaseResponse( code , null == e.getMessage() ? "System malfunction" : e.getMessage());
+    }
 }

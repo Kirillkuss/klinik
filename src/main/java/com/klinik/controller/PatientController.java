@@ -3,6 +3,7 @@ package com.klinik.controller;
 import com.klinik.entity.Document;
 import com.klinik.entity.Patient;
 import com.klinik.excep.MyException;
+import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
 import com.klinik.response.ResponsePatient;
 import com.klinik.service.DocumentService;
@@ -58,19 +59,31 @@ public class PatientController {
     public ResponsePatient addPatient(Patient patient,  @Parameter Long id) throws Exception, MyException{
         ResponsePatient response = new ResponsePatient( 200, "success");
         try{
-            
-            if( service.findByIdDocument( id ) != null ) throw new MyException( 410, "Не верное значение ИД документа, попробуйте другой");
-            if( service.findById( patient.getId_patient() ) != null ) throw new MyException( 411, "Пользователь с таким ИД уже существует, поробуйте установить другое значение");
+            if( service.findByIdDocument( id ) != null ) throw new MyException( 420, "Не верное значение ИД документа, попробуйте другой");
+            if( service.findById( patient.getId_patient()) != null )  throw new MyException( 421, "Пользователь с таким ИД уже существует");
             patient.setDocument_id(id);
             List<Patient> list = new ArrayList<>();
-            service.addPatient(patient);
+            list.add(0, service.addPatient(patient));
             response.setPatient( list );
             return response;
         }catch( MyException ex ){
             return ResponsePatient.error( ex.getCode(), ex );
         }
-
     }
+
+
+ /**    public BaseResponse addPatient(Patient patient, @Parameter( description = "ИД документа") Long id ) throws Exception, MyException{
+        BaseResponse response = new BaseResponse( 200, "success");
+        try{
+            if( service.findByIdDocument( id ) != null ) throw new MyException( 410, "Не верное значение ИД документа, попробуйте другой");
+           
+            patient.setDocument_id( id );
+            service.addPatient( patient );
+            return response;
+        }catch( MyException ex ){
+             return BaseResponse.error( ex.getCode(), ex );
+        }
+    }*/
 
     @RequestMapping( method = RequestMethod.GET, value = "/findByWord")
     @Operation( description = "Поиск пациента по ФИО или номеру телефона", summary = "Поиск пациента по ФИО или номеру телефона")
@@ -89,4 +102,8 @@ public class PatientController {
         }
     }
 
-}
+    @RequestMapping( method = RequestMethod.GET, value = "/findById")
+    public Patient getByID( Long id ) throws Exception{
+        return service.findById( id );
+    } 
+ }

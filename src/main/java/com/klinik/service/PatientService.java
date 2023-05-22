@@ -25,7 +25,6 @@ public class PatientService {
         return repository.findAll();
     }
 
-
     public Patient addPatient( Patient patient ) throws Exception{
         return repository.save( patient );
     }
@@ -35,7 +34,9 @@ public class PatientService {
     }
 
     public Patient findById( Long id) throws Exception{
-        return repository.findById(id).get();
+        return (Patient) em.createQuery(" SELECT u FROM Patient u where u.id_patient = :id")
+                            .setParameter( "id", id)
+                            .getResultList().stream().findFirst().orElse( null );
     }
 
     public Patient findByIdDocument( Long id ) throws Exception{

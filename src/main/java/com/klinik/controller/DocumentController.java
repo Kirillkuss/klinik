@@ -42,7 +42,7 @@ public class DocumentController {
             response.setDocument( service.getAllDocuments() );
             return response;
         }catch( MyException ex ){
-            return ResponseDocument.error( ex.getCode(), ex );
+            return ResponseDocument.error( ex.getCode(), ex);
         }
     }
 
@@ -56,13 +56,13 @@ public class DocumentController {
     public ResponseDocument addDocument( Document document ) throws Exception, MyException{
         ResponseDocument response = new ResponseDocument(200, "success");
         try{
-            if ( service.findById( document.getId_document()) != null ) throw new MyException( 400, "Пользователь с таким ИД уже существует, используйте другой ИД");
+            if ( service.findById( document.getId_document()) != null ) throw new MyException( 410, "Документ с таким ИД уже существует, используйте другой ИД");
             List<Document> list = new ArrayList<>();
-            list.add(1, service.addDocument( document ));
+            list.add(0, service.addDocument( document ));
             response.setDocument(list);
             return response;
         }catch( MyException ex ){
-            return ResponseDocument.error( ex.getCode(), ex );
+            return ResponseDocument.error( ex.getCode(), ex);
         }  
     }
 
