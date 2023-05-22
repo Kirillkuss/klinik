@@ -74,5 +74,10 @@ public class Patient {
             required    = true )
     private Long document_id;
 
+    /**@Hidden
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "document_id")
+    private Document document; */
+
 
 }

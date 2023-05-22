@@ -2,7 +2,6 @@ package com.klinik.repositories;
 
 import com.klinik.entity.Rehabilitation_solution;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
