@@ -6,8 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 @Service
 public class DoctorService {
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Autowired
     private DoctorRerository repository;
@@ -18,5 +24,12 @@ public class DoctorService {
 
     public List<Doctor> findByFIO(String word ) throws Exception{
         return repository.findDoctorByFIO( word );
+    }
+
+    public Doctor findById( Long id) throws Exception{
+        return ( Doctor ) em.createQuery( "SELECT u FROM Doctor u WHERE u.id_doctor = :id")
+                            .setParameter( "id", id)
+                            .getResultList()
+                            .stream().findFirst().orElse( null );
     }
 }

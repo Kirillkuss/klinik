@@ -1,5 +1,7 @@
 package com.klinik.service;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import com.klinik.entity.Сomplaint;
@@ -21,6 +23,10 @@ public class ComplaintService {
                              .setParameter("id", id )
                              .getResultList()
                              .stream().findFirst().orElse( null );
+    }
+
+    public List<Сomplaint> listComplaints() throws Exception{
+        return repository.findAll();
     }
 
 
