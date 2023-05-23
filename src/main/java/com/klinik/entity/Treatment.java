@@ -66,12 +66,16 @@ public class Treatment {
             required    = true )
     private Long card_patient_id;
 
-    @Hidden
+    /**@Hidden
     @Column( name = "rehabilitation_solution_id")
     @Schema( name        = "rehabilitation_solution_id",
             description = "ИД реабилитационного лечения",
             example     = "1",
             required    = true )
-    private Long rehabilitation_solution_id;
+    private Long rehabilitation_solution_id;*/
 
+    @Hidden
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "rehabilitation_solution_id", referencedColumnName = "id_rehabilitation_solution")
+    private Rehabilitation_solution rehabilitation_solution;    
 }

@@ -2,6 +2,8 @@ package com.klinik.controller;
 
 import com.klinik.entity.Treatment;
 import com.klinik.response.BaseResponseError;
+import com.klinik.service.ComplaintService;
+import com.klinik.service.RehabilitationSolutionService;
 import com.klinik.service.TreatmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,6 +27,9 @@ public class TreatmentController {
     @Autowired
     private TreatmentService service;
 
+    @Autowired
+    private RehabilitationSolutionService rehabilitationSolutionService; 
+
     @GetMapping(value = "/Treatment")
     @Operation( description = "Получение списка всех лечений", summary = "Получение списка всех лечений")
     @ApiResponses(value = {
@@ -47,7 +52,7 @@ public class TreatmentController {
                                   @Parameter( description = "Ид карты пациента") Long card_patient_id,
                                   @Parameter( description = "Ид реабилитационного лечения") Long rehabilitation_solution_id) throws Exception{
         treatment.setCard_patient_id( card_patient_id );
-        treatment.setRehabilitation_solution_id( rehabilitation_solution_id );
+        treatment.setRehabilitation_solution( rehabilitationSolutionService.findById(rehabilitation_solution_id));
         return service.addTreatment( treatment );
     }
 
