@@ -163,10 +163,3 @@ CREATE TABLE Record_patient(
 	FOREIGN KEY (doctor_id) REFERENCES public.Doctor(id_doctor) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (card_patient_id) REFERENCES public.Card_patient(id_card_patient) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-
-
-
-
-
-ALTER TABLE Treatment ADD FOREIGN KEY (card_patient_id) REFERENCES public.Card_patient(id_card_patient) ON DELETE CASCADE ON UPDATE CASCADE;

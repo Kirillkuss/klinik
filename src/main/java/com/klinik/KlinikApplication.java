@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @OpenAPIDefinition( info = @Info( title = "ВЫПУСКНАЯ КВАЛИФИКАЦИОННАЯ РАБОТА БАКАЛАВРА",
                                   version = "1.0.0",
-                                  description = "Тема: 'Разработка системы для оценки эффективности в реабилитации пациентов с рассеянным склерозом' ",
+                                  description = "Тема: 'Разработка системы для оценки эффективности в реабилитации пациентов с рассеянным склерозом ",
                                   contact = @Contact(name = "Обратная связь",
                                   url = "https://t.me/lissong",
                                   email = "lisa6318@mail.ru"))

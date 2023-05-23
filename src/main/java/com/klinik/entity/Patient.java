@@ -66,18 +66,18 @@ public class Patient {
             required    = true )
     private String address;
 
-    @Hidden
+    /**@Hidden
     @Column( name = "document_id")
     @Schema( name        = "document_id",
             description = "ИД документа",
             example     = "1",
             required    = true )
-    private Long document_id;
+    private Long document_id;*/
 
-    /**@Hidden
+    @Hidden
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "document_id")
-    private Document document; */
+    @JoinColumn(name = "document_id", referencedColumnName = "id_document")
+    private Document document; 
 
 
 }

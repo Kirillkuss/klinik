@@ -27,7 +27,7 @@ public class CardPatientService {
     }
 
     public Card_patient findByPatientId( Long id ) throws Exception{
-        return ( Card_patient ) em.createQuery("SELECT u FROM Card_patient u where u.pacient_id = :id")
+        return ( Card_patient ) em.createQuery("SELECT u FROM Card_patient u where u.patient.id_patient = :id")
                                   .setParameter("id", id )
                                   .getResultList()
                                   .stream().findFirst().orElse( null );

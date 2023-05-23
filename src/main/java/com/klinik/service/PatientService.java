@@ -1,12 +1,9 @@
 package com.klinik.service;
 
-import com.klinik.entity.Document;
 import com.klinik.entity.Patient;
 import com.klinik.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -39,8 +36,10 @@ public class PatientService {
                             .getResultList().stream().findFirst().orElse( null );
     }
 
-    public Patient findByIdDocument( Long id ) throws Exception{
-        return repository.findPatientByIdDocument( id );
+    public Patient findByIdDocument( Long id_document ) throws Exception{
+        return (Patient) em.createQuery(" SELECT u FROM Patient u WHERE u.document.id_document = :id_document")
+                           .setParameter( "id_document", id_document)
+                           .getResultList().stream().findFirst().orElse( null );
     }
 
 }

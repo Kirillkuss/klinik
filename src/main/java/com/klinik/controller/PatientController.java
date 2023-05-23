@@ -1,5 +1,6 @@
 package com.klinik.controller;
 
+import com.klinik.entity.Document;
 import com.klinik.entity.Patient;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponseError;
@@ -44,7 +45,6 @@ public class PatientController {
         }catch( MyException ex ){
             return ResponsePatient.error( ex.getCode(), ex );
         }
-
     }
 
     @PostMapping( value = "/addPatient")
@@ -57,9 +57,10 @@ public class PatientController {
     public ResponsePatient addPatient(Patient patient,  @Parameter Long id) throws Exception, MyException{
         ResponsePatient response = new ResponsePatient( 200, "success");
         try{
+            Document document = docService.findById( id );
             if( service.findByIdDocument( id ) != null ) throw new MyException( 420, "Не верное значение ИД документа, попробуйте другой");
             if( service.findById( patient.getId_patient()) != null )  throw new MyException( 421, "Пользователь с таким ИД уже существует");
-            patient.setDocument_id(id);
+            patient.setDocument( document );
             List<Patient> list = new ArrayList<>();
             list.add(0, service.addPatient(patient));
             response.setPatient( list );

@@ -51,20 +51,30 @@ public class Card_patient {
             required    = true )
     private String сonclusion;
 
-    @Hidden
+    /**@Hidden
     @Column( name = "complaint_id")
     @Schema( name        = "complaint_id",
             description = "ИД жалобы",
             example     = "1",
             required    = true )
     private Long complaint_id;
-
     @Hidden
     @Column( name = "pacient_id")
     @Schema( name        = "pacient_id",
             description = "ИД_пациента",
             example     = "1",
             required    = true )
-    private Long pacient_id;
+    private Long pacient_id;*/
+
+    @Hidden
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "complaint_id", referencedColumnName = "id_complaint")
+    private Сomplaint complaint;
+
+    @Hidden
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pacient_id", referencedColumnName = "id_patient")
+    private Patient patient;
+
 
 }

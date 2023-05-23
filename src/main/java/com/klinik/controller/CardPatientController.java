@@ -1,11 +1,15 @@
 package com.klinik.controller;
 
 import com.klinik.entity.Card_patient;
+import com.klinik.entity.Patient;
+import com.klinik.entity.Сomplaint;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponseError;
 import com.klinik.response.ResponseCardPatient;
 import com.klinik.service.CardPatientService;
 import com.klinik.service.ComplaintService;
+import com.klinik.service.PatientService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -30,9 +34,12 @@ public class CardPatientController {
     private CardPatientService service;
 
     @Autowired
-    private ComplaintService serviceTwo;
+    private PatientService servicePatient;
 
-    /**@GetMapping(value = "/CardsPatients")
+    @Autowired
+    private ComplaintService serviceComplaint;
+
+    @GetMapping(value = "/CardsPatients")
     @Operation( description = "Список всех карт пациентов", summary = "Список всех карт пациентов")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Found the cards patients", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatient.class))) }),
@@ -47,7 +54,7 @@ public class CardPatientController {
         }catch ( MyException ex){
             return ResponseCardPatient.error( ex.getCode(), ex );
         }
-    }*/
+    }
 
     @GetMapping(value = "/ByIdCard")
     @Operation( description = "Поиск карты пациента по ИД карты", summary = "Поиск карты пациента по ИД карты")
@@ -91,7 +98,6 @@ public class CardPatientController {
         }
     }
 
-
     @PostMapping (value = "/saveCardPatient")
     @Operation( description = "Список всех карт пациентов", summary = "Список всех карт пациентов")
     @ApiResponses(value = {
@@ -104,11 +110,15 @@ public class CardPatientController {
          @Parameter( description = "ИД пациента:") Long id_patient) throws Exception, MyException{
         ResponseCardPatient response = new ResponseCardPatient( 200, "success");
         try{
+            Сomplaint сomplaint = serviceComplaint.findById( id_complaint );
+            Patient patient =  servicePatient.findById( id_patient );
+
             if( service.findByPatientId( id_patient ) != null ) throw new MyException( 430, "Карта пациента с таким ИД пациента уже существует");
-            if( serviceTwo.findById( id_complaint ) == null ) throw new MyException( 431, "Неверный Ид жалобы");
+            if(  сomplaint == null ) throw new MyException( 431, "Неверный Ид жалобы");
             if( service.findByIdCard( card_patient.getId_card_patient() ) != null ) throw new MyException ( 432, "Карта с таким ИД уже существует");
-            card_patient.setComplaint_id( id_complaint );
-            card_patient.setPacient_id( id_patient );
+
+            card_patient.setPatient( patient );;
+            card_patient.setComplaint( сomplaint );
             List<Card_patient> list = new ArrayList<>();
             list.add(0, service.saveCardPatient( card_patient ));
             response.setListCardPatient( list );
