@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@RequestMapping( value = "Patients")
 @RestController
 @Tag(name = "Patient", description = "Пациент")
 public class PatientController {
@@ -30,7 +32,7 @@ public class PatientController {
 
     @Autowired DocumentService docService;
 
-    @GetMapping(value = "/Patients")
+    @GetMapping(value = "/getAllPatients")
     @Operation( description = "Список всех пациентов", summary = "Список всех пациентов")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Found the patients", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponsePatient.class ))) }),
@@ -40,10 +42,10 @@ public class PatientController {
     public ResponsePatient getAllPatients() throws Exception, MyException{
         ResponsePatient response = new ResponsePatient( 200, "sucess");
         try{
-            response.setPatient( service.getAllPatients() );
+            response.setPatients( service.getAllPatients() );
             return response;
-        }catch( MyException ex ){
-            return ResponsePatient.error( ex.getCode(), ex );
+        }catch( Exception ex ){
+            return ResponsePatient.error( 999, ex );
         }
     }
 
@@ -60,13 +62,12 @@ public class PatientController {
             Document document = docService.findById( id );
             if( service.findByIdDocument( id ) != null ) throw new MyException( 420, "Не верное значение ИД документа, попробуйте другой");
             if( service.findById( patient.getId_patient()) != null )  throw new MyException( 421, "Пользователь с таким ИД уже существует");
+            if( docService.findById( id ) == null) throw new MyException( 422, "Документ с таким ИД не существует");
             patient.setDocument( document );
-            List<Patient> list = new ArrayList<>();
-            list.add(0, service.addPatient(patient));
-            response.setPatient( list );
+            response.setPatient( service.addPatient(patient) );
             return response;
-        }catch( MyException ex ){
-            return ResponsePatient.error( ex.getCode(), ex );
+        }catch( Exception ex ){
+            return ResponsePatient.error( 999, ex );
         }
     }
 
@@ -80,10 +81,11 @@ public class PatientController {
     public ResponsePatient findByWord( @Parameter( description = "Параметр поиска")  String word ) throws Exception, MyException{
         ResponsePatient response = new ResponsePatient( 200, "success");
         try{
-            response.setPatient( service.findByWord( word ));
+            response.setPatients( service.findByWord( word ));
             return response;
-        }catch( MyException ex ){
-           return  ResponsePatient.error( ex.getCode() , ex);
+        }catch( Exception ex ){
+           return  ResponsePatient.error( 999 , ex);
         }
     }
+
  }

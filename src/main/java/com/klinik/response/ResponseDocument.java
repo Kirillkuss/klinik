@@ -13,7 +13,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class ResponseDocument<T> extends BaseResponse{
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private List<Document> document;
+    private List<Document> documents;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Document document;
 
 
     public ResponseDocument(){
@@ -23,7 +26,12 @@ public class ResponseDocument<T> extends BaseResponse{
         super( code, message);
     }
 
-    public ResponseDocument( Integer code, String message, List<Document> document ){
+    public ResponseDocument( Integer code, String message, List<Document> documents ){
+        super( code, message);
+        this.documents = documents;
+    }
+
+    public ResponseDocument( Integer code, String message, Document document ){
         super( code, message);
         this.document = document;
     }

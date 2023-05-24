@@ -13,7 +13,7 @@ import java.util.List;
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     @Modifying
-    @Query( "SELECT u FROM Patient u WHERE u.suraname = :word or u.name = :word or u.full_name = :word or u.phone =:word")
+    @Query( "SELECT u FROM Patient u WHERE u.surname = :word or u.name = :word or u.full_name = :word or u.phone =:word")
     List<Patient> findPatientByWord( String word );
 
     @Query( "SELECT u FROM Patient u WHERE u.document.id_document = :id_document")

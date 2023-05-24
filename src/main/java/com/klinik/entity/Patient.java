@@ -24,12 +24,12 @@ public class Patient {
             required    = true )
     private Long id_patient;
 
-    @Column( name = "suraname")
-    @Schema( name        = "suraname",
+    @Column( name = "surname")
+    @Schema( name        = "surname",
             description = "Фамилия",
             example     = "Пупкин",
             required    = true )
-    private String suraname;
+    private String surname;
 
     @Column( name = "name")
     @Schema( name        = "name",

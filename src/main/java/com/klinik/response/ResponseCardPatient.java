@@ -14,6 +14,9 @@ public class ResponseCardPatient extends BaseResponse{
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Card_patient> listCardPatient;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Card_patient cardPatient;
+
     public ResponseCardPatient(){
 
     }
@@ -21,9 +24,16 @@ public class ResponseCardPatient extends BaseResponse{
     public ResponseCardPatient( Integer code, String message ){
         super( code, message );
     }
+
+    
     public ResponseCardPatient( Integer code, String message, List<Card_patient> listCardPatient ){
         super( code, message);
         this.listCardPatient = listCardPatient;
+    }
+
+    public ResponseCardPatient( Integer code, String message, Card_patient cardPatient ){
+        super( code, message);
+        this.cardPatient = cardPatient;
     }
 
     public static ResponseCardPatient error( int code, Throwable e ){

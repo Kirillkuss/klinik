@@ -26,7 +26,7 @@ public class Document {
     @Column( name = "type_document")
     @Schema( name        = "type_document",
             description = "Тип документа",
-            example     = "пасспорт",
+            example     = "Паспорт",
             required    = true )
     private String type_document;
 
@@ -46,15 +46,15 @@ public class Document {
 
     @Column( name = "snils")
     @Schema( name        = "snils",
-            description = "123-456-789-01",
-            example     = "1",
+            description = "СНИЛС",
+            example     = "123-456-789-01",
             required    = true )
     private String snils;
 
     @Column( name = "polis")
     @Schema( name        = "polis",
-            description = "0000 0000 0000 0000",
-            example     = "1",
+            description = "Полис",
+            example     = "0000 0000 0000 0000",
             required    = true )
     private String polis;
 

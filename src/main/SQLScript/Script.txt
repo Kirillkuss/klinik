@@ -13,7 +13,7 @@ CREATE TABLE Document(
 
 CREATE TABLE Patient(
 	id_patient serial PRIMARY KEY,
-	suraname VARCHAR ( 30 ) NOT NULL,
+	surname VARCHAR ( 30 ) NOT NULL,
 	name VARCHAR ( 30 ) NOT NULL,
 	full_name VARCHAR ( 30 ) NOT NULL,
 	gender bool NOT NULL,
@@ -33,14 +33,14 @@ CREATE TABLE Doctor(
 
 CREATE TABLE Complaint(
 	id_complaint serial PRIMARY KEY,
-	functional_impairment VARCHAR ( 50 ) NOT NULL
+	functional_impairment VARCHAR ( 100 ) NOT NULL
 )
 
 // 5 Сущность Реабилитационное лечение
 
 CREATE TABLE Rehabilitation_solution(
 	id_rehabilitation_solution serial PRIMARY KEY,
-	name VARCHAR ( 30 ) NOT NULL,
+	name VARCHAR ( 100 ) NOT NULL,
 	survey_plan VARCHAR ( 255 ) NOT NULL
 )
 
@@ -104,12 +104,12 @@ CREATE TABLE Document(
 
 CREATE TABLE Patient(
 	id_patient serial PRIMARY KEY,
-	suraname VARCHAR ( 30 ) NOT NULL,
+	surname VARCHAR ( 30 ) NOT NULL,
 	name VARCHAR ( 30 ) NOT NULL,
 	full_name VARCHAR ( 30 ) NOT NULL,
 	gender bool NOT NULL,
 	phone  VARCHAR ( 12 ) NOT NULL,
-	address VARCHAR ( 50 ) NOT NULL,
+	address VARCHAR ( 100 ) NOT NULL,
 	document_id int unique references public.Document ( id_document )	
 );
 
@@ -120,12 +120,12 @@ CREATE TABLE Doctor(
 
 CREATE TABLE Complaint(
 	id_complaint serial PRIMARY KEY,
-	functional_impairment VARCHAR ( 50 ) NOT NULL
+	functional_impairment VARCHAR ( 100 ) NOT NULL
 );
 
 CREATE TABLE Rehabilitation_solution(
 	id_rehabilitation_solution serial PRIMARY KEY,
-	name VARCHAR ( 30 ) NOT NULL,
+	name VARCHAR ( 100 ) NOT NULL,
 	survey_plan VARCHAR ( 255 ) NOT NULL
 );
 

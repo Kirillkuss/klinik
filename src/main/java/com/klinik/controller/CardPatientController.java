@@ -21,11 +21,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RequestMapping( value = "CardPatient")
 @RestController
 @Tag(name = "CardPatient", description = "Карта пациента")
 public class CardPatientController {
@@ -39,7 +41,7 @@ public class CardPatientController {
     @Autowired
     private ComplaintService serviceComplaint;
 
-    @GetMapping(value = "/CardsPatients")
+    @GetMapping(value = "/getAll")
     @Operation( description = "Список всех карт пациентов", summary = "Список всех карт пациентов")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Found the cards patients", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatient.class))) }),
@@ -51,8 +53,8 @@ public class CardPatientController {
         try{
             response.setListCardPatient( service.allListCardPatient() );
             return response;
-        }catch ( MyException ex){
-            return ResponseCardPatient.error( ex.getCode(), ex );
+        }catch ( Exception ex){
+            return ResponseCardPatient.error( 999, ex );
         }
     }
 
@@ -66,14 +68,12 @@ public class CardPatientController {
     public ResponseCardPatient getByIdCard( @Parameter( description = "ID Card Patint") Long id ) throws Exception, MyException {
         ResponseCardPatient response = new ResponseCardPatient( 200, "success");
         try{
-            List<Card_patient> list = new ArrayList<>();
             Card_patient result = service.findByIdCard( id );
-            list.add(0, result);
             if( result == null ) throw new MyException( 433, "Карты с таким идентификатором карты не существует");
-            response.setListCardPatient( list);
+            response.setCardPatient(result);
             return response;
-        }catch ( MyException ex){
-            return ResponseCardPatient.error( ex.getCode(), ex );
+        }catch ( Exception ex){
+            return ResponseCardPatient.error( 999, ex );
         }
     }
     
@@ -87,14 +87,12 @@ public class CardPatientController {
     public ResponseCardPatient getByIdPatient (@Parameter( description = "ID Patint") Long id ) throws Exception, MyException {
         ResponseCardPatient response = new ResponseCardPatient( 200, "success");
         try{
-            List<Card_patient> list = new ArrayList<>();
             Card_patient result = service.findByPatientId( id );
             if( result == null ) throw new MyException( 434, "Карты с таким идентификатором пациента не существует");
-            list.add(0, result);
-            response.setListCardPatient( list);
+            response.setCardPatient( result );
             return response;
-        }catch ( MyException ex){
-            return ResponseCardPatient.error( ex.getCode(), ex );
+        }catch ( Exception ex){
+            return ResponseCardPatient.error( 999, ex );
         }
     }
 
@@ -111,20 +109,16 @@ public class CardPatientController {
         ResponseCardPatient response = new ResponseCardPatient( 200, "success");
         try{
             Сomplaint сomplaint = serviceComplaint.findById( id_complaint );
-            Patient patient =  servicePatient.findById( id_patient );
-
+            Patient patient     = servicePatient.findById( id_patient );
             if( service.findByPatientId( id_patient ) != null ) throw new MyException( 430, "Карта пациента с таким ИД пациента уже существует");
             if(  сomplaint == null ) throw new MyException( 431, "Неверный Ид жалобы");
             if( service.findByIdCard( card_patient.getId_card_patient() ) != null ) throw new MyException ( 432, "Карта с таким ИД уже существует");
-
-            card_patient.setPatient( patient );;
+            card_patient.setPatient( patient );
             card_patient.setComplaint( сomplaint );
-            List<Card_patient> list = new ArrayList<>();
-            list.add(0, service.saveCardPatient( card_patient ));
-            response.setListCardPatient( list );
+            response.setCardPatient( service.saveCardPatient( card_patient ) );
             return response;
-        }catch ( MyException ex ){
-            return ResponseCardPatient.error( ex.getCode(), ex );
+        }catch ( Exception ex ){
+            return ResponseCardPatient.error( 999, ex );
         }
     }
 }

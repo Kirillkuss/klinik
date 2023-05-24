@@ -5,10 +5,17 @@ import com.klinik.repositories.RecordPatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Service
 public class RecordPatientService {
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Autowired
     private RecordPatientRepository repository;
@@ -19,5 +26,18 @@ public class RecordPatientService {
 
     public Record_patient saveRecordPatient( Record_patient record_patient ) throws Exception{
         return repository.save( record_patient );
+    }
+
+    public Record_patient findById( Long id ) throws Exception{
+        return (Record_patient) em.createQuery( "SELECT e FROM Record_patient e WHERE e.id_record = :id")
+                                  .setParameter( "id", id )
+                                  .getResultList()
+                                  .stream()
+                                  .findFirst()
+                                  .orElse( null );
+    }
+
+    public List<Record_patient> findByParam( Long id, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception{
+     return repository.findByParamTwo(id, dateFrom, dateTo);
     }
 }

@@ -29,5 +29,9 @@ public class ComplaintService {
         return repository.findAll();
     }
 
+    public Сomplaint saveСomplaint( Сomplaint сomplaint ) throws Exception{
+        return repository.save( сomplaint );
+    }
+
 
 }

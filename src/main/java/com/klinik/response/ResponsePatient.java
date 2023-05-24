@@ -11,7 +11,10 @@ import com.klinik.entity.Patient;
 public class ResponsePatient<T> extends BaseResponse {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private List<Patient> patient;
+    private List<Patient> patients;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Patient patient;
 
     public ResponsePatient(){
     }
@@ -20,7 +23,12 @@ public class ResponsePatient<T> extends BaseResponse {
         super( code, message );
     }
 
-    public ResponsePatient( Integer code, String message, List<Patient> patient ){
+    public ResponsePatient( Integer code, String message, List<Patient> patients ){
+        super(code, message);
+        this.patients = patients;
+    }
+
+    public ResponsePatient( Integer code, String message, Patient patient ){
         super(code, message);
         this.patient = patient;
     }

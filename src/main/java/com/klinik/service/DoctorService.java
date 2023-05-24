@@ -32,4 +32,9 @@ public class DoctorService {
                             .getResultList()
                             .stream().findFirst().orElse( null );
     }
+
+    public Doctor saveDoctor( Doctor doctor ) throws Exception{
+        return repository.save( doctor );
+    }
+
 }

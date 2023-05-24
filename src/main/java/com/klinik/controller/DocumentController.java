@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@RequestMapping( value = "Documents")
 @RestController
 @Tag(name = "Documents", description = "Документ пациента")
 public class DocumentController {
@@ -27,7 +29,7 @@ public class DocumentController {
     @Autowired
     private DocumentService service;
 
-    @GetMapping(value = "/Documents")
+    @GetMapping(value = "/getAllDocunets")
     @Operation( description = "Список всех документов", summary = "Список всех документов")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Found the documents", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponseDocument.class))) }),
@@ -37,10 +39,10 @@ public class DocumentController {
     public ResponseDocument getAllDocuments() throws Exception, MyException{
         ResponseDocument response = new ResponseDocument(200, "success");
         try{
-            response.setDocument( service.getAllDocuments() );
+            response.setDocuments( service.getAllDocuments() );
             return response;
-        }catch( MyException ex ){
-            return ResponseDocument.error( ex.getCode(), ex);
+        }catch( Exception ex ){
+            return ResponseDocument.error( 999, ex);
         }
     }
 
@@ -55,12 +57,10 @@ public class DocumentController {
         ResponseDocument response = new ResponseDocument(200, "success");
         try{
             if ( service.findById( document.getId_document()) != null ) throw new MyException( 410, "Карта с таким ИД документа уже существует, используйте другой ИД");
-            List<Document> list = new ArrayList<>();
-            list.add(0, service.addDocument( document ));
-            response.setDocument(list);
+            response.setDocument(service.addDocument( document ));
             return response;
-        }catch( MyException ex ){
-            return ResponseDocument.error( ex.getCode(), ex);
+        }catch( Exception ex ){
+            return ResponseDocument.error( 999, ex);
         }  
     }
 

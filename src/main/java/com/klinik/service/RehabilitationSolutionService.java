@@ -23,7 +23,7 @@ public class RehabilitationSolutionService {
         return repository.findAll();
     }
 
-    public Rehabilitation_solution findByName( String name ) throws Exception{
+    public List<Rehabilitation_solution> findByName( String name ) throws Exception{
         return repository.findByName( name );
     }
 
@@ -31,5 +31,9 @@ public class RehabilitationSolutionService {
         return ( Rehabilitation_solution ) em.createQuery( "SELECT e FROM Rehabilitation_solution e WHERE e.id_rehabilitation_solution = :id")
                                              .setParameter( "id", id )
                                              .getResultList().stream().findFirst().orElse( null );
+    }
+
+    public Rehabilitation_solution saveRS(Rehabilitation_solution solution) throws Exception{
+        return repository.save( solution );
     }
  }
