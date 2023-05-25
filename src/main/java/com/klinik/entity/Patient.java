@@ -3,6 +3,8 @@ package com.klinik.entity;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.klinik.entity.Document;
 import javax.persistence.*;
 
@@ -12,9 +14,7 @@ import javax.persistence.*;
 @Getter
 @ToString
 @EqualsAndHashCode
-@RequiredArgsConstructor
 public class Patient {
-
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_patient")
@@ -22,6 +22,7 @@ public class Patient {
             description = "ИД пациента",
             example     = "1",
             required    = true )
+    
     private Long id_patient;
 
     @Column( name = "surname")
@@ -77,7 +78,31 @@ public class Patient {
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "document_id", referencedColumnName = "id_document")
-    private Document document; 
+    private Document document;
+    
+    public Patient(){
+    }
+
+        
+    public Patient(Long id_patient,  String surname, String name, String full_name, Boolean gender ,String phone, String address, Document document ){
+        this.id_patient = id_patient;
+        this.surname = surname;
+        this.name = name;
+        this.full_name = full_name;
+        this.gender = gender;
+        this.phone = phone;
+        this.address = address;
+        this.document = document;
+    }
+
+    public Patient(  String surname, String name, String full_name, Boolean gender ,String phone, String address ){
+        this.surname = surname;
+        this.name = name;
+        this.full_name = full_name;
+        this.gender = gender;
+        this.phone = phone;
+        this.address = address;
+    }
 
 
 }

@@ -37,7 +37,7 @@ public class Record_patient {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Schema( name        = "date_appointment",
             description = "Дата и время приема",
-            example     = "2023-05-19T12:47:07.605Z",
+            example     = "2023-05-23T14:00:00.605Z",
             required    = true )
     private LocalDateTime date_appointment;
 

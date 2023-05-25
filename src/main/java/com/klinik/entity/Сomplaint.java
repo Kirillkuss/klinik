@@ -30,4 +30,18 @@ public class Сomplaint {
             example     = "симптомы поражения пирамидного тракта",
             required    = true )
     private String functional_impairment;
+
+    public Сomplaint(){
+
+    }
+
+    public Сomplaint( Long id_complaint, String functional_impairment ){
+        this.id_complaint = id_complaint;
+        this.functional_impairment = functional_impairment;
+        
+    }
+
+    public Сomplaint( String functional_impairment ){
+        this.functional_impairment = functional_impairment;  
+    }
 }

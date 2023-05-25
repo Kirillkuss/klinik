@@ -46,7 +46,7 @@ public class Treatment {
     @Column( name = "time_start_treatment")
     @Schema( name        = "time_start_treatment",
             description = "Дата начала лечения",
-            example     = "2023-05-22 18:58:47.745",
+            example     = "2022-05-22 18:58:47.745",
             required    = true )
     private LocalDateTime time_start_treatment;
 
@@ -54,7 +54,7 @@ public class Treatment {
     @Column( name = "end_time_treatment")
     @Schema( name        = "end_time_treatment",
             description = "Дата окончания лечения",
-            example     = "2023-07-22 18:58:47.745",
+            example     = "2022-11-22 18:58:47.745",
             required    = true )
     private LocalDateTime end_time_treatment;
 

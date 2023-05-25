@@ -51,21 +51,6 @@ public class Card_patient {
             required    = true )
     private String сonclusion;
 
-    /**@Hidden
-    @Column( name = "complaint_id")
-    @Schema( name        = "complaint_id",
-            description = "ИД жалобы",
-            example     = "1",
-            required    = true )
-    private Long complaint_id;
-    @Hidden
-    @Column( name = "pacient_id")
-    @Schema( name        = "pacient_id",
-            description = "ИД_пациента",
-            example     = "1",
-            required    = true )
-    private Long pacient_id;*/
-
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "complaint_id", referencedColumnName = "id_complaint")
@@ -75,6 +60,31 @@ public class Card_patient {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pacient_id", referencedColumnName = "id_patient")
     private Patient patient;
+
+    public Card_patient(){
+
+    }
+
+    public Card_patient(Long id_card_patient, String diagnosis, Boolean allergy,  String note, String сonclusion , Сomplaint complaint, Patient patient){
+        this.id_card_patient = id_card_patient;
+        this.diagnosis = diagnosis;
+        this.allergy = allergy;
+        this.note = note;
+        this.сonclusion = сonclusion;
+        this.complaint = complaint;
+        this.patient = patient;
+    }
+
+    public Card_patient(String diagnosis, Boolean allergy,  String note, String сonclusion , Сomplaint complaint, Patient patient){
+        this.diagnosis = diagnosis;
+        this.allergy = allergy;
+        this.note = note;
+        this.сonclusion = сonclusion;
+        this.complaint = complaint;
+        this.patient = patient;
+    }
+
+    
 
 
 }
