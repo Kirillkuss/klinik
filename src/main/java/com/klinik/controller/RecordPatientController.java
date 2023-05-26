@@ -1,5 +1,6 @@
 package com.klinik.controller;
 
+import com.klinik.entity.Doctor;
 import com.klinik.entity.Record_patient;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponseError;
@@ -67,10 +68,11 @@ public class RecordPatientController {
                                            @Parameter( description = "Ид карты пациента") Long card_patient_id) throws Exception, MyException{
         ResponseRecordPatient response = new ResponseRecordPatient( 200, "success");                                   
         try{
+            Doctor doctor = serviceDoctor.findById( doctor_id );
             if ( serviceDoctor.findById( doctor_id ) == null ) throw new MyException( 440, "Нет доктора с таким идентификатором");
             if ( servicePatientCard.findByIdCard( card_patient_id ) == null ) throw new MyException( 441, "Нет карты пациента с таким идентификатором");
             if ( service.findById( record_patient.getId_record()) != null) throw new MyException( 442, "Запись к врачу с таким ИД уже существует, установите другой ИД записи к врачу");
-            record_patient.setDoctor_id( doctor_id );
+            record_patient.setDoctor(doctor);;
             record_patient.setCard_patient_id( card_patient_id );
             response.setRecordPatient( service.saveRecordPatient( record_patient) );
             return response;

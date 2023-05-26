@@ -42,4 +42,8 @@ public class PatientService {
                            .getResultList().stream().findFirst().orElse( null );
     }
 
+    public Patient findByPhone( String phone ) throws Exception{
+        return repository.findByPhone(phone);
+    }
+
 }

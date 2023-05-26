@@ -1,9 +1,7 @@
 package com.klinik.response.report;
 
-
-import javax.persistence.Column;
-
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +14,10 @@ import lombok.ToString;
 public class ResponseReport {
 
     private String name_rehabilitation_treatment;
+    
     private Long count_treatment;
+
+    @JsonInclude(Include.NON_NULL)
     private Long count_patient;
 
     public ResponseReport(){

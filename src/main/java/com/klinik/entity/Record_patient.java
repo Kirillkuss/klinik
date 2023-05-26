@@ -6,6 +6,8 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @Table
@@ -23,6 +25,7 @@ public class Record_patient {
             description = "ИД записи пациента",
             example     = "1",
             required    = true )
+    @JsonInclude(Include.NON_NULL)
     private Long id_record;
 
     @Column( name = "date_record")
@@ -49,12 +52,9 @@ public class Record_patient {
     private Long number_room;
 
     @Hidden
-    @Column( name = "doctor_id")
-    @Schema( name        = "doctor_id",
-            description = "ИД доктора",
-            example     = "1",
-            required    = true )
-    private Long doctor_id;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "doctor_id", referencedColumnName = "id_doctor")
+    private Doctor doctor;
 
     @Hidden
     @Column( name = "card_patient_id")
@@ -62,6 +62,7 @@ public class Record_patient {
             description = "ИД карты",
             example     = "1",
             required    = true )
+    @JsonInclude(Include.NON_NULL)
     private Long card_patient_id;
 
 }

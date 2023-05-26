@@ -33,5 +33,9 @@ public class ComplaintService {
         return repository.save( сomplaint );
     }
 
+    public Сomplaint findByName( String name ) throws Exception{
+        return repository.findByName( name );
+    }
+
 
 }

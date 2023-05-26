@@ -5,11 +5,13 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponse;
+import com.klinik.response.report.RecordPatientReport;
+import com.klinik.response.report.ResponsePatientReport;
 import com.klinik.service.report.ReportService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -50,19 +52,28 @@ public class ReportController {
 
     @Operation( description = "Отчет о полной информации по пациенту", summary = "Отчет о полной информации по пациенту")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Report full info about patient ", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+            @ApiResponse( responseCode = "200", description = "Report full info about patient ", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponsePatientReport.class))) }),
             @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
             @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) })
     })
     @GetMapping("/report_full_info_patient")
-    public BaseResponse fullInformationPatient(  @Parameter( description = "Ид карты пациента:", example = "1")  Long idCard ) throws Exception{
-        BaseResponse response = new BaseResponse( 200, "success");
-        try{
-            response.setResponse( service.reportInformationAboutPatient( idCard ));
-            return response;
-        }catch( Exception ex ){
-            return BaseResponse.error( 999, ex );
-        }
+    public ResponsePatientReport fullInformationPatient(  @Parameter( description = "Ид карты пациента:", example = "1")  Long idCard ) throws Exception{
+        ResponsePatientReport report = new ResponsePatientReport();
+        report = service.reportInformationAboutPatient( idCard );
+        return report;
+    }
+
+    @Operation( description = "Отчет по записям пациента к врачу", summary = "Отчет по записям пациента к врачу")
+    @ApiResponses(value = {
+            @ApiResponse( responseCode = "200", description = "Report info about patient record ", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = RecordPatientReport.class))) }),
+            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) })
+    })
+    @GetMapping("/report_info_report_patient")
+    public RecordPatientReport findInformationAboutRecordPatient( @Parameter( description = "ИД пациента:", example = "1") Long IdPatient,
+                                                                  @Parameter( description = "Дата начала выборки:", example = "2023-01-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
+                                                                  @Parameter( description = "Дата начала выборки:", example = "2023-12-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception{
+        return service.reportByPatietnWithRecordPatient( IdPatient, dateFrom, dateTo );
     }
     
 }

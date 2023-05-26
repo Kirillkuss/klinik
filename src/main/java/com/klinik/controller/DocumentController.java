@@ -56,7 +56,10 @@ public class DocumentController {
     public ResponseDocument addDocument( Document document ) throws Exception, MyException{
         ResponseDocument response = new ResponseDocument(200, "success");
         try{
-            if ( service.findById( document.getId_document()) != null ) throw new MyException( 410, "Карта с таким ИД документа уже существует, используйте другой ИД");
+            if ( service.findById( document.getId_document()) != null ) throw new MyException( 410, "Документ с таким ИД документа уже существует, используйте другой ИД");
+            if ( service.findByNumar( document.getNumar()) != null ) throw new MyException( 411, "Документ с таким номером документа уже существует");
+            if ( service.findByPolis( document.getPolis()) != null ) throw new MyException( 412, "Документ с таким полисом уже существует");
+            if ( service.findBySnils( document.getSeria()) != null ) throw new MyException( 413, "Документ с таким СНИЛСом уже существует");
             response.setDocument(service.addDocument( document ));
             return response;
         }catch( Exception ex ){

@@ -60,6 +60,7 @@ public class PatientController {
         ResponsePatient response = new ResponsePatient( 200, "success");
         try{
             Document document = docService.findById( id );
+            if( service.findByPhone( patient.getPhone() ) != null ) throw new MyException( 423, "Пользователь с таким номером телефона уже существует, укажите другой");
             if( service.findByIdDocument( id ) != null ) throw new MyException( 420, "Не верное значение ИД документа, попробуйте другой");
             if( service.findById( patient.getId_patient()) != null )  throw new MyException( 421, "Пользователь с таким ИД уже существует");
             if( docService.findById( id ) == null) throw new MyException( 422, "Документ с таким ИД не существует");

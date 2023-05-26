@@ -1,6 +1,7 @@
 package com.klinik.controller;
 
 import com.klinik.entity.Card_patient;
+import com.klinik.entity.Doctor;
 import com.klinik.entity.Rehabilitation_solution;
 import com.klinik.entity.Treatment;
 import com.klinik.excep.MyException;
@@ -8,6 +9,7 @@ import com.klinik.response.BaseResponseError;
 import com.klinik.response.ResponseTreatment;
 import com.klinik.service.CardPatientService;
 import com.klinik.service.ComplaintService;
+import com.klinik.service.DoctorService;
 import com.klinik.service.RehabilitationSolutionService;
 import com.klinik.service.TreatmentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +41,11 @@ public class TreatmentController {
     @Autowired
     private RehabilitationSolutionService rehabilitationSolutionService;
     
-    @Autowired CardPatientService cardPatientService;
+    @Autowired 
+    private CardPatientService cardPatientService;
+
+    @Autowired 
+    private DoctorService doctorService;
 
     @GetMapping(value = "/getAllTreatment")
     @Operation( description = "Получение списка всех лечений", summary = "Получение списка всех лечений")
@@ -68,7 +74,8 @@ public class TreatmentController {
     })
     public ResponseTreatment addTreatment( Treatment treatment,
                                   @Parameter( description = "Ид карты пациента") Long card_patient_id,
-                                  @Parameter( description = "Ид реабилитационного лечения") Long rehabilitation_solution_id) throws Exception{
+                                  @Parameter( description = "Ид реабилитационного лечения") Long rehabilitation_solution_id,
+                                  @Parameter( description = "Ид доктор") Long doctor_id) throws Exception{
         ResponseTreatment response = new ResponseTreatment( 200, "success");
         try{
             if( service.findById( treatment.getId_treatment()) != null  ) throw new MyException( 470, "Лечение с таким ИД уже существует, используйте другой");
@@ -76,8 +83,11 @@ public class TreatmentController {
             if( solution == null  ) throw new MyException( 471, "Указано неверное значение реабилитационного лечения, укажите другой");
             Card_patient card_patient = cardPatientService.findByIdCard(card_patient_id );
             if( card_patient == null ) throw new MyException( 472, "Указано неверное значение карты пациента, укажите другой");
+            Doctor doctor = doctorService.findById( doctor_id );
+            if( doctor == null ) throw new MyException( 473, "Указано неверное значение ид доктора, укажите другой");
             treatment.setCard_patient_id( card_patient.getId_card_patient() );
             treatment.setRehabilitation_solution( solution );
+            treatment.setDoctor( doctor );
             response.setTreatment(service.addTreatment( treatment ));
             return response;
         }catch( Exception ex ){

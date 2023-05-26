@@ -34,4 +34,16 @@ public class DocumentService {
                               .getResultList()
                               .stream().findFirst().orElse( null );
     }
+
+    public Document findByNumar( String numar ) throws Exception{
+        return repository.findByNumar( numar );
+    }
+
+    public Document findBySnils( String snils ) throws Exception{
+        return repository.findBySnils( snils );
+    }
+
+    public Document findByPolis( String polis ) throws Exception{
+        return repository.findByPolis( polis );
+    }
 }

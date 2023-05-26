@@ -57,6 +57,7 @@ public class СomplaintController {
         BaseResponse response = new BaseResponse( 200, "success");
         try{
             if( service.findById( сomplaint.getId_complaint() ) !=null ) throw new MyException( 460, "Справочник жалоба с таким ИЖ уже существует");
+            if( service.findByName( сomplaint.getFunctional_impairment() ) !=null ) throw new MyException( 461, "Справочник жалоба с таким наименованием уже существует");
             response.setResponse( service.saveСomplaint( сomplaint ));
             return response;
         }catch( Exception ex ){

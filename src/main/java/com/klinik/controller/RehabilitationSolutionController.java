@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RequestMapping( value = "RehabilitationSolution")
+@RequestMapping( value = "RehabilitationTreatment")
 @RestController
 @Tag(name = "RehabilitationSolution", description = "Реабилитационное лечение")
 public class RehabilitationSolutionController {
@@ -32,7 +32,7 @@ public class RehabilitationSolutionController {
     @GetMapping(value = "/getAllRS")
     @Operation( description = "Список всех реабилитационных лечений", summary = "Список всех Реабилитационных лечений")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the Rehabilitation Solution", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+            @ApiResponse( responseCode = "200", description = "Found the Rehabilitation Treatment", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
             @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
             @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BaseResponseError.class ))) })
     })
@@ -65,7 +65,7 @@ public class RehabilitationSolutionController {
 
     @Operation( description = "Добавить способ лечения", summary = "Добавить способ лечения")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Save the Rehabilitation Solution", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+            @ApiResponse( responseCode = "200", description = "Save the Rehabilitation Treatment", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
             @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(  implementation = BaseResponseError.class))) }),
             @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(  implementation = BaseResponseError.class))) })
     })
@@ -73,7 +73,8 @@ public class RehabilitationSolutionController {
     public BaseResponse<Rehabilitation_solution> save( Rehabilitation_solution solution ) throws Exception{
         BaseResponse response = new BaseResponse( 200, "success");
         try{
-            if( service.findById( solution.getId_rehabilitation_solution() ) != null ) throw new MyException( 460, "Лечение с таким ИД уже существует");
+            if( service.findById( solution.getId_rehabilitation_solution() ) != null ) throw new MyException( 460, "Ребилитационное лечение с таким ИД уже существует");
+            if( service.findByName( solution.getName() ) != null ) throw new MyException( 461, "Ребилитационное лечени с таким наименованием уже существует");
             response.setResponse(service.saveRS( solution ));
             return response;
         }catch( Exception ex ){

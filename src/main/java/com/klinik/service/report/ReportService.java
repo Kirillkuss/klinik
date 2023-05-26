@@ -8,6 +8,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
@@ -16,8 +18,10 @@ import org.springframework.stereotype.Service;
 import com.klinik.response.report.models.Card_patient;
 import com.klinik.response.report.models.Patient;
 import com.klinik.response.report.models.Сomplaint;
+import com.klinik.entity.Doctor;
+import com.klinik.entity.Record_patient;
 import com.klinik.excep.MyException;
-import com.klinik.response.BaseResponse;
+import com.klinik.response.report.RecordPatientReport;
 import com.klinik.response.report.ResponsePatientReport;
 import com.klinik.response.report.ResponseReport;
 
@@ -28,13 +32,21 @@ public class ReportService {
     @PersistenceContext
     private EntityManager em;
     
-    public List<ResponseReport> getStatReport( LocalDateTime dateFrom, LocalDateTime dateTo) throws Exception, MyException{
+    /**
+     * Отчет по виду ребилитационного лечения за период времени
+     * 
+     * @param dateFrom - дата с 
+     * @param dateTo   - дата по
+     * @return List<ResponseReport>
+     * @throws Exception
+     * @throws MyException
+     */
+    public List<ResponseReport> getStatReport( LocalDateTime dateFrom, LocalDateTime dateTo) throws Exception{
         List<ResponseReport> report = new ArrayList<>();
         try{
             String sql = "SELECT t.name as name_solution, COUNT( u.rehabilitation_solution_id ) as count_solution, COUNT(DISTINCT u.card_patient_id) as count_patient FROM Treatment u" 
-            +" left join Rehabilitation_solution t on t.id_rehabilitation_solution = u.rehabilitation_solution_id"
-            +" where  u.time_start_treatment BETWEEN ? and ?  group by t.name";
-            //u.rehabilitation_solution_id=? and
+                       + " left join Rehabilitation_solution t on t.id_rehabilitation_solution = u.rehabilitation_solution_id"
+                       + " where  u.time_start_treatment BETWEEN ? and ?  group by t.name";
             Session session;
             session = em.unwrap( Session.class );
             session.doWork(( Connection conn) ->{
@@ -51,28 +63,37 @@ public class ReportService {
                         }
                     }
                 }catch(SQLException ex ){
-                    System.out.println("SQL error >>> " + ex.getErrorCode());
+                    java.util.logging.Logger.getLogger( ResponsePatientReport.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
         }catch( Exception ex ){
-            System.out.println( ex.getMessage());
+            java.util.logging.Logger.getLogger( ResponsePatientReport.class.getName()).log(Level.SEVERE, null, ex);
         }
         return report;
     }
 
     /**
-     * @param idCardPatient
-     * @return
+     * Отчет о полной информации по пациенту
+     * 
+     * @param idCardPatient - ид карты пациента
+     * @return ResponsePatientReport
      * @throws Exception
      */
     public ResponsePatientReport reportInformationAboutPatient(Long idCardPatient ) throws Exception{
         ResponsePatientReport response = new ResponsePatientReport();
         try{
-            String sql ="SELECT c.diagnosis, c.allergy, c.note, c.сonclusion, p.surname, p.name, p.full_name,p.gender, p.phone, p.address, s.functional_impairment, count( t.id_treatment) FROM Card_patient c"
-            + " left join Patient p on id_patient = c.pacient_id"
-            + " left join Complaint s on id_complaint = c.complaint_id"
-            + " left join Treatment t on card_patient_id = c.id_card_patient"
-            + " where c.id_card_patient = ? group by c.diagnosis, c.allergy, c.note, c.сonclusion, p.surname, p.name, p.full_name,p.gender, p.phone, p.address, s.functional_impairment";
+            String sql = "SELECT c.diagnosis, c.allergy, c.note, c.сonclusion, p.surname, p.name, p.full_name,p.gender, p.phone, p.address, s.functional_impairment, count( t.id_treatment) FROM Card_patient c"
+                       + " left join Patient p on id_patient = c.pacient_id"
+                       + " left join Complaint s on id_complaint = c.complaint_id"
+                       + " left join Treatment t on card_patient_id = c.id_card_patient"
+                       + " left join Rehabilitation_solution r on r.id_rehabilitation_solution = t.rehabilitation_solution_id"
+                       + " where c.id_card_patient = ? group by c.diagnosis, c.allergy, c.note, c.сonclusion, p.surname, p.name, p.full_name,p.gender, p.phone, p.address, s.functional_impairment";
+            
+            String sql2 = "SELECT t.name as name_solution, COUNT( u.rehabilitation_solution_id ) as count_solution FROM Treatment u"
+                        + " left join Rehabilitation_solution t on t.id_rehabilitation_solution = u.rehabilitation_solution_id"
+                        + " left join Card_patient c on  c.id_card_patient =u.card_patient_id"
+                        + " where  c.id_card_patient  = ?  group by t.name";
+
             Session session;
             session = em.unwrap( Session.class );
             session.doWork(( Connection conn) ->{
@@ -97,16 +118,104 @@ public class ReportService {
                             card.setComplaint( complaint);
                             card.setCount_treatment( rs.getLong( 12 ));
                             response.setCard(card);
+                            List<ResponseReport> treatment = new ArrayList<>();
+                            try ( PreparedStatement st2 = conn.prepareStatement( sql2 )){
+                                st2.setLong(1 , idCardPatient);
+                                try( ResultSet rs2 = st2.executeQuery() ){
+                                    while( rs2.next() ){
+                                        ResponseReport responseReport = new ResponseReport();
+                                        responseReport.setCount_treatment( rs2.getLong( 2 ));
+                                        responseReport.setName_rehabilitation_treatment( rs2.getString( 1 ));
+                                        treatment.add( responseReport);
+                                        card.setFull_info_rehabilitation_treatment( treatment );
+                                    }
+                                }
+                            }
                         }
                     }
                 }catch(SQLException ex ){
-                    System.out.println("SQL error >>> " + ex.getMessage());
+                    java.util.logging.Logger.getLogger( ResponsePatientReport.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
         }catch( Exception ex ){
-            System.out.println( ex.getMessage());
+            java.util.logging.Logger.getLogger( ResponsePatientReport.class.getName()).log(Level.SEVERE, null, ex);
         }
         return response;
+    }
+
+
+    public RecordPatientReport reportByPatietnWithRecordPatient( Long IdPatient, LocalDateTime dateFrom,LocalDateTime dateTo ) throws Exception{
+        RecordPatientReport report = new RecordPatientReport();
+        try{
+            String SQL = "SELECT p.surname, p.name, p.full_name, p.gender, p.phone, p.address, c.diagnosis, c.allergy, c.note, c.сonclusion, count(r.id_record) FROM Patient p " 
+                       + " left join Card_patient c on c.pacient_id = p.id_patient "
+                       + " left join Record_patient r on r.card_patient_id = c.id_card_patient "
+                       + " where p.id_patient = ? and r.date_record BETWEEN ? and ?"
+                       + " GROUP BY p.surname, p.name, p.full_name, p.gender, p.phone, p.address, c.diagnosis, c.allergy, c.note, c.сonclusion";
+
+            String SQL2 = "SELECT r.date_record, r.date_appointment, r.number_room, d.surname, d.name, d.full_name  FROM Record_patient r "
+                        + " left join  Doctor d on d.id_doctor = r.doctor_id"
+                        + " left join Card_patient c on c.id_card_patient = card_patient_id"
+                        + " left join Patient p on p.id_patient = c.pacient_id"
+                        + " where p.id_patient = ? and r.date_record BETWEEN ? and ?";
+
+            Session session;
+            session = em.unwrap( Session.class );
+            session.doWork(( Connection conn ) ->{
+                try( PreparedStatement ps = conn.prepareStatement( SQL )){
+                    ps.setLong( 1, IdPatient );
+                    ps.setTimestamp( 2, Timestamp.valueOf( dateFrom ));
+                    ps.setTimestamp( 3, Timestamp.valueOf( dateTo ));
+                    try( ResultSet rs = ps.executeQuery() ){
+                        while( rs.next() ){
+                            Patient patient = new Patient();
+                            Card_patient card = new Card_patient();
+                            List<Record_patient> list = new ArrayList<>();
+                            patient.setSurname( rs.getString( 1 ));
+                            patient.setName( rs.getString( 2 ));
+                            patient.setFull_name( rs.getString( 3 ));
+                            patient.setGender( rs.getBoolean( 4 ));
+                            patient.setPhone( rs.getString( 5 ));
+                            patient.setAddress( rs.getString( 6 ));
+                            card.setDiagnosis( rs.getString( 7 ));
+                            card.setAllergy( rs.getBoolean( 8 ));
+                            card.setNote( rs.getString( 9 ));
+                            card.setСonclusion( rs.getString( 10 ));
+                            try( PreparedStatement ps2 = conn.prepareStatement( SQL2 )){
+                                ps2.setLong( 1, IdPatient );
+                                ps2.setTimestamp( 2, Timestamp.valueOf( dateFrom ));
+                                ps2.setTimestamp( 3, Timestamp.valueOf( dateTo ));
+                                try( ResultSet rs2 = ps2.executeQuery() ){
+                                    while( rs2.next() ){
+                                    Record_patient record_patient = new Record_patient();
+                                    Doctor doctor = new Doctor();
+                                    record_patient.setDate_record( rs2.getTimestamp(1).toLocalDateTime() );
+                                    record_patient.setDate_appointment( rs2.getTimestamp(2).toLocalDateTime());
+                                    record_patient.setNumber_room( rs2.getLong( 3 ));
+                                    doctor.setSurname( rs2.getString( 4 ));
+                                    doctor.setName( rs2.getString( 5 ));
+                                    doctor.setFull_name( rs2.getString( 6 ));
+                                    record_patient.setDoctor( doctor );  
+                                    list.add( record_patient );  
+
+                                }
+                            }
+                        }
+                            report.setPatient( patient );
+                            report.setCard( card );
+                            report.setCount_record_for_time( rs.getLong( 11 ));
+                            report.setListRecordPatient( list );
+                        }
+                    }
+                }catch( SQLException ex ){
+                    java.util.logging.Logger.getLogger( ResponsePatientReport.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+
+        }catch( Exception ex ){
+            java.util.logging.Logger.getLogger( ResponsePatientReport.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return report;
     }
         
        
