@@ -53,7 +53,7 @@ public class СomplaintController {
             @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
     @PostMapping( value = "/saveСomplaint")
-    public BaseResponse<Сomplaint> saveСomplaint( Сomplaint сomplaint ) throws Exception{
+    public BaseResponse<Сomplaint> saveСomplaint( com.klinik.entity.Сomplaint сomplaint ) throws Exception{
         BaseResponse response = new BaseResponse( 200, "success");
         try{
             if( service.findById( сomplaint.getId_complaint() ) !=null ) throw new MyException( 460, "Справочник жалоба с таким ИЖ уже существует");

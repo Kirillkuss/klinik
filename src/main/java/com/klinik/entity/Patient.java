@@ -20,7 +20,7 @@ public class Patient {
     @Column( name = "id_patient")
     @Schema( name        = "id_patient",
             description = "ИД пациента",
-            example     = "1",
+            example     = "100",
             required    = true )
     
     private Long id_patient;
@@ -48,8 +48,8 @@ public class Patient {
 
     @Column( name = "gender")
     @Schema( name        = "gender",
-            description = "true",
-            example     = "1",
+            description = "Пол пациента",
+            example     = "true",
             required    = true )
     private Boolean gender;
 
@@ -66,14 +66,6 @@ public class Patient {
             example     = "Спб, Проспект Тихорецкого д.5",
             required    = true )
     private String address;
-
-    /**@Hidden
-    @Column( name = "document_id")
-    @Schema( name        = "document_id",
-            description = "ИД документа",
-            example     = "1",
-            required    = true )
-    private Long document_id;*/
 
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)

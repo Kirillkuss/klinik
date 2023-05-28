@@ -39,7 +39,7 @@ public class RecordPatientController {
     @Autowired
     private CardPatientService servicePatientCard;
 
-    @GetMapping(value = "/getAllRecordPatient")
+    //@GetMapping(value = "/getAllRecordPatient")
     @Operation( description = "Список всех записей пациентов к врачу", summary = "Список всех записей пациентов к врачу")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Found the Records Patients", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponseRecordPatient.class))) }),
@@ -83,7 +83,7 @@ public class RecordPatientController {
 
 
     @GetMapping(value = "/findByParams")
-    @Operation( description = "Список всех записей пациентов к врачу", summary = "Список всех записей пациентов к врачу")
+    @Operation( description = "Список всех записей пациентов к врачу по параметрам", summary = "Список всех записей пациентов к врачу по параметрам ")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Found the Records Patients", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponseRecordPatient.class))) }),
             @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),

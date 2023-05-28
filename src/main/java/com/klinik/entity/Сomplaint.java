@@ -20,14 +20,14 @@ public class Сomplaint {
     @Column( name = "id_complaint")
     @Schema( name        = "id_complaint",
             description = "ИД жалобы",
-            example     = "1",
+            example     = "100",
             required    = true )
     private Long id_complaint;
 
     @Column( name = "functional_impairment")
     @Schema( name        = "functional_impairment",
             description = "Функциональные нарушения",
-            example     = "симптомы поражения пирамидного тракта",
+            example     = "Симптомы поражения пирамидного тракта",
             required    = true )
     private String functional_impairment;
 

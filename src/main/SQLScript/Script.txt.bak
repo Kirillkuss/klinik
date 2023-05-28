@@ -109,14 +109,14 @@ CREATE TABLE Patient(
 	gender bool NOT NULL,
 	phone  VARCHAR ( 12 ) NOT NULL UNIQUE,
 	address VARCHAR ( 100 ) NOT NULL ,
-	document_id int unique references public.Document ( id_document )
+	document_id int unique references public.Document ( id_document )	
 );
 
 CREATE TABLE Doctor(
 	id_doctor serial PRIMARY KEY,
 	surname VARCHAR ( 60 ) NOT NULL,
 	name VARCHAR ( 60 ) NOT NULL,
-	full_name VARCHAR ( 60 ) NOT NULL
+	full_name VARCHAR ( 60 ) NOT NULL	
 );
 
 CREATE TABLE Complaint(
@@ -135,29 +135,23 @@ CREATE TABLE Card_patient(
 	id_card_patient serial PRIMARY KEY,
 	diagnosis VARCHAR ( 50 ) NOT NULL,
 	allergy   bool NOT NULL,
-	note VARCHAR ( 255 ) NOT NULL,
+	note VARCHAR ( 255 ) NOT NULL, 
 	сonclusion VARCHAR ( 255 ) NOT NULL,
-	pacient_id int unique references public.Patient ( id_patient )
-);
-
-CREATE TABLE Drug_treatment(
-    id_drug serial PRIMARY KEY,
-    name VARCHAR ( 255 ) NOT NULL
+	complaint_id int8,
+	pacient_id int unique references public.Patient ( id_patient ),
+	FOREIGN KEY (complaint_id) REFERENCES public.Complaint(id_complaint) ON DELETE CASCADE ON UPDATE CASCADE	
 );
 
 CREATE TABLE Treatment (
 	id_treatment serial PRIMARY KEY,
+	medical_treatment VARCHAR ( 255 ) NOT NULL,
 	dosage VARCHAR ( 255 ) NOT NULL,
 	time_start_treatment timestamp(6) NOT NULL,
 	end_time_treatment timestamp(6) NOT NULL,
-	drug_id int8 NOT NULL,
 	card_patient_id int8 NOT NULL,
 	doctor_id int8 NOT NULL,
-	rehabilitation_solution_id int8 NOT NULL,
-	FOREIGN KEY (rehabilitation_solution_id) REFERENCES public.Rehabilitation_solution(id_rehabilitation_solution),
-	FOREIGN KEY (doctor_id) REFERENCES public.Doctor(id_doctor),
-    FOREIGN KEY (card_patient_id) REFERENCES public.Card_patient(id_card_patient),
-    FOREIGN KEY (drug_id) REFERENCES public.Drug_treatment(id_drug)
+	FOREIGN KEY (doctor_id) REFERENCES public.Doctor(id_doctor),	
+    FOREIGN KEY (card_patient_id) REFERENCES public.Card_patient(id_card_patient)	
 );
 
 CREATE TABLE Record_patient(
@@ -174,7 +168,7 @@ CREATE TABLE Record_patient(
 CREATE TABLE Card_patient_Complaint(
 	card_patient_id int8 NOT NULL,
 	complaint_id int8 NOT NULL,
-	PRIMARY KEY (card_patient_id, complaint_id),
+	PRIMARY KEY (card_patient_id, rehabilitation_solution_id),
 	FOREIGN KEY (card_patient_id) REFERENCES Card_patient(id_card_patient),
 	FOREIGN KEY (complaint_id) REFERENCES Complaint(id_complaint)
 );

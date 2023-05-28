@@ -19,7 +19,7 @@ public class Doctor {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_doctor")
     @Schema( name        = "id_doctor",
-            description = "ИД пациента",
+            description = "ИД доктора",
             example     = "1",
             required    = true )
     @JsonInclude(Include.NON_NULL)

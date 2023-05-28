@@ -4,6 +4,8 @@ import com.klinik.entity.Card_patient;
 import com.klinik.repositories.CardPatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -37,6 +39,14 @@ public class CardPatientService {
                 .setParameter("id", id )
                 .getResultList()
                 .stream().findFirst().orElse( null );
+    }
+
+    @Transactional
+    public void addCardPatientComplaint( Long IdCard, Long IdComplaint ) throws Exception{
+        em.createNativeQuery( "INSERT INTO Card_patient_Complaint(card_patient_id, complaint_id) VALUES (?,?)")
+                .setParameter(1, IdCard)
+                .setParameter( 2, IdComplaint)
+                .executeUpdate();
     }
 
 

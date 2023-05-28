@@ -4,6 +4,9 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import javax.persistence.*;
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @Table( name = "card_patient")
@@ -18,21 +21,21 @@ public class Card_patient {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_card_patient")
     @Schema( name        = "id_card_patient",
-            description = "ИД питомца",
-            example     = "1",
+            description = "ИД карты пациента",
+            example     = "100",
             required    = true )
     private Long id_card_patient;
 
     @Column( name = "diagnosis")
     @Schema( name        = "diagnosis",
-            description = "ИД питомца",
-            example     = "1",
+            description = "Диагноз пациента",
+            example     = "Рассеянный склероз",
             required    = true )
     private String diagnosis;
 
     @Column( name = "allergy")
     @Schema( name        = "allergy",
-            description = "ИД питомца",
+            description = "Аллергия на препараты",
             example     = "true",
             required    = true )
     private Boolean allergy;
@@ -52,9 +55,14 @@ public class Card_patient {
     private String сonclusion;
 
     @Hidden
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "complaint_id", referencedColumnName = "id_complaint")
-    private Сomplaint complaint;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name                = "Card_patient_Complaint",
+            joinColumns         = @JoinColumn(name = "card_patient_id", referencedColumnName = "id_card_patient"),
+            inverseJoinColumns  = @JoinColumn(name = "complaint_id", referencedColumnName = "id_complaint")
+    )
+    @JsonInclude(Include.NON_NULL)
+    private List<Сomplaint> complaint;
 
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
@@ -65,7 +73,7 @@ public class Card_patient {
 
     }
 
-    public Card_patient(Long id_card_patient, String diagnosis, Boolean allergy,  String note, String сonclusion , Сomplaint complaint, Patient patient){
+    public Card_patient(Long id_card_patient, String diagnosis, Boolean allergy,  String note, String сonclusion , List<Сomplaint> complaint, Patient patient){
         this.id_card_patient = id_card_patient;
         this.diagnosis = diagnosis;
         this.allergy = allergy;
@@ -75,7 +83,7 @@ public class Card_patient {
         this.patient = patient;
     }
 
-    public Card_patient(String diagnosis, Boolean allergy,  String note, String сonclusion , Сomplaint complaint, Patient patient){
+    public Card_patient(String diagnosis, Boolean allergy,  String note, String сonclusion , List<Сomplaint> complaint, Patient patient){
         this.diagnosis = diagnosis;
         this.allergy = allergy;
         this.note = note;

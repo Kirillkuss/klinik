@@ -23,7 +23,7 @@ public class Record_patient {
     @Column( name = "id_record")
     @Schema( name        = "id_record",
             description = "ИД записи пациента",
-            example     = "1",
+            example     = "100",
             required    = true )
     @JsonInclude(Include.NON_NULL)
     private Long id_record;
@@ -32,7 +32,7 @@ public class Record_patient {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Schema( name        = "date_record",
             description = "Дата и время записи",
-            example     = "2023-05-19T12:47:07.605Z",
+            example     = "2023-01-19T12:00:00.000Z",
             required    = true )
     private LocalDateTime date_record;
 
@@ -40,14 +40,14 @@ public class Record_patient {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Schema( name        = "date_appointment",
             description = "Дата и время приема",
-            example     = "2023-05-23T14:00:00.605Z",
+            example     = "2023-02-01T14:00:00.605Z",
             required    = true )
     private LocalDateTime date_appointment;
 
     @Column( name = "number_room")
     @Schema( name        = "number_room",
             description = "Номер кабинета",
-            example     = "1102",
+            example     = "203",
             required    = true )
     private Long number_room;
 
@@ -62,7 +62,7 @@ public class Record_patient {
             description = "ИД карты",
             example     = "1",
             required    = true )
-    @JsonInclude(Include.NON_NULL)
+    //@JsonInclude(Include.NON_NULL)
     private Long card_patient_id;
 
 }

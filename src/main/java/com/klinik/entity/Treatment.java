@@ -24,29 +24,22 @@ public class Treatment {
     @Column( name = "id_treatment")
     @Schema( name        = "id_treatment",
             description = "ИД лечения",
-            example     = "1",
+            example     = "100",
             required    = true )
     private Long id_treatment;
 
-    @Column( name = "medical_treatment")
-    @Schema( name        = "medical_treatment",
-            description = "Медикационное лечение",
-            example     = "Таблетки",
-            required    = true )
-    private String medical_treatment;
-
-    @Column( name = "method_of_treatment")
-    @Schema( name        = "method_of_treatment",
-            description = "Способ лечения",
+    @Column( name = "dosage")
+    @Schema( name        = "dosage",
+            description = "Дозировка",
             example     = "Способ лечения",
             required    = true )
-    private String method_of_treatment;
+    private String dosage;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column( name = "time_start_treatment")
     @Schema( name        = "time_start_treatment",
             description = "Дата начала лечения",
-            example     = "2022-05-22 18:58:47.745",
+            example     = "2022-01-22 18:00:00.745",
             required    = true )
     private LocalDateTime time_start_treatment;
 
@@ -54,9 +47,14 @@ public class Treatment {
     @Column( name = "end_time_treatment")
     @Schema( name        = "end_time_treatment",
             description = "Дата окончания лечения",
-            example     = "2022-11-22 18:58:47.745",
+            example     = "2022-07-22 18:00:00.745",
             required    = true )
     private LocalDateTime end_time_treatment;
+
+    @Hidden
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "drug_id", referencedColumnName = "id_drug")
+    private  Drug_treatment drug_treatment;
 
     @Hidden
     @Column( name = "card_patient_id")
@@ -74,5 +72,5 @@ public class Treatment {
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "rehabilitation_solution_id", referencedColumnName = "id_rehabilitation_solution")
-    private Rehabilitation_solution rehabilitation_solution;    
+    private Rehabilitation_solution rehabilitation_solution;
 }

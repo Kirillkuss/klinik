@@ -73,8 +73,9 @@ public class RehabilitationSolutionController {
     public BaseResponse<Rehabilitation_solution> save( Rehabilitation_solution solution ) throws Exception{
         BaseResponse response = new BaseResponse( 200, "success");
         try{
+
+            if( service.findByName( solution.getName() ) != null ) throw new MyException( 461, "Ребилитационное лечение с таким наименованием уже существует");
             if( service.findById( solution.getId_rehabilitation_solution() ) != null ) throw new MyException( 460, "Ребилитационное лечение с таким ИД уже существует");
-            if( service.findByName( solution.getName() ) != null ) throw new MyException( 461, "Ребилитационное лечени с таким наименованием уже существует");
             response.setResponse(service.saveRS( solution ));
             return response;
         }catch( Exception ex ){

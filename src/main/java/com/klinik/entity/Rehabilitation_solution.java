@@ -19,22 +19,22 @@ public class Rehabilitation_solution {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_rehabilitation_solution")
     @Schema( name        = "id_rehabilitation_solution",
-            description = "ИД жалобы",
-            example     = "1",
+            description = "ИД реабилитационного лечения",
+            example     = "100",
             required    = true )
     private Long id_rehabilitation_solution;
 
     @Column( name = "name")
     @Schema( name        = "name",
             description = "Наименование",
-            example     = "Интерфероны",
+            example     = "Кинезитерапия1",
             required    = true )
     private String name;
 
     @Column( name = "survey_plan")
     @Schema( name        = "survey_plan",
             description = "План обследования",
-            example     = "интерферон бета1b (бета-ферон) ",
+            example     = "План реабилитационного лечения",
             required    = true )
     private String survey_plan;
 }

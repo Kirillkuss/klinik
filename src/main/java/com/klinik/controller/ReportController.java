@@ -63,7 +63,7 @@ public class ReportController {
         return report;
     }
 
-    @Operation( description = "Отчет по записям пациента к врачу", summary = "Отчет по записям пациента к врачу")
+    @Operation( description = "Отчет по записям пациента к врачу за период времени", summary = "Отчет по записям пациента к врачу за период времени")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Report info about patient record ", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = RecordPatientReport.class))) }),
             @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),

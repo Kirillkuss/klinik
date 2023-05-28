@@ -24,9 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RequestMapping( value = "CardPatient")
 @RestController
 @Tag(name = "CardPatient", description = "Карта пациента")
@@ -97,25 +94,42 @@ public class CardPatientController {
     }
 
     @PostMapping (value = "/saveCardPatient")
-    @Operation( description = "Список всех карт пациентов", summary = "Список всех карт пациентов")
+    @Operation( description = "Добавить карту пациента", summary = "Добавить карту пациента")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Add the card patient", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatient.class))) }),
             @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
             @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
     public ResponseCardPatient saveCardPatient( Card_patient card_patient,
-         @Parameter(description = "Ид жалобы:") Long id_complaint,
          @Parameter( description = "ИД пациента:") Long id_patient) throws Exception, MyException{
         ResponseCardPatient response = new ResponseCardPatient( 200, "success");
         try{
-            Сomplaint сomplaint = serviceComplaint.findById( id_complaint );
             Patient patient     = servicePatient.findById( id_patient );
             if( service.findByPatientId( id_patient ) != null ) throw new MyException( 430, "Карта пациента с таким ИД пациента уже существует");
-            if(  сomplaint == null ) throw new MyException( 431, "Неверный Ид жалобы");
             if( service.findByIdCard( card_patient.getId_card_patient() ) != null ) throw new MyException ( 432, "Карта с таким ИД уже существует");
             card_patient.setPatient( patient );
-            card_patient.setComplaint( сomplaint );
-            response.setCardPatient( service.saveCardPatient( card_patient ) );
+            response.setCardPatient(  service.saveCardPatient( card_patient ));
+            return response;
+        }catch ( Exception ex ){
+            return ResponseCardPatient.error( 999, ex );
+        }
+    }
+
+    @PostMapping (value = "/addComplainttoCardPatient")
+    @Operation( description = "Добавление жалобы пациенту", summary = "Добавление жалобы пациенту")
+    @ApiResponses(value = {
+            @ApiResponse( responseCode = "200", description = "Add Complaint the card patient", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatient.class))) }),
+            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
+    })
+    public ResponseCardPatient saveCardPatient( @Parameter( description = "ИД пациента:") Long idCard,
+                                                @Parameter( description = "ИД жалобы:" ) Long idComplaint ) throws Exception, MyException{
+        ResponseCardPatient response = new ResponseCardPatient( 200, "success");
+        try{
+            if( service.findByIdCard( idCard ) == null ) throw new MyException ( 433, "Карта с таким ИД не существует");
+            if ( serviceComplaint.findById( idComplaint ) == null ) throw  new MyException( 434, "Жалобы с таким ИД не существует");
+            service.addCardPatientComplaint( idCard, idComplaint );
+            response.setCardPatient( service.findByIdCard( idCard ));
             return response;
         }catch ( Exception ex ){
             return ResponseCardPatient.error( 999, ex );

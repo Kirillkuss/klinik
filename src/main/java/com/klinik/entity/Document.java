@@ -19,7 +19,7 @@ public class Document {
     @Column( name = "id_document")
     @Schema( name        = "id_document",
             description = "ИД документа",
-            example     = "1",
+            example     = "100",
             required    = true )
     private Long id_document;
 
