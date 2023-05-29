@@ -28,18 +28,12 @@ public class Treatment {
             required    = true )
     private Long id_treatment;
 
-    @Column( name = "dosage")
-    @Schema( name        = "dosage",
-            description = "Дозировка",
-            example     = "Способ лечения",
-            required    = true )
-    private String dosage;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column( name = "time_start_treatment")
     @Schema( name        = "time_start_treatment",
             description = "Дата начала лечения",
-            example     = "2022-01-22 18:00:00.745",
+            example     = "2023-01-22 18:00:00.745",
             required    = true )
     private LocalDateTime time_start_treatment;
 
@@ -47,7 +41,7 @@ public class Treatment {
     @Column( name = "end_time_treatment")
     @Schema( name        = "end_time_treatment",
             description = "Дата окончания лечения",
-            example     = "2022-07-22 18:00:00.745",
+            example     = "2023-07-22 18:00:00.745",
             required    = true )
     private LocalDateTime end_time_treatment;
 
@@ -55,6 +49,13 @@ public class Treatment {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "drug_id", referencedColumnName = "id_drug")
     private  Drug_treatment drug_treatment;
+
+    @Column( name = "dosage_drug_treatment")
+    @Schema( name        = "dosage_drug_treatment",
+            description = "Дозировка",
+            example     = "Дозировка",
+            required    = true )
+    private String dosage_drug_treatment;
 
     @Hidden
     @Column( name = "card_patient_id")

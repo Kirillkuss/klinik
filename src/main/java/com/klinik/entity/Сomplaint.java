@@ -2,8 +2,9 @@ package com.klinik.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 //Сущность жалоба
 @Entity
@@ -22,6 +23,7 @@ public class Сomplaint {
             description = "ИД жалобы",
             example     = "100",
             required    = true )
+    @JsonInclude(Include.NON_NULL)        
     private Long id_complaint;
 
     @Column( name = "functional_impairment")

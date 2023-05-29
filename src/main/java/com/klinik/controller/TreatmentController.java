@@ -2,7 +2,6 @@ package com.klinik.controller;
 
 import com.klinik.entity.*;
 import com.klinik.excep.MyException;
-import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
 import com.klinik.response.ResponseTreatment;
 import com.klinik.service.*;
@@ -14,13 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,7 +41,7 @@ public class TreatmentController {
     @Autowired
     private ServiceDrugTreatment serviceDrugTreatment;
 
-    @GetMapping(value = "/getAllTreatment")
+    //@GetMapping(value = "/getAllTreatment")
     @Operation( description = "Получение списка всех лечений", summary = "Получение списка всех лечений")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Found the Treatment", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
@@ -74,10 +67,10 @@ public class TreatmentController {
             @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
     public ResponseTreatment addTreatment( Treatment treatment,
-                                   @Parameter( description = "ИД медикаментозного лечения") Long drug_id,
-                                  @Parameter( description = "Ид карты пациента") Long card_patient_id,
-                                  @Parameter( description = "Ид реабилитационного лечения") Long rehabilitation_solution_id,
-                                  @Parameter( description = "Ид доктор") Long doctor_id) throws Exception{
+                                   @Parameter( description = "ИД медикаментозного лечения", example = "1") Long drug_id,
+                                  @Parameter( description = "Ид карты пациента", example = "1") Long card_patient_id,
+                                  @Parameter( description = "Ид реабилитационного лечения", example = "1") Long rehabilitation_solution_id,
+                                  @Parameter( description = "Ид доктор", example = "1") Long doctor_id) throws Exception{
         ResponseTreatment response = new ResponseTreatment( 200, "success");
         try{
             if( service.findById( treatment.getId_treatment()) != null  ) throw new MyException( 470, "Лечение с таким ИД уже существует, используйте другой");
@@ -96,6 +89,7 @@ public class TreatmentController {
             response.setTreatment(service.addTreatment( treatment ));
             return response;
         }catch( Exception ex ){
+            ex.printStackTrace( System.out);
             return new ResponseTreatment().error( 999, ex );
         }                          
     }

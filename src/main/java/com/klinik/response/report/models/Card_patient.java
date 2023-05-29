@@ -2,6 +2,7 @@ package com.klinik.response.report.models;
 
 import java.util.List;
 
+import com.klinik.entity.Сomplaint;
 import com.klinik.response.report.ResponseReport;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

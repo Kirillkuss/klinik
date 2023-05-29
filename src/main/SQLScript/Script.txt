@@ -70,10 +70,10 @@ CREATE TABLE Drug_treatment(
 
 CREATE TABLE Treatment (
 	id_treatment serial PRIMARY KEY,				- ИД Лечения
-	dosage VARCHAR ( 255 ) NOT NULL,				- Дозировка медикаментозного лечения 
 	time_start_treatment timestamp(6) NOT NULL,		- Дата и время начала лечения
 	end_time_treatment timestamp(6) NOT NULL,		- Дата и время окончания лечения
 	drug_id int8 NOT NULL, 							- ИД медикаментозного лечения
+	dosage_drug_treatment VARCHAR ( 255 ) NOT NULL,	- Дозировка медикаментозного лечения 
 	card_patient_id int8 NOT NULL,					- ИД карты пациента 
 	doctor_id int8 NOT NULL,						- ИД доктора
 	rehabilitation_solution_id int8 NOT NULL,		- ИД реабилитационного лечения 
@@ -155,12 +155,12 @@ CREATE TABLE Drug_treatment(
 
 CREATE TABLE Treatment (
 	id_treatment serial PRIMARY KEY,
-	dosage VARCHAR ( 255 ) NOT NULL,
 	time_start_treatment timestamp(6) NOT NULL,
 	end_time_treatment timestamp(6) NOT NULL,
+	dosage_drug_treatment VARCHAR ( 255 ) NOT NULL,
 	drug_id int8 NOT NULL,
 	card_patient_id int8 NOT NULL,
-	doctor_id int8 NOT NULL,
+	doctor_id int8 NOT NULL,						
 	rehabilitation_solution_id int8 NOT NULL,
 	FOREIGN KEY (rehabilitation_solution_id) REFERENCES public.Rehabilitation_solution(id_rehabilitation_solution),
 	FOREIGN KEY (doctor_id) REFERENCES public.Doctor(id_doctor),
