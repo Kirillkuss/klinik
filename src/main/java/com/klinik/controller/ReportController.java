@@ -1,6 +1,7 @@
 package com.klinik.controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponse;
+import com.klinik.response.ReportDrug;
 import com.klinik.response.report.RecordPatientReport;
 import com.klinik.response.report.ResponsePatientReport;
 import com.klinik.service.report.ReportService;
@@ -74,6 +76,25 @@ public class ReportController {
                                                                   @Parameter( description = "Дата начала выборки:", example = "2023-01-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
                                                                   @Parameter( description = "Дата начала выборки:", example = "2023-12-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception{
         return service.reportByPatietnWithRecordPatient( IdPatient, dateFrom, dateTo );
+    }
+
+
+    @Operation( description = "Отчет о медикаментозном лечении за период времени", summary = "Отчет о медикаментозном лечении за период времени")
+    @ApiResponses(value = {
+            @ApiResponse( responseCode = "200", description = "Report full info about patient ", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) })
+    })
+    @GetMapping( "/report_drug_treatment")
+    public BaseResponse<List<ReportDrug>> getReportDrug(@Parameter( description = "Дата начала выборки:", example = "2023-01-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
+                                                        @Parameter( description = "Дата начала выборки:", example = "2023-12-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception{
+        BaseResponse<List<ReportDrug>> report = new BaseResponse<>(200, "success" );
+        try{
+            report.setResponse( service.reportStatDrug( dateFrom, dateTo ));
+            return report;
+        }catch( Exception ex ){
+            return BaseResponse.error( 999, ex );
+        }
     }
     
 }

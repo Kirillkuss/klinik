@@ -19,6 +19,7 @@ import com.klinik.entity.Doctor;
 import com.klinik.entity.Record_patient;
 import com.klinik.entity.Сomplaint;
 import com.klinik.excep.MyException;
+import com.klinik.response.ReportDrug;
 import com.klinik.response.report.RecordPatientReport;
 import com.klinik.response.report.ResponsePatientReport;
 import com.klinik.response.report.ResponseReport;
@@ -69,6 +70,35 @@ public class ReportService {
         }
         return report;
     }
+
+    public List<ReportDrug> reportStatDrug( LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception{
+        List<ReportDrug> response = new ArrayList<>();
+        try{
+            String request = "SELECT dt.name , COUNT( u.drug_id ) as count_drug_treatment, COUNT(DISTINCT u.card_patient_id) as count_patient FROM Treatment u "
+                           + " left join Drug_treatment dt on dt.id_drug = u.drug_id "
+                           + " where u.time_start_treatment BETWEEN ? and ? group by dt.name ";
+            Session session = em.unwrap( Session.class );
+            session.doWork(( Connection conn) ->{
+                try( PreparedStatement ps = conn.prepareStatement( request )){
+                    ps.setTimestamp( 1,Timestamp.valueOf( dateFrom ));
+                    ps.setTimestamp( 2, Timestamp.valueOf( dateTo ));
+                    try( ResultSet rs = ps.executeQuery() ){
+                        while ( rs.next() ){
+                            ReportDrug drug = new ReportDrug();
+                            drug.setName_drug_treatment( rs.getString(1));
+                            drug.setCount_drug_treatment( rs.getLong(2));
+                            drug.setCount_patient( rs.getLong(3));
+                            response.add( drug );
+                        }
+                    }
+                }
+            });               
+        }catch( Exception ex ){
+            java.util.logging.Logger.getLogger( ResponsePatientReport.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+
+        return response;
+    } 
 
     /**
      * Отчет о полной информации по пациенту
