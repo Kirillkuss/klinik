@@ -59,20 +59,28 @@ CREATE TABLE Card_patient(
 	FOREIGN KEY (complaint_id) REFERENCES public.Complaint(id_complaint) ON DELETE CASCADE ON UPDATE CASCADE	
 );
 
-Таблица Лечение 
+// Таблица Медикаментозное лечение (ПИТРС)
+
+CREATE TABLE Drug_treatment(
+    id_drug serial PRIMARY KEY,   		 - ИД Медикаментозного лечения
+    name VARCHAR ( 255 ) NOT NULL UNIQUE - Наименование медикаментозного ленения
+);
+
+//Таблица Лечение 
 
 CREATE TABLE Treatment (
 	id_treatment serial PRIMARY KEY,				- ИД Лечения
-	medical_treatment VARCHAR ( 255 ) NOT NULL,		- Медикаментационное лечение
-	method_of_treatment VARCHAR ( 20 ) NOT NULL,	- Метод лечения
+	dosage VARCHAR ( 255 ) NOT NULL,				- Дозировка медикаментозного лечения 
 	time_start_treatment timestamp(6) NOT NULL,		- Дата и время начала лечения
 	end_time_treatment timestamp(6) NOT NULL,		- Дата и время окончания лечения
+	drug_id int8 NOT NULL, 							- ИД медикаментозного лечения
 	card_patient_id int8 NOT NULL,					- ИД карты пациента 
 	doctor_id int8 NOT NULL,						- ИД доктора
 	rehabilitation_solution_id int8 NOT NULL,		- ИД реабилитационного лечения 
 	FOREIGN KEY (rehabilitation_solution_id) REFERENCES public.Rehabilitation_solution(id_rehabilitation_solution),
 	FOREIGN KEY (doctor_id) REFERENCES public.Doctor(id_doctor),	
-    FOREIGN KEY (card_patient_id) REFERENCES public.Card_patient(id_card_patient)	
+    FOREIGN KEY (card_patient_id) REFERENCES public.Card_patient(id_card_patient),
+	FOREIGN KEY (drug_id) REFERENCES public.Drug_treatment(id_drug)	
 );
 
 //Таблица Запись пациента к врачу
