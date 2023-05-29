@@ -78,8 +78,8 @@ public class RehabilitationSolutionController {
             if( service.findById( solution.getId_rehabilitation_solution() ) != null ) throw new MyException( 460, "Ребилитационное лечение с таким ИД уже существует");
             response.setResponse(service.saveRS( solution ));
             return response;
-        }catch( Exception ex ){
-            return new BaseResponse().error( 999, ex );
+        }catch( MyException ex ){
+            return new BaseResponse().error( ex.getCode(), ex );
         }
 
     }

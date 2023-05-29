@@ -77,8 +77,8 @@ public class DoctorController {
             if( service.findById( doctor.getId_doctor() ) != null ) throw new MyException( 450, "Доктор с таким ИД уже существует");
             response.setResponse(service.saveDoctor( doctor ));
             return response;
-        }catch( Exception ex ){
-            return new BaseResponse().error( 999, ex);
+        }catch( MyException ex ){
+            return new BaseResponse().error( ex.getCode(), ex);
         }
         
     }

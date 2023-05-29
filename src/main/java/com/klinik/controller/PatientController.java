@@ -18,10 +18,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 @RequestMapping( value = "Patients")
 @RestController
 @Tag(name = "Patient", description = "Пациент")
@@ -67,8 +63,8 @@ public class PatientController {
             patient.setDocument( document );
             response.setPatient( service.addPatient(patient) );
             return response;
-        }catch( Exception ex ){
-            return ResponsePatient.error( 999, ex );
+        }catch( MyException ex ){
+            return ResponsePatient.error( ex.getCode(), ex );
         }
     }
 

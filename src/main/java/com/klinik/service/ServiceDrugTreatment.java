@@ -24,4 +24,8 @@ public class ServiceDrugTreatment {
     public Drug_treatment addDrugTreatment( Drug_treatment drug_treatment ) throws Exception{
         return repository.save( drug_treatment );
     }
+
+    public Drug_treatment findByName( String name ) throws Exception{
+        return repository.findByName( name );
+    }
 }

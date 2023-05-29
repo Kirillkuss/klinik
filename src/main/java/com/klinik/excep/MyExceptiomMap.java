@@ -1,10 +1,8 @@
 package com.klinik.excep;
 
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
-
 import com.klinik.response.BaseResponse;
 
 @Provider

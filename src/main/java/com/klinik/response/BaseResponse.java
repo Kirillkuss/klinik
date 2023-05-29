@@ -42,7 +42,7 @@ public class BaseResponse<T> {
         return new BaseResponse( 0, "success");
     }
     
-    public static BaseResponse error( int code, Throwable e ){
+    public static BaseResponse error( Integer code, Throwable e ){
         return new BaseResponse( code , null == e.getMessage() ? "System malfunction" : e.getMessage());
     }
 }

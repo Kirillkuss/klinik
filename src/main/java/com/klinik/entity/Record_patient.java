@@ -62,7 +62,7 @@ public class Record_patient {
             description = "ИД карты",
             example     = "1",
             required    = true )
-    //@JsonInclude(Include.NON_NULL)
+    @JsonInclude(Include.NON_NULL)
     private Long card_patient_id;
 
 }

@@ -60,8 +60,8 @@ public class СomplaintController {
             if( service.findByName( сomplaint.getFunctional_impairment() ) !=null ) throw new MyException( 461, "Справочник жалоба с таким наименованием уже существует");
             response.setResponse( service.saveСomplaint( сomplaint ));
             return response;
-        }catch( Exception ex ){
-            return new BaseResponse().error( 999, ex );
+        }catch( MyException ex ){
+            return new BaseResponse().error( ex.getCode(), ex );
         }
     }
 

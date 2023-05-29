@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.ArrayList;
-import java.util.List;
-
 
 @RequestMapping( value = "Documents")
 @RestController
@@ -62,8 +59,8 @@ public class DocumentController {
             if ( service.findBySnils( document.getSnils()) != null ) throw new MyException( 413, "Документ с таким СНИЛСом уже существует");
             response.setDocument(service.addDocument( document ));
             return response;
-        }catch( Exception ex ){
-            return ResponseDocument.error( 999, ex);
+        }catch( MyException ex ){
+            return ResponseDocument.error( ex.getCode(), ex);
         }  
     }
 

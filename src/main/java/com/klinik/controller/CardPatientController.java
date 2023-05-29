@@ -4,6 +4,7 @@ import com.klinik.entity.Card_patient;
 import com.klinik.entity.Patient;
 import com.klinik.entity.Сomplaint;
 import com.klinik.excep.MyException;
+import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
 import com.klinik.response.ResponseCardPatient;
 import com.klinik.service.CardPatientService;
@@ -38,7 +39,7 @@ public class CardPatientController {
     @Autowired
     private ComplaintService serviceComplaint;
 
-    @GetMapping(value = "/getAll")
+    //@GetMapping(value = "/getAll")
     @Operation( description = "Список всех карт пациентов", summary = "Список всех карт пациентов")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Found the cards patients", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatient.class))) }),
@@ -62,15 +63,15 @@ public class CardPatientController {
             @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
             @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
     })
-    public ResponseCardPatient getByIdCard( @Parameter( description = "ID Card Patint") Long id ) throws Exception, MyException {
+    public ResponseCardPatient getByIdCard( @Parameter( description = "ИД карты пациента", example ="1") Long id ) throws Exception, MyException {
         ResponseCardPatient response = new ResponseCardPatient( 200, "success");
         try{
             Card_patient result = service.findByIdCard( id );
             if( result == null ) throw new MyException( 433, "Карты с таким идентификатором карты не существует");
             response.setCardPatient(result);
             return response;
-        }catch ( Exception ex){
-            return ResponseCardPatient.error( 999, ex );
+        }catch ( MyException ex){
+            return ResponseCardPatient.error( ex.getCode(), ex );
         }
     }
     
@@ -81,15 +82,15 @@ public class CardPatientController {
             @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
             @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
     })
-    public ResponseCardPatient getByIdPatient (@Parameter( description = "ID Patint") Long id ) throws Exception, MyException {
+    public ResponseCardPatient getByIdPatient (@Parameter( description = "ИД Пациента", example = "1") Long id ) throws Exception, MyException {
         ResponseCardPatient response = new ResponseCardPatient( 200, "success");
         try{
             Card_patient result = service.findByPatientId( id );
             if( result == null ) throw new MyException( 434, "Карты с таким идентификатором пациента не существует");
             response.setCardPatient( result );
             return response;
-        }catch ( Exception ex){
-            return ResponseCardPatient.error( 999, ex );
+        }catch ( MyException ex){
+            return ResponseCardPatient.error( ex.getCode(), ex );
         }
     }
 
@@ -110,8 +111,8 @@ public class CardPatientController {
             card_patient.setPatient( patient );
             response.setCardPatient(  service.saveCardPatient( card_patient ));
             return response;
-        }catch ( Exception ex ){
-            return ResponseCardPatient.error( 999, ex );
+        }catch ( MyException ex ){
+            return ResponseCardPatient.error( ex.getCode(), ex );
         }
     }
 
@@ -122,17 +123,18 @@ public class CardPatientController {
             @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
             @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
-    public ResponseCardPatient saveCardPatient( @Parameter( description = "ИД пациента:") Long idCard,
-                                                @Parameter( description = "ИД жалобы:" ) Long idComplaint ) throws Exception, MyException{
-        ResponseCardPatient response = new ResponseCardPatient( 200, "success");
+    public BaseResponse saveCardPatient( @Parameter( description = "ИД карты пациента:", example = "1") Long idCard,
+                                         @Parameter( description = "ИД жалобы:" , example =  "1")  Long idComplaint ) throws Exception, MyException{
+         BaseResponse response = new BaseResponse( 200, "success");
         try{
             if( service.findByIdCard( idCard ) == null ) throw new MyException ( 433, "Карта с таким ИД не существует");
             if ( serviceComplaint.findById( idComplaint ) == null ) throw  new MyException( 434, "Жалобы с таким ИД не существует");
+            if ( service.findByIdCardAndIdComplaint(idCard, idComplaint).getId_card_patient() != null ) throw new MyException ( 435, "Жалоба с таким ИД уже добавлена в карту пацинета");
             service.addCardPatientComplaint( idCard, idComplaint );
-            response.setCardPatient( service.findByIdCard( idCard ));
             return response;
-        }catch ( Exception ex ){
-            return ResponseCardPatient.error( 999, ex );
+        }catch ( MyException ex ){
+            return BaseResponse.error( ex.getCode(), ex );
         }
     }
+
 }
