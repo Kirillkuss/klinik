@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequestMapping( value = "Patients")
 @RestController
-@Tag(name = "Patient", description = "Пациент")
+@Tag(name = "2. Patient", description = "Пациенты:")
 public class PatientController {
 
     @Autowired

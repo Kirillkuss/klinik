@@ -23,7 +23,7 @@ import java.util.List;
 
 @RequestMapping( value = "RehabilitationTreatment")
 @RestController
-@Tag(name = "RehabilitationSolution", description = "Реабилитационное лечение")
+@Tag(name = "9. Rehabilitation Treatment", description = "Справочник: Реабилитационное лечение")
 public class RehabilitationSolutionController {
 
     @Autowired
@@ -49,7 +49,7 @@ public class RehabilitationSolutionController {
     @RequestMapping( method = RequestMethod.GET, value = "/findByNameRS")
     @Operation( description = "Поиск по названию лечения", summary = "Поиск по названию лечения")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the Rehabilitation Solution", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class ))) }),
+            @ApiResponse( responseCode = "200", description = "Found the Rehabilitation Treatment", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class ))) }),
             @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
             @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })

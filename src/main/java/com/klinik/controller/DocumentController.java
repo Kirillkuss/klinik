@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping( value = "Documents")
 @RestController
-@Tag(name = "Documents", description = "Документ пациента")
+@Tag(name = "3. Documents", description = "Документ пациента")
 public class DocumentController {
 
     @Autowired

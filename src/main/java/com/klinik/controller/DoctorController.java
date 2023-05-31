@@ -23,7 +23,7 @@ import java.util.List;
 
 @RequestMapping( value = "Doctors")
 @RestController
-@Tag(name = "Doctors", description = "Доктора")
+@Tag(name = "1. Doctors", description = "Доктора:")
 public class DoctorController {
 
     @Autowired

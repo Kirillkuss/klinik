@@ -2,7 +2,6 @@ package com.klinik.controller;
 
 import com.klinik.entity.Card_patient;
 import com.klinik.entity.Patient;
-import com.klinik.entity.Сomplaint;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
@@ -10,7 +9,6 @@ import com.klinik.response.ResponseCardPatient;
 import com.klinik.service.CardPatientService;
 import com.klinik.service.ComplaintService;
 import com.klinik.service.PatientService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -27,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping( value = "CardPatient")
 @RestController
-@Tag(name = "CardPatient", description = "Карта пациента")
+@Tag(name = "4. Card Patient", description = "Карта пациента")
 public class CardPatientController {
 
     @Autowired

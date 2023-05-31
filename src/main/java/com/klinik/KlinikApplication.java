@@ -21,5 +21,6 @@ public class KlinikApplication {
         SpringApplication.run(KlinikApplication.class, args);
         System.out.println("Klinika start");
     }
+    
 
 }

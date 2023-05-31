@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 
 @RequestMapping( value = "RecordsPatients")
 @RestController
-@Tag(name = "Records Patients", description = "Записи пациентов")
+@Tag(name = "5. Records Patients", description = "Записи пациентов:")
 public class RecordPatientController {
 
     

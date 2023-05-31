@@ -6,7 +6,6 @@ import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
 import com.klinik.service.ServiceDrugTreatment;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,7 +21,7 @@ import java.util.List;
 
 @RequestMapping( value = "DrugTreatment")
 @RestController
-@Tag(name = "DrugTreatment", description = "Медикаментозное лечение")
+@Tag(name = "8. Drug Treatment", description = "Справочник: Медикаментозное лечение")
 public class DrugTreatmentController {
 
     @Autowired
