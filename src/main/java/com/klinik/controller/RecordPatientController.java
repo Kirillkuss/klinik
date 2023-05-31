@@ -42,12 +42,12 @@ public class RecordPatientController {
     //@GetMapping(value = "/getAllRecordPatient")
     @Operation( description = "Список всех записей пациентов к врачу", summary = "Список всех записей пациентов к врачу")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the Records Patients", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponseRecordPatient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
+            @ApiResponse( responseCode = "200", description = "Список всех записей пациентов к врачу", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponseRecordPatient.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
     public ResponseRecordPatient allListRecordPatient() throws Exception, MyException{
-        ResponseRecordPatient response = new ResponseRecordPatient( 200, "success");
+        ResponseRecordPatient response = new ResponseRecordPatient( 200, "успешно");
         try{
             response.setListRecordPatient( service.allListRecordPatient() );
             return response;
@@ -59,14 +59,14 @@ public class RecordPatientController {
     @PostMapping (value = "/addRecordPatient")
     @Operation( description = "Добавить запись пациента к врачу", summary = "Добавить запись пациента к врачу")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the Records Patients", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponseRecordPatient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
+            @ApiResponse( responseCode = "200", description = "Запись к врачу добавлена", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponseRecordPatient.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
     public ResponseRecordPatient addRecordPatient(Record_patient record_patient,
                                            @Parameter( description = "Ид доктора") Long doctor_id,
                                            @Parameter( description = "Ид карты пациента") Long card_patient_id) throws Exception, MyException{
-        ResponseRecordPatient response = new ResponseRecordPatient( 200, "success");                                   
+        ResponseRecordPatient response = new ResponseRecordPatient( 200, "успешно");                                   
         try{
             Doctor doctor = serviceDoctor.findById( doctor_id );
             if ( serviceDoctor.findById( doctor_id ) == null ) throw new MyException( 440, "Нет доктора с таким идентификатором");
@@ -85,14 +85,14 @@ public class RecordPatientController {
     @GetMapping(value = "/findByParams")
     @Operation( description = "Список всех записей пациентов к врачу по параметрам", summary = "Список всех записей пациентов к врачу по параметрам ")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the Records Patients", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponseRecordPatient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
+            @ApiResponse( responseCode = "200", description = "Получен список записей к врачу", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponseRecordPatient.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content(array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
     public ResponseRecordPatient findByParams( @Parameter(description = "ИД карты пациента", example = "1") Long id,
                                                @Parameter(description = "Дата записи с:", example = "2023-02-19T12:47:07.605")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
                                                @Parameter(description = "Дата записи по:", example = "2023-05-19T12:47:07.605") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception, MyException{
-        ResponseRecordPatient response = new ResponseRecordPatient( 200, "success");
+        ResponseRecordPatient response = new ResponseRecordPatient( 200, "успешно");
         try{
             response.setListRecordPatient( service.findByParam(id, dateFrom, dateTo));;
             return response;

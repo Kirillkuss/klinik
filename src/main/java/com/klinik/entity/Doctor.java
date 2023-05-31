@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Setter
 @Getter
 @EqualsAndHashCode
-@ToString
 @RequiredArgsConstructor
 public class Doctor {
 
@@ -45,4 +44,14 @@ public class Doctor {
             example     = "Петрович",
             required    = true )
     private String full_name;
+
+    @Override
+    public String toString() {
+        return new StringBuilder("\n Доктор { \n")
+                      .append("   Ид доктора: ").append(id_doctor).append(",\n")  
+                      .append("   Фамилия: ").append(surname).append(",\n")
+                      .append("   Имя: ").append(name).append(",\n")
+                      .append("   Отчество: ").append(full_name).append("\n }\n")
+                      .toString();
+    }
 }

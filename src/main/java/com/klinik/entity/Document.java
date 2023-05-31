@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Table( name = "document")
 @Setter
 @Getter
-@ToString
 @RequiredArgsConstructor
 @EqualsAndHashCode
 public class Document {
@@ -57,5 +56,17 @@ public class Document {
             example     = "0000 0000 0000 0000",
             required    = true )
     private String polis;
+
+    @Override
+    public String toString() {
+        return new StringBuilder("\n Документ { \n")
+                      .append("   Ид документа: ").append(id_document).append(",\n")  
+                      .append("   Тип документа: ").append(type_document).append(",\n")
+                      .append("   Серия документа: ").append(seria).append(",\n")
+                      .append("   Номер документа: ").append(numar).append(",\n")
+                      .append("   СНИЛС: ").append(snils).append(",\n")
+                      .append("   Полис: ").append(polis).append("\n }\n")
+                      .toString();
+    }
 
 }

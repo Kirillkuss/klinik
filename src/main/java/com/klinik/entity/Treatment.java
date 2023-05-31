@@ -15,8 +15,6 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @EqualsAndHashCode
-@ToString
-@Data
 public class Treatment {
 
     @Id
@@ -58,6 +56,11 @@ public class Treatment {
     private String dosage_drug_treatment;
 
     @Hidden
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "rehabilitation_solution_id", referencedColumnName = "id_rehabilitation_solution")
+    private Rehabilitation_solution rehabilitation_solution;
+
+    @Hidden
     @Column( name = "card_patient_id")
     @Schema( name        = "card_patient_id",
             description = "ИД карты пациента",
@@ -70,8 +73,18 @@ public class Treatment {
     @JoinColumn(name = "doctor_id", referencedColumnName = "id_doctor")
     private Doctor doctor;   
 
-    @Hidden
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "rehabilitation_solution_id", referencedColumnName = "id_rehabilitation_solution")
-    private Rehabilitation_solution rehabilitation_solution;
+    @Override
+    public String toString() {
+        return new StringBuilder("\n{ \n")
+                      .append("   Ид лечения: ").append(id_treatment).append(",\n")  
+                      .append("   Дата начала лечения: ").append(time_start_treatment).append(",\n")
+                      .append("   Дата окончания лечения: ").append(end_time_treatment).append(",\n")
+                      .append("   Медикаментозное лечение: ").append(drug_treatment).append("   ,\n")
+                      .append("   Дозировка: ").append(dosage_drug_treatment).append(",\n")
+                      .append("   Реабилитационное лечение: ").append(rehabilitation_solution).append("   ,\n")
+                      .append("   Ид карты пациента: ").append(card_patient_id).append(",\n")
+                      .append(doctor).append("\n }\n")
+                      .toString();
+    }
+
 }

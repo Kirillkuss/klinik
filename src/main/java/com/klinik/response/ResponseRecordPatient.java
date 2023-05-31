@@ -38,6 +38,13 @@ public class ResponseRecordPatient extends BaseResponse {
     public static ResponseRecordPatient error( int code, Throwable e ){
         return new ResponseRecordPatient( code , null == e.getMessage() ? "System malfunction" : e.getMessage());
     }
-    
+
+    @Override
+    public String toString() {
+        return new StringBuilder("\n {\n")
+                      .append(listRecordPatient).append(",\n")
+                      .append(recordPatient).append("\n }\n")
+                      .toString();
+    }
     
 }

@@ -12,8 +12,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @Setter
 @Getter
 @EqualsAndHashCode
-@ToString
-@Data
 public class Сomplaint {
 
     @Id
@@ -45,5 +43,13 @@ public class Сomplaint {
 
     public Сomplaint( String functional_impairment ){
         this.functional_impairment = functional_impairment;  
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder(" { \n")
+                      .append("   ИД жалобы: ").append(id_complaint).append(",\n")  
+                      .append("   Функциональные нарушения: ").append(functional_impairment).append("\n }")
+                      .toString();
     }
 }

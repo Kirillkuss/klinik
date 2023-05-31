@@ -12,8 +12,8 @@ public class BaseResponseError {
 
     @Schema (description = "Код сообщения", name = "code",  example = "999")
     private Integer code = 999;
-    @Schema (description = "Сообщение", name = "message",  example = "System Malfunction")
-    private String massage = "System Malfunction";
+    @Schema (description = "Сообщение", name = "message",  example = "Сообщение об ошибке")
+    private String massage = "Сообщение об ошибке";
 
     public BaseResponseError(){
     }

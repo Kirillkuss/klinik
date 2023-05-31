@@ -5,7 +5,7 @@ import com.klinik.entity.Patient;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
-import com.klinik.response.ResponseCardPatient;
+import com.klinik.response.ResponseCardPatientByDocument;
 import com.klinik.service.CardPatientService;
 import com.klinik.service.ComplaintService;
 import com.klinik.service.PatientService;
@@ -37,101 +37,103 @@ public class CardPatientController {
     @Autowired
     private ComplaintService serviceComplaint;
 
-    //@GetMapping(value = "/getAll")
-    @Operation( description = "Список всех карт пациентов", summary = "Список всех карт пациентов")
+    @GetMapping(value = "/findCardPatientByDocument")
+    @Operation( description = "Поиск карты пациента по документу пациента (СНИЛС, номер документа, ПОЛИС)", summary = "Поиск карты пациента по документу пациента")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the cards patients", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
+            @ApiResponse( responseCode = "200", description = "Карта пациента найдена по документу пациента", content = { @Content( array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatientByDocument.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос ",                      content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                      content = { @Content( array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
     })
-    public ResponseCardPatient getAllCards() throws Exception, MyException {
-        ResponseCardPatient response = new ResponseCardPatient( 200, "success");
+    public String findByDocumentPatient(@Parameter( description = "Параметр поиска:", example = "123243453") String word ) throws Exception, MyException {
+        ResponseCardPatientByDocument response = new ResponseCardPatientByDocument( 200, "успешно");
         try{
-            response.setListCardPatient( service.allListCardPatient() );
-            return response;
-        }catch ( Exception ex){
-            return ResponseCardPatient.error( 999, ex );
+            Card_patient card_patient = service.findByNumberPolisSnils( word );
+            if ( card_patient.getId_card_patient() == null ) throw new MyException( 30, "Карта паицента не найдена");
+            response.setCardPatient( card_patient );
+            return response.toString();
+        }catch ( MyException ex){
+            return ResponseCardPatientByDocument.error( ex.getCode(), ex ).toString();
         }
     }
 
     @GetMapping(value = "/ByIdCard")
     @Operation( description = "Поиск карты пациента по ИД карты", summary = "Поиск карты пациента по ИД карты")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the card by ID_card", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
+            @ApiResponse( responseCode = "200", description = "Карта пациента найдена по ИД карты пациента", content = { @Content(array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatientByDocument.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
     })
-    public ResponseCardPatient getByIdCard( @Parameter( description = "ИД карты пациента", example ="1") Long id ) throws Exception, MyException {
-        ResponseCardPatient response = new ResponseCardPatient( 200, "success");
+    public String getByIdCard( @Parameter( description = "ИД карты пациента", example ="1") Long id ) throws Exception, MyException {
+        ResponseCardPatientByDocument response = new ResponseCardPatientByDocument( 200, "успешно");
         try{
             Card_patient result = service.findByIdCard( id );
             if( result == null ) throw new MyException( 433, "Карты с таким идентификатором карты не существует");
             response.setCardPatient(result);
-            return response;
+            return response.toString();
         }catch ( MyException ex){
-            return ResponseCardPatient.error( ex.getCode(), ex );
+            return ResponseCardPatientByDocument.error( ex.getCode(), ex ).toString();
         }
     }
     
     @GetMapping(value = "/ByIdPatient")
     @Operation( description = "Поиск карты пациента по ИД пациента", summary = "Поиск карты пациента по ИД пациента")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the card by ID_patient", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
+            @ApiResponse( responseCode = "200", description = "Карта пациента найдена по ИД пациента", content = { @Content( array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatientByDocument.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
     })
-    public ResponseCardPatient getByIdPatient (@Parameter( description = "ИД Пациента", example = "1") Long id ) throws Exception, MyException {
-        ResponseCardPatient response = new ResponseCardPatient( 200, "success");
+    public String getByIdPatient (@Parameter( description = "ИД Пациента", example = "1") Long id ) throws Exception, MyException {
+        ResponseCardPatientByDocument response = new ResponseCardPatientByDocument( 200, "успешно");
         try{
             Card_patient result = service.findByPatientId( id );
             if( result == null ) throw new MyException( 434, "Карты с таким идентификатором пациента не существует");
             response.setCardPatient( result );
-            return response;
+            return response.toString();
         }catch ( MyException ex){
-            return ResponseCardPatient.error( ex.getCode(), ex );
+            return ResponseCardPatientByDocument.error( ex.getCode(), ex ).toString();
         }
     }
 
     @PostMapping (value = "/saveCardPatient")
     @Operation( description = "Добавить карту пациента", summary = "Добавить карту пациента")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Add the card patient", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
+            @ApiResponse( responseCode = "200", description = "Карта пациента добавлена", content = { @Content( array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatientByDocument.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
-    public ResponseCardPatient saveCardPatient( Card_patient card_patient,
+    public String saveCardPatient( Card_patient card_patient,
          @Parameter( description = "ИД пациента:") Long id_patient) throws Exception, MyException{
-        ResponseCardPatient response = new ResponseCardPatient( 200, "success");
+        ResponseCardPatientByDocument response = new ResponseCardPatientByDocument( 200, "успешно");
         try{
             Patient patient     = servicePatient.findById( id_patient );
             if( service.findByPatientId( id_patient ) != null ) throw new MyException( 430, "Карта пациента с таким ИД пациента уже существует");
             if( service.findByIdCard( card_patient.getId_card_patient() ) != null ) throw new MyException ( 432, "Карта с таким ИД уже существует");
             card_patient.setPatient( patient );
             response.setCardPatient(  service.saveCardPatient( card_patient ));
-            return response;
+            return response.toString();
         }catch ( MyException ex ){
-            return ResponseCardPatient.error( ex.getCode(), ex );
+            return ResponseCardPatientByDocument.error( ex.getCode(), ex ).toString();
         }
     }
 
     @PostMapping (value = "/addComplainttoCardPatient")
     @Operation( description = "Добавление жалобы пациенту", summary = "Добавление жалобы пациенту")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Add Complaint the card patient", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
+            @ApiResponse( responseCode = "200", description = "Добавление жалобы в карту пациента", content = { @Content( array = @ArraySchema(schema = @Schema(implementation = ResponseCardPatientByDocument.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
-    public BaseResponse saveCardPatient( @Parameter( description = "ИД карты пациента:", example = "1") Long idCard,
+    public String saveCardPatient( @Parameter( description = "ИД карты пациента:", example = "1") Long idCard,
                                          @Parameter( description = "ИД жалобы:" , example =  "1")  Long idComplaint ) throws Exception, MyException{
-         BaseResponse response = new BaseResponse( 200, "success");
+         BaseResponse response = new BaseResponse( 200, "успешно");
         try{
             if( service.findByIdCard( idCard ) == null ) throw new MyException ( 433, "Карта с таким ИД не существует");
             if ( serviceComplaint.findById( idComplaint ) == null ) throw  new MyException( 434, "Жалобы с таким ИД не существует");
             if ( service.findByIdCardAndIdComplaint(idCard, idComplaint).getId_card_patient() != null ) throw new MyException ( 435, "Жалоба с таким ИД уже добавлена в карту пацинета");
             service.addCardPatientComplaint( idCard, idComplaint );
-            return response;
+            return response.toString();
         }catch ( MyException ex ){
-            return BaseResponse.error( ex.getCode(), ex );
+            return BaseResponse.error( ex.getCode(), ex ).toString();
         }
     }
 

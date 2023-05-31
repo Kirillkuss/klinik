@@ -14,7 +14,7 @@ public class MyExceptionMapper implements ExceptionMapper<Exception>{
     public Response toResponse(Exception e) {
         BaseResponse bs = new BaseResponse();
         bs.setCode( 999);
-        bs.setMassage(null == e.getMessage() ? "System malfunction" : e.getMessage());
+        bs.setMassage(null == e.getMessage() ? "Ошибка" : e.getMessage());
         return Response.ok().entity(bs).build();
     }
 }

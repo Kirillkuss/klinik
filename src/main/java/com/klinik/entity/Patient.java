@@ -96,5 +96,19 @@ public class Patient {
         this.address = address;
     }
 
+    @Override
+    public String toString() {
+        return new StringBuilder(" Пациент { \n")
+                      .append("   Ид пациента: ").append(id_patient).append(",\n")  
+                      .append("   Фамилия: ").append(surname).append(",\n")
+                      .append("   Имя: ").append(name).append(",\n")
+                      .append("   Отчество: ").append(full_name).append(",\n")
+                      .append("   Пол: ").append(gender == true ? "Муж" : "Жен").append(",\n")
+                      .append("   Номер телефона: ").append(phone).append(",\n")
+                      .append("   Адрес: ").append(address).append(",")
+                      .append("  \t  ").append(document).append("}\n")
+                      .toString();
+    }
+
 
 }

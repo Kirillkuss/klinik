@@ -13,8 +13,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Setter
 @Getter
 @EqualsAndHashCode
-@ToString
-@Data
 public class Card_patient {
 
     @Id
@@ -90,6 +88,20 @@ public class Card_patient {
         this.сonclusion = сonclusion;
         this.complaint = complaint;
         this.patient = patient;
+    }
+
+    
+    @Override
+    public String toString() {
+        return new StringBuilder("\n Карта пациента { \n")
+                      .append("   Ид карты пациента: ").append(id_card_patient).append(",\n")  
+                      .append("   Диагноз: ").append(diagnosis).append(",\n")
+                      .append("   Аллергия: ").append(allergy == true ? "Да" : "Нет").append(",\n")
+                      .append("   Примечание: ").append(note).append(",\n")
+                      .append("   Заключение: ").append(сonclusion).append(",\n")
+                      .append("   Список жалоб: ").append(complaint).append(",\n")
+                      .append(patient).append("\n }\n")
+                      .toString();
     }
 
     

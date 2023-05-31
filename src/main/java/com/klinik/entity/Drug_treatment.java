@@ -12,8 +12,6 @@ import javax.persistence.*;
 @Table( name = "Drug_treatment")
 @Getter
 @Setter
-@ToString
-@Data
 public class Drug_treatment {
 
     @Id
@@ -32,4 +30,13 @@ public class Drug_treatment {
             example     = "Кортикостероиды",
             required    = true )
     private String name;
+
+    
+    @Override
+    public String toString() {
+        return new StringBuilder(" { \n")
+                      .append("         Ид медикаментозного лечения: ").append(id_drug).append(",\n")  
+                      .append("         Наименование: ").append(name).append("\n        }\n")
+                      .toString();
+    }
 }

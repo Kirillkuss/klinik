@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @RequestMapping( value = "RehabilitationTreatment")
 @RestController
@@ -32,54 +31,54 @@ public class RehabilitationSolutionController {
     @GetMapping(value = "/getAllRS")
     @Operation( description = "Список всех реабилитационных лечений", summary = "Список всех Реабилитационных лечений")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the Rehabilitation Treatment", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BaseResponseError.class ))) })
+            @ApiResponse( responseCode = "200", description = "Получен список всех реабилитационных лечений", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema(implementation = BaseResponseError.class ))) })
     })
-    public BaseResponse<List<Rehabilitation_solution>> getAllRehabilitationSolution() throws Exception{
-        BaseResponse response = new BaseResponse( 200, "success");
+    public String getAllRehabilitationSolution() throws Exception{
+        BaseResponse response = new BaseResponse( 200, "успешно");
         try{
             response.setResponse( service.getAllReha());
-            return response;
+            return response.toString();
         }catch( Exception ex ){
-            return new BaseResponse().error( 999, ex);
+            return new BaseResponse().error( 999, ex).toString();
         }
     }
 
     @RequestMapping( method = RequestMethod.GET, value = "/findByNameRS")
     @Operation( description = "Поиск по названию лечения", summary = "Поиск по названию лечения")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the Rehabilitation Treatment", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class ))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
+            @ApiResponse( responseCode = "200", description = "Получено реабилитационное лечение по наименованию", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class ))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content(array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
-    public BaseResponse<Rehabilitation_solution> findByName( @Parameter( description = "Наименование лечения") String name ) throws Exception{
-        BaseResponse response = new BaseResponse( 200, "success");
+    public String findByName( @Parameter( description = "Наименование лечения") String name ) throws Exception{
+        BaseResponse response = new BaseResponse( 200, "успешно");
         try{
             response.setResponse(  service.findByName( name ));
-            return response;
+            return response.toString();
         }catch( Exception ex ){
-            return new BaseResponse<>().error( 999, ex);
+            return new BaseResponse<>().error( 999, ex).toString();
         }
     }
 
     @Operation( description = "Добавить способ лечения", summary = "Добавить способ лечения")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Save the Rehabilitation Treatment", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(  implementation = BaseResponseError.class))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(  implementation = BaseResponseError.class))) })
+            @ApiResponse( responseCode = "200", description = "Добавлен способ лечения", content = { @Content(array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema(  implementation = BaseResponseError.class))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema(  implementation = BaseResponseError.class))) })
     })
     @RequestMapping( method = RequestMethod.POST, value = "/saveRS")
-    public BaseResponse<Rehabilitation_solution> save( Rehabilitation_solution solution ) throws Exception{
-        BaseResponse response = new BaseResponse( 200, "success");
+    public String save( Rehabilitation_solution solution ) throws Exception{
+        BaseResponse response = new BaseResponse( 200, "успешно");
         try{
 
             if( service.findByName( solution.getName() ) != null ) throw new MyException( 461, "Ребилитационное лечение с таким наименованием уже существует");
             if( service.findById( solution.getId_rehabilitation_solution() ) != null ) throw new MyException( 460, "Ребилитационное лечение с таким ИД уже существует");
             response.setResponse(service.saveRS( solution ));
-            return response;
+            return response.toString();
         }catch( MyException ex ){
-            return new BaseResponse().error( ex.getCode(), ex );
+            return new BaseResponse().error( ex.getCode(), ex ).toString();
         }
 
     }

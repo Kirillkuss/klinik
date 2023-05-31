@@ -11,17 +11,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 public class BaseResponse<T> {
 
-    @Schema (description = "Код сообщения", name = "code",  example = "200")
+    @Schema (description = "Код сообщения", name = "Код сообщения",  example = "200")
     private Integer code = 200;
-    @Schema (description = "Сообщение", name = "message",  example = "success")
-    private String massage = "success";
+    @Schema (description = "Сообщение", name = "Сообщение",  example = "успешно")
+    private String massage = "успешно";
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @Schema (description = "Сообщение", name = "message",  example = "success")
+    @Schema (description = "Ответ", name = "response")
     private T response;
 
     public BaseResponse(){
@@ -39,10 +38,20 @@ public class BaseResponse<T> {
     }
 
     public static BaseResponse success() {
-        return new BaseResponse( 0, "success");
+        return new BaseResponse( 0, "успешно");
     }
     
     public static BaseResponse error( Integer code, Throwable e ){
-        return new BaseResponse( code , null == e.getMessage() ? "System malfunction" : e.getMessage());
+        return new BaseResponse( code , null == e.getMessage() ? "Сообщение об ошибке" : e.getMessage());
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder(" { \n")
+                      .append("   Код: ").append(code).append(",\n")  
+                      .append("   Сообщение: ").append(massage).append(",\n")
+                      .append("   Ответ: ").append(response == null ? "" : response).append("\n }\n")
+                      .toString();
+    }
+
 }

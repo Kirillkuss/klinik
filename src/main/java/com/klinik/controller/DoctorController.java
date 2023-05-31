@@ -32,53 +32,39 @@ public class DoctorController {
     @GetMapping(value = "/getAll")
     @Operation( description = "Список всех докторов", summary = "Список всех докторов")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the Doctors", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
+            @ApiResponse( responseCode = "200", description = "Получение списка всех докторов", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Doctor.class))) })
     })
-    public BaseResponse<List<Doctor>>  getAllDoc() throws Exception{
-        BaseResponse response = new BaseResponse( 200, "success");
-        try{
-            response.setResponse(service.allDoctor());
-            return response;
-        }catch ( Exception ex ){
-            return new BaseResponse<>().error( 999, ex);
-        }
-        
+    public String  getAllDoc() throws Exception{
+        return service.allDoctor().toString();
     }
 
     @GetMapping(value = "/FindDoctorByFIO")
     @Operation( description = "Поиск врача по ФИО", summary = "Поиск врача по ФИО")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the Doctor", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
+            @ApiResponse( responseCode = "200", description = "Поиск доктора по ФИО", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Doctor.class))) })
     })
-    public BaseResponse<List<Doctor>> findByFIO(@Parameter( description = "ФИО врача") String word ) throws Exception{
-        BaseResponse response = new BaseResponse<>( 200, "success");
+    public String findByFIO(@Parameter( description = "ФИО врача") String word ) throws Exception{
         try{
-            response.setResponse( service.findByFIO( word ));
-            return response;
-        }catch( Exception ex ){
-            return new BaseResponse<>().error( 999, ex);
+            List<Doctor> doctors = service.findByFIO( word );
+            if( doctors.isEmpty() == true ) throw new MyException( 999, "По данному запросу ничего не найдено");
+            return doctors.toString();
+        }catch( MyException ex ){
+            return ex.getMessage();
         }
+
     }
 
     @PostMapping( value = "/addDoctor")
     @Operation( description = "Добавить доктора", summary = "Добавить доктора")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Save the Doctor", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
-    })
-    public BaseResponse<Doctor> addDoctor( Doctor doctor ) throws Exception{
-        BaseResponse response = new BaseResponse( 200, "success");
+            @ApiResponse( responseCode = "200", description = "Доктор добавлен", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Doctor.class))) })})
+    public String addDoctor( Doctor doctor ) throws Exception{
         try{
-            if( service.findById( doctor.getId_doctor() ) != null ) throw new MyException( 450, "Доктор с таким ИД уже существует");
-            response.setResponse(service.saveDoctor( doctor ));
-            return response;
+            if (service.findById( doctor.getId_doctor() ) != null ) throw new MyException( 999, "Пользователь с таким ИД уще существует");
+            Doctor response =  service.saveDoctor( doctor );
+            return response.toString();
         }catch( MyException ex ){
-            return new BaseResponse().error( ex.getCode(), ex);
+            return  ex.getMessage();
         }
         
     }

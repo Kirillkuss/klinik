@@ -44,17 +44,17 @@ public class TreatmentController {
     //@GetMapping(value = "/getAllTreatment")
     @Operation( description = "Получение списка всех лечений", summary = "Получение списка всех лечений")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the Treatment", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
+            @ApiResponse( responseCode = "200", description = "Получен список лечений", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content(array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
-    public ResponseTreatment getAllTreatment() throws Exception{
-        ResponseTreatment response = new ResponseTreatment( 200, "success");
+    public String getAllTreatment() throws Exception{
+        ResponseTreatment response = new ResponseTreatment( 200, "успешно");
         try{
             response.setResponse( service.allListTreatment());
-            return response;
+            return response.toString();
         }catch( Exception ex ){
-            return new ResponseTreatment().error( 999, ex ); 
+            return new ResponseTreatment().error( 999, ex ).toString(); 
         }
 
     }
@@ -62,16 +62,16 @@ public class TreatmentController {
     @PostMapping( value = "/addTreatment")
     @Operation( description = "Добавить лечение для пациента", summary = "Добавить лечение для пациента")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Create the Treatment", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
+            @ApiResponse( responseCode = "200", description = "Добавлено новое лечение паиценту", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
-    public ResponseTreatment addTreatment( Treatment treatment,
+    public String addTreatment( Treatment treatment,
                                    @Parameter( description = "ИД медикаментозного лечения", example = "1") Long drug_id,
                                   @Parameter( description = "Ид карты пациента", example = "1") Long card_patient_id,
                                   @Parameter( description = "Ид реабилитационного лечения", example = "1") Long rehabilitation_solution_id,
                                   @Parameter( description = "Ид доктор", example = "1") Long doctor_id) throws Exception{
-        ResponseTreatment response = new ResponseTreatment( 200, "success");
+        ResponseTreatment response = new ResponseTreatment( 200, "успешно");
         try{
             if( service.findById( treatment.getId_treatment()) != null  ) throw new MyException( 470, "Лечение с таким ИД уже существует, используйте другой");
             Rehabilitation_solution solution = rehabilitationSolutionService.findByIdList(rehabilitation_solution_id);
@@ -87,47 +87,47 @@ public class TreatmentController {
             treatment.setDoctor( doctor );
             treatment.setDrug_treatment( drug_treatment);
             response.setTreatment(service.addTreatment( treatment ));
-            return response;
+            return response.toString();
         }catch( Exception ex ){
             ex.printStackTrace( System.out);
-            return new ResponseTreatment().error( 999, ex );
+            return new ResponseTreatment().error( 999, ex ).toString();
         }                          
     }
 
     @GetMapping(value = "/findByParamIdCardAndDateStart")
     @Operation( description = "Получение списка лечений по параметрам", summary = "Получение списка лечений по параметрам")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the Treatments", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
+            @ApiResponse( responseCode = "200", description = "Получен список лечений по параметрам", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content(array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
-    public ResponseTreatment findByParamIdCardAndDateStart( @Parameter( description = "Ид карты", example = "1") Long id,
+    public String findByParamIdCardAndDateStart( @Parameter( description = "Ид карты", example = "1") Long id,
                                                             @Parameter( description = "Время начала лечения с:", example = "2023-01-20T12:47:07.605") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
                                                             @Parameter( description = "Время начала лечения по", example = "2023-09-20T12:47:07.605") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo) throws Exception{
-        ResponseTreatment response = new ResponseTreatment( 200, "success");
+        ResponseTreatment response = new ResponseTreatment( 200, "успешно");
         try{
             response.setResponse( service.findByParamIdCardAndDateStart(id, dateFrom, dateTo));
-            return response;
+            return response.toString();
         }catch( Exception ex ){
-            return new ResponseTreatment().error( 999, ex ); 
+            return new ResponseTreatment().error( 999, ex ).toString(); 
         }
     }
 
     @GetMapping(value = "/findByParamIdCardAndIdRh")
     @Operation( description = "Получение списка лечений по параметрам", summary = "Получение списка лечений по параметрам")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Found the Treatments", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
-            @ApiResponse( responseCode = "400", description = "Bad request",       content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
-            @ApiResponse( responseCode = "500", description = "System malfunction",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
+            @ApiResponse( responseCode = "200", description = "Получен список лечений по параметрам", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
-    public ResponseTreatment findByParamIdCardAndIdRh( @Parameter( description = "Ид карты пациента", example = "1") Long idCard, 
+    public String findByParamIdCardAndIdRh( @Parameter( description = "Ид карты пациента", example = "1") Long idCard, 
                                                        @Parameter( description = "Ид реабилитационного лечения", example = "1") Long idReSol ) throws Exception{
-        ResponseTreatment response = new ResponseTreatment( 200, "success");
+        ResponseTreatment response = new ResponseTreatment( 200, "успешно");
         try{
             response.setResponse( service.findByParamIdCardAndIdRh( idCard, idReSol ));
-            return response;
+            return response.toString();
         }catch( Exception ex ){
-            return new ResponseTreatment().error( 999, ex ); 
+            return new ResponseTreatment().error( 999, ex ).toString(); 
         }
     }
 

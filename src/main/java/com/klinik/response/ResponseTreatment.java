@@ -39,5 +39,13 @@ public class ResponseTreatment extends BaseResponse {
     public static ResponseTreatment error( int code, Throwable e ){
         return new ResponseTreatment( code , null == e.getMessage() ? "System malfunction" : e.getMessage());
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder(" { \n")
+                      .append(response).append(",\n")   
+                      .append(treatment).append("\n }\n")
+                      .toString();
+    }
     
 }
