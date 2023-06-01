@@ -104,7 +104,4 @@ public class Card_patient {
                       .toString();
     }
 
-    
-
-
 }

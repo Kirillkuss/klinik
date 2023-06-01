@@ -5,10 +5,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.klinik.entity.TypeComplaint;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
 import com.klinik.service.ComplaintService;
+import com.klinik.service.TypeComplaintService;
+
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,11 +23,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RequestMapping( value = "Сomplaint")
 @RestController
-@Tag(name = "6. Сomplaint", description = "Справочник: Жалобы")
+@Tag(name = "6. Сomplaint", description = "Справочник: Жалобы и поджалобы ")
 public class СomplaintController {
 
     @Autowired
     private ComplaintService service;
+
+    @Autowired
+    private TypeComplaintService serviceTC;
 
 
     @GetMapping(value = "/getAll")
@@ -61,6 +68,40 @@ public class СomplaintController {
         }catch( MyException ex ){
             return new BaseResponse().error( ex.getCode(), ex ).toString();
         }
+    }
+
+    @Operation( description = "Добавление поджалобы", summary = "Добавление поджалобы")
+    @ApiResponses(value = {
+            @ApiResponse( responseCode = "200", description = "Добавлена поджалоба", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
+    })
+    @PostMapping( value = "/TypeComplaint")
+    public String saveTypeComplaint(TypeComplaint request ) throws Exception{
+        BaseResponse response = new BaseResponse(200, "успешно");
+        try{
+            System.out.println(request.toString());
+            if( service.findById( request.getComplaint_id() ) == null ) throw new MyException( 462, "Жалобы с таким ИД не существует");
+            
+            if( serviceTC.findByNme( request.getName()) != null) throw new MyException( 463, "Поджалоба с таким наименование уже существует");
+            if( serviceTC.findById( request.getId_type_complaint()) != null ) throw new MyException( 464, "Поджалоба с таким ИД уже существует");
+            response.setResponse( serviceTC.saveTypeComplaint( request ));
+            return response.toString();
+        }catch( Exception ex ){
+            return BaseResponse.error(999, ex ).toString();
+        }
+    }
+
+    @GetMapping( "/findComplaintWithTypeComplaints")
+    public String listComplaintWithTypeComplaints( Long Id ) throws Exception{
+        BaseResponse response = new BaseResponse();
+        try{
+            if( service.findById( Id ) == null ) throw new MyException( 462, "Жалобы с таким ИД не существует");
+            
+            return response.toString();
+        }catch( MyException ex){
+            return BaseResponse.error( ex.getCode(), ex ).toString();
+        } 
     }
 
     

@@ -96,6 +96,22 @@ CREATE TABLE Record_patient(
 	FOREIGN KEY (card_patient_id) REFERENCES public.Card_patient(id_card_patient) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+// Таблица поджалобы
+CREATE TABLE Type_complaint(
+	id_type_complaint serial PRIMARY KEY,
+	name VARCHAR ( 150 ) NOT NULL UNIQUE,
+	complaint_id int8 NOT NULL,
+	FOREIGN KEY (complaint_id) REFERENCES public.Complaint(id_complaint)
+);
+
+//Таблица лекарства
+CREATE TABLE Grug(
+	id_dr serial PRIMARY KEY,
+	name VARCHAR ( 255 ) NOT NULL UNIQUE,
+	drug_id int8 NOT NULL,
+	FOREIGN KEY (drug_id) REFERENCES public.Drug_treatment(id_drug)
+);
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Код для копирования:
@@ -185,4 +201,19 @@ CREATE TABLE Card_patient_Complaint(
 	PRIMARY KEY (card_patient_id, complaint_id),
 	FOREIGN KEY (card_patient_id) REFERENCES Card_patient(id_card_patient),
 	FOREIGN KEY (complaint_id) REFERENCES Complaint(id_complaint)
+);
+
+
+CREATE TABLE Type_complaint(
+	id_type_complaint serial PRIMARY KEY,
+	name VARCHAR ( 150 ) NOT NULL UNIQUE,
+	complaint_id int8 NOT NULL,
+	FOREIGN KEY (complaint_id) REFERENCES public.Complaint(id_complaint)
+);
+
+CREATE TABLE Drug(
+	id_dr serial PRIMARY KEY,
+	name VARCHAR ( 255 ) NOT NULL UNIQUE,
+	drug_id int8 NOT NULL,
+	FOREIGN KEY (drug_id) REFERENCES public.Drug_treatment(id_drug)
 );
