@@ -28,5 +28,14 @@ public class ResponseReport {
         this.count_treatment = count_treatment;
         this.count_patient = count_patient;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder(" { \n")
+                      .append("         1. Наименование реабилитационного лечения: ").append(name_rehabilitation_treatment).append(",\n")  
+                      .append("         2. Количество реабилитациооных лечений: ").append(count_treatment).append(",\n")
+                      .append("         3. Количество пациентов: ").append(count_patient == null ? "" : count_patient ).append("\n }\n")
+                      .toString();
+    }
     
 }

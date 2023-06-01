@@ -28,5 +28,17 @@ public class Patient {
         this.phone = phone;
         this.address = address;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder(" { \n")
+                      .append("     6.1. Фамилия: ").append(surname).append(",\n")  
+                      .append("     6.2. Имя: ").append(name).append(",\n")
+                      .append("     6.3. Отчество: ").append(full_name).append(",\n")
+                      .append("     6.4. Пол: ").append(gender == true ? "Муж" : "Жен").append(",\n")
+                      .append("     6.5. Номер телефона: ").append(phone).append(",\n")
+                      .append("     6.6. Адрес: ").append(address).append("\n }\n")
+                      .toString();
+    }
     
 }

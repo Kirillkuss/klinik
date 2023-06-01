@@ -45,14 +45,14 @@ public class CardPatientController {
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                      content = { @Content( array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
     })
     public String findByDocumentPatient(@Parameter( description = "Параметр поиска:", example = "123243453") String word ) throws Exception, MyException {
-        ResponseCardPatientByDocument response = new ResponseCardPatientByDocument( 200, "успешно");
+        BaseResponse response = new BaseResponse( 200, "успешно");
         try{
             Card_patient card_patient = service.findByNumberPolisSnils( word );
             if ( card_patient.getId_card_patient() == null ) throw new MyException( 30, "Карта паицента не найдена");
-            response.setCardPatient( card_patient );
+            response.setResponse( card_patient );
             return response.toString();
         }catch ( MyException ex){
-            return ResponseCardPatientByDocument.error( ex.getCode(), ex ).toString();
+            return BaseResponse.error( ex.getCode(), ex ).toString();
         }
     }
 
@@ -64,14 +64,14 @@ public class CardPatientController {
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
     })
     public String getByIdCard( @Parameter( description = "ИД карты пациента", example ="1") Long id ) throws Exception, MyException {
-        ResponseCardPatientByDocument response = new ResponseCardPatientByDocument( 200, "успешно");
+        BaseResponse response = new BaseResponse( 200, "успешно");
         try{
             Card_patient result = service.findByIdCard( id );
             if( result == null ) throw new MyException( 433, "Карты с таким идентификатором карты не существует");
-            response.setCardPatient(result);
+            response.setResponse(result);
             return response.toString();
         }catch ( MyException ex){
-            return ResponseCardPatientByDocument.error( ex.getCode(), ex ).toString();
+            return BaseResponse.error( ex.getCode(), ex ).toString();
         }
     }
     
@@ -83,14 +83,14 @@ public class CardPatientController {
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
     })
     public String getByIdPatient (@Parameter( description = "ИД Пациента", example = "1") Long id ) throws Exception, MyException {
-        ResponseCardPatientByDocument response = new ResponseCardPatientByDocument( 200, "успешно");
+        BaseResponse response = new BaseResponse( 200, "успешно");
         try{
             Card_patient result = service.findByPatientId( id );
             if( result == null ) throw new MyException( 434, "Карты с таким идентификатором пациента не существует");
-            response.setCardPatient( result );
+            response.setResponse( result );
             return response.toString();
         }catch ( MyException ex){
-            return ResponseCardPatientByDocument.error( ex.getCode(), ex ).toString();
+            return BaseResponse.error( ex.getCode(), ex ).toString();
         }
     }
 
@@ -103,16 +103,16 @@ public class CardPatientController {
     })
     public String saveCardPatient( Card_patient card_patient,
          @Parameter( description = "ИД пациента:") Long id_patient) throws Exception, MyException{
-        ResponseCardPatientByDocument response = new ResponseCardPatientByDocument( 200, "успешно");
+            BaseResponse response = new BaseResponse( 200, "успешно");
         try{
             Patient patient     = servicePatient.findById( id_patient );
             if( service.findByPatientId( id_patient ) != null ) throw new MyException( 430, "Карта пациента с таким ИД пациента уже существует");
             if( service.findByIdCard( card_patient.getId_card_patient() ) != null ) throw new MyException ( 432, "Карта с таким ИД уже существует");
             card_patient.setPatient( patient );
-            response.setCardPatient(  service.saveCardPatient( card_patient ));
+            response.setResponse(  service.saveCardPatient( card_patient ));
             return response.toString();
         }catch ( MyException ex ){
-            return ResponseCardPatientByDocument.error( ex.getCode(), ex ).toString();
+            return BaseResponse.error( ex.getCode(), ex ).toString();
         }
     }
 

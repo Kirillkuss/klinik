@@ -34,7 +34,7 @@ public class Drug_treatment {
     
     @Override
     public String toString() {
-        return new StringBuilder(" { \n")
+        return new StringBuilder("      { \n")
                       .append("         Ид медикаментозного лечения: ").append(id_drug).append(",\n")  
                       .append("         Наименование: ").append(name).append("\n        }\n")
                       .toString();

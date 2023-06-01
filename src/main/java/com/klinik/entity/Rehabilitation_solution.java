@@ -40,7 +40,7 @@ public class Rehabilitation_solution {
 
     @Override
     public String toString() {
-        return new StringBuilder(" { \n")
+        return new StringBuilder("     { \n")
                       .append("         ИД реабилитационного лечения: ").append(id_rehabilitation_solution).append(",\n")
                       .append("         Наименование: ").append(name).append(",\n")   
                       .append("         План обследования: ").append(survey_plan).append("\n     }\n")

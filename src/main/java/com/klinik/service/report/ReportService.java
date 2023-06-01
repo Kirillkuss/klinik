@@ -19,9 +19,9 @@ import com.klinik.entity.Doctor;
 import com.klinik.entity.Record_patient;
 import com.klinik.entity.Сomplaint;
 import com.klinik.excep.MyException;
+import com.klinik.response.BaseResponse;
 import com.klinik.response.ReportDrug;
 import com.klinik.response.report.RecordPatientReport;
-import com.klinik.response.report.ResponsePatientReport;
 import com.klinik.response.report.ResponseReport;
 
 
@@ -62,11 +62,11 @@ public class ReportService {
                         }
                     }
                 }catch(SQLException ex ){
-                    java.util.logging.Logger.getLogger( ResponsePatientReport.class.getName()).log(Level.SEVERE, null, ex);
+                    java.util.logging.Logger.getLogger( ReportService.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
         }catch( Exception ex ){
-            java.util.logging.Logger.getLogger( ResponsePatientReport.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger( ReportService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return report;
     }
@@ -94,7 +94,7 @@ public class ReportService {
                 }
             });               
         }catch( Exception ex ){
-            java.util.logging.Logger.getLogger( ResponsePatientReport.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger( ReportService.class.getName()).log(Level.SEVERE, null, ex);
         } 
 
         return response;
@@ -107,8 +107,8 @@ public class ReportService {
      * @return ResponsePatientReport
      * @throws Exception
      */
-    public ResponsePatientReport reportInformationAboutPatient(Long idCardPatient ) throws Exception{
-        ResponsePatientReport response = new ResponsePatientReport();
+    public BaseResponse reportInformationAboutPatient(Long idCardPatient ) throws Exception{
+        BaseResponse response = new BaseResponse();
         try{
             String sql = "SELECT c.diagnosis, c.allergy, c.note, c.сonclusion, p.surname, p.name, p.full_name,p.gender, p.phone, p.address,count( t.id_treatment) FROM Card_patient c"
                        + " left join Patient p on id_patient = c.pacient_id"
@@ -146,13 +146,12 @@ public class ReportService {
                             patient.setGender( rs.getBoolean(8));
                             patient.setPhone( rs.getString(9));
                             patient.setAddress( rs.getString(10));
-                            List<Сomplaint> complaints  = new ArrayList();
+                            List<String> complaints  = new ArrayList();
                             try ( PreparedStatement st3 = conn.prepareStatement( sql3 )){
                                 st3.setLong(1 , idCardPatient);
                                 try( ResultSet rs3 = st3.executeQuery() ){
                                     while( rs3.next() ){
-                                        Сomplaint complaint = new Сomplaint();
-                                        complaint.setFunctional_impairment(rs3.getString(1) );
+                                        String complaint = new String(rs3.getString(1));
                                         complaints.add( complaint );
                                     }
                                 }
@@ -160,7 +159,7 @@ public class ReportService {
                             card.setComplaints( complaints );
                             card.setPatient(patient);
                             card.setCount_rehabilitation_treatment( rs.getLong( 11 ));
-                            response.setCard(card);
+                            
                             List<ResponseReport> treatment = new ArrayList<>();
                             try ( PreparedStatement st2 = conn.prepareStatement( sql2 )){
                                 st2.setLong(1 , idCardPatient);
@@ -174,14 +173,15 @@ public class ReportService {
                                     }
                                 }
                             }
+                            response.setResponse(card);
                         }
                     }
                 }catch(SQLException ex ){
-                    java.util.logging.Logger.getLogger( ResponsePatientReport.class.getName()).log(Level.SEVERE, null, ex);
+                    java.util.logging.Logger.getLogger( ReportService.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
         }catch( Exception ex ){
-            java.util.logging.Logger.getLogger( ResponsePatientReport.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger( ReportService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return response;
     }
@@ -196,11 +196,18 @@ public class ReportService {
                        + " where p.id_patient = ? and r.date_record BETWEEN ? and ?"
                        + " GROUP BY p.surname, p.name, p.full_name, p.gender, p.phone, p.address, c.diagnosis, c.allergy, c.note, c.сonclusion";
 
-            String SQL2 = "SELECT r.date_record, r.date_appointment, r.number_room, d.surname, d.name, d.full_name  FROM Record_patient r "
+            String SQL2 = "SELECT r.id_record, r.date_record, r.date_appointment, r.number_room,d.id_doctor, d.surname, d.name, d.full_name  FROM Record_patient r "
                         + " left join  Doctor d on d.id_doctor = r.doctor_id"
                         + " left join Card_patient c on c.id_card_patient = card_patient_id"
                         + " left join Patient p on p.id_patient = c.pacient_id"
                         + " where p.id_patient = ? and r.date_record BETWEEN ? and ?";
+
+            String SQL3 = "SELECT s.functional_impairment FROM Card_patient c "
+                        + " left join Patient p on id_patient = c.pacient_id "
+                        + " left join Card_patient_Complaint cpc on cpc.card_patient_id = c.id_card_patient "
+                        + " left join Complaint s on s.id_complaint = cpc.complaint_id "
+                        + " where p.id_patient = ?";     
+                        
 
             Session session;
             session = em.unwrap( Session.class );
@@ -232,31 +239,45 @@ public class ReportService {
                                     while( rs2.next() ){
                                     Record_patient record_patient = new Record_patient();
                                     Doctor doctor = new Doctor();
-                                    record_patient.setDate_record( rs2.getTimestamp(1).toLocalDateTime() );
-                                    record_patient.setDate_appointment( rs2.getTimestamp(2).toLocalDateTime());
-                                    record_patient.setNumber_room( rs2.getLong( 3 ));
-                                    doctor.setSurname( rs2.getString( 4 ));
-                                    doctor.setName( rs2.getString( 5 ));
-                                    doctor.setFull_name( rs2.getString( 6 ));
+                                    record_patient.setId_record(rs2.getLong(1));
+                                    record_patient.setDate_record( rs2.getTimestamp(2).toLocalDateTime() );
+                                    record_patient.setDate_appointment( rs2.getTimestamp(3).toLocalDateTime());
+                                    record_patient.setNumber_room( rs2.getLong( 4 ));
+                                    doctor.setId_doctor( rs2.getLong( 5));
+                                    doctor.setSurname( rs2.getString( 6 ));
+                                    doctor.setName( rs2.getString( 7 ));
+                                    doctor.setFull_name( rs2.getString( 8 ));
                                     record_patient.setDoctor( doctor );  
                                     list.add( record_patient );  
 
                                 }
                             }
                         }
-                            report.setPatient( patient );
+
+                        List<String> complaints  = new ArrayList();
+                        try ( PreparedStatement st3 = conn.prepareStatement( SQL3 )){
+                            st3.setLong(1 , IdPatient);
+                            try( ResultSet rs3 = st3.executeQuery() ){
+                                while( rs3.next() ){
+                                    String complaint = new String(rs3.getString(1));
+                                    complaints.add( complaint );
+                                }
+                            }
+                        }
+                            card.setComplaints( complaints );
+                            card.setPatient(patient);
                             report.setCard( card );
                             report.setCount_record_for_time( rs.getLong( 11 ));
                             report.setListRecordPatient( list );
                         }
                     }
                 }catch( SQLException ex ){
-                    java.util.logging.Logger.getLogger( ResponsePatientReport.class.getName()).log(Level.SEVERE, null, ex);
+                    java.util.logging.Logger.getLogger( ReportService.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
 
         }catch( Exception ex ){
-            java.util.logging.Logger.getLogger( ResponsePatientReport.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger( ReportService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return report;
     }

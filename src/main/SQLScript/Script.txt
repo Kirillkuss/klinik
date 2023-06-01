@@ -143,8 +143,8 @@ CREATE TABLE Card_patient(
 	id_card_patient serial PRIMARY KEY,
 	diagnosis VARCHAR ( 50 ) NOT NULL,
 	allergy   bool NOT NULL,
-	note VARCHAR ( 255 ) NOT NULL,
-	сonclusion VARCHAR ( 255 ) NOT NULL,
+	note VARCHAR ( 255 ),
+	сonclusion VARCHAR ( 255 ),
 	pacient_id int unique references public.Patient ( id_patient )
 );
 

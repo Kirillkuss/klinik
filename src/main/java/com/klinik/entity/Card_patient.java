@@ -93,14 +93,14 @@ public class Card_patient {
     
     @Override
     public String toString() {
-        return new StringBuilder("\n Карта пациента { \n")
-                      .append("   Ид карты пациента: ").append(id_card_patient).append(",\n")  
-                      .append("   Диагноз: ").append(diagnosis).append(",\n")
-                      .append("   Аллергия: ").append(allergy == true ? "Да" : "Нет").append(",\n")
-                      .append("   Примечание: ").append(note).append(",\n")
-                      .append("   Заключение: ").append(сonclusion).append(",\n")
-                      .append("   Список жалоб: ").append(complaint).append(",\n")
-                      .append(patient).append("\n }\n")
+        return new StringBuilder("  Карта пациента { \n")
+                      .append("    1. Ид карты пациента: ").append(id_card_patient).append(",\n")  
+                      .append("    2. Диагноз: ").append(diagnosis).append(",\n")
+                      .append("    3. Аллергия: ").append(allergy == true ? "Да" : "Нет").append(",\n")
+                      .append("    4. Примечание: ").append(note == null ? "" : note).append(",\n")
+                      .append("    5. Заключение: ").append(сonclusion == null ? "" : сonclusion ).append(",\n")
+                      .append("    6. Список жалоб: ").append(complaint == null ? "" : complaint).append(",\n")
+                      .append("    7.").append(patient).append("\n }\n")
                       .toString();
     }
 
