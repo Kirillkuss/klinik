@@ -26,7 +26,7 @@ import java.util.List;
 
 @RequestMapping( value = "DrugTreatment")
 @RestController
-@Tag(name = "8. Drug Treatment", description = "Справочник: Медикаментозное лечение")
+@Tag(name = "8. Drug Treatment", description = "Справочник: Медикаментозное лечение и препараты")
 public class DrugTreatmentController {
 
     @Autowired
@@ -56,9 +56,10 @@ public class DrugTreatmentController {
     public String findById( @Parameter(description = "ИД медикаментозного лечения",example = "1") Long id ) throws Exception{
         BaseResponse response = new BaseResponse<>( 200, "успешно");
         try{
+            if( service.findById( id ) == null ) throw new MyException( 408, "Мед. лечения с таким ИД не существует");
             Drug_treatment treat = service.findById( id );
             List<Drug> list = serviceD.findByIdDrugTreatment( id );
-            return treat.toString() + list.toString();
+            return treat.toString() + (list.isEmpty() == true ? "" : list.toString());
         }catch( Exception ex ){
             return BaseResponse.error( 999, ex).toString();
         } 

@@ -57,10 +57,10 @@ public class TypeComplaint {
 
     @Override
     public String toString() {
-        return new StringBuilder("              Поджалоба { \n")
-                      .append("                 1. Ид поджалобы: ").append(id_type_complaint).append(",\n")
-                      .append("                 2. Наименование: ").append(name).append(",\n")  
-                      .append("                 3. Ид жалобы:").append(complaint_id).append("\n                   }\n")
+        return new StringBuilder("  Поджалоба { \n")
+                      .append("   1. Ид поджалобы: ").append(id_type_complaint).append(",\n")
+                      .append("   2. Наименование: ").append(name).append("\n")  
+                      .append("  }\n")
                       .toString();
     }
 

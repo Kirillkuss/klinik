@@ -99,7 +99,7 @@ public class Card_patient {
                       .append("    3. Аллергия: ").append(allergy == true ? "Да" : "Нет").append(",\n")
                       .append("    4. Примечание: ").append(note == null ? "" : note).append(",\n")
                       .append("    5. Заключение: ").append(сonclusion == null ? "" : сonclusion ).append(",\n")
-                      .append("    6. Список жалоб: ").append(complaint == null ? "" : complaint).append(",\n")
+                      .append("    6. Список жалоб: ").append(complaint.isEmpty() == true ? "" : complaint).append(",\n")
                       .append("    7.").append(patient).append("\n }\n")
                       .toString();
     }

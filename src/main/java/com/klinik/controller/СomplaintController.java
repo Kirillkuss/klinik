@@ -5,20 +5,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.klinik.entity.TypeComplaint;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
 import com.klinik.service.ComplaintService;
 import com.klinik.service.TypeComplaintService;
-
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RequestMapping( value = "Сomplaint")
@@ -80,9 +79,7 @@ public class СomplaintController {
     public String saveTypeComplaint(TypeComplaint request ) throws Exception{
         BaseResponse response = new BaseResponse(200, "успешно");
         try{
-            System.out.println(request.toString());
             if( service.findById( request.getComplaint_id() ) == null ) throw new MyException( 462, "Жалобы с таким ИД не существует");
-            
             if( serviceTC.findByNme( request.getName()) != null) throw new MyException( 463, "Поджалоба с таким наименование уже существует");
             if( serviceTC.findById( request.getId_type_complaint()) != null ) throw new MyException( 464, "Поджалоба с таким ИД уже существует");
             response.setResponse( serviceTC.saveTypeComplaint( request ));
@@ -92,13 +89,19 @@ public class СomplaintController {
         }
     }
 
+
+    @Operation( description = "Получение жалобы с поджалобами", summary = "Получение жалобы с поджалобами")
+    @ApiResponses(value = {
+            @ApiResponse( responseCode = "200", description = "Получение жалобы с поджалобами", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
+    })
     @GetMapping( "/findComplaintWithTypeComplaints")
-    public String listComplaintWithTypeComplaints( Long Id ) throws Exception{
+    public String listComplaintWithTypeComplaints( @Parameter( description = "Ид жалобы", example = "1" )Long Id ) throws Exception{
         BaseResponse response = new BaseResponse();
         try{
             if( service.findById( Id ) == null ) throw new MyException( 462, "Жалобы с таким ИД не существует");
-            
-            return response.toString();
+            return service.findById( Id ).toString() + ( serviceTC.findByIdComplaint( Id ).isEmpty() == true ? "" : serviceTC.findByIdComplaint( Id ).toString());
         }catch( MyException ex){
             return BaseResponse.error( ex.getCode(), ex ).toString();
         } 

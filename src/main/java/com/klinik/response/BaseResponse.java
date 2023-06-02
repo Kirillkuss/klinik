@@ -50,7 +50,7 @@ public class BaseResponse<T> {
         return new StringBuilder(" { \n")
                       .append("   Код: ").append(code).append(",\n")  
                       .append("   Сообщение: ").append(massage).append(",\n")
-                      .append("   Ответ: ").append("\n").append(response == null ? "" : response).append("\n }\n")
+                      .append(response == null ? "" : response).append(" }\n")
                       .toString();
     }
 

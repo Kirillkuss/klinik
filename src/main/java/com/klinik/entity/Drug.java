@@ -62,10 +62,10 @@ public class Drug {
 
     @Override
     public String toString() {
-        return new StringBuilder("              Препарат { \n")
-                      .append("                 1. Ид препарата: ").append(id_dr).append(",\n")
-                      .append("                 2. Наименование: ").append(name).append(",\n")  
-                      .append("                 3. Мед. лечения:").append(drug_id).append("\n                   }\n")
+        return new StringBuilder("  Препарат { \n")
+                      .append("  1. Ид препарата: ").append(id_dr).append(",\n")
+                      .append("  2. Наименование: ").append(name).append(",\n")  
+                      .append("  3. Мед. лечения:").append(drug_id).append("\n  }\n")
                       .toString();
     }
     

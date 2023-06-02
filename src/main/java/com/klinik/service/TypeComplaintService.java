@@ -24,7 +24,11 @@ public class TypeComplaintService {
         return repository.save( complaint );
     }
 
-     public TypeComplaint findByNme( String name ) throws Exception{
+    public TypeComplaint findByNme( String name ) throws Exception{
         return repository.findName( name );
+    }
+
+    public List<TypeComplaint> findByIdComplaint( Long id ) throws Exception{
+        return repository.findByIdComplaint( id );
     }
 }
