@@ -2,6 +2,9 @@ package com.klinik.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+
+import java.util.List;
+
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -38,7 +41,6 @@ public class Сomplaint {
     public Сomplaint( Long id_complaint, String functional_impairment ){
         this.id_complaint = id_complaint;
         this.functional_impairment = functional_impairment;
-        
     }
 
     public Сomplaint( String functional_impairment ){
