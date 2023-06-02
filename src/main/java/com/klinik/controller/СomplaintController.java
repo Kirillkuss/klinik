@@ -76,12 +76,13 @@ public class СomplaintController {
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
     @PostMapping( value = "/TypeComplaint")
-    public String saveTypeComplaint(TypeComplaint request ) throws Exception{
+    public String saveTypeComplaint(TypeComplaint request, @Parameter( description = "ИД жалобы", example = "1") Long idComplaint ) throws Exception{
         BaseResponse response = new BaseResponse(200, "успешно");
         try{
-            if( service.findById( request.getComplaint_id() ) == null ) throw new MyException( 462, "Жалобы с таким ИД не существует");
+            if( service.findById( idComplaint) == null ) throw new MyException( 462, "Жалобы с таким ИД не существует");
             if( serviceTC.findByNme( request.getName()) != null) throw new MyException( 463, "Поджалоба с таким наименование уже существует");
             if( serviceTC.findById( request.getId_type_complaint()) != null ) throw new MyException( 464, "Поджалоба с таким ИД уже существует");
+            request.setComplaint( service.findById( idComplaint ));
             response.setResponse( serviceTC.saveTypeComplaint( request ));
             return response.toString();
         }catch( Exception ex ){
@@ -101,7 +102,8 @@ public class СomplaintController {
         BaseResponse response = new BaseResponse();
         try{
             if( service.findById( Id ) == null ) throw new MyException( 462, "Жалобы с таким ИД не существует");
-            return service.findById( Id ).toString() + ( serviceTC.findByIdComplaint( Id ).isEmpty() == true ? "" : serviceTC.findByIdComplaint( Id ).toString());
+            //service.findById( Id ).toStringTwo() +
+            return  ( serviceTC.findByIdComplaint( Id ).isEmpty() == true ? new BaseResponse( 200 , "Нет поджалоб").toString() : serviceTC.findByIdComplaint( Id ).toString());
         }catch( MyException ex){
             return BaseResponse.error( ex.getCode(), ex ).toString();
         } 

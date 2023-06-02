@@ -9,6 +9,8 @@ import com.klinik.response.ResponseCardPatientByDocument;
 import com.klinik.service.CardPatientService;
 import com.klinik.service.ComplaintService;
 import com.klinik.service.PatientService;
+import com.klinik.service.TypeComplaintService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -35,7 +37,7 @@ public class CardPatientController {
     private PatientService servicePatient;
 
     @Autowired
-    private ComplaintService serviceComplaint;
+    private TypeComplaintService serviceTypeComplaint;
 
     @GetMapping(value = "/findCardPatientByDocument")
     @Operation( description = "Поиск карты пациента по документу пациента (СНИЛС, номер документа, ПОЛИС)", summary = "Поиск карты пациента по документу пациента")
@@ -124,11 +126,11 @@ public class CardPatientController {
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
     public String saveCardPatient( @Parameter( description = "ИД карты пациента:", example = "1") Long idCard,
-                                         @Parameter( description = "ИД жалобы:" , example =  "1")  Long idComplaint ) throws Exception, MyException{
+                                         @Parameter( description = "ИД Поджалобы:" , example =  "1")  Long idComplaint ) throws Exception, MyException{
          BaseResponse response = new BaseResponse( 200, "успешно");
         try{
             if( service.findByIdCard( idCard ) == null ) throw new MyException ( 433, "Карта с таким ИД не существует");
-            if ( serviceComplaint.findById( idComplaint ) == null ) throw  new MyException( 434, "Жалобы с таким ИД не существует");
+            if ( serviceTypeComplaint.findById( idComplaint ) == null ) throw  new MyException( 434, "Жалобы с таким ИД не существует");
             if ( service.findByIdCardAndIdComplaint(idCard, idComplaint).getId_card_patient() != null ) throw new MyException ( 435, "Жалоба с таким ИД уже добавлена в карту пацинета");
             service.addCardPatientComplaint( idCard, idComplaint );
             return response.toString();

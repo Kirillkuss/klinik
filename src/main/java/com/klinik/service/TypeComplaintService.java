@@ -28,7 +28,7 @@ public class TypeComplaintService {
         return repository.findName( name );
     }
 
-    public List<TypeComplaint> findByIdComplaint( Long id ) throws Exception{
+     public List<TypeComplaint> findByIdComplaint( Long id ) throws Exception{
         return repository.findByIdComplaint( id );
     }
 }

@@ -195,15 +195,6 @@ CREATE TABLE Record_patient(
 	FOREIGN KEY (card_patient_id) REFERENCES public.Card_patient(id_card_patient) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Card_patient_Complaint(
-	card_patient_id int8 NOT NULL,
-	complaint_id int8 NOT NULL,
-	PRIMARY KEY (card_patient_id, complaint_id),
-	FOREIGN KEY (card_patient_id) REFERENCES Card_patient(id_card_patient),
-	FOREIGN KEY (complaint_id) REFERENCES Complaint(id_complaint)
-);
-
-
 CREATE TABLE Type_complaint(
 	id_type_complaint serial PRIMARY KEY,
 	name VARCHAR ( 150 ) NOT NULL UNIQUE,
@@ -217,3 +208,14 @@ CREATE TABLE Drug(
 	drug_id int8 NOT NULL,
 	FOREIGN KEY (drug_id) REFERENCES public.Drug_treatment(id_drug)
 );
+
+CREATE TABLE Card_patient_Complaint(
+	card_patient_id int8 NOT NULL,
+	type_complaint_id int8 NOT NULL,
+	PRIMARY KEY (card_patient_id, type_complaint_id),
+	FOREIGN KEY (card_patient_id) REFERENCES Card_patient(id_card_patient),
+	FOREIGN KEY (type_complaint_id) REFERENCES Type_complaint(id_type_complaint)
+);
+
+
+

@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -41,15 +43,13 @@ public class Card_patient {
     @Column( name = "note")
     @Schema( name        = "note",
             description = "Примечание",
-            example     = "Есть аллергия на цитрамон",
-            required    = true )
+            example     = "Есть аллергия на цитрамон" )
     private String note;
 
     @Column( name = "сonclusion")
     @Schema( name        = "сonclusion",
             description = "Заключение",
-            example     = "Болен",
-            required    = true )
+            example     = "Болен")
     private String сonclusion;
 
     @Hidden
@@ -57,10 +57,10 @@ public class Card_patient {
     @JoinTable(
             name                = "Card_patient_Complaint",
             joinColumns         = @JoinColumn(name = "card_patient_id", referencedColumnName = "id_card_patient"),
-            inverseJoinColumns  = @JoinColumn(name = "complaint_id", referencedColumnName = "id_complaint")
+            inverseJoinColumns  = @JoinColumn(name = "type_complaint_id", referencedColumnName = "id_type_complaint")
     )
     @JsonInclude(Include.NON_NULL)
-    private List<Сomplaint> complaint;
+    private List<TypeComplaint> typeComplaint = new ArrayList<>();
 
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
@@ -71,22 +71,30 @@ public class Card_patient {
 
     }
 
-    public Card_patient(Long id_card_patient, String diagnosis, Boolean allergy,  String note, String сonclusion , List<Сomplaint> complaint, Patient patient){
+    public Card_patient(Long id_card_patient, String diagnosis, Boolean allergy,  String note, String сonclusion , List<TypeComplaint> typeComplaint, Patient patient){
         this.id_card_patient = id_card_patient;
         this.diagnosis = diagnosis;
         this.allergy = allergy;
         this.note = note;
         this.сonclusion = сonclusion;
-        this.complaint = complaint;
+        this.typeComplaint = typeComplaint;
         this.patient = patient;
     }
 
-    public Card_patient(String diagnosis, Boolean allergy,  String note, String сonclusion , List<Сomplaint> complaint, Patient patient){
+    public Card_patient(String diagnosis, Boolean allergy,  String note, String сonclusion , List<TypeComplaint> typeComplaint, Patient patient){
         this.diagnosis = diagnosis;
         this.allergy = allergy;
         this.note = note;
         this.сonclusion = сonclusion;
-        this.complaint = complaint;
+        this.typeComplaint = typeComplaint;
+        this.patient = patient;
+    }
+
+    public Card_patient(String diagnosis, Boolean allergy,  String note, String сonclusion , Patient patient){
+        this.diagnosis = diagnosis;
+        this.allergy = allergy;
+        this.note = note;
+        this.сonclusion = сonclusion;
         this.patient = patient;
     }
 
@@ -99,7 +107,7 @@ public class Card_patient {
                       .append("    3. Аллергия: ").append(allergy == true ? "Да" : "Нет").append(",\n")
                       .append("    4. Примечание: ").append(note == null ? "" : note).append(",\n")
                       .append("    5. Заключение: ").append(сonclusion == null ? "" : сonclusion ).append(",\n")
-                      .append("    6. Список жалоб: ").append(complaint.isEmpty() == true ? "" : complaint).append(",\n")
+                      .append("    6. Список жалоб: ").append(typeComplaint.isEmpty() == true ? "" : typeComplaint).append(",\n")
                       .append("    7.").append(patient).append("\n }\n")
                       .toString();
     }

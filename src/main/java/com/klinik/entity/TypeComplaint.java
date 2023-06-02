@@ -1,12 +1,18 @@
 package com.klinik.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -37,30 +43,28 @@ public class TypeComplaint {
             required    = true )
     private String name;
 
-    @Column( name = "complaint_id")
-    @Schema( name        = "complaint_id",
-            description = "ИД жалобы",
-            example     = "1",
-            required    = true )
+
+   @Hidden 
+   @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "complaint_id", referencedColumnName = "id_complaint")
-    private Long complaint_id;
+   private Сomplaint complaint;
 
     public TypeComplaint(){
 
     }
 
-    public TypeComplaint( Long id_type_complaint, String name, Long complaint_id ){
+    public TypeComplaint( Long id_type_complaint, String name, Сomplaint complaint ){
         this.id_type_complaint = id_type_complaint;
         this.name = name;
-        this.complaint_id = complaint_id;
+        this.complaint = complaint;
     }
 
     @Override
     public String toString() {
-        return new StringBuilder("  Поджалоба { \n")
-                      .append("   1. Ид поджалобы: ").append(id_type_complaint).append(",\n")
-                      .append("   2. Наименование: ").append(name).append("\n")  
-                      .append("  }\n")
+        return new StringBuilder()
+                      .append(complaint)
+                      .append("    Ид поджалобы: ").append(id_type_complaint).append(",\n")
+                      .append("    Поджалоба: ").append(name).append("\n") 
                       .toString();
     }
 

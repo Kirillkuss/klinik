@@ -3,15 +3,14 @@ package com.klinik.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -42,22 +41,19 @@ public class Drug {
             required    = true )
     private String name;
 
-    @Column( name = "drug_id")
-    @Schema( name        = "drug_id",
-            description = "ИД мед. лечения",
-            example     = "1",
-            required    = true )
+    @Hidden
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "drug_id", referencedColumnName = "id_drug")
-    private Long drug_id;
+    private Drug_treatment drugTreatment ;
 
     public Drug(){
 
     }
 
-    public Drug( Long id_dr, String name, Long drug_id){
+    public Drug( Long id_dr, String name, Drug_treatment drugTreatment){
         this.id_dr = id_dr;
         this.name = name;
-        this.drug_id = drug_id;
+        this.drugTreatment = drugTreatment;
     }
 
     @Override
@@ -65,7 +61,7 @@ public class Drug {
         return new StringBuilder("  Препарат { \n")
                       .append("  1. Ид препарата: ").append(id_dr).append(",\n")
                       .append("  2. Наименование: ").append(name).append(",\n")  
-                      .append("  3. Мед. лечения:").append(drug_id).append("\n  }\n")
+                      .append("  3. Мед. лечения:").append(drugTreatment).append("\n  }\n")
                       .toString();
     }
     

@@ -36,7 +36,7 @@ public class DrugService {
     }
 
     public List<Drug> findByIdDrugTreatment( Long id  ){
-        return ( List<Drug>) em.createQuery( "SELECT e FROM Drug e WHERE e.drug_id = :id")
+        return ( List<Drug>) em.createQuery( "SELECT e FROM Drug e WHERE e.drugTreatment.id_drug = :id")
                                .setParameter("id", id)
                                .getResultList(); 
     }

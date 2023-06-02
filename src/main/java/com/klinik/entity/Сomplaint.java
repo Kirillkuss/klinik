@@ -29,7 +29,7 @@ public class Сomplaint {
 
     @Column( name = "functional_impairment")
     @Schema( name        = "functional_impairment",
-            description = "Функциональные нарушения",
+            description = "Наименование жалобы",
             example     = "Симптомы поражения пирамидного тракта",
             required    = true )
     private String functional_impairment;
@@ -49,9 +49,15 @@ public class Сomplaint {
 
     @Override
     public String toString() {
-        return new StringBuilder(" { \n")
-                      .append("   ИД жалобы: ").append(id_complaint).append(",\n")  
-                      .append("   Функциональные нарушения: ").append(functional_impairment).append("\n }")
+        return new StringBuilder("\n")
+                      .append("    Жалоба: ").append(functional_impairment).append("\n")
+                      .toString();
+    }
+
+    public String toStringTwo() {
+        return new StringBuilder("\n")
+                      .append("   1. ИД жалобы: ").append(id_complaint).append(",\n")  
+                      .append("   2. Наименование жалобы: ").append(functional_impairment).append("")
                       .toString();
     }
 }

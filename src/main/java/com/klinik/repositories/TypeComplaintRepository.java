@@ -13,7 +13,7 @@ public interface TypeComplaintRepository extends JpaRepository<TypeComplaint, Lo
     @Query( "SELECT u from TypeComplaint u WHERE u.name = :name")
     TypeComplaint findName( String name);
 
-    @Query( "SELECT u FROM  TypeComplaint u WHERE u.complaint_id = :id")
+    @Query( "SELECT u FROM  TypeComplaint u WHERE u.complaint.id_complaint = :id")
     List<TypeComplaint> findByIdComplaint( Long id );
 
     

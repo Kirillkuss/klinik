@@ -95,8 +95,7 @@ public class DrugTreatmentController {
     public String saveDrug( Drug drug ) throws Exception{
         BaseResponse response = new BaseResponse<>(200, "успешно");
         try{
-            System.out.println(drug);
-            if( service.findById( drug.getDrug_id() ) == null ) throw new MyException( 493, "Медикаментозное лечение с таким ИД не существует");
+            //if( service.findById( drug.getDrug_id() ) == null ) throw new MyException( 493, "Медикаментозное лечение с таким ИД не существует");
             if (serviceD.findById( drug.getId_dr() ) != null ) throw new MyException( 494, "Препарат с такми ИД уже существует");
             if (serviceD.findByName(drug.getName()) != null ) throw new MyException( 494, "Препарат с такми наименованием уже существует");
             response.setResponse( serviceD.saveDrug( drug ));

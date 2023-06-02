@@ -3,6 +3,7 @@ package com.klinik.service;
 import com.klinik.entity.Card_patient;
 import com.klinik.entity.Document;
 import com.klinik.entity.Patient;
+import com.klinik.entity.TypeComplaint;
 import com.klinik.entity.Сomplaint;
 import com.klinik.repositories.CardPatientRepository;
 
@@ -54,7 +55,7 @@ public class CardPatientService {
 
     @Transactional
     public void addCardPatientComplaint( Long IdCard, Long IdComplaint ) throws Exception{
-        em.createNativeQuery( "INSERT INTO Card_patient_Complaint(card_patient_id, complaint_id) VALUES (?,?)")
+        em.createNativeQuery( "INSERT INTO Card_patient_Complaint(card_patient_id, type_complaint_id) VALUES (?,?)")
                 .setParameter(1, IdCard)
                 .setParameter( 2, IdComplaint)
                 .executeUpdate();
@@ -63,8 +64,8 @@ public class CardPatientService {
     public Card_patient findByIdCardAndIdComplaint( Long idCard, Long IdComplaint ) throws Exception{
         String sql = "SELECT u.id_card_patient FROM Card_patient u "
                     + " left join Card_patient_Complaint cpc on cpc.card_patient_id = u.id_card_patient "
-                    + " left join Complaint c on c.id_complaint = cpc.complaint_id "
-                    +" WHERE u.id_card_patient = ? and c.id_complaint = ? ";
+                    + " left join Type_complaint c on c.id_type_complaint = cpc.type_complaint_id "
+                    +" WHERE u.id_card_patient = ? and c.id_type_complaint = ? ";
         Session session;
         Card_patient card = new Card_patient();
         try{
@@ -98,11 +99,12 @@ public class CardPatientService {
                     + " left join Patient p on p.id_patient = cp.pacient_id "
                     + " left join Document d on d.id_document = p.document_id "
                     + " WHERE d.numar = ? or d.snils = ? or d.polis = ? ";
-        String sql2 = " SELECT c.id_complaint, c.functional_impairment FROM Card_patient cp "
+        String sql2 = " SELECT c.functional_impairment, tc.id_type_complaint, tc.name FROM Card_patient cp "
                     + " left join Patient p on p.id_patient = cp.pacient_id"
                     + " left join Document d on d.id_document = p.document_id"
                     + " left join Card_patient_Complaint cpc on cpc.card_patient_id = cp.id_card_patient "
-                    + " left join Complaint c on c.id_complaint = cpc.complaint_id "
+                    + " left join Type_complaint tc on tc.id_type_complaint = cpc.type_complaint_id "
+                    + " left join Complaint c on c.id_complaint = tc.complaint_id"
                     + " WHERE d.numar = ? or d.snils = ? or d.polis = ? ";
         Session session;
         Card_patient card = new Card_patient();
@@ -137,21 +139,24 @@ public class CardPatientService {
                             document.setPolis( set.getString( 18 ));
                             patient.setDocument( document );
                             card.setPatient( patient );
-                            List<Сomplaint> list = new ArrayList<>();
+                            List<TypeComplaint> list = new ArrayList<>();
                             try( PreparedStatement st2= conn.prepareStatement( sql2 )){
                                 st2.setString(1, parametr);
                                 st2.setString(2, parametr);
                                 st2.setString(3, parametr);
                                 try( ResultSet set2 = st2.executeQuery()){
                                     while( set2.next()){
+                                        TypeComplaint typeComplaint = new TypeComplaint();
                                         Сomplaint complaint = new Сomplaint();
-                                        complaint.setId_complaint( set2.getLong(1 ));
-                                        complaint.setFunctional_impairment( set2.getString( 2 ));
-                                        list.add( complaint );
+                                        complaint.setFunctional_impairment( set2.getString( 1 ));
+                                        typeComplaint.setComplaint(complaint);
+                                        typeComplaint.setId_type_complaint( set2.getLong(2 ));
+                                        typeComplaint.setName(set2.getString( 3 ));
+                                        list.add( typeComplaint );
                                     }
                                 }
                             }
-                            card.setComplaint( list );
+                            card.setTypeComplaint(list);
                         }
                     }
                 }
