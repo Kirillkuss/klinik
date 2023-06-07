@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RequestMapping( value = "Treatment")
 @RestController
 @Tag(name = "7. Treatment", description = "Лечение пациентов:")
