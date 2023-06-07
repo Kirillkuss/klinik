@@ -24,6 +24,7 @@ public class Card_patient {
             description = "ИД карты пациента",
             example     = "100",
             required    = true )
+    @JsonInclude(Include.NON_NULL)
     private Long id_card_patient;
 
     @Column( name = "diagnosis")

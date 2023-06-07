@@ -6,7 +6,6 @@ import com.klinik.entity.Card_patient;
 import com.klinik.entity.Record_patient;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,13 +20,4 @@ public class RecordPatientReport {
     @JsonInclude(Include.NON_NULL)
     private List<Record_patient> listRecordPatient;
 
-    @Override
-    public String toString() {
-        return new StringBuilder(" { \n")
-                      .append("   Карта пациента: ").append(card).append(",\n")
-                      .append("   Количество записей к докторам: ").append(count_record_for_time).append(",\n")
-                      .append("   Список записей к докторам: ").append(listRecordPatient).append("\n }\n")
-                      .toString();
-    }
-    
 }

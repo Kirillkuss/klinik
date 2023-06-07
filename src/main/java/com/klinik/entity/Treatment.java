@@ -45,15 +45,8 @@ public class Treatment {
 
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "drug_id", referencedColumnName = "id_drug")
-    private  Drug_treatment drug_treatment;
-
-    @Column( name = "dosage_drug_treatment")
-    @Schema( name        = "dosage_drug_treatment",
-            description = "Дозировка",
-            example     = "Дозировка",
-            required    = true )
-    private String dosage_drug_treatment;
+    @JoinColumn(name = "drug_id", referencedColumnName = "id_dr")
+    private  Drug drug;
 
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
@@ -79,8 +72,7 @@ public class Treatment {
                       .append("   Ид лечения: ").append(id_treatment).append(",\n")  
                       .append("   Дата начала лечения: ").append(time_start_treatment).append(",\n")
                       .append("   Дата окончания лечения: ").append(end_time_treatment).append(",\n")
-                      .append("   Медикаментозное лечение: ").append(drug_treatment).append("   ,\n")
-                      .append("   Дозировка: ").append(dosage_drug_treatment).append(",\n")
+                      .append("   Медикаментозное лечение: ").append(drug).append("   ,\n")
                       .append("   Реабилитационное лечение: ").append(rehabilitation_solution).append("   ,\n")
                       .append("   Ид карты пациента: ").append(card_patient_id).append(",\n")
                       .append(doctor).append("\n }\n")

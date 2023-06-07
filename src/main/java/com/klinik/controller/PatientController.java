@@ -65,8 +65,8 @@ public class PatientController {
             patient.setDocument( document );
             response.setResponse( service.addPatient( patient ));
             return response;
-        }catch( MyException ex ){
-            return BaseResponse.error( ex.getCode() , ex );
+        }catch( Exception ex ){
+            return BaseResponse.error( 999 , ex );
         }
     }
 

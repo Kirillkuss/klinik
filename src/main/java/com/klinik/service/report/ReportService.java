@@ -17,6 +17,7 @@ import com.klinik.response.report.models.Patient;
 import com.klinik.entity.Card_patient;
 import com.klinik.entity.Doctor;
 import com.klinik.entity.Record_patient;
+import com.klinik.entity.TypeComplaint;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponse;
 import com.klinik.response.ReportDrug;
@@ -185,7 +186,15 @@ public class ReportService {
         return response;
     }
 
-
+    /**
+     * Отчет по записям пациента за период времени
+     * 
+     * @param IdPatient
+     * @param dateFrom
+     * @param dateTo
+     * @return
+     * @throws Exception
+     */
     public RecordPatientReport reportByPatietnWithRecordPatient( Long IdPatient, LocalDateTime dateFrom,LocalDateTime dateTo ) throws Exception{
         RecordPatientReport report = new RecordPatientReport();
         try{
@@ -201,10 +210,10 @@ public class ReportService {
                         + " left join Patient p on p.id_patient = c.pacient_id"
                         + " where p.id_patient = ? and r.date_record BETWEEN ? and ?";
 
-            String SQL3 = "SELECT s.functional_impairment FROM Card_patient c "
+            String SQL3 = "SELECT s.name FROM Card_patient c "
                         + " left join Patient p on id_patient = c.pacient_id "
                         + " left join Card_patient_Complaint cpc on cpc.card_patient_id = c.id_card_patient "
-                        + " left join Complaint s on s.id_complaint = cpc.complaint_id "
+                        + " left join Type_complaint s on s.id_type_complaint = cpc.type_complaint_id "
                         + " where p.id_patient = ?";     
                         
 
@@ -253,18 +262,19 @@ public class ReportService {
                             }
                         }
 
-                        List<String> complaints  = new ArrayList();
-                        try ( PreparedStatement st3 = conn.prepareStatement( SQL3 )){
-                            st3.setLong(1 , IdPatient);
-                            try( ResultSet rs3 = st3.executeQuery() ){
+                      List<TypeComplaint> listTypeComplaint = new ArrayList<>();
+                       
+                        try ( PreparedStatement ps3 = conn.prepareStatement( SQL3 )){
+                            ps3.setLong(1 , IdPatient );
+                            try( ResultSet rs3 = ps3.executeQuery() ){
                                 while( rs3.next() ){
-                                    String complaint = new String(rs3.getString(1));
-                                    complaints.add( complaint );
+                                    TypeComplaint typeComplaint = new TypeComplaint();
+                                    typeComplaint.setName(rs3.getString(1));
+                                    listTypeComplaint.add( typeComplaint );
                                 }
                             }
-                        }
-                      //      card.setComplaints( complaints );
-                      //      card.setPatient(patient);
+                        } 
+                            card.setTypeComplaint( listTypeComplaint );
                             report.setCard( card );
                             report.setCount_record_for_time( rs.getLong( 11 ));
                             report.setListRecordPatient( list );

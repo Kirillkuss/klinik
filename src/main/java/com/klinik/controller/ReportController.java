@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.klinik.excep.MyException;
@@ -35,8 +34,8 @@ public class ReportController {
     @Operation( description = "Отчет по виду ребилитационного лечения за период времени", summary = "Отчет по виду ребилитационного лечения за период времени")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Получен отчет по виду ребилитационного лечения за период времени", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) })
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",                                                    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                                                   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) })
     })
     @GetMapping("/report_rehabilitation_treatment_for_time")
     public BaseResponse report( @Parameter( description = "Дата начала выборки:", example = "2021-05-24T14:02:35.584")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
@@ -55,8 +54,8 @@ public class ReportController {
     @Operation( description = "Отчет о полной информации по пациенту", summary = "Отчет о полной информации по пациенту")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Получен отчет о полной информации по пациенту", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",                                 content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                                content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
     @GetMapping("/report_full_info_patient")
     public BaseResponse fullInformationPatient(  @Parameter( description = "Ид карты пациента:", example = "1")  Long idCard ) throws Exception{ 
@@ -72,34 +71,38 @@ public class ReportController {
     @Operation( description = "Отчет по записям пациента к врачу за период времени", summary = "Отчет по записям пациента к врачу за период времени")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Получен отчет по записям пациента к врачу за период времени", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = RecordPatientReport.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",                                               content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                                              content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
     @GetMapping("/report_info_report_patient")
-    public String findInformationAboutRecordPatient( @Parameter( description = "ИД пациента:", example = "1") Long IdPatient,
-                                                                  @Parameter( description = "Дата начала выборки:", example = "2023-01-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
-                                                                  @Parameter( description = "Дата начала выборки:", example = "2023-12-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception{
+    public BaseResponse findInformationAboutRecordPatient( @Parameter( description = "ИД пациента:",         example = "1") Long IdPatient,
+                                                           @Parameter( description = "Дата начала выборки:", example = "2023-01-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
+                                                           @Parameter( description = "Дата начала выборки:", example = "2023-12-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception{
         BaseResponse response = new BaseResponse( 200, "успешно");
-        response.setResponse( service.reportByPatietnWithRecordPatient( IdPatient, dateFrom, dateTo ));
-        return response.toString();
+        try{
+            response.setResponse( service.reportByPatietnWithRecordPatient( IdPatient, dateFrom, dateTo ));
+            return response;
+        }catch( Exception ex ){
+            return BaseResponse.error( 999, ex );
+        }
     }
 
 
     @Operation( description = "Отчет о медикаментозном лечении за период времени", summary = "Отчет о медикаментозном лечении за период времени")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Получен отчет о медикаментозном лечении за период времени", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",                                             content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                                            content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
     @GetMapping( "/report_drug_treatment")
-    public String getReportDrug(@Parameter( description = "Дата начала выборки:", example = "2023-01-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
-                                                        @Parameter( description = "Дата начала выборки:", example = "2023-12-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception{
+    public BaseResponse getReportDrug(@Parameter( description = "Дата начала выборки:", example = "2023-01-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
+                                      @Parameter( description = "Дата начала выборки:", example = "2023-12-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception{
         BaseResponse<List<ReportDrug>> report = new BaseResponse<>(200, "успешно" );
         try{
             report.setResponse( service.reportStatDrug( dateFrom, dateTo ));
-            return report.toString();
+            return report;
         }catch( Exception ex ){
-            return BaseResponse.error( 999, ex ).toString();
+            return BaseResponse.error( 999, ex );
         }
     }
     

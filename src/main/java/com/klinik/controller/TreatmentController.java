@@ -40,7 +40,7 @@ public class TreatmentController {
     private DoctorService doctorService;
 
     @Autowired
-    private ServiceDrugTreatment serviceDrugTreatment;
+    private DrugService serviceDrug;
 
     //@GetMapping(value = "/getAllTreatment")
     @Operation( description = "Получение списка всех лечений", summary = "Получение списка всех лечений")
@@ -68,25 +68,23 @@ public class TreatmentController {
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
     public ResponseTreatment addTreatment( Treatment treatment,
-        @Parameter( description = "ИД медикаментозного лечения",  example = "1") Long drug_id,
-        @Parameter( description = "Ид карты пациента",            example = "1") Long card_patient_id,
-        @Parameter( description = "Ид реабилитационного лечения", example = "1") Long rehabilitation_solution_id,
-        @Parameter( description = "Ид доктор",                    example = "1") Long doctor_id ) throws Exception{
+        @Parameter( description = "ИД медикаментозного лечения (Препарата):",  example = "1") Long drug_id,
+        @Parameter( description = "Ид карты пациента:",            example = "1") Long card_patient_id,
+        @Parameter( description = "Ид реабилитационного лечения:", example = "1") Long rehabilitation_solution_id,
+        @Parameter( description = "Ид доктор:",                    example = "1") Long doctor_id ) throws Exception{
         ResponseTreatment response = new ResponseTreatment( 200, "успешно");
         try{
-            if( service.findById( treatment.getId_treatment()) != null  ) throw new MyException( 470, "Лечение с таким ИД уже существует, используйте другой");
+            if( serviceDrug.findById( drug_id) == null )                    throw new MyException( 474, "Указано неверное значение медикаментозного лечения, укажите другой");
+            if( service.findById( treatment.getId_treatment()) != null  )   throw new MyException( 470, "Лечение с таким ИД уже существует, используйте другой");
             Rehabilitation_solution solution = rehabilitationSolutionService.findByIdList(rehabilitation_solution_id);
-            if( solution == null  )                                       throw new MyException( 471, "Указано неверное значение реабилитационного лечения, укажите другой");
-            Card_patient card_patient = cardPatientService.findByIdCard(card_patient_id );
-            if( card_patient == null )                                    throw new MyException( 472, "Указано неверное значение карты пациента, укажите другой");
-            Doctor doctor = doctorService.findById( doctor_id );
-            if( doctor == null )                                          throw new MyException( 473, "Указано неверное значение ид доктора, укажите другой");
-            Drug_treatment drug_treatment = serviceDrugTreatment.findById( drug_id );
-            if( drug_treatment == null )                                  throw new MyException( 474, "Указано неверное значение медикаментозного лечения, укажите другой");
-            treatment.setCard_patient_id( card_patient.getId_card_patient() );
+            if( solution == null  )                                         throw new MyException( 471, "Указано неверное значение реабилитационного лечения, укажите другой");
+            if( cardPatientService.findByIdCard(card_patient_id ) == null ) throw new MyException( 472, "Указано неверное значение карты пациента, укажите другой");
+            if( doctorService.findById( doctor_id )  == null )              throw new MyException( 473, "Указано неверное значение ид доктора, укажите другой");
+            
+            treatment.setCard_patient_id( cardPatientService.findByIdCard(card_patient_id ).getId_card_patient() );
             treatment.setRehabilitation_solution( solution );
-            treatment.setDoctor( doctor );
-            treatment.setDrug_treatment( drug_treatment);
+            treatment.setDoctor( doctorService.findById( doctor_id ) );
+            treatment.setDrug( serviceDrug.findById( drug_id ));
             response.setTreatment(service.addTreatment( treatment ));
             return response;
         }catch( Exception ex ){
