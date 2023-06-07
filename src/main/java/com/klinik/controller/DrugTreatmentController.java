@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.ArrayList;
 import java.util.List;
-
 
 @RequestMapping( value = "DrugTreatment")
 @RestController
@@ -39,8 +37,8 @@ public class DrugTreatmentController {
     @Operation( description = "Список всех медикаментозных лечений", summary = "Список всех медикаментозных лечений")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Получен список всех медикаментозных лечений", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class ))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",                               content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                              content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
     })
     public String listAll() throws Exception{
         return service.getAll().toString();
@@ -50,8 +48,8 @@ public class DrugTreatmentController {
     @Operation( description = "Поиск по ИД медикаментозного лечения c препаратами", summary = "Поиск по ИД медикаментозного лечения с препаратами")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Найдено медикоментозное лечение по ИД", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class ))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content(array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",                         content = { @Content(array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                        content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
     })
     public String findById( @Parameter(description = "ИД медикаментозного лечения",example = "1") Long id ) throws Exception{
         BaseResponse response = new BaseResponse<>( 200, "успешно");
@@ -68,8 +66,8 @@ public class DrugTreatmentController {
     @Operation( description = "Добавить медикаментозного лечения", summary = "Добавить медикаментозного лечения")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Добавлено медикаментозное лечение", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class ))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",                     content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
     })
     @PostMapping( "/addDrug_treatment")
     public String addDrug_treatment( Drug_treatment drug_treatment ) throws Exception{
@@ -88,16 +86,17 @@ public class DrugTreatmentController {
     @Operation( description = "Добавить препарат для медикаментозного лечения", summary = "Добавить препарат для медикаментозного лечения")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Добавлен препарат для медикаментозного лечения", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class ))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",                                  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                                 content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
     })
     @PostMapping("/addDrug")
-    public String saveDrug( Drug drug ) throws Exception{
+    public String saveDrug( Drug drug, @Parameter( description = "ИД мед. лечения", example = "1" ) Long idDrugTreatment ) throws Exception{
         BaseResponse response = new BaseResponse<>(200, "успешно");
         try{
-            //if( service.findById( drug.getDrug_id() ) == null ) throw new MyException( 493, "Медикаментозное лечение с таким ИД не существует");
+            if( service.findById( idDrugTreatment ) == null )  throw new MyException( 493, "Медикаментозное лечение с таким ИД не существует");
             if (serviceD.findById( drug.getId_dr() ) != null ) throw new MyException( 494, "Препарат с такми ИД уже существует");
-            if (serviceD.findByName(drug.getName()) != null ) throw new MyException( 494, "Препарат с такми наименованием уже существует");
+            if (serviceD.findByName(drug.getName()) != null )  throw new MyException( 494, "Препарат с такми наименованием уже существует");
+            drug.setDrugTreatment( service.findById( idDrugTreatment ));
             response.setResponse( serviceD.saveDrug( drug ));
             return response.toString();
         }catch( Exception ex ){

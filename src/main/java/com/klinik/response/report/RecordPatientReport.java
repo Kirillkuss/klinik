@@ -2,9 +2,8 @@ package com.klinik.response.report;
 
 import java.util.List;
 
+import com.klinik.entity.Card_patient;
 import com.klinik.entity.Record_patient;
-import com.klinik.response.report.models.Card_patient;
-import com.klinik.response.report.models.Patient;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 

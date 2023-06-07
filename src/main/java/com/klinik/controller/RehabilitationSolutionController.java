@@ -32,16 +32,16 @@ public class RehabilitationSolutionController {
     @Operation( description = "Список всех реабилитационных лечений", summary = "Список всех Реабилитационных лечений")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Получен список всех реабилитационных лечений", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema(implementation = BaseResponseError.class ))) })
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",                                content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                               content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
-    public String getAllRehabilitationSolution() throws Exception{
+    public BaseResponse getAllRehabilitationSolution() throws Exception{
         BaseResponse response = new BaseResponse( 200, "успешно");
         try{
             response.setResponse( service.getAllReha());
-            return response.toString();
+            return response;
         }catch( Exception ex ){
-            return new BaseResponse().error( 999, ex).toString();
+            return new BaseResponse().error( 999, ex);
         }
     }
 
@@ -49,36 +49,35 @@ public class RehabilitationSolutionController {
     @Operation( description = "Поиск по названию лечения", summary = "Поиск по названию лечения")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Получено реабилитационное лечение по наименованию", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class ))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content(array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",                                     content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                                    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
-    public String findByName( @Parameter( description = "Наименование лечения") String name ) throws Exception{
+    public BaseResponse findByName( @Parameter( description = "Наименование лечения") String name ) throws Exception{
         BaseResponse response = new BaseResponse( 200, "успешно");
         try{
             response.setResponse(  service.findByName( name ));
-            return response.toString();
+            return response;
         }catch( Exception ex ){
-            return new BaseResponse<>().error( 999, ex).toString();
+            return new BaseResponse<>().error( 999, ex);
         }
     }
 
     @Operation( description = "Добавить способ лечения", summary = "Добавить способ лечения")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Добавлен способ лечения", content = { @Content(array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema(  implementation = BaseResponseError.class))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema(  implementation = BaseResponseError.class))) })
+            @ApiResponse( responseCode = "200", description = "Добавлен способ лечения", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+            @ApiResponse( responseCode = "400", description = "Плохой запрос",           content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
+            @ApiResponse( responseCode = "500", description = "Ошибка сервера",          content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
     @RequestMapping( method = RequestMethod.POST, value = "/saveRS")
-    public String save( Rehabilitation_solution solution ) throws Exception{
+    public BaseResponse save( Rehabilitation_solution solution ) throws Exception{
         BaseResponse response = new BaseResponse( 200, "успешно");
         try{
-
-            if( service.findByName( solution.getName() ) != null ) throw new MyException( 461, "Ребилитационное лечение с таким наименованием уже существует");
+            if( service.findByName( solution.getName() ) != null )                     throw new MyException( 461, "Ребилитационное лечение с таким наименованием уже существует");
             if( service.findById( solution.getId_rehabilitation_solution() ) != null ) throw new MyException( 460, "Ребилитационное лечение с таким ИД уже существует");
             response.setResponse(service.saveRS( solution ));
-            return response.toString();
+            return response;
         }catch( MyException ex ){
-            return new BaseResponse().error( ex.getCode(), ex ).toString();
+            return new BaseResponse().error( ex.getCode(), ex );
         }
 
     }

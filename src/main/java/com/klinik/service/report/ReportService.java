@@ -13,11 +13,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
-import com.klinik.response.report.models.Card_patient;
 import com.klinik.response.report.models.Patient;
+import com.klinik.entity.Card_patient;
 import com.klinik.entity.Doctor;
 import com.klinik.entity.Record_patient;
-import com.klinik.entity.Сomplaint;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponse;
 import com.klinik.response.ReportDrug;
@@ -156,9 +155,9 @@ public class ReportService {
                                     }
                                 }
                             }
-                            card.setComplaints( complaints );
-                            card.setPatient(patient);
-                            card.setCount_rehabilitation_treatment( rs.getLong( 11 ));
+                           // card.setComplaints( complaints );
+                          //  card.setPatient(patient);
+                           // card.setCount_rehabilitation_treatment( rs.getLong( 11 ));
                             
                             List<ResponseReport> treatment = new ArrayList<>();
                             try ( PreparedStatement st2 = conn.prepareStatement( sql2 )){
@@ -169,7 +168,7 @@ public class ReportService {
                                         responseReport.setCount_treatment( rs2.getLong( 2 ));
                                         responseReport.setName_rehabilitation_treatment( rs2.getString( 1 ));
                                         treatment.add( responseReport);
-                                        card.setFull_info_rehabilitation_treatment( treatment );
+                                   //     card.setFull_info_rehabilitation_treatment( treatment );
                                     }
                                 }
                             }
@@ -264,8 +263,8 @@ public class ReportService {
                                 }
                             }
                         }
-                            card.setComplaints( complaints );
-                            card.setPatient(patient);
+                      //      card.setComplaints( complaints );
+                      //      card.setPatient(patient);
                             report.setCard( card );
                             report.setCount_record_for_time( rs.getLong( 11 ));
                             report.setListRecordPatient( list );

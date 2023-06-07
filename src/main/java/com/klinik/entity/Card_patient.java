@@ -65,6 +65,7 @@ public class Card_patient {
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pacient_id", referencedColumnName = "id_patient")
+    @JsonInclude(Include.NON_NULL)
     private Patient patient;
 
     public Card_patient(){
