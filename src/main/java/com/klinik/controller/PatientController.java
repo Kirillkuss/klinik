@@ -35,13 +35,13 @@ public class PatientController {
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Получен список всех пациентов", content = { @Content(array = @ArraySchema(schema = @Schema( implementation = ResponsePatient.class ))) })
     })
-    public String getAllPatients() throws Exception, MyException{
+    public BaseResponse getAllPatients() throws Exception, MyException{
         BaseResponse response = new ResponsePatient( 200, "успешно");
         try{
             response.setResponse(service.getAllPatients());
-            return response.toString();
+            return response;
         }catch( Exception ex ){
-            return BaseResponse.error( 999, ex ).toString();
+            return BaseResponse.error( 999, ex );
         }
     }
 
@@ -50,8 +50,8 @@ public class PatientController {
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Пациент добавлен",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponsePatient.class ))) })
     })
-    public String addPatient(Patient patient,  @Parameter( description = "Ид документа" , example = "1") Long id) throws Exception, MyException{
-        BaseResponse response = new ResponsePatient( 200, "успешно");
+    public BaseResponse addPatient(Patient patient,  @Parameter( description = "Ид документа" , example = "1") Long id) throws Exception, MyException{
+        BaseResponse response = new BaseResponse( 200, "успешно");
         try{
             Document document = docService.findById( id );
             if( service.findByPhone( patient.getPhone() ) != null ) throw new MyException( 423, "Пользователь с таким номером телефона уже существует, укажите другой");
@@ -61,9 +61,9 @@ public class PatientController {
             patient.setDocument( document );
             Patient pat = service.addPatient(patient);
             response.setResponse( pat );
-            return response.toString();
+            return response;
         }catch( MyException ex ){
-            return BaseResponse.error( ex.getCode() , ex ).toString();
+            return BaseResponse.error( ex.getCode() , ex );
         }
     }
 
@@ -72,15 +72,15 @@ public class PatientController {
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Пациент найден", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponsePatient.class ))) })
     })
-    public String findByWord( @Parameter( description = "Параметр поиска")  String word ) throws Exception, MyException{
-        BaseResponse response = new ResponsePatient( 200, "успешно");
+    public BaseResponse findByWord( @Parameter( description = "Параметр поиска")  String word ) throws Exception, MyException{
+        BaseResponse response = new BaseResponse( 200, "успешно");
         try{
             List<Patient> list =  service.findByWord( word );
             if ( list.isEmpty() == true ) throw new MyException( 999, "По данному запросу ничего не найдено");
             response.setResponse( list );    
-            return response.toString();
+            return response;
         }catch( MyException ex ){
-           return  BaseResponse.error( ex.getCode(), ex ).toString();
+           return  BaseResponse.error( ex.getCode(), ex );
         }
     }
 

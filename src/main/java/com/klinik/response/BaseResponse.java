@@ -17,7 +17,7 @@ public class BaseResponse<T> {
     @Schema (description = "Код сообщения", name = "Код сообщения",  example = "200")
     private Integer code = 200;
     @Schema (description = "Сообщение", name = "Сообщение",  example = "успешно")
-    private String massage = "успешно";
+    private String message = "успешно";
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Schema (description = "Ответ", name = "response")
@@ -28,12 +28,12 @@ public class BaseResponse<T> {
 
     public BaseResponse(Integer code, String massage){
         this.code = code;
-        this.massage = massage;
+        this.message = massage;
     }
 
-    public BaseResponse(Integer code, String massage, T response){
+    public BaseResponse(Integer code, String message, T response){
         this.code = code;
-        this.massage = massage;
+        this.message = message;
         this.response = response;
     }
 
@@ -49,7 +49,7 @@ public class BaseResponse<T> {
     public String toString() {
         return new StringBuilder(" { \n")
                       .append("   Код: ").append(code).append(",\n")  
-                      .append("   Сообщение: ").append(massage).append(",\n")
+                      .append("   Сообщение: ").append(message).append(",\n")
                       .append(response == null ? "" : response).append(" }\n")
                       .toString();
     }

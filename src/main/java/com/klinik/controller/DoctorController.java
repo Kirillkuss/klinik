@@ -1,5 +1,6 @@
 package com.klinik.controller;
 
+import com.fasterxml.jackson.databind.JsonSerializable.Base;
 import com.klinik.entity.Doctor;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponse;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RequestMapping( value = "Doctors")
@@ -32,24 +32,36 @@ public class DoctorController {
     @GetMapping(value = "/getAll")
     @Operation( description = "Список всех докторов", summary = "Список всех докторов")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Получение списка всех докторов", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Doctor.class))) })
+        @ApiResponse( responseCode = "200", description = "Получен отчет по виду ребилитационного лечения за период времени", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+        @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+        @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) })
     })
-    public String  getAllDoc() throws Exception{
-        return service.allDoctor().toString();
+    public BaseResponse  getAllDoc() throws Exception{
+        BaseResponse response = new BaseResponse<>( 200, "success" );
+        try{
+            response.setResponse(service.allDoctor());
+            return response;
+        }catch( Exception ex ){
+            return BaseResponse.error( 999, ex );
+        }
     }
 
     @GetMapping(value = "/FindDoctorByFIO")
     @Operation( description = "Поиск врача по ФИО", summary = "Поиск врача по ФИО")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Поиск доктора по ФИО", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Doctor.class))) })
+        @ApiResponse( responseCode = "200", description = "Получен отчет по виду ребилитационного лечения за период времени", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+        @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+        @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) })
     })
-    public String findByFIO(@Parameter( description = "ФИО врача") String word ) throws Exception{
+    public BaseResponse findByFIO(@Parameter( description = "ФИО врача") String word ) throws Exception{
+        BaseResponse response = new BaseResponse( 200, "success");
         try{
             List<Doctor> doctors = service.findByFIO( word );
             if( doctors.isEmpty() == true ) throw new MyException( 999, "По данному запросу ничего не найдено");
-            return doctors.toString();
+            response.setResponse(doctors);
+            return response; 
         }catch( MyException ex ){
-            return ex.getMessage();
+            return BaseResponse.error( ex.getCode(), ex);
         }
 
     }
@@ -57,14 +69,18 @@ public class DoctorController {
     @PostMapping( value = "/addDoctor")
     @Operation( description = "Добавить доктора", summary = "Добавить доктора")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Доктор добавлен", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Doctor.class))) })})
-    public String addDoctor( Doctor doctor ) throws Exception{
+        @ApiResponse( responseCode = "200", description = "Получен отчет по виду ребилитационного лечения за период времени", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+        @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
+        @ApiResponse( responseCode = "500", description = "Ошибка сервера",content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) })
+    })
+    public BaseResponse addDoctor( Doctor doctor ) throws Exception{
+        BaseResponse response = new BaseResponse( 200, "success" ); 
         try{
             if (service.findById( doctor.getId_doctor() ) != null ) throw new MyException( 999, "Пользователь с таким ИД уще существует");
-            Doctor response =  service.saveDoctor( doctor );
-            return response.toString();
+            response.setResponse(service.saveDoctor( doctor ));
+            return response;
         }catch( MyException ex ){
-            return  ex.getMessage();
+            return  BaseResponse.error( ex.getCode(), ex );
         }
         
     }
