@@ -40,17 +40,11 @@ public class CardPatientService {
     }
 
     public Card_patient findByPatientId( Long id ) throws Exception{
-        return ( Card_patient ) em.createQuery("SELECT u FROM Card_patient u where u.patient.id_patient = :id")
-                                  .setParameter("id", id )
-                                  .getResultList()
-                                  .stream().findFirst().orElse( null );
+        return repository.findByPatientId( id );
     }
 
     public Card_patient findByIdCard( Long id ) throws Exception{
-        return ( Card_patient ) em.createQuery("SELECT u FROM Card_patient u where u.id_card_patient = :id")
-                .setParameter("id", id )
-                .getResultList()
-                .stream().findFirst().orElse( null );
+        return repository.findByIdCard(id);
     }
 
     @Transactional

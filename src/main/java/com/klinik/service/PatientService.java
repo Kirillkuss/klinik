@@ -5,15 +5,9 @@ import com.klinik.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 @Service
 public class PatientService {
-
-    @PersistenceContext
-    EntityManager em;
-
 
     @Autowired
     private PatientRepository repository;
@@ -31,19 +25,14 @@ public class PatientService {
     }
 
     public Patient findById( Long id) throws Exception{
-        return (Patient) em.createQuery(" SELECT u FROM Patient u where u.id_patient = :id")
-                            .setParameter( "id", id)
-                            .getResultList().stream().findFirst().orElse( null );
+        return repository.findByIdPatinet( id );
     }
 
     public Patient findByIdDocument( Long id_document ) throws Exception{
-        return (Patient) em.createQuery(" SELECT u FROM Patient u WHERE u.document.id_document = :id_document")
-                           .setParameter( "id_document", id_document)
-                           .getResultList().stream().findFirst().orElse( null );
+        return repository.findPatientByIdDocument(id_document);
     }
 
     public Patient findByPhone( String phone ) throws Exception{
         return repository.findByPhone(phone);
     }
-
 }

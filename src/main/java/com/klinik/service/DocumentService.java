@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import java.util.List;
 
 @Service
@@ -29,10 +28,7 @@ public class DocumentService {
     }
 
     public Document findById( Long id ) throws Exception{
-         return ( Document ) em.createQuery("select e from Document e where e.id = ?1")
-                              .setParameter(1 , id )
-                              .getResultList()
-                              .stream().findFirst().orElse( null );
+         return repository.findByIdDocument( id );
     }
 
     public Document findByNumar( String numar ) throws Exception{
