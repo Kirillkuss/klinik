@@ -2,6 +2,7 @@ package com.klinik.controller;
 
 import com.klinik.entity.*;
 import com.klinik.excep.MyException;
+import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
 import com.klinik.response.ResponseTreatment;
 import com.klinik.service.*;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "7. Treatment", description = "Лечение пациентов:")
 public class TreatmentController {
+
+    @ExceptionHandler(Throwable.class)
+    public ResponseTreatment errBaseResponse( Throwable ex ){
+        return ResponseTreatment.error( 999, ex );
+    }
+
+    @ExceptionHandler(MyException.class)
+    public ResponseTreatment errBaseResponse( MyException ex ){
+        return ResponseTreatment.error( ex.getCode(), ex );
+    }
 
     @Autowired
     private TreatmentService service;
@@ -50,14 +62,7 @@ public class TreatmentController {
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",         content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
     public ResponseTreatment getAllTreatment() throws Exception{
-        ResponseTreatment response = new ResponseTreatment( 200, "успешно");
-        try{
-            response.setResponse( service.allListTreatment());
-            return response;
-        }catch( Exception ex ){
-            return new ResponseTreatment().error( 999, ex ); 
-        }
-
+        return new ResponseTreatment( 200, "успешно", service.allListTreatment());
     }
 
     @PostMapping( value = "/addTreatment")
@@ -67,30 +72,21 @@ public class TreatmentController {
             @ApiResponse( responseCode = "400", description = "Плохой запрос",                    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
-    public ResponseTreatment addTreatment( Treatment treatment,
-        @Parameter( description = "ИД медикаментозного лечения (Препарата):",  example = "1") Long drug_id,
-        @Parameter( description = "Ид карты пациента:",            example = "1") Long card_patient_id,
-        @Parameter( description = "Ид реабилитационного лечения:", example = "1") Long rehabilitation_solution_id,
-        @Parameter( description = "Ид доктор:",                    example = "1") Long doctor_id ) throws Exception{
-        ResponseTreatment response = new ResponseTreatment( 200, "успешно");
-        try{
-            if( serviceDrug.findById( drug_id) == null )                    throw new MyException( 474, "Указано неверное значение медикаментозного лечения, укажите другой");
-            if( service.findById( treatment.getId_treatment()) != null  )   throw new MyException( 470, "Лечение с таким ИД уже существует, используйте другой");
-            Rehabilitation_solution solution = rehabilitationSolutionService.findByIdList(rehabilitation_solution_id);
-            if( solution == null  )                                         throw new MyException( 471, "Указано неверное значение реабилитационного лечения, укажите другой");
-            if( cardPatientService.findByIdCard(card_patient_id ) == null ) throw new MyException( 472, "Указано неверное значение карты пациента, укажите другой");
-            if( doctorService.findById( doctor_id )  == null )              throw new MyException( 473, "Указано неверное значение ид доктора, укажите другой");
-            
-            treatment.setCard_patient_id( cardPatientService.findByIdCard(card_patient_id ).getId_card_patient() );
-            treatment.setRehabilitation_solution( solution );
-            treatment.setDoctor( doctorService.findById( doctor_id ) );
-            treatment.setDrug( serviceDrug.findById( drug_id ));
-            response.setTreatment(service.addTreatment( treatment ));
-            return response;
-        }catch( Exception ex ){
-            ex.printStackTrace( System.out);
-            return new ResponseTreatment().error( 999, ex );
-        }                          
+    public ResponseTreatment addTreatment(  Treatment treatment,
+                                            @Parameter( description = "ИД медикаментозного лечения (Препарата):",  example = "1") Long drug_id,
+                                            @Parameter( description = "Ид карты пациента:",                        example = "1") Long card_patient_id,
+                                            @Parameter( description = "Ид реабилитационного лечения:",             example = "1") Long rehabilitation_solution_id,
+                                            @Parameter( description = "Ид доктор:",                                example = "1") Long doctor_id ) throws Exception{
+        if( serviceDrug.findById( drug_id) == null )                                          throw new MyException( 474, "Указано неверное значение медикаментозного лечения, укажите другой");
+        if( service.findById( treatment.getId_treatment()) != null  )                         throw new MyException( 470, "Лечение с таким ИД уже существует, используйте другой");
+        if( rehabilitationSolutionService.findByIdList(rehabilitation_solution_id) == null  ) throw new MyException( 471, "Указано неверное значение реабилитационного лечения, укажите другой");
+        if( cardPatientService.findByIdCard(card_patient_id ) == null )                       throw new MyException( 472, "Указано неверное значение карты пациента, укажите другой");
+        if( doctorService.findById( doctor_id )  == null )                                    throw new MyException( 473, "Указано неверное значение ид доктора, укажите другой");
+        treatment.setCard_patient_id( cardPatientService.findByIdCard(card_patient_id ).getId_card_patient() );
+        treatment.setRehabilitation_solution( rehabilitationSolutionService.findByIdList(rehabilitation_solution_id) );
+        treatment.setDoctor( doctorService.findById( doctor_id ) );
+        treatment.setDrug( serviceDrug.findById( drug_id ));
+        return new ResponseTreatment( 200, "success", service.addTreatment( treatment ));              
     }
 
     @GetMapping(value = "/findByParamIdCardAndDateStart")
@@ -103,13 +99,7 @@ public class TreatmentController {
     public ResponseTreatment findByParamIdCardAndDateStart( @Parameter( description = "Ид карты",                example = "1") Long id,
                                                  @Parameter( description = "Время начала лечения с:", example = "2023-01-20T12:47:07.605") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
                                                  @Parameter( description = "Время начала лечения по", example = "2023-09-20T12:47:07.605") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo) throws Exception{
-        ResponseTreatment response = new ResponseTreatment( 200, "успешно");
-        try{
-            response.setResponse( service.findByParamIdCardAndDateStart(id, dateFrom, dateTo));
-            return response;
-        }catch( Exception ex ){
-            return new ResponseTreatment().error( 999, ex ); 
-        }
+        return new ResponseTreatment( 200, "success", service.findByParamIdCardAndDateStart(id, dateFrom, dateTo));
     }
 
     @GetMapping(value = "/findByParamIdCardAndIdRh")
@@ -121,13 +111,7 @@ public class TreatmentController {
     })
     public ResponseTreatment findByParamIdCardAndIdRh( @Parameter( description = "Ид карты пациента",            example = "1") Long idCard, 
                                                        @Parameter( description = "Ид реабилитационного лечения", example = "1") Long idReSol ) throws Exception{
-        ResponseTreatment response = new ResponseTreatment( 200, "успешно");
-        try{
-            response.setResponse( service.findByParamIdCardAndIdRh( idCard, idReSol ));
-            return response;
-        }catch( Exception ex ){
-            return new ResponseTreatment().error( 999, ex ); 
-        }
+        return new ResponseTreatment( 200, "success", service.findByParamIdCardAndIdRh( idCard, idReSol ));
     }
 
 }

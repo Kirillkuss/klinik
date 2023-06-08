@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class BaseResponse<T> {
 
     @Schema (description = "Код сообщения", name = "Код сообщения",  example = "200")
-    private Integer code = 200;
+    private Integer code = 0;
     @Schema (description = "Сообщение", name = "Сообщение",  example = "успешно")
     private String message = "успешно";
 
@@ -38,7 +38,7 @@ public class BaseResponse<T> {
     }
 
     public static BaseResponse success() {
-        return new BaseResponse( 0, "успешно");
+        return new BaseResponse( 200, "success");
     }
     
     public static BaseResponse error( Integer code, Throwable e ){

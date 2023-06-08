@@ -16,16 +16,26 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
 
 @RequestMapping( value = "DrugTreatment")
 @RestController
 @Tag(name = "8. Drug Treatment", description = "Справочник: Медикаментозное лечение и препараты")
 public class DrugTreatmentController {
+
+    @ExceptionHandler(Throwable.class)
+    public BaseResponse errBaseResponse( Throwable ex ){
+        return BaseResponse.error( 999, ex );
+    }
+
+    @ExceptionHandler(MyException.class)
+    public BaseResponse errBaseResponse( MyException ex ){
+        return BaseResponse.error( ex.getCode(), ex );
+    }
 
     @Autowired
     private ServiceDrugTreatment service;
@@ -41,13 +51,7 @@ public class DrugTreatmentController {
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                              content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
     })
     public BaseResponse listAll() throws Exception{
-        BaseResponse response = new BaseResponse( 200, "success");
-        try{
-            response.setResponse( service.getAll() );
-            return response;
-        }catch( Exception ex ){
-            return BaseResponse.error( 999, ex );
-        }
+        return new BaseResponse<>( 200, "success", service.getAll());
     }
 
     @GetMapping( "/findById")
@@ -58,14 +62,8 @@ public class DrugTreatmentController {
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                        content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
     })
     public BaseResponse findById( @Parameter(description = "ИД медикаментозного лечения",example = "1") Long id ) throws Exception{
-        BaseResponse response = new BaseResponse<>( 200, "успешно");
-        try{
-            if( service.findById( id ) == null ) throw new MyException( 408, "Мед. лечения с таким ИД не существует");
-            response.setResponse(serviceD.findByIdDrugTreatment( id ));
-            return response;
-        }catch( Exception ex ){
-            return BaseResponse.error( 999, ex);
-        } 
+        if( service.findById( id ) == null ) throw new MyException( 408, "Мед. лечения с таким ИД не существует");
+        return new BaseResponse<>( 200, "success", serviceD.findByIdDrugTreatment( id ) );
     }
 
     @Operation( description = "Добавить медикаментозного лечения", summary = "Добавить медикаментозного лечения")
@@ -76,16 +74,9 @@ public class DrugTreatmentController {
     })
     @PostMapping( "/addDrug_treatment")
     public BaseResponse addDrug_treatment( Drug_treatment drug_treatment ) throws Exception{
-        BaseResponse response = new BaseResponse( 200, "успешно");
-        try{
-            if ( service.findById( drug_treatment.getId_drug()) != null ) throw new MyException( 491, "Медикаментозное лечение с таким ИД уже существует");
-            if ( service.findByName( drug_treatment.getName() ) != null ) throw new MyException( 492, "Медикаментозное лечение с таким наименование уже существует");
-            response.setResponse( service.addDrugTreatment( drug_treatment ));
-            return response;
-        }catch( MyException ex ){
-            return BaseResponse.error( ex.getCode(), ex );
-        }
-
+        if ( service.findById( drug_treatment.getId_drug()) != null ) throw new MyException( 491, "Медикаментозное лечение с таким ИД уже существует");
+        if ( service.findByName( drug_treatment.getName() ) != null ) throw new MyException( 492, "Медикаментозное лечение с таким наименование уже существует");
+        return new BaseResponse<>( 200, "success", service.addDrugTreatment( drug_treatment ));
     }
 
     @Operation( description = "Добавить препарат для медикаментозного лечения", summary = "Добавить препарат для медикаментозного лечения")
@@ -96,20 +87,10 @@ public class DrugTreatmentController {
     })
     @PostMapping("/addDrug")
     public BaseResponse saveDrug( Drug drug, @Parameter( description = "ИД мед. лечения", example = "1" ) Long idDrugTreatment ) throws Exception{
-        BaseResponse response = new BaseResponse<>(200, "успешно");
-        try{
-            if( service.findById( idDrugTreatment ) == null )  throw new MyException( 493, "Медикаментозное лечение с таким ИД не существует");
-            if (serviceD.findById( drug.getId_dr() ) != null ) throw new MyException( 494, "Препарат с такми ИД уже существует");
-            if (serviceD.findByName(drug.getName()) != null )  throw new MyException( 494, "Препарат с такми наименованием уже существует");
-            drug.setDrugTreatment( service.findById( idDrugTreatment ));
-            response.setResponse( serviceD.saveDrug( drug ));
-            return response;
-        }catch( Exception ex ){
-            ex.printStackTrace(System.out); 
-            return BaseResponse.error( 999, ex );
-        }
+        if( service.findById( idDrugTreatment ) == null )  throw new MyException( 493, "Медикаментозное лечение с таким ИД не существует");
+        if (serviceD.findById( drug.getId_dr() ) != null ) throw new MyException( 494, "Препарат с такми ИД уже существует");
+        if (serviceD.findByName(drug.getName()) != null )  throw new MyException( 494, "Препарат с такми наименованием уже существует");
+        drug.setDrugTreatment( service.findById( idDrugTreatment ));
+        return new BaseResponse<>( 200, "success", serviceD.saveDrug( drug ));
     }
-
-
-
 }

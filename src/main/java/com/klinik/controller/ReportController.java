@@ -1,17 +1,15 @@
 package com.klinik.controller;
 
 import java.time.LocalDateTime;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
-import com.klinik.response.ReportDrug;
 import com.klinik.response.report.RecordPatientReport;
 import com.klinik.service.report.ReportService;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,6 +26,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Report", description = "Отчеты:")
 public class ReportController {
 
+    @ExceptionHandler(Throwable.class)
+    public BaseResponse errBaseResponse( Throwable ex ){
+        return BaseResponse.error( 999, ex );
+    }
+
+    @ExceptionHandler(MyException.class)
+    public BaseResponse errBaseResponse( MyException ex ){
+        return BaseResponse.error( ex.getCode(), ex );
+    }
+
     @Autowired
     private ReportService service;
 
@@ -40,14 +48,7 @@ public class ReportController {
     @GetMapping("/report_rehabilitation_treatment_for_time")
     public BaseResponse report( @Parameter( description = "Дата начала выборки:", example = "2021-05-24T14:02:35.584")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
                                 @Parameter( description = "Дата конца выборки:", example = "2023-12-24T14:02:35.584")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception{
-        
-        BaseResponse response = new BaseResponse<>( 200, "успешно");
-        try{
-            response.setResponse(service.getStatReport( dateFrom, dateTo));
-            return response;
-        }catch( Exception ex){
-            return BaseResponse.error( 999, ex);
-        }
+        return new BaseResponse<>( 200, "success", service.getStatReport( dateFrom, dateTo));
     }
 
 
@@ -59,13 +60,7 @@ public class ReportController {
     })
     @GetMapping("/report_full_info_patient")
     public BaseResponse fullInformationPatient(  @Parameter( description = "Ид карты пациента:", example = "1")  Long idCard ) throws Exception{ 
-        BaseResponse response = new BaseResponse( 200, "success");
-        try{
-            response.setResponse( service.reportInformationAboutPatient( idCard ));
-            return response;
-        }catch( Exception ex ){
-            return BaseResponse.error( 999, ex );
-        }
+        return new BaseResponse<>( 200, "success", service.reportInformationAboutPatient( idCard ));
     }
 
     @Operation( description = "Отчет по записям пациента к врачу за период времени", summary = "Отчет по записям пациента к врачу за период времени")
@@ -78,13 +73,7 @@ public class ReportController {
     public BaseResponse findInformationAboutRecordPatient( @Parameter( description = "ИД пациента:",         example = "1") Long IdPatient,
                                                            @Parameter( description = "Дата начала выборки:", example = "2023-01-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
                                                            @Parameter( description = "Дата начала выборки:", example = "2023-12-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception{
-        BaseResponse response = new BaseResponse( 200, "успешно");
-        try{
-            response.setResponse( service.reportByPatietnWithRecordPatient( IdPatient, dateFrom, dateTo ));
-            return response;
-        }catch( Exception ex ){
-            return BaseResponse.error( 999, ex );
-        }
+        return new BaseResponse<>( 200, "успешно", service.reportByPatietnWithRecordPatient( IdPatient, dateFrom, dateTo ));
     }
 
 
@@ -97,13 +86,7 @@ public class ReportController {
     @GetMapping( "/report_drug_treatment")
     public BaseResponse getReportDrug(@Parameter( description = "Дата начала выборки:", example = "2023-01-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
                                       @Parameter( description = "Дата начала выборки:", example = "2023-12-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception{
-        BaseResponse<List<ReportDrug>> report = new BaseResponse<>(200, "успешно" );
-        try{
-            report.setResponse( service.reportStatDrug( dateFrom, dateTo ));
-            return report;
-        }catch( Exception ex ){
-            return BaseResponse.error( 999, ex );
-        }
+        return new BaseResponse<>(200, "успешно", service.reportStatDrug( dateFrom, dateTo ));
     }
     
 }

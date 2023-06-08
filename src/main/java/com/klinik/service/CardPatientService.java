@@ -152,7 +152,7 @@ public class CardPatientService {
                                         typeComplaint.setComplaint(complaint);
                                         typeComplaint.setId_type_complaint( set2.getLong(2 ));
                                         typeComplaint.setName(set2.getString( 3 ));
-                                        list.add( typeComplaint );
+                                        if( typeComplaint.getComplaint().getFunctional_impairment() != null ? list.add( typeComplaint ) :  list.isEmpty());
                                     }
                                 }
                             }

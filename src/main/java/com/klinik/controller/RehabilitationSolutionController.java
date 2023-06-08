@@ -14,16 +14,26 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RequestMapping( value = "RehabilitationTreatment")
 @RestController
 @Tag(name = "9. Rehabilitation Treatment", description = "Справочник: Реабилитационное лечение")
 public class RehabilitationSolutionController {
+
+    @ExceptionHandler(Throwable.class)
+    public BaseResponse errBaseResponse( Throwable ex ){
+        return BaseResponse.error( 999, ex );
+    }
+
+    @ExceptionHandler(MyException.class)
+    public BaseResponse errBaseResponse( MyException ex ){
+        return BaseResponse.error( ex.getCode(), ex );
+    }
 
     @Autowired
     private RehabilitationSolutionService service;
@@ -36,13 +46,7 @@ public class RehabilitationSolutionController {
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                               content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
     public BaseResponse getAllRehabilitationSolution() throws Exception{
-        BaseResponse response = new BaseResponse( 200, "успешно");
-        try{
-            response.setResponse( service.getAllReha());
-            return response;
-        }catch( Exception ex ){
-            return new BaseResponse().error( 999, ex);
-        }
+        return new BaseResponse<>( 200, "success", service.getAllReha());
     }
 
     @RequestMapping( method = RequestMethod.GET, value = "/findByNameRS")
@@ -53,13 +57,8 @@ public class RehabilitationSolutionController {
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                                    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
     public BaseResponse findByName( @Parameter( description = "Наименование лечения") String name ) throws Exception{
-        BaseResponse response = new BaseResponse( 200, "успешно");
-        try{
-            response.setResponse(  service.findByName( name ));
-            return response;
-        }catch( Exception ex ){
-            return new BaseResponse<>().error( 999, ex);
-        }
+        if( service.findByName( name ) == null ) throw new MyException( 999, "По данному запросу ничего не найдено");
+        return new BaseResponse<>( 200, "success", service.findByName( name ));
     }
 
     @Operation( description = "Добавить способ лечения", summary = "Добавить способ лечения")
@@ -70,15 +69,8 @@ public class RehabilitationSolutionController {
     })
     @RequestMapping( method = RequestMethod.POST, value = "/saveRS")
     public BaseResponse save( Rehabilitation_solution solution ) throws Exception{
-        BaseResponse response = new BaseResponse( 200, "успешно");
-        try{
-            if( service.findByName( solution.getName() ) != null )                     throw new MyException( 461, "Ребилитационное лечение с таким наименованием уже существует");
-            if( service.findById( solution.getId_rehabilitation_solution() ) != null ) throw new MyException( 460, "Ребилитационное лечение с таким ИД уже существует");
-            response.setResponse(service.saveRS( solution ));
-            return response;
-        }catch( MyException ex ){
-            return new BaseResponse().error( ex.getCode(), ex );
-        }
-
+        if( service.findByName( solution.getName() ) != null )                     throw new MyException( 461, "Ребилитационное лечение с таким наименованием уже существует");
+        if( service.findById( solution.getId_rehabilitation_solution() ) != null ) throw new MyException( 460, "Ребилитационное лечение с таким ИД уже существует");
+        return new BaseResponse<>( 200, "success", service.saveRS( solution ));
     }
 }
