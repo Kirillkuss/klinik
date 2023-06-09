@@ -4,10 +4,8 @@ import com.klinik.entity.Record_patient;
 import com.klinik.repositories.RecordPatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -29,12 +27,7 @@ public class RecordPatientService {
     }
 
     public Record_patient findById( Long id ) throws Exception{
-        return (Record_patient) em.createQuery( "SELECT e FROM Record_patient e WHERE e.id_record = :id")
-                                  .setParameter( "id", id )
-                                  .getResultList()
-                                  .stream()
-                                  .findFirst()
-                                  .orElse( null );
+        return repository.findByIdRecordPatient( id );
     }
 
     public List<Record_patient> findByParam( Long id, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception{

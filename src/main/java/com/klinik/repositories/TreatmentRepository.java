@@ -18,4 +18,7 @@ public interface TreatmentRepository extends JpaRepository<Treatment, Long> {
     
     @Query("SELECT u FROM Treatment u WHERE u.card_patient_id = :idCard and u.rehabilitation_solution.id_rehabilitation_solution = :idReSol" )
     List<Treatment> findByParamIdCardAndIdRh( Long idCard, Long idReSol) throws Exception;
+
+    @Query( "SELECT u FROM Treatment u WHERE u.id_treatment = :id")
+    Treatment findByIdTreatment( Long id ) throws Exception;
 }

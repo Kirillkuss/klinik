@@ -3,9 +3,12 @@ package com.klinik.entity;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.klinik.entity.Document;
+
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,7 +17,9 @@ import javax.persistence.*;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class Patient {
+public class Patient implements Serializable {
+
+         
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_patient")
@@ -22,7 +27,7 @@ public class Patient {
             description = "ИД пациента",
             example     = "100",
             required    = true )
-    
+    @JsonInclude(Include.NON_NULL) 
     private Long id_patient;
 
     @Column( name = "surname")
@@ -48,10 +53,8 @@ public class Patient {
 
     @Column( name = "gender")
     @Schema( name        = "gender",
-            description = "Пол пациента",
-            example     = "true",
-            required    = true )
-    private Boolean gender;
+            description = "Пол пациента" )
+    private Gender gender;
 
     @Column( name = "phone")
     @Schema( name        = "phone",
@@ -70,13 +73,14 @@ public class Patient {
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "document_id", referencedColumnName = "id_document")
+    @JsonInclude(Include.NON_NULL)
     private Document document;
     
     public Patient(){
     }
 
         
-    public Patient(Long id_patient,  String surname, String name, String full_name, Boolean gender ,String phone, String address, Document document ){
+    public Patient(Long id_patient,  String surname, String name, String full_name, Gender gender ,String phone, String address, Document document ){
         this.id_patient = id_patient;
         this.surname = surname;
         this.name = name;
@@ -87,7 +91,7 @@ public class Patient {
         this.document = document;
     }
 
-    public Patient(  String surname, String name, String full_name, Boolean gender ,String phone, String address ){
+    public Patient(  String surname, String name, String full_name, Gender gender ,String phone, String address ){
         this.surname = surname;
         this.name = name;
         this.full_name = full_name;
@@ -95,20 +99,5 @@ public class Patient {
         this.phone = phone;
         this.address = address;
     }
-
-    @Override
-    public String toString() {
-        return new StringBuilder(" Пациент { \n")
-                      .append("           Ид пациента: ").append(id_patient).append(",\n")  
-                      .append("           Фамилия: ").append(surname).append(",\n")
-                      .append("           Имя: ").append(name).append(",\n")
-                      .append("           Отчество: ").append(full_name).append(",\n")
-                      .append("           Пол: ").append(gender == true ? "Муж" : "Жен").append(",\n")
-                      .append("           Номер телефона: ").append(phone).append(",\n")
-                      .append("           Адрес: ").append(address).append(",")
-                      .append("                                 ").append(document).append("}\n")
-                      .toString();
-    }
-
 
 }

@@ -70,7 +70,7 @@ public class RehabilitationSolutionController {
     @RequestMapping( method = RequestMethod.POST, value = "/saveRS")
     public BaseResponse save( Rehabilitation_solution solution ) throws Exception{
         if( service.findByName( solution.getName() ) != null )                     throw new MyException( 461, "Ребилитационное лечение с таким наименованием уже существует");
-        if( service.findById( solution.getId_rehabilitation_solution() ) != null ) throw new MyException( 460, "Ребилитационное лечение с таким ИД уже существует");
+        if( service.findByIdList( solution.getId_rehabilitation_solution() ) != null ) throw new MyException( 460, "Ребилитационное лечение с таким ИД уже существует");
         return new BaseResponse<>( 200, "success", service.saveRS( solution ));
     }
 }

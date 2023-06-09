@@ -16,4 +16,5 @@ public interface RehabilitationSolutionRepository extends JpaRepository<Rehabili
 
     @Query( "SELECT u FROM Rehabilitation_solution u WHERE u.id_rehabilitation_solution = :idList")
     Rehabilitation_solution findByIdList(Long idList );
+
 }

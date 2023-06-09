@@ -4,18 +4,12 @@ import com.klinik.entity.Treatment;
 import com.klinik.repositories.TreatmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 @Service
 public class TreatmentService {
 
-    @PersistenceContext
-    private EntityManager em;
 
     @Autowired
     private TreatmentRepository repository;
@@ -43,10 +37,7 @@ public class TreatmentService {
      * @throws Exception
      */
     public Treatment findById( Long id ) throws Exception{
-        return ( Treatment ) em.createQuery( "SELECT u FROM Treatment u WHERE u.id_treatment = :id" )
-                               .setParameter( "id", id )
-                               .getResultList()
-                               .stream().findFirst().orElse( null );
+        return repository.findByIdTreatment( id );
     }
     /**
      * Получение списка лечений пациентов по параметрам

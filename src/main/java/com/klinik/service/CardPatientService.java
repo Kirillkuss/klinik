@@ -2,6 +2,7 @@ package com.klinik.service;
 
 import com.klinik.entity.Card_patient;
 import com.klinik.entity.Document;
+import com.klinik.entity.Gender;
 import com.klinik.entity.Patient;
 import com.klinik.entity.TypeComplaint;
 import com.klinik.entity.Сomplaint;
@@ -121,7 +122,7 @@ public class CardPatientService {
                             patient.setSurname( set.getString( 7 ));
                             patient.setName( set.getString( 8 ));
                             patient.setFull_name( set.getString( 9 ));
-                            patient.setGender( set.getBoolean( 10 ));
+                            patient.setGender(  set.getInt( 10 )  == 0 ? Gender.Man : Gender.Woman );
                             patient.setPhone( set.getString( 11));
                             patient.setAddress( set.getString( 12 ));
                             Document document = new Document();
