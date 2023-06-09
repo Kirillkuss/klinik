@@ -2,9 +2,6 @@ package com.klinik.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-
-import java.util.List;
-
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -15,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @Setter
 @Getter
 @EqualsAndHashCode
+@ToString
 public class Сomplaint {
 
     @Id
@@ -47,17 +45,4 @@ public class Сomplaint {
         this.functional_impairment = functional_impairment;  
     }
 
-    @Override
-    public String toString() {
-        return new StringBuilder("\n")
-                      .append("    Жалоба: ").append(functional_impairment).append("\n")
-                      .toString();
-    }
-
-    public String toStringTwo() {
-        return new StringBuilder("\n")
-                      .append("   1. ИД жалобы: ").append(id_complaint).append(",\n")  
-                      .append("   2. Наименование жалобы: ").append(functional_impairment).append("")
-                      .toString();
-    }
 }

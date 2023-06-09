@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import javax.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -15,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Setter
 @Getter
 @EqualsAndHashCode
+@ToString
 public class Card_patient {
 
     @Id
@@ -98,20 +98,6 @@ public class Card_patient {
         this.note = note;
         this.сonclusion = сonclusion;
         this.patient = patient;
-    }
-
-    
-    @Override
-    public String toString() {
-        return new StringBuilder("  Карта пациента { \n")
-                      .append("    1. Ид карты пациента: ").append(id_card_patient).append(",\n")  
-                      .append("    2. Диагноз: ").append(diagnosis).append(",\n")
-                      .append("    3. Аллергия: ").append(allergy == true ? "Да" : "Нет").append(",\n")
-                      .append("    4. Примечание: ").append(note == null ? "" : note).append(",\n")
-                      .append("    5. Заключение: ").append(сonclusion == null ? "" : сonclusion ).append(",\n")
-                      .append("    6. Список жалоб: ").append(typeComplaint.isEmpty() == true ? "" : typeComplaint).append(",\n")
-                      .append("    7.").append(patient).append("\n }\n")
-                      .toString();
     }
 
 }

@@ -21,12 +21,10 @@ import com.klinik.entity.Record_patient;
 import com.klinik.entity.TypeComplaint;
 import com.klinik.entity.Сomplaint;
 import com.klinik.excep.MyException;
-import com.klinik.response.BaseResponse;
 import com.klinik.response.ReportDrug;
 import com.klinik.response.report.CardPatinetReport;
 import com.klinik.response.report.RecordPatientReport;
 import com.klinik.response.report.ResponseReport;
-
 
 @Service
 public class ReportService {
@@ -118,20 +116,17 @@ public class ReportService {
                        + " left join Patient p on id_patient = c.pacient_id"
                        + " left join Treatment t on t.card_patient_id = c.id_card_patient"
                        + " left join Rehabilitation_solution r on r.id_rehabilitation_solution = t.rehabilitation_solution_id"
-                       + " where c.id_card_patient = ? group by c.diagnosis, c.allergy, c.note, c.сonclusion, p.surname, p.name, p.full_name,p.gender, p.phone, p.address";
-            
+                       + " where c.id_card_patient = ? group by c.diagnosis, c.allergy, c.note, c.сonclusion, p.surname, p.name, p.full_name,p.gender, p.phone, p.address";   
             String sql2 = "SELECT t.name as name_solution, COUNT( u.rehabilitation_solution_id ) as count_solution FROM Treatment u"
                         + " left join Rehabilitation_solution t on t.id_rehabilitation_solution = u.rehabilitation_solution_id"
                         + " left join Card_patient c on  c.id_card_patient =u.card_patient_id"
                         + " where  c.id_card_patient  = ?  group by t.name";
-
             String sql3 = "SELECT s.name, d.functional_impairment FROM Card_patient c "
                         + " left join Patient p on id_patient = c.pacient_id "
                         + " left join Card_patient_Complaint cpc on cpc.card_patient_id = c.id_card_patient "
                         + " left join Type_complaint s on s.id_type_complaint = cpc.type_complaint_id "
                         + " left join Complaint d on d.id_complaint =  s.complaint_id "
                         + " where c.id_card_patient = ?";            
-
             Session session;
             session = em.unwrap( Session.class );
             session.doWork(( Connection conn) ->{
@@ -154,33 +149,33 @@ public class ReportService {
                             response.setCount_treatment( rs.getInt( 11 ));
                             card.setPatient( patient );
                             List<TypeComplaint> complaints  = new ArrayList();
-                             try ( PreparedStatement st3 = conn.prepareStatement( sql3 )){
-                                st3.setLong(1 , idCardPatient);
-                                try( ResultSet rs3 = st3.executeQuery() ){
-                                    while( rs3.next() ){
-                                        TypeComplaint typeComplaint = new TypeComplaint();
-                                        typeComplaint.setName( rs3.getString( 1 ));
-                                        Сomplaint complaint = new Сomplaint();
-                                        complaint.setFunctional_impairment( rs3.getString( 2 ));
-                                        typeComplaint.setComplaint( complaint );
-                                        complaints.add( typeComplaint );
+                                try ( PreparedStatement st3 = conn.prepareStatement( sql3 )){
+                                    st3.setLong(1 , idCardPatient);
+                                    try( ResultSet rs3 = st3.executeQuery() ){
+                                        while( rs3.next() ){
+                                            TypeComplaint typeComplaint = new TypeComplaint();
+                                            typeComplaint.setName( rs3.getString( 1 ));
+                                            Сomplaint complaint = new Сomplaint();
+                                            complaint.setFunctional_impairment( rs3.getString( 2 ));
+                                            typeComplaint.setComplaint( complaint );
+                                            complaints.add( typeComplaint );
+                                        }
                                     }
                                 }
-                            }
-                          card.setTypeComplaint( complaints );
-                          List<ResponseReport> treatment = new ArrayList<>();
-                            try ( PreparedStatement st2 = conn.prepareStatement( sql2 )){
-                                st2.setLong(1 , idCardPatient);
-                                try( ResultSet rs2 = st2.executeQuery() ){
-                                    while( rs2.next() ){
-                                        ResponseReport responseReport = new ResponseReport();
-                                        responseReport.setCount_treatment( rs2.getLong( 2 ));
-                                        responseReport.setName_rehabilitation_treatment( rs2.getString( 1 ));
-                                        treatment.add( responseReport);
-                                        response.setTreatment( treatment );
-                                    }
-                                }
-                            }
+                                        card.setTypeComplaint( complaints );
+                                        List<ResponseReport> treatment = new ArrayList<>();
+                                        try ( PreparedStatement st2 = conn.prepareStatement( sql2 )){
+                                            st2.setLong(1 , idCardPatient);
+                                            try( ResultSet rs2 = st2.executeQuery() ){
+                                                while( rs2.next() ){
+                                                    ResponseReport responseReport = new ResponseReport();
+                                                    responseReport.setCount_treatment( rs2.getLong( 2 ));
+                                                    responseReport.setName_rehabilitation_treatment( rs2.getString( 1 ));
+                                                    treatment.add( responseReport);
+                                                    response.setTreatment( treatment );
+                                                }
+                                            }
+                                        }
                             response.setCard( card );
                         }
                     }
@@ -211,20 +206,16 @@ public class ReportService {
                        + " left join Record_patient r on r.card_patient_id = c.id_card_patient "
                        + " where p.id_patient = ? and r.date_record BETWEEN ? and ?"
                        + " GROUP BY p.surname, p.name, p.full_name, p.gender, p.phone, p.address, c.diagnosis, c.allergy, c.note, c.сonclusion";
-
             String SQL2 = "SELECT r.id_record, r.date_record, r.date_appointment, r.number_room,d.id_doctor, d.surname, d.name, d.full_name  FROM Record_patient r "
                         + " left join  Doctor d on d.id_doctor = r.doctor_id"
                         + " left join Card_patient c on c.id_card_patient = card_patient_id"
                         + " left join Patient p on p.id_patient = c.pacient_id"
                         + " where p.id_patient = ? and r.date_record BETWEEN ? and ?";
-
             String SQL3 = "SELECT s.name FROM Card_patient c "
                         + " left join Patient p on id_patient = c.pacient_id "
                         + " left join Card_patient_Complaint cpc on cpc.card_patient_id = c.id_card_patient "
                         + " left join Type_complaint s on s.id_type_complaint = cpc.type_complaint_id "
                         + " where p.id_patient = ?";     
-                        
-
             Session session;
             session = em.unwrap( Session.class );
             session.doWork(( Connection conn ) ->{
@@ -266,23 +257,20 @@ public class ReportService {
                                     doctor.setFull_name( rs2.getString( 8 ));
                                     record_patient.setDoctor( doctor );  
                                     list.add( record_patient );  
-
+                                        }
+                                    }
                                 }
-                            }
-                        }
-
-                      List<TypeComplaint> listTypeComplaint = new ArrayList<>();
-                       
-                        try ( PreparedStatement ps3 = conn.prepareStatement( SQL3 )){
-                            ps3.setLong(1 , IdPatient );
-                            try( ResultSet rs3 = ps3.executeQuery() ){
-                                while( rs3.next() ){
-                                    TypeComplaint typeComplaint = new TypeComplaint();
-                                    typeComplaint.setName(rs3.getString(1));
-                                    listTypeComplaint.add( typeComplaint );
-                                }
-                            }
-                        } 
+                                List<TypeComplaint> listTypeComplaint = new ArrayList<>();
+                                    try ( PreparedStatement ps3 = conn.prepareStatement( SQL3 )){
+                                        ps3.setLong(1 , IdPatient );
+                                        try( ResultSet rs3 = ps3.executeQuery() ){
+                                            while( rs3.next() ){
+                                                TypeComplaint typeComplaint = new TypeComplaint();
+                                                typeComplaint.setName(rs3.getString(1));
+                                                listTypeComplaint.add( typeComplaint );
+                                            }
+                                        }
+                                    } 
                             card.setTypeComplaint( listTypeComplaint );
                             report.setCard( card );
                             report.setCount_record_for_time( rs.getLong( 11 ));

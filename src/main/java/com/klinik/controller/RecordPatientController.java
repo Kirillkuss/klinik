@@ -1,6 +1,5 @@
 package com.klinik.controller;
 
-import com.klinik.entity.Doctor;
 import com.klinik.entity.Record_patient;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponse;

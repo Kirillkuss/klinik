@@ -1,16 +1,12 @@
 package com.klinik.controller;
 
 import com.klinik.entity.Card_patient;
-import com.klinik.entity.Patient;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
-import com.klinik.response.ResponseCardPatientByDocument;
 import com.klinik.service.CardPatientService;
-import com.klinik.service.ComplaintService;
 import com.klinik.service.PatientService;
 import com.klinik.service.TypeComplaintService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

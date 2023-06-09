@@ -31,7 +31,7 @@ public class TypeComplaint {
     @Column (name = "id_type_complaint")
     @Schema( name        = "id_type_complaint",
             description = "ИД поджалобы",
-            example     = "1",
+            example     = "100",
             required    = true )
     @JsonInclude(Include.NON_NULL)
     private Long id_type_complaint;
@@ -60,16 +60,5 @@ public class TypeComplaint {
         this.name = name;
         this.complaint = complaint;
     }
-
-    @Override
-    public String toString() {
-        return new StringBuilder()
-                      .append(complaint)
-                      .append("    Ид поджалобы: ").append(id_type_complaint).append(",\n")
-                      .append("    Поджалоба: ").append(name).append("\n") 
-                      .toString();
-    }
-
-
-    
+ 
 }

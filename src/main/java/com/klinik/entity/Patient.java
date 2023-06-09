@@ -5,10 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.klinik.entity.Document;
-
 import java.io.Serializable;
-
 import javax.persistence.*;
 
 @Entity

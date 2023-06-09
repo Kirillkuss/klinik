@@ -2,7 +2,6 @@ package com.klinik.controller;
 
 import com.klinik.entity.*;
 import com.klinik.excep.MyException;
-import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
 import com.klinik.response.ResponseTreatment;
 import com.klinik.service.*;

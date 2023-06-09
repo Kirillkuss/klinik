@@ -1,17 +1,16 @@
 package com.klinik.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 import javax.persistence.*;
 
 @Entity
 @Table( name = "Drug_treatment")
 @Getter
 @Setter
+@ToString
 public class Drug_treatment {
 
     @Id
@@ -31,12 +30,4 @@ public class Drug_treatment {
             required    = true )
     private String name;
 
-    
-    @Override
-    public String toString() {
-        return new StringBuilder("      { \n")
-                      .append("         Ид медикаментозного лечения: ").append(id_drug).append(",\n")  
-                      .append("         Наименование: ").append(name).append("\n        }\n")
-                      .toString();
-    }
 }

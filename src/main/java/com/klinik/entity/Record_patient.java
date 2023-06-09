@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Getter
 @RequiredArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class Record_patient {
 
     @Id
@@ -64,16 +65,4 @@ public class Record_patient {
     @JsonInclude(Include.NON_NULL)
     private Long card_patient_id;
 
-
-    @Override
-    public String toString() {
-        return new StringBuilder(" { \n")
-                      .append("     ИД записи к врачу: ").append(id_record).append(",\n")
-                      .append("     Дата записи: ").append(date_record).append(",\n")
-                      .append("     Дата приема: ").append(date_appointment).append(",\n") 
-                      .append("     Номер кабинета: ").append(number_room)
-                      .append(doctor)   
-                      .append("  }\n")
-                      .toString();
-    }
 }
