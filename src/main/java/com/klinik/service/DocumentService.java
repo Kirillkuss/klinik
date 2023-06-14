@@ -16,7 +16,7 @@ public class DocumentService {
     EntityManager em;
 
     @Autowired
-    private DocumentRepository repository;
+    public DocumentRepository repository;
 
     public List<Document> getAllDocuments() throws Exception{
         return repository.findAll();

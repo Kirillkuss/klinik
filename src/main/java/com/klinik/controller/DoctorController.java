@@ -36,7 +36,7 @@ public class DoctorController {
     }
 
     @Autowired
-    private DoctorService service;
+    DoctorService service;
 
     @GetMapping(value = "/getAll")
     @Operation( description = "Список всех докторов", summary = "Список всех докторов")
@@ -57,7 +57,7 @@ public class DoctorController {
         @ApiResponse( responseCode = "500", description = "Ошибка сервера",     content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
     public BaseResponse findByFIO(@Parameter( description = "ФИО врача") String word ) throws Exception{
-        if( service.findByFIO( word ).isEmpty() == true ) throw new MyException( 999, "По данному запросу ничего не найдено");
+        if( service.findByFIO( word ).isEmpty() == true ) throw new MyException( 417, "По данному запросу ничего не найдено");
         return new BaseResponse<>( 200, "success", service.findByFIO( word )); 
     }
 
@@ -69,7 +69,7 @@ public class DoctorController {
         @ApiResponse( responseCode = "500", description = "Ошибка сервера",   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
     public BaseResponse addDoctor( Doctor doctor ) throws Exception{
-        if (service.findById( doctor.getId_doctor() ) != null ) throw new MyException( 999, "Пользователь с таким ИД уще существует");
+        if (service.findById( doctor.getId_doctor() ) != null ) throw new MyException( 418, "Пользователь с таким ИД уще существует");
         return new BaseResponse<>( 200, "success", service.saveDoctor( doctor ));
     }
 }

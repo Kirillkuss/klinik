@@ -10,7 +10,7 @@ import java.util.List;
 public class DoctorService {
 
     @Autowired
-    private DoctorRerository repository;
+     DoctorRerository repository;
 
     public List<Doctor> allDoctor() throws Exception{
         return repository.findAll();

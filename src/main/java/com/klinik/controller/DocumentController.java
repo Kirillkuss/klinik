@@ -35,7 +35,7 @@ public class DocumentController {
     }
 
     @Autowired
-    private DocumentService service;
+    DocumentService service;
 
     @GetMapping(value = "/getAllDocunets")
     @Operation( description = "Список всех документов", summary = "Список всех документов")
