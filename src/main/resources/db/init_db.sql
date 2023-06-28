@@ -97,6 +97,3 @@ CREATE TABLE Card_patient_Complaint(
 	FOREIGN KEY (card_patient_id) REFERENCES Card_patient(id_card_patient),
 	FOREIGN KEY (type_complaint_id) REFERENCES Type_complaint(id_type_complaint)
 );
-
-
-
