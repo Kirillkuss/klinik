@@ -29,7 +29,7 @@ public class DoctorControllerTest {
     private Doctor doctor = new Doctor();
     private BaseResponse response = new BaseResponse<>();
 
-        @BeforeEach
+    @BeforeEach
     public void setUp() {
         controller = mock( DoctorController.class );
         controller.service = mock( DoctorService.class);
