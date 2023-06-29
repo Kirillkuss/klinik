@@ -1,5 +1,7 @@
 package com.klinik.rest;
 
+import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,26 +25,26 @@ public interface IPatient {
     @GetMapping(value = "/getAllPatients")
     @Operation( description = "Список всех пациентов", summary = "Список всех пациентов")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Получен список всех пациентов", content = { @Content(array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class ))) }),
+            @ApiResponse( responseCode = "200", description = "Получен список всех пациентов", content = { @Content(array = @ArraySchema(schema = @Schema( implementation = Patient.class ))) }),
             @ApiResponse( responseCode = "400", description = "Плохой запрос",                 content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
-    public BaseResponse getAllPatients() throws Exception, MyException;
+    public ResponseEntity<List<Patient>> getAllPatients() throws Exception, MyException;
     @PostMapping( value = "/addPatient")
     @Operation( description = "Добавить пациента", summary = "Добавить пациента")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Пациент добавлен", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class ))) }),
+            @ApiResponse( responseCode = "201", description = "Пациент добавлен", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Patient.class ))) }),
             @ApiResponse( responseCode = "400", description = "Плохой запрос",    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
-    public BaseResponse addPatient(Patient patient,  @Parameter( description = "Ид документа" , example = "1") Long id) throws Exception, MyException;
+    public ResponseEntity<Patient> addPatient(Patient patient,  @Parameter( description = "Ид документа" , example = "1") Long id) throws Exception, MyException;
     @RequestMapping( method = RequestMethod.GET, value = "/findByWord")
     @Operation( description = "Поиск пациента по ФИО или номеру телефона", summary = "Поиск пациента по ФИО или номеру телефона")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Пациент найден", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class ))) }),
+            @ApiResponse( responseCode = "200", description = "Пациент найден", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Patient.class ))) }),
             @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
-    public BaseResponse findByWord( @Parameter( description = "Параметр поиска")  String word ) throws Exception, MyException;
+    public ResponseEntity<List<Patient>> findByWord( @Parameter( description = "Параметр поиска")  String word ) throws Exception, MyException;
     
 }

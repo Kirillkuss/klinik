@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CardPatientController implements ICardPatient{
 
     @ExceptionHandler(Throwable.class)
-    public BaseResponse errBaseResponse( Throwable ex ){
-        return BaseResponse.error( 999, ex );
+    public ResponseEntity errBaseResponse( Throwable ex ){
+        return ResponseEntity.internalServerError().body( BaseResponse.error( 999, ex ) );
     }
 
     @ExceptionHandler(MyException.class)
-    public BaseResponse errBaseResponse( MyException ex ){
-        return BaseResponse.error( ex.getCode(), ex );
+    public ResponseEntity errBaseResponse( MyException ex ){
+        return ResponseEntity.badRequest( ).body( BaseResponse.error( ex.getCode(), ex ));
     }
 
     @Autowired private CardPatientService   cardPatientService;
@@ -48,6 +48,7 @@ public class CardPatientController implements ICardPatient{
     public ResponseEntity<Card_patient> saveCardPatient( Card_patient card_patient, Long id_patient) throws Exception, MyException{
         if( cardPatientService.findByPatientId( id_patient ) != null )                     throw new MyException( 430, "Карта пациента с таким ИД пациента уже существует");
         if( cardPatientService.findByIdCard( card_patient.getId_card_patient() ) != null ) throw new MyException ( 432, "Карта с таким ИД уже существует");
+        if( servicePatient.findById( id_patient ) == null )                                throw new MyException ( 436, "Пациента с таким ИД не существует");
         card_patient.setPatient( servicePatient.findById( id_patient ));
         return new ResponseEntity<>( cardPatientService.saveCardPatient( card_patient ), HttpStatus.OK);
     }

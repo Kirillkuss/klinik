@@ -3,6 +3,9 @@ package com.klinik.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
+
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.klinik.KlinikApplication;
 import com.klinik.entity.Doctor;
@@ -28,6 +32,8 @@ public class DoctorControllerTest {
 
     private Doctor doctor = new Doctor();
     private BaseResponse response = new BaseResponse<>();
+    ResponseEntity<List<Doctor>> listDoctors;
+    ResponseEntity<Doctor> doctors;
 
     @BeforeEach
     public void setUp() {
@@ -43,7 +49,7 @@ public class DoctorControllerTest {
     @Test
     public void testGetAllDoc() throws Exception{
         Mockito.when( controller.getAllDoc()).thenCallRealMethod();
-        Mockito.when( controller.getAllDoc()).thenReturn( response );
+        Mockito.when( controller.getAllDoc()).thenReturn( listDoctors );
         Mockito.when( controller.getAllDoc()).then(( InvocationOnMock inv ) ->{
             return ( BaseResponse ) inv.callRealMethod();
         });
@@ -67,7 +73,7 @@ public class DoctorControllerTest {
     @Test
     public void testAddDoctor() throws Exception{
         Mockito.when( controller.addDoctor( doctor )).thenCallRealMethod();
-        Mockito.when( controller.addDoctor( doctor )).thenReturn( response );
+        Mockito.when( controller.addDoctor( doctor )).thenReturn( doctors );
         Mockito.when( controller.addDoctor( doctor )).then(( InvocationOnMock inv ) ->{
             return ( BaseResponse ) inv.callRealMethod();
         });

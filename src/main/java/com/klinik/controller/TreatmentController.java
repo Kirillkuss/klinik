@@ -10,7 +10,11 @@ import com.klinik.service.DrugService;
 import com.klinik.service.RehabilitationSolutionService;
 import com.klinik.service.TreatmentService;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,13 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class TreatmentController implements ITreatment{
 
     @ExceptionHandler(Throwable.class)
-    public ResponseTreatment errBaseResponse( Throwable ex ){
-        return ResponseTreatment.error( 999, ex );
+    public ResponseEntity<ResponseTreatment> errBaseResponse( Throwable ex ){
+        return ResponseEntity.internalServerError().body( ResponseTreatment.error( 999, ex ));
     }
 
     @ExceptionHandler(MyException.class)
-    public ResponseTreatment errBaseResponse( MyException ex ){
-        return ResponseTreatment.error( ex.getCode(), ex );
+    public ResponseEntity<ResponseTreatment> errBaseResponse( MyException ex ){
+        return ResponseEntity.badRequest().body( ResponseTreatment.error( ex.getCode(), ex ));
     }
 
     @Autowired private TreatmentService              treatmentService;
@@ -32,10 +36,10 @@ public class TreatmentController implements ITreatment{
     @Autowired private CardPatientService            cardPatientService;
     @Autowired private DoctorService                 doctorService;
     @Autowired private DrugService                   serviceDrug;
-    public ResponseTreatment getAllTreatment() throws Exception{
-        return new ResponseTreatment( 200, "успешно", treatmentService.allListTreatment());
+    public ResponseEntity<List<Treatment>> getAllTreatment() throws Exception{
+        return new ResponseEntity<>(treatmentService.allListTreatment(), HttpStatus.OK );
     }
-    public ResponseTreatment addTreatment( Treatment treatment,
+    public ResponseEntity<Treatment> addTreatment( Treatment treatment,
                                            Long drug_id,
                                            Long card_patient_id,
                                            Long rehabilitation_solution_id, 
@@ -49,14 +53,14 @@ public class TreatmentController implements ITreatment{
         treatment.setRehabilitation_solution( rehabilitationSolutionService.findByIdList(rehabilitation_solution_id) );
         treatment.setDoctor( doctorService.findById( doctor_id ) );
         treatment.setDrug( serviceDrug.findById( drug_id ));
-        return new ResponseTreatment( 200, "success", treatmentService.addTreatment( treatment ));              
+        return new ResponseEntity<>( treatmentService.addTreatment( treatment ), HttpStatus.CREATED );              
     }
-    public ResponseTreatment findByParamIdCardAndDateStart( Long id, LocalDateTime dateFrom, LocalDateTime dateTo) throws Exception{
-        return new ResponseTreatment( 200, "success", treatmentService.findByParamIdCardAndDateStart(id, dateFrom, dateTo));
+    public ResponseEntity<List<Treatment>> findByParamIdCardAndDateStart( Long id, LocalDateTime dateFrom, LocalDateTime dateTo) throws Exception{
+        return new ResponseEntity<>( treatmentService.findByParamIdCardAndDateStart(id, dateFrom, dateTo), HttpStatus.OK );
     }
 
-    public ResponseTreatment findByParamIdCardAndIdRh( Long idCard, Long idReSol ) throws Exception{
-        return new ResponseTreatment( 200, "success", treatmentService.findByParamIdCardAndIdRh( idCard, idReSol ));
+    public ResponseEntity<List<Treatment>> findByParamIdCardAndIdRh( Long idCard, Long idReSol ) throws Exception{
+        return new ResponseEntity<>( treatmentService.findByParamIdCardAndIdRh( idCard, idReSol ), HttpStatus.OK );
     }
 
 }
