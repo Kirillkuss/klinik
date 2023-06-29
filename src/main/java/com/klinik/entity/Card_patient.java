@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,9 +14,10 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Table( name = "card_patient")
 @Setter
 @Getter
+@RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Card_patient {
+public class Card_patient  implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -69,9 +71,6 @@ public class Card_patient {
     @JsonInclude(Include.NON_NULL)
     private Patient patient;
 
-    public Card_patient(){
-
-    }
 
     public Card_patient(Long id_card_patient, String diagnosis, Boolean allergy,  String note, String сonclusion , List<TypeComplaint> typeComplaint, Patient patient){
         this.id_card_patient = id_card_patient;

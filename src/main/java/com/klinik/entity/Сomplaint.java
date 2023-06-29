@@ -2,6 +2,7 @@ package com.klinik.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import java.io.Serializable;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -11,9 +12,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @Table( name = "complaint")
 @Setter
 @Getter
+@RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Сomplaint {
+public class Сomplaint implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -31,10 +33,6 @@ public class Сomplaint {
             example     = "Симптомы поражения пирамидного тракта",
             required    = true )
     private String functional_impairment;
-
-    public Сomplaint(){
-
-    }
 
     public Сomplaint( Long id_complaint, String functional_impairment ){
         this.id_complaint = id_complaint;

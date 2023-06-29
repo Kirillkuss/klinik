@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Table( name = "patient")
 @Setter
 @Getter
+@RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode
 public class Patient implements Serializable {
@@ -72,10 +73,6 @@ public class Patient implements Serializable {
     @JoinColumn(name = "document_id", referencedColumnName = "id_document")
     @JsonInclude(Include.NON_NULL)
     private Document document;
-    
-    public Patient(){
-    }
-
         
     public Patient(Long id_patient,  String surname, String name, String full_name, Gender gender ,String phone, String address, Document document ){
         this.id_patient = id_patient;

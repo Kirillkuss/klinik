@@ -1,5 +1,7 @@
 package com.klinik.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +16,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -21,9 +24,10 @@ import lombok.ToString;
 @Table( name = "drug")
 @Setter
 @Getter
+@RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Drug {
+public class Drug implements Serializable{
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -45,10 +49,6 @@ public class Drug {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "drug_id", referencedColumnName = "id_drug")
     private Drug_treatment drugTreatment ;
-
-    public Drug(){
-
-    }
 
     public Drug( Long id_dr, String name, Drug_treatment drugTreatment){
         this.id_dr = id_dr;

@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @RequiredArgsConstructor
 @ToString
-public class Doctor {
+public class Doctor  implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)

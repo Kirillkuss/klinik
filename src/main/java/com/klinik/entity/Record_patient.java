@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -16,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Record_patient {
+public class Record_patient implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)

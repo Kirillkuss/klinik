@@ -32,7 +32,7 @@ public class DoctorControllerTest {
     @BeforeEach
     public void setUp() {
         controller = mock( DoctorController.class );
-        controller.service = mock( DoctorService.class);
+        controller.doctorService = mock( DoctorService.class);
     }
 
     @AfterEach

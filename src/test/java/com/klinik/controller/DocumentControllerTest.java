@@ -35,8 +35,8 @@ public class DocumentControllerTest {
         documentController         = mock( DocumentController.class );
         repository                 = mock( DocumentRepository.class );
         service                    = mock( DocumentService.class );
-        service.repository         = repository;
-        documentController.service = service;
+        service.repository                 = repository;
+        documentController.documentService = service;
 
     }
 

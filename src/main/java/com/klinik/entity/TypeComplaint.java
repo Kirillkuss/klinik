@@ -1,5 +1,6 @@
 package com.klinik.entity;
 
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -22,9 +24,10 @@ import lombok.ToString;
 @Table( name = "Type_complaint")
 @Setter
 @Getter
+@RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class TypeComplaint {
+public class TypeComplaint implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -50,10 +53,6 @@ public class TypeComplaint {
    @JoinColumn(name = "complaint_id", referencedColumnName = "id_complaint")
    @JsonInclude(Include.NON_NULL)
    private Сomplaint complaint;
-
-    public TypeComplaint(){
-
-    }
 
     public TypeComplaint( Long id_type_complaint, String name, Сomplaint complaint ){
         this.id_type_complaint = id_type_complaint;

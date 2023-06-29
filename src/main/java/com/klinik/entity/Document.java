@@ -2,7 +2,7 @@ package com.klinik.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-
+import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Document {
+public class Document  implements Serializable{
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)

@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 //Сущночть лечение
@@ -14,8 +14,9 @@ import java.time.LocalDateTime;
 @Table( name = "Treatment")
 @Setter
 @Getter
+@RequiredArgsConstructor
 @EqualsAndHashCode
-public class Treatment {
+public class Treatment implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)

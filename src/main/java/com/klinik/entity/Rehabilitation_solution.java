@@ -2,6 +2,7 @@ package com.klinik.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import java.io.Serializable;
 import javax.persistence.*;
 
 //Реабилитационное лечение
@@ -10,10 +11,9 @@ import javax.persistence.*;
 @Table( name = "rehabilitation_solution")
 @Setter
 @Getter
-
 @EqualsAndHashCode
 @RequiredArgsConstructor
-public class Rehabilitation_solution {
+public class Rehabilitation_solution  implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
