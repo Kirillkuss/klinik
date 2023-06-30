@@ -1,7 +1,6 @@
 package com.klinik.controller;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,13 +9,15 @@ import com.klinik.excep.MyException;
 import com.klinik.rest.IComplaint;
 import com.klinik.service.ComplaintService;
 import com.klinik.service.TypeComplaintService;
+import lombok.RequiredArgsConstructor;
 import com.klinik.entity.Сomplaint;
 
 @RestController
+@RequiredArgsConstructor
 public class СomplaintController implements IComplaint {
     
-    @Autowired private ComplaintService     complaintService;
-    @Autowired private TypeComplaintService typeComplaintService;
+    private final ComplaintService     complaintService;
+    private final TypeComplaintService typeComplaintService;
     public ResponseEntity<List<Сomplaint>> findAll() throws Exception{
         return new ResponseEntity<>( complaintService.listComplaints(), HttpStatus.OK);
     }

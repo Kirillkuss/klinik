@@ -8,29 +8,30 @@ import com.klinik.service.DoctorService;
 import com.klinik.service.DrugService;
 import com.klinik.service.RehabilitationSolutionService;
 import com.klinik.service.TreatmentService;
+import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class TreatmentController implements ITreatment{
 
-    @Autowired private TreatmentService              treatmentService;
-    @Autowired private RehabilitationSolutionService rehabilitationSolutionService;
-    @Autowired private CardPatientService            cardPatientService;
-    @Autowired private DoctorService                 doctorService;
-    @Autowired private DrugService                   serviceDrug;
+    private final TreatmentService              treatmentService;
+    private final RehabilitationSolutionService rehabilitationSolutionService;
+    private final CardPatientService            cardPatientService;
+    private final DoctorService                 doctorService;
+    private final DrugService                   serviceDrug;
     public ResponseEntity<List<Treatment>> getAllTreatment() throws Exception{
         return new ResponseEntity<>(treatmentService.allListTreatment(), HttpStatus.OK );
     }
     public ResponseEntity<Treatment> addTreatment( Treatment treatment,
-                                           Long drug_id,
-                                           Long card_patient_id,
-                                           Long rehabilitation_solution_id, 
-                                           Long doctor_id ) throws Exception{
+                                                   Long drug_id,
+                                                   Long card_patient_id,
+                                                   Long rehabilitation_solution_id, 
+                                                   Long doctor_id ) throws Exception{
         if( serviceDrug.findById( drug_id) == null )                                          throw new MyException( 400, "Указано неверное значение медикаментозного лечения, укажите другой");
         if( treatmentService.findById( treatment.getId_treatment()) != null  )                throw new MyException( 409, "Лечение с таким ИД уже существует, используйте другой");
         if( rehabilitationSolutionService.findByIdList(rehabilitation_solution_id) == null  ) throw new MyException( 400, "Указано неверное значение реабилитационного лечения, укажите другой");

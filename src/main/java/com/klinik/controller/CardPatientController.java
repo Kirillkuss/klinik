@@ -6,17 +6,18 @@ import com.klinik.rest.ICardPatient;
 import com.klinik.service.CardPatientService;
 import com.klinik.service.PatientService;
 import com.klinik.service.TypeComplaintService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class CardPatientController implements ICardPatient{
 
-    @Autowired private CardPatientService   cardPatientService;
-    @Autowired private PatientService       servicePatient;
-    @Autowired private TypeComplaintService serviceTypeComplaint;
+    private final CardPatientService   cardPatientService;
+    private final PatientService       servicePatient;
+    private final TypeComplaintService serviceTypeComplaint;
 
     public ResponseEntity<Card_patient> findByDocumentPatient( String word ) throws Exception, MyException {
         if ( cardPatientService.findByNumberPolisSnils( word ).getId_card_patient() == null ) throw new MyException( 404, "Карта паицента не найдена");

@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Setter
 @Getter
 @EqualsAndHashCode
-@RequiredArgsConstructor
 @ToString
 public class Doctor  implements Serializable {
 

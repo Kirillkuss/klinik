@@ -2,15 +2,15 @@ package com.klinik.service;
 
 import com.klinik.entity.Doctor;
 import com.klinik.repositories.DoctorRerository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DoctorService {
 
-    @Autowired
-    DoctorRerository doctorRerository;
+    private final DoctorRerository doctorRerository;
 
     public List<Doctor> allDoctor() throws Exception{
         return doctorRerository.findAll();

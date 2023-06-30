@@ -1,16 +1,16 @@
 package com.klinik.service;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.klinik.entity.TypeComplaint;
 import com.klinik.repositories.TypeComplaintRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class TypeComplaintService {
     
-    @Autowired
-    private TypeComplaintRepository typeComplaintRepository;
+    private final  TypeComplaintRepository typeComplaintRepository;
 
     public List<TypeComplaint> findByAll() throws Exception{
         return typeComplaintRepository.findAll();

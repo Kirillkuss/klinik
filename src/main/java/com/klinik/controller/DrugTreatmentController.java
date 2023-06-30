@@ -7,17 +7,18 @@ import com.klinik.rest.IDrugTreatment;
 import com.klinik.service.DrugService;
 import com.klinik.service.DrugTreatmentService;
 import io.swagger.v3.oas.annotations.Parameter;
+import lombok.RequiredArgsConstructor;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class DrugTreatmentController implements IDrugTreatment{
 
-    @Autowired private DrugTreatmentService serviceDrugTreatment;
-    @Autowired private DrugService          drugService; 
+    private final DrugTreatmentService serviceDrugTreatment;
+    private final DrugService          drugService; 
     public ResponseEntity<List<Drug_treatment>> listAll() throws Exception{
         return new ResponseEntity<>( serviceDrugTreatment.getAll(), HttpStatus.OK);
     }

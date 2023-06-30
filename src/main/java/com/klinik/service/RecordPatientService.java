@@ -2,7 +2,7 @@ package com.klinik.service;
 
 import com.klinik.entity.Record_patient;
 import com.klinik.repositories.RecordPatientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,13 +10,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Service
+@RequiredArgsConstructor
 public class RecordPatientService {
 
     @PersistenceContext
     private EntityManager em;
 
-    @Autowired
-    private RecordPatientRepository recordPatientRepository;
+    private final RecordPatientRepository recordPatientRepository;
 
     public List<Record_patient> allListRecordPatient() throws Exception{
         return recordPatientRepository.findAll();

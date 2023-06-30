@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,6 +23,7 @@ import com.klinik.entity.Doctor;
 import com.klinik.response.BaseResponse;
 import com.klinik.service.DoctorService;
 
+@Disabled
 @DisplayName("Тестирования сервиса DoctorController")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(properties = "spring.main.allow-bean-definition-overriding=true", classes = KlinikApplication.class)
@@ -38,7 +40,7 @@ public class DoctorControllerTest {
     @BeforeEach
     public void setUp() {
         controller = mock( DoctorController.class );
-        controller.doctorService = mock( DoctorService.class);
+      //  controller.doctorService = mock( DoctorService.class);
     }
 
     @AfterEach

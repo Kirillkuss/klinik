@@ -5,20 +5,18 @@ import com.klinik.excep.MyException;
 import com.klinik.rest.IPatient;
 import com.klinik.service.DocumentService;
 import com.klinik.service.PatientService;
+import lombok.RequiredArgsConstructor;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 public class PatientController implements IPatient{
 
-    @Autowired
-    private PatientService  patientService;
-    
-    @Autowired
-    private DocumentService documentService;
+    private final PatientService  patientService;
+    private final DocumentService documentService;
     public ResponseEntity<List<Patient>> getAllPatients() throws Exception, MyException{
         return new ResponseEntity<>(patientService.getAllPatients(), HttpStatus.OK );
     }

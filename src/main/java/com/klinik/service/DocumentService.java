@@ -2,7 +2,7 @@ package com.klinik.service;
 
 import com.klinik.entity.Document;
 import com.klinik.repositories.DocumentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
@@ -10,13 +10,13 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DocumentService {
 
     @PersistenceContext
     EntityManager em;
 
-    @Autowired
-    public DocumentRepository documentRepository;
+    public final DocumentRepository documentRepository;
 
     public List<Document> getAllDocuments() throws Exception{
         return documentRepository.findAll();

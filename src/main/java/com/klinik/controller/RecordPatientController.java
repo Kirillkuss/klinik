@@ -6,7 +6,7 @@ import com.klinik.rest.IRecordPatinet;
 import com.klinik.service.CardPatientService;
 import com.klinik.service.DoctorService;
 import com.klinik.service.RecordPatientService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,11 +14,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class RecordPatientController implements IRecordPatinet {
 
-    @Autowired private RecordPatientService recordPatientService;
-    @Autowired private DoctorService        serviceDoctor;
-    @Autowired private CardPatientService   servicePatientCard;
+    private final RecordPatientService recordPatientService;
+    private final DoctorService        serviceDoctor;
+    private final CardPatientService   servicePatientCard;
 
     public ResponseEntity<List<Record_patient>> allListRecordPatient() throws Exception, MyException{
         return new ResponseEntity<>( recordPatientService.allListRecordPatient(), HttpStatus.OK );

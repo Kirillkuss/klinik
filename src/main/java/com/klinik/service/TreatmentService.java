@@ -2,17 +2,16 @@ package com.klinik.service;
 
 import com.klinik.entity.Treatment;
 import com.klinik.repositories.TreatmentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TreatmentService {
 
-
-    @Autowired
-    private TreatmentRepository treatmentRepository;
+    private final TreatmentRepository treatmentRepository;
     /**
      * Получение списка всех лечений 
      * @return List<Treatment>

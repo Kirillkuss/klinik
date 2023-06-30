@@ -2,15 +2,15 @@ package com.klinik.service;
 
 import com.klinik.entity.Rehabilitation_solution;
 import com.klinik.repositories.RehabilitationSolutionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RehabilitationSolutionService {
 
-    @Autowired
-    private RehabilitationSolutionRepository rehabilitationSolutionRepository;
+    private final RehabilitationSolutionRepository rehabilitationSolutionRepository;
 
     public List<Rehabilitation_solution> getAllReha() throws Exception{
         return rehabilitationSolutionRepository.findAll();

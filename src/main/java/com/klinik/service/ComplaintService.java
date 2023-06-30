@@ -3,14 +3,14 @@ package com.klinik.service;
 import java.util.List;
 import com.klinik.entity.Сomplaint;
 import com.klinik.repositories.ComplaintRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ComplaintService {
 
-    @Autowired
-    private ComplaintRepository complaintRepository;
+    private final ComplaintRepository complaintRepository;
 
     public Сomplaint findById( Long id ) throws Exception{
         return complaintRepository.findByIdComplaint( id );

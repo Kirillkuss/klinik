@@ -4,17 +4,17 @@ import com.klinik.entity.Document;
 import com.klinik.excep.MyException;
 import com.klinik.rest.IDocument;
 import com.klinik.service.DocumentService;
+import lombok.RequiredArgsConstructor;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class DocumentController implements IDocument{
 
-    @Autowired
-    DocumentService documentService;
+    private final DocumentService documentService;
     public ResponseEntity<List<Document>> getAllDocuments() throws Exception, MyException{
         return new ResponseEntity<>( documentService.getAllDocuments(), HttpStatus.OK );
     }

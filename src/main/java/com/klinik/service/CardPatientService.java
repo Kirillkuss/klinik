@@ -7,15 +7,12 @@ import com.klinik.entity.Patient;
 import com.klinik.entity.TypeComplaint;
 import com.klinik.entity.Сomplaint;
 import com.klinik.repositories.CardPatientRepository;
-
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,13 +21,13 @@ import java.util.List;
 import java.util.logging.Level;
 
 @Service
+@RequiredArgsConstructor
 public class CardPatientService {
 
     @PersistenceContext
     EntityManager em;
 
-    @Autowired
-    private CardPatientRepository cardPatientRepository;
+    private final CardPatientRepository cardPatientRepository;
 
     public List<Card_patient> allListCardPatient() throws Exception{
         return cardPatientRepository.findAll();
