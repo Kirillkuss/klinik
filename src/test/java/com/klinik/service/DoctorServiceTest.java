@@ -37,7 +37,7 @@ public class DoctorServiceTest {
     @BeforeEach
     public void setUp() {
         service = mock( DoctorService.class );
-        service.repository = mock( DoctorRerository.class);
+        service.doctorRerository = mock( DoctorRerository.class);
     }
 
     @AfterEach

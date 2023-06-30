@@ -16,21 +16,21 @@ public class RecordPatientService {
     private EntityManager em;
 
     @Autowired
-    private RecordPatientRepository repository;
+    private RecordPatientRepository recordPatientRepository;
 
     public List<Record_patient> allListRecordPatient() throws Exception{
-        return repository.findAll();
+        return recordPatientRepository.findAll();
     }
 
     public Record_patient saveRecordPatient( Record_patient record_patient ) throws Exception{
-        return repository.save( record_patient );
+        return recordPatientRepository.save( record_patient );
     }
 
     public Record_patient findById( Long id ) throws Exception{
-        return repository.findByIdRecordPatient( id );
+        return recordPatientRepository.findByIdRecordPatient( id );
     }
 
     public List<Record_patient> findByParam( Long id, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception{
-     return repository.findByParamTwo(id, dateFrom, dateTo);
+     return recordPatientRepository.findByParamTwo(id, dateFrom, dateTo);
     }
 }

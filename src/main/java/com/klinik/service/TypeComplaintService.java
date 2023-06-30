@@ -10,25 +10,25 @@ import com.klinik.repositories.TypeComplaintRepository;
 public class TypeComplaintService {
     
     @Autowired
-    private TypeComplaintRepository repository;
+    private TypeComplaintRepository typeComplaintRepository;
 
     public List<TypeComplaint> findByAll() throws Exception{
-        return repository.findAll();
+        return typeComplaintRepository.findAll();
     }
 
     public TypeComplaint findById( Long id ) throws Exception{
-        return repository.findById( id ).stream().findFirst().orElse(null);
+        return typeComplaintRepository.findById( id ).stream().findFirst().orElse(null);
     }
 
     public TypeComplaint saveTypeComplaint( TypeComplaint complaint ) throws Exception{
-        return repository.save( complaint );
+        return typeComplaintRepository.save( complaint );
     }
 
-    public TypeComplaint findByNme( String name ) throws Exception{
-        return repository.findName( name );
+    public TypeComplaint findByName( String name ) throws Exception{
+        return typeComplaintRepository.findName( name );
     }
 
      public List<TypeComplaint> findByIdComplaint( Long id ) throws Exception{
-        return repository.findByIdComplaint( id );
+        return typeComplaintRepository.findByIdComplaint( id );
     }
 }

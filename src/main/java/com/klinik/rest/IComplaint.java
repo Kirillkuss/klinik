@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RequestMapping( value = "Сomplaint")
 @Tag(name = "6. Сomplaint", description = "Справочник: Жалобы и под жалобы ")
-public interface IComplaint {
+public interface        IComplaint {
     @GetMapping(value = "/getAll")
     @Operation( description = "Получение справочника жалобы", summary = "Получение справочника жалобы")
     @ApiResponses(value = {
@@ -38,7 +38,7 @@ public interface IComplaint {
     public ResponseEntity saveСomplaint( com.klinik.entity.Сomplaint сomplaint ) throws Exception;
     @Operation( description = "Добавление под жалобы", summary = "Добавление под жалобы")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Добавлена под жалоба", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Сomplaint.class))) }),
+            @ApiResponse( responseCode = "201", description = "Добавлена под жалоба", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Сomplaint.class))) }),
             @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",      content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
@@ -46,7 +46,7 @@ public interface IComplaint {
     public ResponseEntity saveTypeComplaint(TypeComplaint request, @Parameter( description = "ИД жалобы", example = "1") Long idComplaint ) throws Exception;
     @Operation( description = "Получение жалобы с под жалобами", summary = "Получение жалобы с под жалобами")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Получение жалобы с под жалобами", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = TypeComplaint.class))) }),
+            @ApiResponse( responseCode = "201", description = "Получение жалобы с под жалобами", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = TypeComplaint.class))) }),
             @ApiResponse( responseCode = "400", description = "Плохой запрос",                   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })

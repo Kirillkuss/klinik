@@ -38,7 +38,7 @@ public class DocumentServiceTest {
     @BeforeEach
     public void setUp() {
         service = mock( DocumentService.class );
-        service.repository = repository;
+        service.documentRepository = repository;
     }
 
     @AfterEach

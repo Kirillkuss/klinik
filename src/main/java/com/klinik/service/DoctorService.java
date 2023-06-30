@@ -10,22 +10,22 @@ import java.util.List;
 public class DoctorService {
 
     @Autowired
-     DoctorRerository repository;
+    DoctorRerository doctorRerository;
 
     public List<Doctor> allDoctor() throws Exception{
-        return repository.findAll();
+        return doctorRerository.findAll();
     }
 
     public List<Doctor> findByFIO(String word ) throws Exception{
-        return repository.findDoctorByFIO( word );
+        return doctorRerository.findDoctorByFIO( word );
     }
 
     public Doctor findById( Long id) throws Exception{
-        return repository.findByIdDoctor( id );
+        return doctorRerository.findByIdDoctor( id );
     }
 
     public Doctor saveDoctor( Doctor doctor ) throws Exception{
-        return repository.save( doctor );
+        return doctorRerository.save( doctor );
     }
 
 }

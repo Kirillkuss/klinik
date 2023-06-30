@@ -2,7 +2,6 @@ package com.klinik.controller;
 
 import com.klinik.entity.Treatment;
 import com.klinik.excep.MyException;
-import com.klinik.response.ResponseTreatment;
 import com.klinik.rest.ITreatment;
 import com.klinik.service.CardPatientService;
 import com.klinik.service.DoctorService;
@@ -11,25 +10,13 @@ import com.klinik.service.RehabilitationSolutionService;
 import com.klinik.service.TreatmentService;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TreatmentController implements ITreatment{
-
-    @ExceptionHandler(Throwable.class)
-    public ResponseEntity<ResponseTreatment> errBaseResponse( Throwable ex ){
-        return ResponseEntity.internalServerError().body( ResponseTreatment.error( 999, ex ));
-    }
-
-    @ExceptionHandler(MyException.class)
-    public ResponseEntity<ResponseTreatment> errBaseResponse( MyException ex ){
-        return ResponseEntity.badRequest().body( ResponseTreatment.error( ex.getCode(), ex ));
-    }
 
     @Autowired private TreatmentService              treatmentService;
     @Autowired private RehabilitationSolutionService rehabilitationSolutionService;
@@ -44,11 +31,11 @@ public class TreatmentController implements ITreatment{
                                            Long card_patient_id,
                                            Long rehabilitation_solution_id, 
                                            Long doctor_id ) throws Exception{
-        if( serviceDrug.findById( drug_id) == null )                                          throw new MyException( 474, "Указано неверное значение медикаментозного лечения, укажите другой");
-        if( treatmentService.findById( treatment.getId_treatment()) != null  )                throw new MyException( 470, "Лечение с таким ИД уже существует, используйте другой");
-        if( rehabilitationSolutionService.findByIdList(rehabilitation_solution_id) == null  ) throw new MyException( 471, "Указано неверное значение реабилитационного лечения, укажите другой");
-        if( cardPatientService.findByIdCard(card_patient_id ) == null )                       throw new MyException( 472, "Указано неверное значение карты пациента, укажите другой");
-        if( doctorService.findById( doctor_id )  == null )                                    throw new MyException( 473, "Указано неверное значение ид доктора, укажите другой");
+        if( serviceDrug.findById( drug_id) == null )                                          throw new MyException( 400, "Указано неверное значение медикаментозного лечения, укажите другой");
+        if( treatmentService.findById( treatment.getId_treatment()) != null  )                throw new MyException( 409, "Лечение с таким ИД уже существует, используйте другой");
+        if( rehabilitationSolutionService.findByIdList(rehabilitation_solution_id) == null  ) throw new MyException( 400, "Указано неверное значение реабилитационного лечения, укажите другой");
+        if( cardPatientService.findByIdCard(card_patient_id ) == null )                       throw new MyException( 400, "Указано неверное значение карты пациента, укажите другой");
+        if( doctorService.findById( doctor_id )  == null )                                    throw new MyException( 400, "Указано неверное значение ид доктора, укажите другой");
         treatment.setCard_patient_id( cardPatientService.findByIdCard(card_patient_id ).getId_card_patient() );
         treatment.setRehabilitation_solution( rehabilitationSolutionService.findByIdList(rehabilitation_solution_id) );
         treatment.setDoctor( doctorService.findById( doctor_id ) );

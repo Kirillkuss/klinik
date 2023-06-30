@@ -8,24 +8,24 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ServiceDrugTreatment {
+public class DrugTreatmentService {
 
     @Autowired
-    DrugTreatmentRepository repository;
+    DrugTreatmentRepository drugTreatmentRepositoryс;
 
     public List<Drug_treatment> getAll() throws Exception{
-        return repository.findAll();
+        return drugTreatmentRepositoryс.findAll();
     }
 
     public Drug_treatment findById( Long id ) throws Exception{
-        return repository.findById( id ).stream().findFirst().orElse( null);
+        return drugTreatmentRepositoryс.findById( id ).stream().findFirst().orElse( null);
     }
 
     public Drug_treatment addDrugTreatment( Drug_treatment drug_treatment ) throws Exception{
-        return repository.save( drug_treatment );
+        return drugTreatmentRepositoryс.save( drug_treatment );
     }
 
     public Drug_treatment findByName( String name ) throws Exception{
-        return repository.findByName( name );
+        return drugTreatmentRepositoryс.findByName( name );
     }
 }

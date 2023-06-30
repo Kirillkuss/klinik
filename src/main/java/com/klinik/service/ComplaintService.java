@@ -10,22 +10,22 @@ import org.springframework.stereotype.Service;
 public class ComplaintService {
 
     @Autowired
-    private ComplaintRepository repository;
+    private ComplaintRepository complaintRepository;
 
     public Сomplaint findById( Long id ) throws Exception{
-        return repository.findByIdComplaint( id );
+        return complaintRepository.findByIdComplaint( id );
     }
 
     public List<Сomplaint> listComplaints() throws Exception{
-        return repository.findAll();
+        return complaintRepository.findAll();
     }
 
     public Сomplaint saveСomplaint( Сomplaint сomplaint ) throws Exception{
-        return repository.save( сomplaint );
+        return complaintRepository.save( сomplaint );
     }
 
     public Сomplaint findByName( String name ) throws Exception{
-        return repository.findByName( name );
+        return complaintRepository.findByName( name );
     }
 
 }

@@ -12,14 +12,14 @@ public class TreatmentService {
 
 
     @Autowired
-    private TreatmentRepository repository;
+    private TreatmentRepository treatmentRepository;
     /**
      * Получение списка всех лечений 
      * @return List<Treatment>
      * @throws Exception
      */
     public List<Treatment> allListTreatment() throws Exception{
-        return repository.findAll();
+        return treatmentRepository.findAll();
     }
     /**
      * Добавить лечение пациента
@@ -28,7 +28,7 @@ public class TreatmentService {
      * @throws Exception
      */
     public Treatment addTreatment( Treatment treatment ) throws Exception{
-        return repository.save( treatment );
+        return treatmentRepository.save( treatment );
     }
     /**
      * Поиск лечения по ИД лечения 
@@ -37,7 +37,7 @@ public class TreatmentService {
      * @throws Exception
      */
     public Treatment findById( Long id ) throws Exception{
-        return repository.findByIdTreatment( id );
+        return treatmentRepository.findByIdTreatment( id );
     }
     /**
      * Получение списка лечений пациентов по параметрам
@@ -48,7 +48,7 @@ public class TreatmentService {
      * @throws Exception
      */
     public List<Treatment> findByParamIdCardAndDateStart( Long id, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception{
-        return repository.findByParamIdCardAndDateStart(id, dateFrom, dateTo);
+        return treatmentRepository.findByParamIdCardAndDateStart(id, dateFrom, dateTo);
     }
     /**
      * Получение списка лечений пациентов по параметрам
@@ -58,6 +58,6 @@ public class TreatmentService {
      * @throws Exception
      */
     public List<Treatment> findByParamIdCardAndIdRh( Long idCard, Long idReSol ) throws Exception{
-        return repository.findByParamIdCardAndIdRh(idCard, idReSol);
+        return treatmentRepository.findByParamIdCardAndIdRh(idCard, idReSol);
     }
 }

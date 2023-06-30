@@ -10,29 +10,29 @@ import java.util.List;
 public class PatientService {
 
     @Autowired
-    private PatientRepository repository;
+    private PatientRepository patientRepository;
 
     public List<Patient> getAllPatients() throws Exception{
-        return repository.findAll();
+        return patientRepository.findAll();
     }
 
     public Patient addPatient( Patient patient ) throws Exception{
-        return repository.save( patient );
+        return patientRepository.save( patient );
     }
 
     public List<Patient> findByWord( String word ) throws Exception{
-        return repository.findPatientByWord( word );
+        return patientRepository.findPatientByWord( word );
     }
 
     public Patient findById( Long id) throws Exception{
-        return repository.findByIdPatinet( id );
+        return patientRepository.findByIdPatinet( id );
     }
 
     public Patient findByIdDocument( Long id_document ) throws Exception{
-        return repository.findPatientByIdDocument(id_document);
+        return patientRepository.findPatientByIdDocument(id_document);
     }
 
     public Patient findByPhone( String phone ) throws Exception{
-        return repository.findByPhone(phone);
+        return patientRepository.findByPhone(phone);
     }
 }

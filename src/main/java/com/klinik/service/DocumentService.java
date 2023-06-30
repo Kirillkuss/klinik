@@ -16,30 +16,30 @@ public class DocumentService {
     EntityManager em;
 
     @Autowired
-    public DocumentRepository repository;
+    public DocumentRepository documentRepository;
 
     public List<Document> getAllDocuments() throws Exception{
-        return repository.findAll();
+        return documentRepository.findAll();
     }
 
     @Transactional
     public Document addDocument( Document document ) throws Exception{
-        return repository.save( document );
+        return documentRepository.save( document );
     }
 
     public Document findById( Long id ) throws Exception{
-         return repository.findByIdDocument( id );
+         return documentRepository.findByIdDocument( id );
     }
 
     public Document findByNumar( String numar ) throws Exception{
-        return repository.findByNumar( numar );
+        return documentRepository.findByNumar( numar );
     }
 
     public Document findBySnils( String snils ) throws Exception{
-        return repository.findBySnils( snils );
+        return documentRepository.findBySnils( snils );
     }
 
     public Document findByPolis( String polis ) throws Exception{
-        return repository.findByPolis( polis );
+        return documentRepository.findByPolis( polis );
     }
 }

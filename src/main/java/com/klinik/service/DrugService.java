@@ -10,25 +10,25 @@ import com.klinik.repositories.DrugRepository;
 public class DrugService {
 
     @Autowired
-    private DrugRepository repository;
+    private DrugRepository drugRepository;
 
     public List<Drug> findAll() throws Exception{
-        return repository.findAll();
+        return drugRepository.findAll();
     }
 
     public Drug findById( Long id ) throws Exception{
-        return repository.findById(id).stream().findFirst().orElse( null );
+        return drugRepository.findById(id).stream().findFirst().orElse( null );
     }
     
     public Drug saveDrug( Drug drug ) throws Exception{
-        return repository.save( drug );
+        return drugRepository.save( drug );
     }
 
     public Drug findByName( String word ) throws Exception{
-        return repository.findByName( word );
+        return drugRepository.findByName( word );
     }
 
     public List<Drug> findByIdDrugTreatment( Long id  ){
-        return repository.findByIdDrugTreatment( id );
+        return drugRepository.findByIdDrugTreatment( id );
     }
 }

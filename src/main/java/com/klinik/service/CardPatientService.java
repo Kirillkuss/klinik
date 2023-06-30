@@ -30,22 +30,22 @@ public class CardPatientService {
     EntityManager em;
 
     @Autowired
-    private CardPatientRepository repository;
+    private CardPatientRepository cardPatientRepository;
 
     public List<Card_patient> allListCardPatient() throws Exception{
-        return repository.findAll();
+        return cardPatientRepository.findAll();
     }
 
     public Card_patient saveCardPatient( Card_patient card_patient ) throws Exception{
-        return repository.save( card_patient );
+        return cardPatientRepository.save( card_patient );
     }
 
     public Card_patient findByPatientId( Long id ) throws Exception{
-        return repository.findByPatientId( id );
+        return cardPatientRepository.findByPatientId( id );
     }
 
     public Card_patient findByIdCard( Long id ) throws Exception{
-        return repository.findByIdCard(id);
+        return cardPatientRepository.findByIdCard(id);
     }
 
     @Transactional
