@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.klinik.entity.TypeComplaint;
 import com.klinik.entity.Сomplaint;
-import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -17,10 +16,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@RequestMapping( value = "Сomplaint")
+@RequestMapping( value = "complaints")
 @Tag(name = "6. Сomplaint", description = "Справочник: Жалобы и под жалобы ")
 public interface        IComplaint {
-    @GetMapping(value = "/getAll")
+    @GetMapping(value = "/list")
     @Operation( description = "Получение справочника жалобы", summary = "Получение справочника жалобы")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Получен список жалобы", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Сomplaint.class))) }),
@@ -34,23 +33,23 @@ public interface        IComplaint {
             @ApiResponse( responseCode = "400", description = "Плохой запрос",    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
-    @PostMapping( value = "/saveСomplaint")
-    public ResponseEntity saveСomplaint( com.klinik.entity.Сomplaint сomplaint ) throws Exception;
+    @PostMapping( value = "/complaint/{complaint}")
+    public ResponseEntity saveСomplaint( Сomplaint complaint ) throws Exception;
     @Operation( description = "Добавление под жалобы", summary = "Добавление под жалобы")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "201", description = "Добавлена под жалоба", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Сomplaint.class))) }),
             @ApiResponse( responseCode = "400", description = "Плохой запрос",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",      content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
-    @PostMapping( value = "/TypeComplaint")
-    public ResponseEntity saveTypeComplaint(TypeComplaint request, @Parameter( description = "ИД жалобы", example = "1") Long idComplaint ) throws Exception;
+    @PostMapping( value = "/typecomplaint/{request}{id-complaint}")
+    public ResponseEntity saveTypeComplaint(TypeComplaint request, @Parameter( description = "ИД жалобы", example = "1") Long idcomplaint ) throws Exception;
     @Operation( description = "Получение жалобы с под жалобами", summary = "Получение жалобы с под жалобами")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "201", description = "Получение жалобы с под жалобами", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = TypeComplaint.class))) }),
             @ApiResponse( responseCode = "400", description = "Плохой запрос",                   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
-    @GetMapping( "/findComplaintWithTypeComplaints")
-    public ResponseEntity listComplaintWithTypeComplaints( @Parameter( description = "Ид жалобы", example = "1" )Long Id ) throws Exception;
+    @GetMapping( "/type/{id}")
+    public ResponseEntity listComplaintWithTypeComplaints( @Parameter( description = "Ид жалобы", example = "1" )Long id ) throws Exception;
     
 }

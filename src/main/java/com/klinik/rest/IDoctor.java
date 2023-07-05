@@ -15,10 +15,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@RequestMapping( value = "Doctors")
+@RequestMapping( value = "doctors")
 @Tag(name = "1. Doctors", description = "Доктора:")
 public interface IDoctor {
-    @GetMapping(value = "/getAll")
+    @GetMapping(value = "/all")
     @Operation( description = "Список всех докторов", summary = "Список всех докторов")
     @ApiResponses(value = {
         @ApiResponse( responseCode = "200", description = "Список всех докторов", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Doctor.class))) }),
@@ -26,7 +26,7 @@ public interface IDoctor {
         @ApiResponse( responseCode = "500", description = "Ошибка сервера",       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
     public ResponseEntity  getAllDoc() throws Exception;
-    @GetMapping(value = "/FindDoctorByFIO")
+    @GetMapping(value = "/fio/{word}")
     @Operation( description = "Поиск врача по ФИО", summary = "Поиск врача по ФИО")
     @ApiResponses(value = {
         @ApiResponse( responseCode = "200", description = "Поиск врача по ФИО", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Doctor.class))) }),
@@ -34,13 +34,13 @@ public interface IDoctor {
         @ApiResponse( responseCode = "500", description = "Ошибка сервера",     content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
     public ResponseEntity findByFIO(@Parameter( description = "ФИО врача") String word ) throws Exception;
-    @PostMapping( value = "/addDoctor")
+    @PostMapping( value = "/add/{doc}")
     @Operation( description = "Добавить доктора", summary = "Добавить доктора")
     @ApiResponses(value = {
         @ApiResponse( responseCode = "200", description = "Добавить доктора", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Doctor.class))) }),
         @ApiResponse( responseCode = "400", description = "Плохой запрос",    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
         @ApiResponse( responseCode = "500", description = "Ошибка сервера",   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
-    public ResponseEntity addDoctor( Doctor doctor ) throws Exception;
+    public ResponseEntity addDoctor( Doctor doc ) throws Exception;
     
 }

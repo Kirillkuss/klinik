@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@RequestMapping("/Reports")
+@RequestMapping("/reports")
 @Tag(name = "Report", description = "Отчеты:")
 public interface IReport {
     @Operation( description = "Отчет по виду ребилитационного лечения за период времени", summary = "Отчет по виду ребилитационного лечения за период времени")
@@ -32,17 +32,17 @@ public interface IReport {
             @ApiResponse( responseCode = "400", description = "Плохой запрос",                                                    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                                                   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) })
     })
-    @GetMapping("/report_rehabilitation_treatment_for_time")
-    public ResponseEntity<List<ResponseReport>> report( @Parameter( description = "Дата начала выборки:", example = "2021-05-24T14:02:35.584")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
-                                                        @Parameter( description = "Дата конца выборки:", example = "2023-12-24T14:02:35.584")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception;
+    @GetMapping("/rehabilitation-treatments/{from}{to}")
+    public ResponseEntity<List<ResponseReport>> report( @Parameter( description = "Дата начала выборки:", example = "2021-05-24T14:02:35.584")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+                                                        @Parameter( description = "Дата конца выборки:", example = "2023-12-24T14:02:35.584")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to ) throws Exception;
     @Operation( description = "Отчет о полной информации по пациенту", summary = "Отчет о полной информации по пациенту")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Получен отчет о полной информации по пациенту", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = CardPatinetReport.class))) }),
             @ApiResponse( responseCode = "400", description = "Плохой запрос",                                 content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                                content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
-    @GetMapping("/report_full_info_patient")
-    public ResponseEntity<CardPatinetReport> fullInformationPatient( @Parameter( description = "Ид карты пациента:", example = "1")  Long idCard ) throws Exception;
+    @GetMapping("/info-patient/{id-card}")
+    public ResponseEntity<CardPatinetReport> fullInformationPatient( @Parameter( description = "Ид карты пациента:", example = "1")  Long idcard ) throws Exception;
 
     @Operation( description = "Отчет по записям пациента к врачу за период времени", summary = "Отчет по записям пациента к врачу за период времени")
     @ApiResponses(value = {
@@ -50,19 +50,19 @@ public interface IReport {
             @ApiResponse( responseCode = "400", description = "Плохой запрос",                                               content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                                              content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
-    @GetMapping("/report_info_report_patient")
-    public ResponseEntity<RecordPatientReport> findInformationAboutRecordPatient( @Parameter( description = "ИД пациента:",         example = "1") Long IdPatient,
-                                                                                  @Parameter( description = "Дата начала выборки:", example = "2023-01-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
-                                                                                  @Parameter( description = "Дата начала выборки:", example = "2023-12-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception;
+    @GetMapping("/report-patient/{id-patient}{from}{to}")
+    public ResponseEntity<RecordPatientReport> findInformationAboutRecordPatient( @Parameter( description = "ИД пациента:",         example = "1") Long idpatient,
+                                                                                  @Parameter( description = "Дата начала выборки:", example = "2023-01-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+                                                                                  @Parameter( description = "Дата начала выборки:", example = "2023-12-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to ) throws Exception;
     @Operation( description = "Отчет о медикаментозном лечении за период времени", summary = "Отчет о медикаментозном лечении за период времени")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Получен отчет о медикаментозном лечении за период времени", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ReportDrug.class))) }),
             @ApiResponse( responseCode = "400", description = "Плохой запрос",                                             content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                                            content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
-    @GetMapping( "/report_drug_treatment")
-    public ResponseEntity<List<ReportDrug>> getReportDrug(@Parameter( description = "Дата начала выборки:", example = "2023-01-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
-                                                          @Parameter( description = "Дата начала выборки:", example = "2023-12-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception;
+    @GetMapping( "/drug-treatment/{from}{to}")
+    public ResponseEntity<List<ReportDrug>> getReportDrug(@Parameter( description = "Дата начала выборки:", example = "2023-01-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+                                                          @Parameter( description = "Дата начала выборки:", example = "2023-12-24T14:02:35.584") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to ) throws Exception;
     
 }
 

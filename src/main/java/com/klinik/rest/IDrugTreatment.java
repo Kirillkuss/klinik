@@ -19,10 +19,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@RequestMapping( value = "DrugTreatment")
+@RequestMapping( value = "drug-treatments")
 @Tag(name = "8. Drug Treatment", description = "Справочник: Медикаментозное лечение и препараты")
 public interface IDrugTreatment {
-    @GetMapping( "/getAllDrugTreatments")
+    @GetMapping( "/list")
     @Operation( description = "Список всех медикаментозных лечений", summary = "Список всех медикаментозных лечений")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Получен список всех медикаментозных лечений", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Drug_treatment.class ))) }),
@@ -30,7 +30,7 @@ public interface IDrugTreatment {
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                              content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
     })
     public ResponseEntity<List<Drug_treatment>> listAll() throws Exception;
-    @GetMapping( "/findById")
+    @GetMapping( "/drug-treatment/{id}")
     @Operation( description = "Поиск по ИД медикаментозного лечения c препаратами", summary = "Поиск по ИД медикаментозного лечения с препаратами")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Найдено медикоментозное лечение по ИД", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Drug.class ))) }),
@@ -44,15 +44,15 @@ public interface IDrugTreatment {
             @ApiResponse( responseCode = "400", description = "Плохой запрос",                     content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
     })
-    @PostMapping( "/addDrug_treatment")
-    public ResponseEntity<Drug_treatment> addDrugTreatment( Drug_treatment drug_treatment ) throws Exception;
+    @PostMapping( "/add/drug-treatment/{drug-treatment}")
+    public ResponseEntity<Drug_treatment> addDrugTreatment( Drug_treatment drugtreatment ) throws Exception;
     @Operation( description = "Добавить препарат для медикаментозного лечения", summary = "Добавить препарат для медикаментозного лечения")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Добавлен препарат для медикаментозного лечения", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Drug.class ))) }),
             @ApiResponse( responseCode = "400", description = "Плохой запрос",                                  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                                 content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
     })
-    @PostMapping("/addDrug")
-    public ResponseEntity<Drug> saveDrug( Drug drug, @Parameter( description = "ИД мед. лечения", example = "1" ) Long idDrugTreatment ) throws Exception;
+    @PostMapping("/add/drug/{request}{id-drug-treatment}")
+    public ResponseEntity<Drug> saveDrug( Drug drug, @Parameter( description = "ИД мед. лечения", example = "1" ) Long idrugtreatment ) throws Exception;
     
 }
