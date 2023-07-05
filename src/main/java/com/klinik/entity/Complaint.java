@@ -15,32 +15,32 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Сomplaint implements Serializable {
+public class Complaint implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_complaint")
-    @Schema( name        = "id_complaint",
+    @Schema( name        = "idComplaint",
             description = "ИД жалобы",
             example     = "100",
             required    = true )
     @JsonInclude(Include.NON_NULL)        
-    private Long id_complaint;
+    private Long idComplaint;
 
     @Column( name = "functional_impairment")
-    @Schema( name        = "functional_impairment",
+    @Schema( name        = "functionalImpairment",
             description = "Наименование жалобы",
             example     = "Симптомы поражения пирамидного тракта",
             required    = true )
-    private String functional_impairment;
+    private String functionalImpairment;
 
-    public Сomplaint( Long id_complaint, String functional_impairment ){
-        this.id_complaint = id_complaint;
-        this.functional_impairment = functional_impairment;
+    public Complaint( Long idComplaint, String functionalImpairment ){
+        this.idComplaint = idComplaint;
+        this.functionalImpairment = functionalImpairment;
     }
 
-    public Сomplaint( String functional_impairment ){
-        this.functional_impairment = functional_impairment;  
+    public Complaint( String functionalImpairment ){
+        this.functionalImpairment = functionalImpairment;  
     }
 
 }

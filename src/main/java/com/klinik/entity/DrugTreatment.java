@@ -14,17 +14,17 @@ import javax.persistence.*;
 @Setter
 @RequiredArgsConstructor
 @ToString
-public class Drug_treatment  implements Serializable {
+public class DrugTreatment  implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_drug")
-    @Schema( name        = "id_drug",
+    @Schema( name        = "idDrugTreatment",
             description = "ИД медикаментозного лечения",
             example     = "100",
             required    = true )
 
-    private Long id_drug;
+    private Long idDrugTreatment;
 
     @Column( name = "name")
     @Schema( name        = "name",

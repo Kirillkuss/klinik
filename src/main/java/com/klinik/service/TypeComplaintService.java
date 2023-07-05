@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.klinik.entity.TypeComplaint;
-import com.klinik.entity.Сomplaint;
+import com.klinik.entity.Complaint;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.ComplaintRepository;
 import com.klinik.repositories.TypeComplaintRepository;
@@ -20,10 +20,10 @@ public class TypeComplaintService {
         return typeComplaintRepository.findAll();
     }
     public TypeComplaint saveTypeComplaint( TypeComplaint typeComplaint, Long idComplaint ) throws Exception{
-        Optional<Сomplaint> complaint = complaintRepository.findById( idComplaint);
+        Optional<Complaint> complaint = complaintRepository.findById( idComplaint);
         if( complaint.isEmpty() == true )      throw new MyException( 400, "Неверный параметр, жалоба с таким ИД не существует");
         if( typeComplaintRepository.findName( typeComplaint.getName()).isEmpty() == false ) throw new MyException( 409, "Под жалоба с таким наименованием уже существует");
-        if( typeComplaintRepository.findById( typeComplaint.getId_type_complaint()).isEmpty() == false ) throw new MyException( 409, "Под жалоба с таким ИД уже существует");
+        if( typeComplaintRepository.findById( typeComplaint.getIdTypeComplaint()).isEmpty() == false ) throw new MyException( 409, "Под жалоба с таким ИД уже существует");
         typeComplaint.setComplaint( complaint.get() );
         return typeComplaintRepository.save( typeComplaint );
     }

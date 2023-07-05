@@ -1,6 +1,6 @@
 package com.klinik.controller;
 
-import com.klinik.entity.Rehabilitation_solution;
+import com.klinik.entity.RehabilitationSolution;
 import com.klinik.rest.IRehabilitationSolution;
 import com.klinik.service.RehabilitationSolutionService;
 import lombok.RequiredArgsConstructor;
@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class RehabilitationSolutionController implements IRehabilitationSolution {
 
     private final RehabilitationSolutionService rehabilitationSolutionService;
-    public ResponseEntity<List<Rehabilitation_solution>> getAllRehabilitationSolution() throws Exception{
+    public ResponseEntity<List<RehabilitationSolution>> getAllRehabilitationSolution() throws Exception{
         return new ResponseEntity<>( rehabilitationSolutionService.getAll(), HttpStatus.OK );
     }
-    public ResponseEntity<Rehabilitation_solution> findByName( String name ) throws Exception{
+    public ResponseEntity<RehabilitationSolution> findByName( String name ) throws Exception{
         return new ResponseEntity<>( rehabilitationSolutionService.findByName( name ), HttpStatus.OK );
     }
-    public ResponseEntity<Rehabilitation_solution> save( Rehabilitation_solution solution ) throws Exception{
+    public ResponseEntity<RehabilitationSolution> save( RehabilitationSolution solution ) throws Exception{
         return new ResponseEntity<>( rehabilitationSolutionService.saveRS( solution ), HttpStatus.CREATED );
     }
 }

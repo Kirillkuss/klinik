@@ -18,12 +18,12 @@ public class Doctor  implements Serializable {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_doctor")
-    @Schema( name        = "id_doctor",
+    @Schema( name        = "idDoctor",
             description = "ИД доктора",
             example     = "1",
             required    = true )
     @JsonInclude(Include.NON_NULL)
-    private Long id_doctor;
+    private Long idDoctor;
 
     @Column( name = "surname")
     @Schema( name        = "surname",
@@ -40,10 +40,10 @@ public class Doctor  implements Serializable {
     private String name;
 
     @Column( name = "full_name")
-    @Schema( name        = "full_name",
+    @Schema( name        = "fullName",
             description = "Отчество",
             example     = "Петрович",
             required    = true )
-    private String full_name;
+    private String fullName;
 
 }

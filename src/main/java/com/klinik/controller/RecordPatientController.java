@@ -1,6 +1,6 @@
 package com.klinik.controller;
 
-import com.klinik.entity.Record_patient;
+import com.klinik.entity.RecordPatient;
 import com.klinik.excep.MyException;
 import com.klinik.rest.IRecordPatinet;
 import com.klinik.service.RecordPatientService;
@@ -16,13 +16,13 @@ import java.util.List;
 public class RecordPatientController implements IRecordPatinet {
 
     private final RecordPatientService recordPatientService;
-    public ResponseEntity<List<Record_patient>> allListRecordPatient() throws Exception, MyException{
+    public ResponseEntity<List<RecordPatient>> allListRecordPatient() throws Exception, MyException{
         return new ResponseEntity<>( recordPatientService.allListRecordPatient(), HttpStatus.OK );
     }
-    public ResponseEntity addRecordPatient( Record_patient record_patient, Long doctor_id, Long card_patient_id ) throws Exception, MyException{
-        return new ResponseEntity<>( recordPatientService.saveRecordPatient( record_patient,  doctor_id, card_patient_id ), HttpStatus.CREATED );                
+    public ResponseEntity addRecordPatient( RecordPatient recordPatient, Long idDoctor, Long idCardPatient ) throws Exception, MyException{
+        return new ResponseEntity<>( recordPatientService.saveRecordPatient( recordPatient,  idDoctor, idCardPatient ), HttpStatus.CREATED );                
     }
-    public ResponseEntity<List<Record_patient>> findByParams( Long id, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception, MyException{
+    public ResponseEntity<List<RecordPatient>> findByParams( Long id, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception, MyException{
         return new ResponseEntity<>( recordPatientService.findByParam( id, dateFrom, dateTo ), HttpStatus.OK );
     } 
 }

@@ -21,14 +21,14 @@ public class Document  implements Serializable{
             description = "ИД документа",
             example     = "100",
             required    = true )
-    private Long id_document;
+    private Long idDocument;
 
     @Column( name = "type_document")
     @Schema( name        = "type_document",
             description = "Тип документа",
             example     = "Паспорт",
             required    = true )
-    private String type_document;
+    private String typeDocument;
 
     @Column( name = "seria")
     @Schema( name        = "seria",

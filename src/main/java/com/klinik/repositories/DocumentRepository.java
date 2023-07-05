@@ -20,7 +20,7 @@ public interface DocumentRepository extends JpaRepository<Document,Long> {
     @Query( "SELECT u FROM Document u WHERE u.polis = :polis")
     Document findByPolis( String polis );
 
-    @Query("select e from Document e where e.id = :id")
+    @Query("select e from Document e where e.idDocument = :id")
     Optional<Document> findByIdDocument( Long id );
     
 }

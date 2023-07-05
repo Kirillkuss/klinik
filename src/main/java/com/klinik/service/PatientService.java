@@ -24,7 +24,7 @@ public class PatientService {
     public Patient addPatient( Patient patient, Long id ) throws Exception{
         if( patientRepository.findByPhone( patient.getPhone() ) != null )  throw new MyException( 409, "Пользователь с таким номером телефона уже существует, укажите другой");
         if( patientRepository.findPatientByIdDocument( id ) != null )      throw new MyException( 400, "Неверное значение ИД документа, попробуйте другой");
-        if( patientRepository.findById( patient.getId_patient()).isEmpty() != true ) throw new MyException( 409, "Пользователь с таким ИД уже существует");
+        if( patientRepository.findById( patient.getIdPatient()).isEmpty() != true ) throw new MyException( 409, "Пользователь с таким ИД уже существует");
         Optional<Document> document = documentRepository.findByIdDocument( id );
         if( document.isEmpty() == true ) throw new MyException( 400, "Документ с таким ИД не существует");
         patient.setDocument( document.get() );

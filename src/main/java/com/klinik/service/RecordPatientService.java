@@ -1,8 +1,8 @@
 package com.klinik.service;
 
-import com.klinik.entity.Card_patient;
+import com.klinik.entity.CardPatient;
 import com.klinik.entity.Doctor;
-import com.klinik.entity.Record_patient;
+import com.klinik.entity.RecordPatient;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.CardPatientRepository;
 import com.klinik.repositories.DoctorRerository;
@@ -20,20 +20,20 @@ public class RecordPatientService {
     private final RecordPatientRepository recordPatientRepository;
     private final DoctorRerository        doctorRerository;
     private final CardPatientRepository   cardPatientRepository;
-    public List<Record_patient> allListRecordPatient() {
+    public List<RecordPatient> allListRecordPatient() {
         return recordPatientRepository.findAll();
     }
-    public Record_patient saveRecordPatient( Record_patient record_patient, Long doctor_id, Long card_patient_id ) throws Exception{
+    public RecordPatient saveRecordPatient( RecordPatient record_patient, Long doctor_id, Long card_patient_id ) throws Exception{
         Optional<Doctor> doctor = doctorRerository.findById( doctor_id );
         if ( doctor.isEmpty() == true ) throw new MyException( 400, "Нет доктора с таким идентификатором");
-        Optional<Card_patient> cardPatient = cardPatientRepository.findById( card_patient_id );
+        Optional<CardPatient> cardPatient = cardPatientRepository.findById( card_patient_id );
         if ( cardPatient.isEmpty() == true ) throw new MyException( 400, "Нет карты пациента с таким идентификатором");
-        if ( recordPatientRepository.findById( record_patient.getId_record()).isPresent() == true) throw new MyException( 409, "Запись к врачу с таким ИД уже существует, установите другой ИД записи к врачу");
+        if ( recordPatientRepository.findById( record_patient.getIdRecord()).isPresent() == true) throw new MyException( 409, "Запись к врачу с таким ИД уже существует, установите другой ИД записи к врачу");
         record_patient.setDoctor( doctor.get() );;
-        record_patient.setCard_patient_id( cardPatient.get().getId_card_patient() );
+        record_patient.setCardPatientId( cardPatient.get().getIdCardPatient() );
         return recordPatientRepository.save( record_patient );
     }
-    public List<Record_patient> findByParam( Long id, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception{
+    public List<RecordPatient> findByParam( Long id, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception{
      return recordPatientRepository.findByParamTwo(id, dateFrom, dateTo);
     }
 }

@@ -1,6 +1,6 @@
 package com.klinik.service;
 
-import com.klinik.entity.Rehabilitation_solution;
+import com.klinik.entity.RehabilitationSolution;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.RehabilitationSolutionRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,17 +13,17 @@ public class RehabilitationSolutionService {
 
     private final RehabilitationSolutionRepository rehabilitationSolutionRepository;
 
-    public List<Rehabilitation_solution> getAll() {
+    public List<RehabilitationSolution> getAll() {
         return rehabilitationSolutionRepository.findAll();
     }
 
-    public Rehabilitation_solution findByName( String name ) throws Exception{
+    public RehabilitationSolution findByName( String name ) throws Exception{
         return rehabilitationSolutionRepository.findByName( name ).orElseThrow();
     }
 
-    public Rehabilitation_solution saveRS(Rehabilitation_solution solution) throws Exception{
+    public RehabilitationSolution saveRS(RehabilitationSolution solution) throws Exception{
         if( rehabilitationSolutionRepository.findByName( solution.getName() ).isPresent() == true ) throw new MyException( 409, "Ребилитационное лечение с таким наименованием уже существует");
-        if( rehabilitationSolutionRepository.findById( solution.getId_rehabilitation_solution() ).isPresent() == true ) throw new MyException( 409, "Ребилитационное лечение с таким ИД уже существует");
+        if( rehabilitationSolutionRepository.findById( solution.getIdRehabilitationSolution() ).isPresent() == true ) throw new MyException( 409, "Ребилитационное лечение с таким ИД уже существует");
         return rehabilitationSolutionRepository.save( solution );
     }
  }

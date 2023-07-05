@@ -26,7 +26,7 @@ public class Patient implements Serializable {
             example     = "100",
             required    = true )
     @JsonInclude(Include.NON_NULL) 
-    private Long id_patient;
+    private Long idPatient;
 
     @Column( name = "surname")
     @Schema( name        = "surname",
@@ -43,11 +43,11 @@ public class Patient implements Serializable {
     private String name;
 
     @Column( name = "full_name")
-    @Schema( name        = "full_name",
+    @Schema( name        = "fullName",
             description = "Отчество",
             example     = "Петрович",
             required    = true )
-    private String full_name;
+    private String fullName;
 
     @Column( name = "gender")
     @Schema( name        = "gender",
@@ -74,21 +74,21 @@ public class Patient implements Serializable {
     @JsonInclude(Include.NON_NULL)
     private Document document;
         
-    public Patient(Long id_patient,  String surname, String name, String full_name, Gender gender ,String phone, String address, Document document ){
-        this.id_patient = id_patient;
+    public Patient(Long idPatient,  String surname, String name, String fullName, Gender gender ,String phone, String address, Document document ){
+        this.idPatient = idPatient;
         this.surname = surname;
         this.name = name;
-        this.full_name = full_name;
+        this.fullName = fullName;
         this.gender = gender;
         this.phone = phone;
         this.address = address;
         this.document = document;
     }
 
-    public Patient(  String surname, String name, String full_name, Gender gender ,String phone, String address ){
+    public Patient(  String surname, String name, String fullName, Gender gender ,String phone, String address ){
         this.surname = surname;
         this.name = name;
-        this.full_name = full_name;
+        this.fullName = fullName;
         this.gender = gender;
         this.phone = phone;
         this.address = address;

@@ -12,6 +12,6 @@ import com.klinik.entity.TypeComplaint;
 public interface TypeComplaintRepository extends JpaRepository<TypeComplaint, Long> {
     @Query( "SELECT u from TypeComplaint u WHERE u.name = :name")
     Optional<TypeComplaint> findName( String name);
-    @Query( "SELECT u FROM  TypeComplaint u WHERE u.complaint.id_complaint = :id")
+    @Query( "SELECT u FROM  TypeComplaint u WHERE u.complaint.idComplaint = :id")
     List<TypeComplaint> findByIdComplaint( Long id );
 }

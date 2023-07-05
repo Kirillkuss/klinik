@@ -13,16 +13,16 @@ import javax.persistence.*;
 @Getter
 @EqualsAndHashCode
 @RequiredArgsConstructor
-public class Rehabilitation_solution  implements Serializable {
+public class RehabilitationSolution  implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_rehabilitation_solution")
-    @Schema( name        = "id_rehabilitation_solution",
+    @Schema( name        = "idRehabilitationSolution",
             description = "ИД реабилитационного лечения",
             example     = "100",
             required    = true )
-    private Long id_rehabilitation_solution;
+    private Long idRehabilitationSolution;
 
     @Column( name = "name")
     @Schema( name        = "name",
@@ -32,10 +32,10 @@ public class Rehabilitation_solution  implements Serializable {
     private String name;
 
     @Column( name = "survey_plan")
-    @Schema( name        = "survey_plan",
+    @Schema( name        = "surveyPlan",
             description = "План обследования",
             example     = "План реабилитационного лечения",
             required    = true )
-    private String survey_plan;
+    private String surveyPlan;
 
 }

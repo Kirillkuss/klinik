@@ -31,7 +31,7 @@ public interface IPatient {
     public ResponseEntity<List<Patient>> getAllPatients() throws Exception, MyException;
     @PostMapping( value = "/add/{pat}{id-document}")
     @Operation( description = "Добавить пациента", summary = "Добавить пациента")
-    public ResponseEntity<Patient> addPatient( Patient patient,  @Parameter( description = "Ид документа" , example = "1") Long idocument) throws Exception, MyException;
+    public ResponseEntity<Patient> addPatient( Patient patient,  @Parameter( description = "Ид документа" , example = "1") Long idDocument) throws Exception, MyException;
     @RequestMapping( method = RequestMethod.GET, value = "/find/{word}")
     @Operation( description = "Поиск пациента по ФИО или номеру телефона", summary = "Поиск пациента по ФИО или номеру телефона")
     public ResponseEntity<List<Patient>> findByWord( @Parameter( description = "Параметр поиска")  String word ) throws Exception, MyException;

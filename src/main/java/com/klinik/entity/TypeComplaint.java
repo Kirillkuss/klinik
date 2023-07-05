@@ -32,12 +32,12 @@ public class TypeComplaint implements Serializable {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column (name = "id_type_complaint")
-    @Schema( name        = "id_type_complaint",
+    @Schema( name        = "idTypeComplaint",
             description = "ИД поджалобы",
             example     = "100",
             required    = true )
     @JsonInclude(Include.NON_NULL)
-    private Long id_type_complaint;
+    private Long idTypeComplaint;
 
     @Column( name = "name")
     @Schema( name        = "name",
@@ -52,10 +52,10 @@ public class TypeComplaint implements Serializable {
    @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "complaint_id", referencedColumnName = "id_complaint")
    @JsonInclude(Include.NON_NULL)
-   private Сomplaint complaint;
+   private Complaint complaint;
 
-    public TypeComplaint( Long id_type_complaint, String name, Сomplaint complaint ){
-        this.id_type_complaint = id_type_complaint;
+    public TypeComplaint( Long idTypeComplaint, String name, Complaint complaint ){
+        this.idTypeComplaint = idTypeComplaint;
         this.name = name;
         this.complaint = complaint;
     }

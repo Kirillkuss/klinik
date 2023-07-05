@@ -1,6 +1,6 @@
 package com.klinik.repositories;
 
-import com.klinik.entity.Card_patient;
+import com.klinik.entity.CardPatient;
 
 import java.util.Optional;
 
@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CardPatientRepository extends JpaRepository<Card_patient, Long> {
+public interface CardPatientRepository extends JpaRepository<CardPatient, Long> {
 
-    @Query("SELECT u FROM Card_patient u where u.patient.id_patient = :id")
-    Optional<Card_patient> findByPatientId( Long id );
+    @Query("SELECT u FROM CardPatient u where u.patient.idPatient = :id")
+    Optional<CardPatient> findByPatientId( Long id );
 }

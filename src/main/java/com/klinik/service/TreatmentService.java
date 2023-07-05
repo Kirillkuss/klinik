@@ -1,9 +1,9 @@
 package com.klinik.service;
 
-import com.klinik.entity.Card_patient;
+import com.klinik.entity.CardPatient;
 import com.klinik.entity.Doctor;
 import com.klinik.entity.Drug;
-import com.klinik.entity.Rehabilitation_solution;
+import com.klinik.entity.RehabilitationSolution;
 import com.klinik.entity.Treatment;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.CardPatientRepository;
@@ -21,11 +21,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TreatmentService {
 
-    private final TreatmentRepository treatmentRepository;
-    private final DrugRepository drugRepository;
+    private final TreatmentRepository              treatmentRepository;
+    private final DrugRepository                   drugRepository;
     private final RehabilitationSolutionRepository rehabilitationSolutionRepository;
-    private final CardPatientRepository cardPatientRepository;
-    private final DoctorRerository doctorRerository;
+    private final CardPatientRepository            cardPatientRepository;
+    private final DoctorRerository                 doctorRerository;
     /**
      * Получение списка всех лечений 
      * @return List<Treatment>
@@ -44,14 +44,14 @@ public class TreatmentService {
                                    Long rehabilitation_solution_id, Long doctor_id ) throws Exception{
         Optional<Drug> drug = drugRepository.findById( drug_id);
         Optional<Doctor> doctor = doctorRerository.findById( doctor_id );
-        Optional<Rehabilitation_solution> rehabilitationSolution = rehabilitationSolutionRepository.findById(rehabilitation_solution_id);
-        Optional<Card_patient> cardPatietn = cardPatientRepository.findById(card_patient_id );
+        Optional<RehabilitationSolution> rehabilitationSolution = rehabilitationSolutionRepository.findById(rehabilitation_solution_id);
+        Optional<CardPatient> cardPatietn = cardPatientRepository.findById(card_patient_id );
         if( drug.isEmpty() == true ) throw new MyException( 400, "Указано неверное значение медикаментозного лечения, укажите другой");
         if( treatmentRepository.findById( treatment.getId_treatment()).isPresent() == true ) throw new MyException( 409, "Лечение с таким ИД уже существует, используйте другой");
         if( rehabilitationSolution.isEmpty() == true ) throw new MyException( 400, "Указано неверное значение реабилитационного лечения, укажите другой");
         if( cardPatietn.isEmpty() == true ) throw new MyException( 400, "Указано неверное значение карты пациента, укажите другой");
         if( doctor.isEmpty() == true ) throw new MyException( 400, "Указано неверное значение ид доктора, укажите другой");
-        treatment.setCard_patient_id( cardPatietn.get().getId_card_patient() );
+        treatment.setCard_patient_id( cardPatietn.get().getIdCardPatient() );
         treatment.setRehabilitation_solution( rehabilitationSolution.get() );
         treatment.setDoctor( doctor.get());
         treatment.setDrug( drug.get());

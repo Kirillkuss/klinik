@@ -17,40 +17,40 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Record_patient implements Serializable {
+public class RecordPatient implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_record")
-    @Schema( name        = "id_record",
+    @Schema( name        = "idRecord",
             description = "ИД записи пациента",
             example     = "100",
             required    = true )
     @JsonInclude(Include.NON_NULL)
-    private Long id_record;
+    private Long idRecord;
 
     @Column( name = "date_record")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @Schema( name        = "date_record",
+    @Schema( name        = "dateRecord",
             description = "Дата и время записи",
             example     = "2023-01-19T12:00:00.000Z",
             required    = true )
-    private LocalDateTime date_record;
+    private LocalDateTime dateRecord;
 
     @Column( name = "date_appointment")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @Schema( name        = "date_appointment",
+    @Schema( name        = "dateAppointment",
             description = "Дата и время приема",
             example     = "2023-02-01T14:00:00.605Z",
             required    = true )
-    private LocalDateTime date_appointment;
+    private LocalDateTime dateAppointment;
 
     @Column( name = "number_room")
-    @Schema( name        = "number_room",
+    @Schema( name        = "numberRoom",
             description = "Номер кабинета",
             example     = "203",
             required    = true )
-    private Long number_room;
+    private Long numberRoom;
 
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
@@ -59,11 +59,11 @@ public class Record_patient implements Serializable {
 
     @Hidden
     @Column( name = "card_patient_id")
-    @Schema( name        = "card_patient_id",
+    @Schema( name        = "cardPatientId",
             description = "ИД карты",
             example     = "1",
             required    = true )
     @JsonInclude(Include.NON_NULL)
-    private Long card_patient_id;
+    private Long cardPatientId;
 
 }

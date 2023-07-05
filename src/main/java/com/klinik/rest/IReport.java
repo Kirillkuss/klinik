@@ -35,7 +35,7 @@ public interface IReport {
                                                         @Parameter( description = "Дата конца выборки:", example = "2023-12-24T14:02:35.584")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to ) throws Exception;
     @Operation( description = "Отчет о полной информации по пациенту", summary = "Отчет о полной информации по пациенту")
     @GetMapping("/info-patient/{id-card}")
-    public ResponseEntity<CardPatinetReport> fullInformationPatient( @Parameter( description = "Ид карты пациента:", example = "1")  Long idcard ) throws Exception;
+    public ResponseEntity<CardPatinetReport> fullInformationPatient( @Parameter( description = "Ид карты пациента:", example = "1")  Long idCard ) throws Exception;
 
     @Operation( description = "Отчет по записям пациента к врачу за период времени", summary = "Отчет по записям пациента к врачу за период времени")
     @GetMapping("/report-patient/{id-patient}{from}{to}")

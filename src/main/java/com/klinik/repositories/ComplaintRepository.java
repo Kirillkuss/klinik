@@ -4,11 +4,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import com.klinik.entity.Сomplaint;
+import com.klinik.entity.Complaint;
 
 @Repository
-public interface ComplaintRepository extends JpaRepository<Сomplaint, Long> {
-    @Query( "SELECT u from Сomplaint u WHERE u.functional_impairment = :name")
-    Optional<Сomplaint> findByName( String name );
+public interface ComplaintRepository extends JpaRepository<Complaint, Long> {
+    @Query( "SELECT u from Complaint u WHERE u.functionalImpairment = :name")
+    Optional<Complaint> findByName( String name );
     
 }

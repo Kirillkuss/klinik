@@ -52,7 +52,7 @@ public class Treatment implements Serializable {
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "rehabilitation_solution_id", referencedColumnName = "id_rehabilitation_solution")
-    private Rehabilitation_solution rehabilitation_solution;
+    private RehabilitationSolution rehabilitation_solution;
 
     @Hidden
     @Column( name = "card_patient_id")

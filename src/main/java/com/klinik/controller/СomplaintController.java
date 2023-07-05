@@ -10,7 +10,7 @@ import com.klinik.rest.IComplaint;
 import com.klinik.service.ComplaintService;
 import com.klinik.service.TypeComplaintService;
 import lombok.RequiredArgsConstructor;
-import com.klinik.entity.Сomplaint;
+import com.klinik.entity.Complaint;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,10 +18,10 @@ public class СomplaintController implements IComplaint {
     
     private final ComplaintService     complaintService;
     private final TypeComplaintService typeComplaintService;
-    public ResponseEntity<List<Сomplaint>> findAll() throws Exception{
+    public ResponseEntity<List<Complaint>> findAll() throws Exception{
         return new ResponseEntity<>( complaintService.listComplaints(), HttpStatus.OK);
     }
-    public ResponseEntity<Сomplaint> saveСomplaint( Сomplaint сomplaint ) throws Exception{
+    public ResponseEntity<Complaint> saveСomplaint( Complaint сomplaint ) throws Exception{
         return new ResponseEntity<>(complaintService.saveСomplaint( сomplaint ), HttpStatus.CREATED );
     }
     public ResponseEntity<TypeComplaint> saveTypeComplaint( TypeComplaint request, Long idComplaint ) throws Exception{

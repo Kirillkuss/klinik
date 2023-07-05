@@ -13,13 +13,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
-import com.klinik.entity.Card_patient;
+import com.klinik.entity.CardPatient;
 import com.klinik.entity.Doctor;
 import com.klinik.entity.Gender;
 import com.klinik.entity.Patient;
-import com.klinik.entity.Record_patient;
+import com.klinik.entity.RecordPatient;
 import com.klinik.entity.TypeComplaint;
-import com.klinik.entity.Сomplaint;
+import com.klinik.entity.Complaint;
 import com.klinik.excep.MyException;
 import com.klinik.response.ReportDrug;
 import com.klinik.response.report.CardPatinetReport;
@@ -134,7 +134,7 @@ public class ReportService {
                     st.setLong(1 , idCardPatient);
                     try( ResultSet rs = st.executeQuery() ){
                         while( rs.next() ){
-                            Card_patient card = new Card_patient();
+                            CardPatient card = new CardPatient();
                             card.setDiagnosis( rs.getString( 1 ));
                             card.setAllergy( rs.getBoolean( 2 ));
                             card.setNote( rs.getString( 3 ));
@@ -142,7 +142,7 @@ public class ReportService {
                             Patient patient = new Patient();
                             patient.setSurname( rs.getString(5));
                             patient.setName( rs.getString(6));
-                            patient.setFull_name( rs.getString(7));
+                            patient.setFullName( rs.getString(7));
                             patient.setGender( rs.getInt(8) == 0 ? Gender.Man : Gender.Woman );
                             patient.setPhone( rs.getString(9));
                             patient.setAddress( rs.getString(10));
@@ -155,8 +155,8 @@ public class ReportService {
                                         while( rs3.next() ){
                                             TypeComplaint typeComplaint = new TypeComplaint();
                                             typeComplaint.setName( rs3.getString( 1 ));
-                                            Сomplaint complaint = new Сomplaint();
-                                            complaint.setFunctional_impairment( rs3.getString( 2 ));
+                                            Complaint complaint = new Complaint();
+                                            complaint.setFunctionalImpairment( rs3.getString( 2 ));
                                             typeComplaint.setComplaint( complaint );
                                             complaints.add( typeComplaint );
                                         }
@@ -226,11 +226,11 @@ public class ReportService {
                     try( ResultSet rs = ps.executeQuery() ){
                         while( rs.next() ){
                             Patient patient = new Patient();
-                            Card_patient card = new Card_patient();
-                            List<Record_patient> list = new ArrayList<>();
+                            CardPatient card = new CardPatient();
+                            List<RecordPatient> list = new ArrayList<>();
                             patient.setSurname( rs.getString( 1 ));
                             patient.setName( rs.getString( 2 ));
-                            patient.setFull_name( rs.getString( 3 ));
+                            patient.setFullName( rs.getString( 3 ));
                             patient.setGender( rs.getInt( 4 ) == 0 ? Gender.Man : Gender.Woman );
                             patient.setPhone( rs.getString( 5 ));
                             patient.setAddress( rs.getString( 6 ));
@@ -245,16 +245,16 @@ public class ReportService {
                                 ps2.setTimestamp( 3, Timestamp.valueOf( dateTo ));
                                 try( ResultSet rs2 = ps2.executeQuery() ){
                                     while( rs2.next() ){
-                                    Record_patient record_patient = new Record_patient();
+                                    RecordPatient record_patient = new RecordPatient();
                                     Doctor doctor = new Doctor();
-                                    record_patient.setId_record(rs2.getLong(1));
-                                    record_patient.setDate_record( rs2.getTimestamp(2).toLocalDateTime() );
-                                    record_patient.setDate_appointment( rs2.getTimestamp(3).toLocalDateTime());
-                                    record_patient.setNumber_room( rs2.getLong( 4 ));
-                                    doctor.setId_doctor( rs2.getLong( 5));
+                                    record_patient.setIdRecord(rs2.getLong(1));
+                                    record_patient.setDateRecord( rs2.getTimestamp(2).toLocalDateTime() );
+                                    record_patient.setDateAppointment( rs2.getTimestamp(3).toLocalDateTime());
+                                    record_patient.setNumberRoom( rs2.getLong( 4 ));
+                                    doctor.setIdDoctor( rs2.getLong( 5));
                                     doctor.setSurname( rs2.getString( 6 ));
                                     doctor.setName( rs2.getString( 7 ));
-                                    doctor.setFull_name( rs2.getString( 8 ));
+                                    doctor.setFullName( rs2.getString( 8 ));
                                     record_patient.setDoctor( doctor );  
                                     list.add( record_patient );  
                                         }

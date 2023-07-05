@@ -1,14 +1,14 @@
 package com.klinik.repositories;
 
-import com.klinik.entity.Drug_treatment;
+import com.klinik.entity.DrugTreatment;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DrugTreatmentRepository extends JpaRepository<Drug_treatment, Long> {
+public interface DrugTreatmentRepository extends JpaRepository<DrugTreatment, Long> {
 
-    @Query( "SELECT u FROM Drug_treatment u WHERE u.name = :name")
-    Optional<Drug_treatment> findByName( String name );
+    @Query( "SELECT u FROM DrugTreatment u WHERE u.name = :name")
+    Optional<DrugTreatment> findByName( String name );
 }

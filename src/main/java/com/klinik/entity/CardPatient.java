@@ -17,17 +17,17 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Card_patient  implements Serializable {
+public class CardPatient  implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_card_patient")
-    @Schema( name        = "id_card_patient",
+    @Schema( name        = "idCardPatient",
             description = "ИД карты пациента",
             example     = "100",
             required    = true )
     @JsonInclude(Include.NON_NULL)
-    private Long id_card_patient;
+    private Long idCardPatient;
 
     @Column( name = "diagnosis")
     @Schema( name        = "diagnosis",
@@ -72,8 +72,8 @@ public class Card_patient  implements Serializable {
     private Patient patient;
 
 
-    public Card_patient(Long id_card_patient, String diagnosis, Boolean allergy,  String note, String сonclusion , List<TypeComplaint> typeComplaint, Patient patient){
-        this.id_card_patient = id_card_patient;
+    public CardPatient(Long idCardPatient, String diagnosis, Boolean allergy,  String note, String сonclusion , List<TypeComplaint> typeComplaint, Patient patient){
+        this.idCardPatient = idCardPatient;
         this.diagnosis = diagnosis;
         this.allergy = allergy;
         this.note = note;
@@ -82,7 +82,7 @@ public class Card_patient  implements Serializable {
         this.patient = patient;
     }
 
-    public Card_patient(String diagnosis, Boolean allergy,  String note, String сonclusion , List<TypeComplaint> typeComplaint, Patient patient){
+    public CardPatient(String diagnosis, Boolean allergy,  String note, String сonclusion , List<TypeComplaint> typeComplaint, Patient patient){
         this.diagnosis = diagnosis;
         this.allergy = allergy;
         this.note = note;
@@ -91,7 +91,7 @@ public class Card_patient  implements Serializable {
         this.patient = patient;
     }
 
-    public Card_patient(String diagnosis, Boolean allergy,  String note, String сonclusion , Patient patient){
+    public CardPatient(String diagnosis, Boolean allergy,  String note, String сonclusion , Patient patient){
         this.diagnosis = diagnosis;
         this.allergy = allergy;
         this.note = note;

@@ -32,11 +32,11 @@ public class Drug implements Serializable{
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_dr")
-    @Schema( name        = "id_dr",
+    @Schema( name        = "idDrug",
             description = "ИД лекарства",
             example     = "100",
             required    = true )
-    private Long id_dr;
+    private Long idDrug;
 
     @Column( name = "name")
     @Schema( name        = "name",
@@ -48,21 +48,12 @@ public class Drug implements Serializable{
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "drug_id", referencedColumnName = "id_drug")
-    private Drug_treatment drugTreatment ;
+    private DrugTreatment drugTreatment ;
 
-    public Drug( Long id_dr, String name, Drug_treatment drugTreatment){
-        this.id_dr = id_dr;
+    public Drug( Long idDrug, String name, DrugTreatment drugTreatment){
+        this.idDrug = idDrug;
         this.name = name;
         this.drugTreatment = drugTreatment;
-    }
-
-    @Override
-    public String toString() {
-        return new StringBuilder("  Препарат { \n")
-                      .append("  1. Ид препарата: ").append(id_dr).append(",\n")
-                      .append("  2. Наименование: ").append(name).append(",\n")  
-                      .append("  3. Мед. лечения:").append(drugTreatment).append("\n  }\n")
-                      .toString();
     }
     
 }

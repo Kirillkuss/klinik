@@ -23,14 +23,14 @@ public class TreatmentController implements ITreatment{
     public ResponseEntity<List<Treatment>> getAllTreatment() throws Exception{
         return new ResponseEntity<>(treatmentService.allListTreatment(), HttpStatus.OK );
     }
-    public ResponseEntity<Treatment> addTreatment( Treatment treatment, Long drug_id, Long card_patient_id,
-                                                   Long rehabilitation_solution_id, Long doctor_id ) throws Exception{
-        return new ResponseEntity<>( treatmentService.addTreatment( treatment, drug_id, card_patient_id, rehabilitation_solution_id, doctor_id ), HttpStatus.CREATED );              
+    public ResponseEntity<Treatment> addTreatment( Treatment treatment, Long idDrug, Long idCardPatient,
+                                                   Long idRehabilitationSolution, Long idDoctor ) throws Exception{
+        return new ResponseEntity<>( treatmentService.addTreatment( treatment, idDrug, idCardPatient, idRehabilitationSolution, idDoctor ), HttpStatus.CREATED );              
     }
     public ResponseEntity<List<Treatment>> findByParamIdCardAndDateStart( Long id, LocalDateTime dateFrom, LocalDateTime dateTo) throws Exception{
         return new ResponseEntity<>( treatmentService.findByParamIdCardAndDateStart(id, dateFrom, dateTo), HttpStatus.OK );
     }
-    public ResponseEntity<List<Treatment>> findByParamIdCardAndIdRh( Long idCard, Long idReSol ) throws Exception{
-        return new ResponseEntity<>( treatmentService.findByParamIdCardAndIdRh( idCard, idReSol ), HttpStatus.OK );
+    public ResponseEntity<List<Treatment>> findByParamIdCardAndIdRh( Long idCard, Long idRehabilitationSolution ) throws Exception{
+        return new ResponseEntity<>( treatmentService.findByParamIdCardAndIdRh( idCard, idRehabilitationSolution ), HttpStatus.OK );
     }
 }

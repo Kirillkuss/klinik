@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import com.klinik.entity.Drug;
-import com.klinik.entity.Drug_treatment;
+import com.klinik.entity.DrugTreatment;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.DrugRepository;
 import com.klinik.repositories.DrugTreatmentRepository;
@@ -22,9 +22,9 @@ public class DrugService {
         return drugRepository.findAll();
     }
     public Drug saveDrug( Drug drug,  Long idDrugTreatment ) throws Exception{
-        Optional<Drug_treatment> drugTreatment = drugTreatmentRepository.findById( idDrugTreatment );
+        Optional<DrugTreatment> drugTreatment = drugTreatmentRepository.findById( idDrugTreatment );
         if ( drugTreatment.isEmpty() == true ) throw new MyException( 400, "Медикаментозное лечение с таким ИД не существует");
-        if ( drugRepository.findById( drug.getId_dr() ).isPresent() == true ) throw new MyException( 409, "Препарат с такми ИД уже существует");
+        if ( drugRepository.findById( drug.getIdDrug()).isPresent() == true ) throw new MyException( 409, "Препарат с такми ИД уже существует");
         if ( drugRepository.findByName( drug.getName() ).isPresent() == true ) throw new MyException( 409, "Препарат с такми наименованием уже существует");
         drug.setDrugTreatment( drugTreatment.get() );
         return drugRepository.save( drug );

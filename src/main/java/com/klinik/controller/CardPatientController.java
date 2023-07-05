@@ -1,6 +1,6 @@
 package com.klinik.controller;
 
-import com.klinik.entity.Card_patient;
+import com.klinik.entity.CardPatient;
 import com.klinik.excep.MyException;
 import com.klinik.rest.ICardPatient;
 import com.klinik.service.CardPatientService;
@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class CardPatientController implements ICardPatient{
 
     private final CardPatientService   cardPatientService;
-    public ResponseEntity<Card_patient> findByDocumentPatient( String word ) throws Exception, MyException {
+    public ResponseEntity<CardPatient> findByDocumentPatient( String word ) throws Exception, MyException {
         return new ResponseEntity<>( cardPatientService.findByNPS( word ), HttpStatus.OK );
     } 
-    public ResponseEntity<Card_patient> getByIdCard( Long id ) throws Exception, MyException {
+    public ResponseEntity<CardPatient> getByIdCard( Long id ) throws Exception, MyException {
         return new ResponseEntity<>(cardPatientService.findByIdCard( id ), HttpStatus.OK);
     }
-    public ResponseEntity<Card_patient> getByIdPatient ( Long id ) throws Exception, MyException {
+    public ResponseEntity<CardPatient> getByIdPatient ( Long id ) throws Exception, MyException {
         return new ResponseEntity<>( cardPatientService.findByPatientId( id ), HttpStatus.OK );
     }
-    public ResponseEntity<Card_patient> saveCardPatient( Card_patient card_patient, Long id_patient) throws Exception, MyException{
+    public ResponseEntity<CardPatient> saveCardPatient( CardPatient card_patient, Long id_patient) throws Exception, MyException{
         return new ResponseEntity<>( cardPatientService.saveCardPatient( card_patient, id_patient ), HttpStatus.OK);
     }
     public ResponseEntity saveComplaintToCardPatient( Long idCard, Long idComplaint ) throws Exception, MyException{

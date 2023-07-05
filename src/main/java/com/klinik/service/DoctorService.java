@@ -24,7 +24,7 @@ public class DoctorService {
     }
 
     public Doctor saveDoctor( Doctor doctor ) throws Exception{
-        if ( doctorRerository.findById( doctor.getId_doctor() ).isPresent() == true) throw new MyException( 409, "Пользователь с таким ИД уще существует");
+        if ( doctorRerository.findById( doctor.getIdDoctor() ).isPresent() == true) throw new MyException( 409, "Пользователь с таким ИД уще существует");
         return doctorRerository.save( doctor );
     }
 
