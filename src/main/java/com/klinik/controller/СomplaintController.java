@@ -21,20 +21,13 @@ public class СomplaintController implements IComplaint {
     public ResponseEntity<List<Сomplaint>> findAll() throws Exception{
         return new ResponseEntity<>( complaintService.listComplaints(), HttpStatus.OK);
     }
-    public ResponseEntity<Сomplaint> saveСomplaint( com.klinik.entity.Сomplaint сomplaint ) throws Exception{
-        if( complaintService.findById( сomplaint.getId_complaint() ) !=null )            throw new MyException( 409, "Справочник жалоба с таким ИД уже существует");
-        if( complaintService.findByName( сomplaint.getFunctional_impairment() ) !=null ) throw new MyException( 409, "Справочник жалоба с таким наименованием уже существует");
+    public ResponseEntity<Сomplaint> saveСomplaint( Сomplaint сomplaint ) throws Exception{
         return new ResponseEntity<>(complaintService.saveСomplaint( сomplaint ), HttpStatus.CREATED );
     }
     public ResponseEntity<TypeComplaint> saveTypeComplaint( TypeComplaint request, Long idComplaint ) throws Exception{
-        if( complaintService.findById( idComplaint) == null )                        throw new MyException( 400, "Неверный параметр, жалоба с таким ИД не существует");
-        if( typeComplaintService.findByName( request.getName()) != null)             throw new MyException( 409, "Под жалоба с таким наименованием уже существует");
-        if( typeComplaintService.findById( request.getId_type_complaint()) != null ) throw new MyException( 409, "Под жалоба с таким ИД уже существует");
-        request.setComplaint( complaintService.findById( idComplaint ));
-        return new ResponseEntity<>( typeComplaintService.saveTypeComplaint( request ), HttpStatus.CREATED );
+        return new ResponseEntity<>( typeComplaintService.saveTypeComplaint( request, idComplaint ), HttpStatus.CREATED );
     }
     public ResponseEntity<List<TypeComplaint>> listComplaintWithTypeComplaints( Long Id ) throws Exception{
-        if( complaintService.findById( Id ) == null ) throw new MyException( 404, "Жалобы с таким ИД не существует");
         return new ResponseEntity<>( typeComplaintService.findByIdComplaint( Id ), HttpStatus.OK );
     }
  

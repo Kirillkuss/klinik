@@ -1,4 +1,4 @@
-package com.klinik.service;
+/**package com.klinik.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.klinik.KlinikApplication;
 import com.klinik.entity.Doctor;
+import com.klinik.repositories.DoctorRerository;
 
 @Disabled
 @DisplayName("Тестирования сервиса DoctorService")
@@ -26,36 +28,36 @@ public class DoctorServiceTest {
     @Autowired 
     private DoctorService service;
 
-    private List<Doctor> list = new ArrayList<>();
-    private Doctor doctor = new Doctor();
+    @Autowired 
+    DoctorRerository doctorRerository;
 
+    private List<Doctor> list = new ArrayList<>();
+    private Optional<Doctor> doctor;
     @BeforeEach
     public void setUp() {
         service = mock( DoctorService.class );
-        //service.doctorRerository = mock( DoctorRerository.class);
+        doctorRerository = mock( DoctorRerository.class );
     }
-
     @AfterEach
     public void tearDown() {
     }
-
     @DisplayName( "Поиск доктора по Ид")
     @Test
 	public void testFindById() throws Exception {
-        Mockito.when( service.findById( 1L )).thenCallRealMethod();
-        Mockito.when( service.findById( 1L )).thenReturn( doctor );
-        Mockito.when( service.findById( 1L )).then(( InvocationOnMock inv ) ->{
+        Mockito.when( doctorRerository.findById( 1L )).thenCallRealMethod();
+        Mockito.when( doctorRerository.findById( 1L )).thenReturn( doctor );
+        Mockito.when( doctorRerository.findById( 1L )).then(( InvocationOnMock inv ) ->{
             return ( Doctor ) inv.callRealMethod();
         });
-        assertEquals(service.findById( 1L ), service.findById( 1L )); 
-        Mockito.verify( service, times( 2 )).findById( 1L );
+        assertEquals(doctorRerository.findById( 1L ), doctorRerository.findById( 1L )); 
+        Mockito.verify( doctorRerository, times( 2 )).findById( 1L );
 	}
     
     @DisplayName("Получение списка всех докторов")
     @Test
     public void testFindAll() throws Exception{
         Mockito.when( service.allDoctor() ).thenCallRealMethod();
-        Mockito.when( service.allDoctor() ).thenReturn(list);
+        Mockito.when( service.allDoctor() ).thenReturn( list );
         Mockito.when( service.allDoctor() ).thenAnswer(( InvocationOnMock inv ) ->{
             return ( List<Doctor>) inv.callRealMethod();
         });
@@ -88,4 +90,4 @@ public class DoctorServiceTest {
         Mockito.verify( service, times( 2 )).saveDoctor( doctor );
     }
   
-}
+}*/

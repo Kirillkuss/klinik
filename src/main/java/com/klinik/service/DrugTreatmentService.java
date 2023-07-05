@@ -1,6 +1,7 @@
 package com.klinik.service;
 
 import com.klinik.entity.Drug_treatment;
+import com.klinik.excep.MyException;
 import com.klinik.repositories.DrugTreatmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,21 +11,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DrugTreatmentService {
 
-    private final DrugTreatmentRepository drugTreatmentRepositoryс;
+    private final DrugTreatmentRepository drugTreatmentRepository;
 
     public List<Drug_treatment> getAll() throws Exception{
-        return drugTreatmentRepositoryс.findAll();
+        return drugTreatmentRepository.findAll();
     }
-
-    public Drug_treatment findById( Long id ) throws Exception{
-        return drugTreatmentRepositoryс.findById( id ).stream().findFirst().orElse( null);
-    }
-
     public Drug_treatment addDrugTreatment( Drug_treatment drug_treatment ) throws Exception{
-        return drugTreatmentRepositoryс.save( drug_treatment );
-    }
-
-    public Drug_treatment findByName( String name ) throws Exception{
-        return drugTreatmentRepositoryс.findByName( name );
+        if ( drugTreatmentRepository.findById( drug_treatment.getId_drug()).isPresent() == true ) throw new MyException( 409, "Медикаментозное лечение с таким ИД уже существует");
+        if ( drugTreatmentRepository.findByName( drug_treatment.getName() ).isPresent() == true ) throw new MyException( 409, "Медикаментозное лечение с таким наименование уже существует");
+        return drugTreatmentRepository.save( drug_treatment );
     }
 }

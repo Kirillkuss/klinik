@@ -6,7 +6,10 @@ import com.klinik.entity.Gender;
 import com.klinik.entity.Patient;
 import com.klinik.entity.TypeComplaint;
 import com.klinik.entity.Сomplaint;
+import com.klinik.excep.MyException;
 import com.klinik.repositories.CardPatientRepository;
+import com.klinik.repositories.PatientRepository;
+import com.klinik.repositories.TypeComplaintRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 
 @Service
@@ -27,26 +31,32 @@ public class CardPatientService {
     @PersistenceContext
     EntityManager em;
 
+    private final TypeComplaintRepository typeComplaintRepository;
     private final CardPatientRepository cardPatientRepository;
+    private final PatientRepository     patientRepository;
 
-    public List<Card_patient> allListCardPatient() throws Exception{
-        return cardPatientRepository.findAll();
-    }
-
-    public Card_patient saveCardPatient( Card_patient card_patient ) throws Exception{
+    public Card_patient saveCardPatient( Card_patient card_patient,  Long id_patient ) throws Exception{
+        if( cardPatientRepository.findByPatientId( id_patient ).isEmpty() == false)       throw new MyException( 409, "Карта пациента с таким ИД пациента уже существует");
+        if( cardPatientRepository.findById( card_patient.getId_card_patient() ).isEmpty() == false ) throw new MyException ( 409, "Карта с таким ИД уже существует");
+        Optional<Patient> patient = patientRepository.findById( id_patient );
+        if( patient.isEmpty() == true ) throw new MyException ( 400, "Пациента с таким ИД не существует");
+        card_patient.setPatient( patient.get());
         return cardPatientRepository.save( card_patient );
     }
 
     public Card_patient findByPatientId( Long id ) throws Exception{
-        return cardPatientRepository.findByPatientId( id );
+        return cardPatientRepository.findByPatientId( id ).orElseThrow();
     }
 
     public Card_patient findByIdCard( Long id ) throws Exception{
-        return cardPatientRepository.findByIdCard(id);
+        return cardPatientRepository.findById( id ).orElseThrow();
     }
 
     @Transactional
     public void addCardPatientComplaint( Long IdCard, Long IdComplaint ) throws Exception{
+        if ( cardPatientRepository.findById( IdCard ).isEmpty() == true ) throw new MyException ( 400, "Карта с таким ИД не существует");
+        if ( typeComplaintRepository.findById( IdComplaint ).isEmpty() == true ) throw new MyException ( 400, "Под жалобы с таким ИД не существует");
+        if ( findByIdCardAndIdComplaint(IdCard, IdComplaint).getId_card_patient() != null ) throw new MyException ( 409, "Под жалоба с таким ИД уже добавлена в карту пацинета");
         em.createNativeQuery( "INSERT INTO Card_patient_Complaint(card_patient_id, type_complaint_id) VALUES (?,?)")
                 .setParameter(1, IdCard)
                 .setParameter( 2, IdComplaint)
@@ -156,7 +166,8 @@ public class CardPatientService {
 
             }catch ( Exception ex ){
                 java.util.logging.Logger.getLogger( CardPatientService.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            }        
+            }
+            if ( card.getId_card_patient() == null ) throw new MyException( 404, "Карта паицента не найдена");        
             return card;
         }
 

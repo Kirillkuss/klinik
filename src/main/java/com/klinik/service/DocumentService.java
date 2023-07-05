@@ -1,20 +1,16 @@
 package com.klinik.service;
 
 import com.klinik.entity.Document;
+import com.klinik.excep.MyException;
 import com.klinik.repositories.DocumentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class DocumentService {
-
-    @PersistenceContext
-    EntityManager em;
 
     public final DocumentRepository documentRepository;
 
@@ -24,22 +20,11 @@ public class DocumentService {
 
     @Transactional
     public Document addDocument( Document document ) throws Exception{
+        if ( documentRepository.findByIdDocument( document.getId_document()).isEmpty() == false ) throw new MyException( 409, "Документ с таким ИД документа уже существует, используйте другой ИД");
+        if ( documentRepository.findByNumar( document.getNumar()) != null ) throw new MyException( 409, "Документ с таким номером документа уже существует");
+        if ( documentRepository.findByPolis( document.getPolis()) != null ) throw new MyException( 409, "Документ с таким полисом уже существует");
+        if ( documentRepository.findBySnils( document.getSnils()) != null ) throw new MyException( 409, "Документ с таким СНИЛСом уже существует");
         return documentRepository.save( document );
     }
 
-    public Document findById( Long id ) throws Exception{
-         return documentRepository.findByIdDocument( id );
-    }
-
-    public Document findByNumar( String numar ) throws Exception{
-        return documentRepository.findByNumar( numar );
-    }
-
-    public Document findBySnils( String snils ) throws Exception{
-        return documentRepository.findBySnils( snils );
-    }
-
-    public Document findByPolis( String polis ) throws Exception{
-        return documentRepository.findByPolis( polis );
-    }
 }

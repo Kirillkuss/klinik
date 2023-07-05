@@ -12,7 +12,4 @@ public interface RecordPatientRepository extends JpaRepository<Record_patient,Lo
 
     @Query("SELECT u FROM Record_patient u WHERE u.card_patient_id = :id and (( u.date_record >= :fromLDT)  and (  u.date_record <= :toLDT))" )
     List<Record_patient> findByParamTwo( Long id, LocalDateTime fromLDT, LocalDateTime toLDT) throws Exception;
-
-    @Query( "SELECT e FROM Record_patient e WHERE e.id_record = :id")
-    Record_patient findByIdRecordPatient( Long id) throws Exception;
 }

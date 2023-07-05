@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +35,7 @@ public class DocumentServiceTest {
 
     private DocumentService service;
 
-    private Document document = new Document();
+    private Optional<Document> document = null;
     private List<Document> list = new ArrayList<>();
 
     @BeforeEach
@@ -58,76 +59,6 @@ public class DocumentServiceTest {
         assertNotNull( service.getAllDocuments());
         Mockito.verify( service, times(1)).getAllDocuments();
     }
-
-    @DisplayName( "Поиск документа по ИД документа")
-    @Test
-    public void testFindDocumentById() throws Exception{
-        Long IdDocument = 1L;
-        Mockito.when( service.findById( IdDocument )).thenCallRealMethod();
-        Mockito.when( service.findById( IdDocument )).thenReturn(document);
-        Mockito.when( service.findById( IdDocument )).then(( InvocationOnMock inv ) ->{
-            return ( Document ) inv.callRealMethod();
-        });
-        assertNotNull( service.findById( IdDocument ));
-        Mockito.verify( service, times(1)).findById( IdDocument );
-    }
-
-    @DisplayName( "Добавить документ")
-    @Test
-    public void testaAddDocument() throws Exception{
-        Long IdDocument = 1L;
-        Mockito.when( service.findById( IdDocument )).then(( InvocationOnMock inv ) ->{
-            return ( Document ) inv.callRealMethod();
-        });
-        assertNotNull( document =  service.findById( IdDocument ));
-        Mockito.when( service.addDocument(document)).thenCallRealMethod();
-        Mockito.when( service.addDocument(document)).thenReturn(document);
-        Mockito.when( service.addDocument(document)).then(( InvocationOnMock inv ) ->{
-            return ( Document ) inv.callRealMethod();
-        });
-        assertNotNull( service.addDocument(document));
-        Mockito.verify( service, times(1)).addDocument(document);
-    }
-
-    @DisplayName("Поиск документа по номеру")
-    @Test
-    public void testFindByNumar() throws Exception{
-        String numar = "123243411";
-        Mockito.when( service.findByNumar(numar)).thenCallRealMethod();
-        Mockito.when( service.findByNumar(numar)).thenReturn(document);
-        Mockito.when( service.findByNumar(numar)).then(( InvocationOnMock inv ) ->{
-            return ( Document ) inv.callRealMethod();
-        });
-        assertNotNull( service.findByNumar(numar));
-        Mockito.verify( service, times(1)).findByNumar(numar);
-    }
-
-    @DisplayName("Поиск документа по снилс")
-    @Test
-    public void testFindBySnils() throws Exception{
-        String snils = "123-456-789-11";
-        Mockito.when( service.findBySnils(snils)).thenCallRealMethod();
-        Mockito.when( service.findBySnils(snils)).thenReturn(document);
-        Mockito.when( service.findBySnils(snils)).then(( InvocationOnMock inv ) ->{
-            return ( Document ) inv.callRealMethod();
-        });
-        assertNotNull( service.findBySnils(snils));
-        Mockito.verify( service, times(1)).findBySnils(snils);
-    }
-
-    @DisplayName("Поиск документа по полису")
-    @Test
-    public void testFindByPolis() throws Exception{
-        String polis = "0000 0000 0000 0111";
-        Mockito.when( service.findByPolis(polis)).thenCallRealMethod();
-        Mockito.when( service.findByPolis(polis)).thenReturn(document);
-        Mockito.when( service.findByPolis(polis)).then(( InvocationOnMock inv ) ->{
-            return ( Document ) inv.callRealMethod();
-        });
-        assertNotNull( service.findByPolis(polis));
-        Mockito.verify( service, times(1)).findByPolis(polis);
-    }
-
 
     
 }

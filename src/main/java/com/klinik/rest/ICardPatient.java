@@ -58,8 +58,8 @@ public interface ICardPatient {
             @ApiResponse( responseCode = "400", description = "Плохой запрос",                      content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                     content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
-    public ResponseEntity<Card_patient> saveComplaintToCardPatient( @Parameter( description = "ИД карты пациента:", example = "1") Long idCard,
-                                                                    @Parameter( description = "ИД Под жалобы:" , example =  "1") Long idComplaint ) throws Exception, MyException;
+    public ResponseEntity saveComplaintToCardPatient( @Parameter( description = "ИД карты пациента:", example = "1") Long idCard,
+                                                      @Parameter( description = "ИД Под жалобы:" , example =  "1") Long idComplaint ) throws Exception, MyException;
 
     
 }

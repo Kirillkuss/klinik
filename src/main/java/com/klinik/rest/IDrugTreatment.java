@@ -45,7 +45,7 @@ public interface IDrugTreatment {
             @ApiResponse( responseCode = "500", description = "Ошибка сервера",                    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
     })
     @PostMapping( "/addDrug_treatment")
-    public ResponseEntity<Drug_treatment> addDrug_treatment( Drug_treatment drug_treatment ) throws Exception;
+    public ResponseEntity<Drug_treatment> addDrugTreatment( Drug_treatment drug_treatment ) throws Exception;
     @Operation( description = "Добавить препарат для медикаментозного лечения", summary = "Добавить препарат для медикаментозного лечения")
     @ApiResponses(value = {
             @ApiResponse( responseCode = "200", description = "Добавлен препарат для медикаментозного лечения", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Drug.class ))) }),

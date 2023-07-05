@@ -1,6 +1,9 @@
 package com.klinik.repositories;
 
 import com.klinik.entity.Document;
+
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -18,6 +21,6 @@ public interface DocumentRepository extends JpaRepository<Document,Long> {
     Document findByPolis( String polis );
 
     @Query("select e from Document e where e.id = :id")
-    Document findByIdDocument( Long id );
+    Optional<Document> findByIdDocument( Long id );
     
 }

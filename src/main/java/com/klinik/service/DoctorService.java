@@ -1,6 +1,7 @@
 package com.klinik.service;
 
 import com.klinik.entity.Doctor;
+import com.klinik.excep.MyException;
 import com.klinik.repositories.DoctorRerository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,18 +14,19 @@ public class DoctorService {
     private final DoctorRerository doctorRerository;
 
     public List<Doctor> allDoctor() throws Exception{
-        return doctorRerository.findAll();
+        List<Doctor> response = doctorRerository.findAll();
+        if(  response.isEmpty() == true ) throw new MyException( 404, "Список врачей пуст");
+        return response;
     }
 
-    public List<Doctor> findByFIO(String word ) throws Exception{
-        return doctorRerository.findDoctorByFIO( word );
-    }
-
-    public Doctor findById( Long id) throws Exception{
-        return doctorRerository.findByIdDoctor( id );
+    public List<Doctor> findByFIO( String word ) throws Exception{
+        List<Doctor> response = doctorRerository.findDoctorByFIO( word );
+        if( response.isEmpty() == true ) throw new MyException( 404, "По данному запросу ничего не найдено");
+        return response;
     }
 
     public Doctor saveDoctor( Doctor doctor ) throws Exception{
+        if ( doctorRerository.findById( doctor.getId_doctor() ).isPresent() == true) throw new MyException( 409, "Пользователь с таким ИД уще существует");
         return doctorRerository.save( doctor );
     }
 

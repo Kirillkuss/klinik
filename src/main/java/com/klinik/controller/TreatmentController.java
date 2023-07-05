@@ -19,36 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TreatmentController implements ITreatment{
 
-    private final TreatmentService              treatmentService;
-    private final RehabilitationSolutionService rehabilitationSolutionService;
-    private final CardPatientService            cardPatientService;
-    private final DoctorService                 doctorService;
-    private final DrugService                   serviceDrug;
+    private final TreatmentService treatmentService;
     public ResponseEntity<List<Treatment>> getAllTreatment() throws Exception{
         return new ResponseEntity<>(treatmentService.allListTreatment(), HttpStatus.OK );
     }
-    public ResponseEntity<Treatment> addTreatment( Treatment treatment,
-                                                   Long drug_id,
-                                                   Long card_patient_id,
-                                                   Long rehabilitation_solution_id, 
-                                                   Long doctor_id ) throws Exception{
-        if( serviceDrug.findById( drug_id) == null )                                          throw new MyException( 400, "Указано неверное значение медикаментозного лечения, укажите другой");
-        if( treatmentService.findById( treatment.getId_treatment()) != null  )                throw new MyException( 409, "Лечение с таким ИД уже существует, используйте другой");
-        if( rehabilitationSolutionService.findByIdList(rehabilitation_solution_id) == null  ) throw new MyException( 400, "Указано неверное значение реабилитационного лечения, укажите другой");
-        if( cardPatientService.findByIdCard(card_patient_id ) == null )                       throw new MyException( 400, "Указано неверное значение карты пациента, укажите другой");
-        if( doctorService.findById( doctor_id )  == null )                                    throw new MyException( 400, "Указано неверное значение ид доктора, укажите другой");
-        treatment.setCard_patient_id( cardPatientService.findByIdCard(card_patient_id ).getId_card_patient() );
-        treatment.setRehabilitation_solution( rehabilitationSolutionService.findByIdList(rehabilitation_solution_id) );
-        treatment.setDoctor( doctorService.findById( doctor_id ) );
-        treatment.setDrug( serviceDrug.findById( drug_id ));
-        return new ResponseEntity<>( treatmentService.addTreatment( treatment ), HttpStatus.CREATED );              
+    public ResponseEntity<Treatment> addTreatment( Treatment treatment, Long drug_id, Long card_patient_id,
+                                                   Long rehabilitation_solution_id, Long doctor_id ) throws Exception{
+        return new ResponseEntity<>( treatmentService.addTreatment( treatment, drug_id, card_patient_id, rehabilitation_solution_id, doctor_id ), HttpStatus.CREATED );              
     }
     public ResponseEntity<List<Treatment>> findByParamIdCardAndDateStart( Long id, LocalDateTime dateFrom, LocalDateTime dateTo) throws Exception{
         return new ResponseEntity<>( treatmentService.findByParamIdCardAndDateStart(id, dateFrom, dateTo), HttpStatus.OK );
     }
-
     public ResponseEntity<List<Treatment>> findByParamIdCardAndIdRh( Long idCard, Long idReSol ) throws Exception{
         return new ResponseEntity<>( treatmentService.findByParamIdCardAndIdRh( idCard, idReSol ), HttpStatus.OK );
     }
-
 }

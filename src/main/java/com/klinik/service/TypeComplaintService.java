@@ -1,34 +1,34 @@
 package com.klinik.service;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.klinik.entity.TypeComplaint;
+import com.klinik.entity.Сomplaint;
+import com.klinik.excep.MyException;
+import com.klinik.repositories.ComplaintRepository;
 import com.klinik.repositories.TypeComplaintRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class TypeComplaintService {
-    
-    private final  TypeComplaintRepository typeComplaintRepository;
 
+    private final ComplaintRepository     complaintRepository;
+    private final TypeComplaintRepository typeComplaintRepository;
     public List<TypeComplaint> findByAll() throws Exception{
         return typeComplaintRepository.findAll();
     }
-
-    public TypeComplaint findById( Long id ) throws Exception{
-        return typeComplaintRepository.findById( id ).stream().findFirst().orElse(null);
+    public TypeComplaint saveTypeComplaint( TypeComplaint typeComplaint, Long idComplaint ) throws Exception{
+        Optional<Сomplaint> complaint = complaintRepository.findById( idComplaint);
+        if( complaint.isEmpty() == true )      throw new MyException( 400, "Неверный параметр, жалоба с таким ИД не существует");
+        if( typeComplaintRepository.findName( typeComplaint.getName()).isEmpty() == false ) throw new MyException( 409, "Под жалоба с таким наименованием уже существует");
+        if( typeComplaintRepository.findById( typeComplaint.getId_type_complaint()).isEmpty() == false ) throw new MyException( 409, "Под жалоба с таким ИД уже существует");
+        typeComplaint.setComplaint( complaint.get() );
+        return typeComplaintRepository.save( typeComplaint );
     }
-
-    public TypeComplaint saveTypeComplaint( TypeComplaint complaint ) throws Exception{
-        return typeComplaintRepository.save( complaint );
-    }
-
-    public TypeComplaint findByName( String name ) throws Exception{
-        return typeComplaintRepository.findName( name );
-    }
-
      public List<TypeComplaint> findByIdComplaint( Long id ) throws Exception{
+        if( complaintRepository.findById( id ).isEmpty() == true ) throw new MyException( 404, "Жалобы с таким ИД не существует");
         return typeComplaintRepository.findByIdComplaint( id );
     }
 }
