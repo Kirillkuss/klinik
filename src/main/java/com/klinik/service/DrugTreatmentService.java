@@ -13,7 +13,7 @@ public class DrugTreatmentService {
 
     private final DrugTreatmentRepository drugTreatmentRepository;
 
-    public List<Drug_treatment> getAll() throws Exception{
+    public List<Drug_treatment> getAll(){
         return drugTreatmentRepository.findAll();
     }
     public Drug_treatment addDrugTreatment( Drug_treatment drug_treatment ) throws Exception{

@@ -18,46 +18,26 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RequestMapping( value = "card-patinets")
 @Tag(name = "4. Card Patient", description = "Карта пациента")
+    @ApiResponses(value = {
+        @ApiResponse( responseCode = "200", description = "Успешно",        content = { @Content( array = @ArraySchema(schema = @Schema(implementation = Card_patient.class ))) }),
+        @ApiResponse( responseCode = "400", description = "Плохой запрос ", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+        @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
+    })
 public interface ICardPatient {
     @GetMapping(value = "/document/{word}")
     @Operation( description = "Поиск карты пациента по документу пациента (СНИЛС, номер документа, ПОЛИС)", summary = "Поиск карты пациента по документу пациента")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Карта пациента найдена по документу пациента", content = { @Content( array = @ArraySchema(schema = @Schema(implementation = Card_patient.class ))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос ",                               content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                               content = { @Content( array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
-    })
     public ResponseEntity<Card_patient> findByDocumentPatient(@Parameter( description = "Параметр поиска:", example = "123243453") String word) throws Exception, MyException;
     @GetMapping(value = "/card/{id}")
     @Operation( description = "Поиск карты пациента по ИД карты", summary = "Поиск карты пациента по ИД карты")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Карта пациента найдена по ИД карты пациента", content = { @Content( array = @ArraySchema(schema = @Schema(implementation = Card_patient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",                               content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                              content = { @Content( array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
-    })
     public ResponseEntity<Card_patient> getByIdCard( @Parameter( description = "ИД карты пациента", example ="1") Long id ) throws Exception, MyException;
     @GetMapping(value = "/patient/{id}")
     @Operation( description = "Поиск карты пациента по ИД пациента", summary = "Поиск карты пациента по ИД пациента")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Карта пациента найдена по ИД пациента", content = { @Content( array = @ArraySchema(schema = @Schema(implementation = Card_patient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",                         content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                        content = { @Content( array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
-    })
     public ResponseEntity<Card_patient> getByIdPatient (@Parameter( description = "ИД Пациента", example = "1") Long id ) throws Exception, MyException;
     @PostMapping (value = "/add/{card}{id-patient}")
     @Operation( description = "Добавить карту пациента", summary = "Добавить карту пациента")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Карта пациента добавлена", content = { @Content( array = @ArraySchema(schema = @Schema(implementation = Card_patient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",            content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",           content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
-    })
     public ResponseEntity<Card_patient> saveCardPatient( Card_patient card, @Parameter( description = "ИД пациента:") Long idpatient) throws Exception, MyException;
     @PostMapping (value = "/complaint/{id-card}{id-complaint}")
     @Operation( description = "Добавление жалобы пациенту", summary = "Добавление жалобы пациенту")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Добавление жалобы в карту пациента", content = { @Content( array = @ArraySchema(schema = @Schema(implementation = Card_patient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",                      content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                     content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
-    })
     public ResponseEntity saveComplaintToCardPatient( @Parameter( description = "ИД карты пациента:", example = "1") Long idcard,
                                                       @Parameter( description = "ИД Под жалобы:" , example =  "1") Long idcomplaint ) throws Exception, MyException;
 

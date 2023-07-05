@@ -13,10 +13,8 @@ public class DoctorService {
 
     private final DoctorRerository doctorRerository;
 
-    public List<Doctor> allDoctor() throws Exception{
-        List<Doctor> response = doctorRerository.findAll();
-        if(  response.isEmpty() == true ) throw new MyException( 404, "Список врачей пуст");
-        return response;
+    public List<Doctor> allDoctor(){
+        return doctorRerository.findAll();
     }
 
     public List<Doctor> findByFIO( String word ) throws Exception{

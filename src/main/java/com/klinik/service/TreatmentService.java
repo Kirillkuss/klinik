@@ -31,7 +31,7 @@ public class TreatmentService {
      * @return List<Treatment>
      * @throws Exception
      */
-    public List<Treatment> allListTreatment() throws Exception{
+    public List<Treatment> allListTreatment() {
         return treatmentRepository.findAll();
     }
     /**

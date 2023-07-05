@@ -10,14 +10,12 @@ import lombok.ToString;
 @ToString
 public class BaseResponseError {
 
-    @Schema (description = "Код сообщения", name = "code",  example = "999")
-    private Integer code = 999;
+    @Schema (description = "Код сообщения", name = "code",  example = "400")
+    private Integer code;
     @Schema (description = "Сообщение", name = "message",  example = "Сообщение об ошибке")
-    private String massage = "Сообщение об ошибке";
-
+    private String massage;
     public BaseResponseError(){
     }
-
     public BaseResponseError(Integer code, String massage){
         this.code = code;
         this.massage = massage;

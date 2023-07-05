@@ -18,7 +18,7 @@ public class DrugService {
 
     private final DrugRepository          drugRepository;
     private final DrugTreatmentRepository drugTreatmentRepository;
-    public List<Drug> findAll() throws Exception{
+    public List<Drug> findAll(){
         return drugRepository.findAll();
     }
     public Drug saveDrug( Drug drug,  Long idDrugTreatment ) throws Exception{

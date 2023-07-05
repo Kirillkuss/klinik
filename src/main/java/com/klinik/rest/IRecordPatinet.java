@@ -21,32 +21,22 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RequestMapping( value = "record-patients")
 @Tag(name = "5. Records Patients", description = "Записи пациентов:")
+@ApiResponses(value = {
+        @ApiResponse( responseCode = "200", description = "Успешно",        content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Record_patient.class))) }),
+        @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+        @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
+    })
 public interface IRecordPatinet {
         //@GetMapping(value = "/list")
     @Operation( description = "Список всех записей пациентов к врачу", summary = "Список всех записей пациентов к врачу")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Список всех записей пациентов к врачу", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Record_patient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",                         content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                        content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
-    })
     public ResponseEntity<List<Record_patient>> allListRecordPatient() throws Exception, MyException;
     @PostMapping (value = "/add/{record}{id-doctor}{id-card}")
     @Operation( description = "Добавить запись пациента к врачу", summary = "Добавить запись пациента к врачу")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "201", description = "Запись к врачу добавлена", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Record_patient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",            content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",           content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
-    })
     public ResponseEntity<Record_patient> addRecordPatient( Record_patient record,
                                                             @Parameter( description = "Ид доктора") Long idoctor,
                                                             @Parameter( description = "Ид карты пациента") Long idcard) throws Exception, MyException;
     @GetMapping(value = "/find/{id}{from}{to}")
     @Operation( description = "Список всех записей пациентов к врачу по параметрам", summary = "Список всех записей пациентов к врачу по параметрам ")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Получен список записей к врачу", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Record_patient.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",                  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                 content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
-    })
     public ResponseEntity<List<Record_patient>> findByParams( @Parameter(description = "ИД карты пациента", example = "1") Long id,
                                                               @Parameter(description = "Дата записи с:", example = "2023-02-19T12:47:07.605")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
                                                               @Parameter(description = "Дата записи по:", example = "2023-05-19T12:47:07.605") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo ) throws Exception, MyException;

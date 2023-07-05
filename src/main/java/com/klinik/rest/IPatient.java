@@ -20,30 +20,19 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RequestMapping( value = "patients")
 @Tag(name = "2. Patient", description = "Пациенты:")
+@ApiResponses(value = {
+        @ApiResponse( responseCode = "200", description = "Успешно",        content = { @Content(array = @ArraySchema(schema = @Schema( implementation = Patient.class ))) }),
+        @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+        @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
+    })
 public interface IPatient {
     @GetMapping(value = "/all")
     @Operation( description = "Список всех пациентов", summary = "Список всех пациентов")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Получен список всех пациентов", content = { @Content(array = @ArraySchema(schema = @Schema( implementation = Patient.class ))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",                 content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
-    })
     public ResponseEntity<List<Patient>> getAllPatients() throws Exception, MyException;
     @PostMapping( value = "/add/{pat}{id-document}")
     @Operation( description = "Добавить пациента", summary = "Добавить пациента")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "201", description = "Пациент добавлен", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Patient.class ))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
-    })
-    public ResponseEntity<Patient> addPatient(Patient patient,  @Parameter( description = "Ид документа" , example = "1") Long idocument) throws Exception, MyException;
+    public ResponseEntity<Patient> addPatient( Patient patient,  @Parameter( description = "Ид документа" , example = "1") Long idocument) throws Exception, MyException;
     @RequestMapping( method = RequestMethod.GET, value = "/find/{word}")
     @Operation( description = "Поиск пациента по ФИО или номеру телефона", summary = "Поиск пациента по ФИО или номеру телефона")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Пациент найден", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Patient.class ))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
-    })
     public ResponseEntity<List<Patient>> findByWord( @Parameter( description = "Параметр поиска")  String word ) throws Exception, MyException;
-    
 }

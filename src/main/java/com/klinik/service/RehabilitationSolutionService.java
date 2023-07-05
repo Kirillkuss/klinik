@@ -13,7 +13,7 @@ public class RehabilitationSolutionService {
 
     private final RehabilitationSolutionRepository rehabilitationSolutionRepository;
 
-    public List<Rehabilitation_solution> getAllReha() throws Exception{
+    public List<Rehabilitation_solution> getAllReha() {
         return rehabilitationSolutionRepository.findAll();
     }
 

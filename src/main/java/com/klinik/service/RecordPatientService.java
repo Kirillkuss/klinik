@@ -20,7 +20,7 @@ public class RecordPatientService {
     private final RecordPatientRepository recordPatientRepository;
     private final DoctorRerository        doctorRerository;
     private final CardPatientRepository   cardPatientRepository;
-    public List<Record_patient> allListRecordPatient() throws Exception{
+    public List<Record_patient> allListRecordPatient() {
         return recordPatientRepository.findAll();
     }
     public Record_patient saveRecordPatient( Record_patient record_patient, Long doctor_id, Long card_patient_id ) throws Exception{

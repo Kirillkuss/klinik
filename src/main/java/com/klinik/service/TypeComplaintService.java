@@ -16,7 +16,7 @@ public class TypeComplaintService {
 
     private final ComplaintRepository     complaintRepository;
     private final TypeComplaintRepository typeComplaintRepository;
-    public List<TypeComplaint> findByAll() throws Exception{
+    public List<TypeComplaint> findByAll(){
         return typeComplaintRepository.findAll();
     }
     public TypeComplaint saveTypeComplaint( TypeComplaint typeComplaint, Long idComplaint ) throws Exception{

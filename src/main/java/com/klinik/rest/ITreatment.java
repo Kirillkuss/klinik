@@ -22,44 +22,29 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RequestMapping( value = "treatments")
 @Tag(name = "7. Treatment", description = "Лечение пациентов:")
+@ApiResponses(value = {
+        @ApiResponse( responseCode = "200", description = "Успешно",        content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
+        @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
+        @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
+    })
 public interface ITreatment {
     //@GetMapping(value = "/all")
     @Operation( description = "Получение списка всех лечений", summary = "Получение списка всех лечений")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Получен список лечений", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",          content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",         content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
-    })
     public ResponseEntity<List<Treatment>> getAllTreatment() throws Exception;
     @PostMapping( value = "/treatment/add/{request}{id-rug}{id-card}{id-rehabilitation-solution}{id-doctor}")
     @Operation( description = "Добавить лечение для пациента", summary = "Добавить лечение для пациента")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Добавлено новое лечение паиценту", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",                    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
-    })
     public ResponseEntity<Treatment> addTreatment(  Treatment treatment,
-                                                    @Parameter( description = "ИД медикаментозного лечения (Препарата):",  example = "1") Long idrug,
-                                                    @Parameter( description = "Ид карты пациента:",                        example = "1") Long idcard,
-                                                    @Parameter( description = "Ид реабилитационного лечения:",             example = "1") Long idrehabilitationsolution,
-                                                    @Parameter( description = "Ид доктор:",                                example = "1") Long iddoctor ) throws Exception;
+                                                    @Parameter( description = "ИД медикаментозного лечения (Препарата):", example = "1") Long idrug,
+                                                    @Parameter( description = "Ид карты пациента:",                       example = "1") Long idcard,
+                                                    @Parameter( description = "Ид реабилитационного лечения:",            example = "1") Long idrehabilitationsolution,
+                                                    @Parameter( description = "Ид доктор:",                               example = "1") Long iddoctor ) throws Exception;
     @GetMapping(value = "/find/treat/{id-card}{from}{to}")
     @Operation( description = "Получение списка лечений по параметрам", summary = "Получение списка лечений по параметрам")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Получен список лечений по параметрам", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",                        content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
-    })
     public ResponseEntity<List<Treatment>> findByParamIdCardAndDateStart( @Parameter( description = "Ид карты",                example = "1") Long idcard,
                                                                           @Parameter( description = "Время начала лечения с:", example = "2023-01-20T12:47:07.605") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
                                                                           @Parameter( description = "Время начала лечения по", example = "2023-09-20T12:47:07.605") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to) throws Exception;
     @GetMapping(value = "/find/treatment/{id-card}{id-rehabilitation-solution}")
     @Operation( description = "Получение списка лечений по параметрам", summary = "Получение списка лечений по параметрам")
-    @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Получен список лечений по параметрам", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
-            @ApiResponse( responseCode = "400", description = "Плохой запрос",                        content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
-            @ApiResponse( responseCode = "500", description = "Ошибка сервера",                       content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
-    })
     public ResponseEntity<List<Treatment>> findByParamIdCardAndIdRh( @Parameter( description = "Ид карты пациента",            example = "1") Long idcard, 
                                                                      @Parameter( description = "Ид реабилитационного лечения", example = "1") Long idrehabilitationsolution ) throws Exception;
 

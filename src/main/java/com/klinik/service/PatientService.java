@@ -17,7 +17,7 @@ public class PatientService {
     private final PatientRepository patientRepository;
     private final DocumentRepository documentRepository; 
 
-    public List<Patient> getAllPatients() throws Exception{
+    public List<Patient> getAllPatients(){
         return patientRepository.findAll();
     }
 
