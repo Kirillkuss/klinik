@@ -15,7 +15,7 @@ public class CardPatientController implements ICardPatient{
 
     private final CardPatientService   cardPatientService;
     public ResponseEntity<Card_patient> findByDocumentPatient( String word ) throws Exception, MyException {
-        return new ResponseEntity<>( cardPatientService.findByNumberPolisSnils( word ), HttpStatus.OK );
+        return new ResponseEntity<>( cardPatientService.findByNPS( word ), HttpStatus.OK );
     } 
     public ResponseEntity<Card_patient> getByIdCard( Long id ) throws Exception, MyException {
         return new ResponseEntity<>(cardPatientService.findByIdCard( id ), HttpStatus.OK);

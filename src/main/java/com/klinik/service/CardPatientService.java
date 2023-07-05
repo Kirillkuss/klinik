@@ -95,7 +95,7 @@ public class CardPatientService {
      * @return Card_patient
      * @throws Exception
      */
-    public Card_patient findByNumberPolisSnils( String parametr ) throws Exception{
+    public Card_patient findByNPS( String parametr ) throws Exception{
         String sql1 = " SELECT cp.id_card_patient, cp.diagnosis, cp.allergy, cp.note, cp.сonclusion, p.id_patient, p.surname, p.name, p.full_name, p.gender, "
                     + " p.phone, p.address, d.id_document, d.type_document, d.seria, d.numar, d.snils, d.polis  FROM Card_patient cp "
                     + " left join Patient p on p.id_patient = cp.pacient_id "
