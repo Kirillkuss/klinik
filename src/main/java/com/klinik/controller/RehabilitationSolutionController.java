@@ -15,7 +15,7 @@ public class RehabilitationSolutionController implements IRehabilitationSolution
 
     private final RehabilitationSolutionService rehabilitationSolutionService;
     public ResponseEntity<List<Rehabilitation_solution>> getAllRehabilitationSolution() throws Exception{
-        return new ResponseEntity<>( rehabilitationSolutionService.getAllReha(), HttpStatus.OK );
+        return new ResponseEntity<>( rehabilitationSolutionService.getAll(), HttpStatus.OK );
     }
     public ResponseEntity<Rehabilitation_solution> findByName( String name ) throws Exception{
         return new ResponseEntity<>( rehabilitationSolutionService.findByName( name ), HttpStatus.OK );

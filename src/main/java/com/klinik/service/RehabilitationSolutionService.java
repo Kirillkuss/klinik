@@ -13,7 +13,7 @@ public class RehabilitationSolutionService {
 
     private final RehabilitationSolutionRepository rehabilitationSolutionRepository;
 
-    public List<Rehabilitation_solution> getAllReha() {
+    public List<Rehabilitation_solution> getAll() {
         return rehabilitationSolutionRepository.findAll();
     }
 
