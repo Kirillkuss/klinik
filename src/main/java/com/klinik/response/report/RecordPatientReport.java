@@ -11,13 +11,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@JsonInclude(Include.NON_NULL)
 public class RecordPatientReport {
 
-    @JsonInclude(Include.NON_NULL)
     private CardPatient card;
-    @JsonInclude(Include.NON_NULL)
-    private Long count_record_for_time;
-    @JsonInclude(Include.NON_NULL)
+    private Long countRecordForTime;
     private List<RecordPatient> listRecordPatient;
 
 }

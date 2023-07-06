@@ -21,7 +21,7 @@ public class TreatmentController implements ITreatment{
 
     private final TreatmentService treatmentService;
     public ResponseEntity<List<Treatment>> getAllTreatment() throws Exception{
-        return new ResponseEntity<>(treatmentService.allListTreatment(), HttpStatus.OK );
+        return new ResponseEntity<>(treatmentService.findAll(), HttpStatus.OK );
     }
     public ResponseEntity<Treatment> addTreatment( Treatment treatment, Long idDrug, Long idCardPatient,
                                                    Long idRehabilitationSolution, Long idDoctor ) throws Exception{

@@ -17,13 +17,13 @@ public class RehabilitationSolutionService {
         return rehabilitationSolutionRepository.findAll();
     }
 
-    public RehabilitationSolution findByName( String name ) throws Exception{
+    public RehabilitationSolution findByName( String name ){
         return rehabilitationSolutionRepository.findByName( name ).orElseThrow();
     }
 
-    public RehabilitationSolution saveRS(RehabilitationSolution solution) throws Exception{
-        if( rehabilitationSolutionRepository.findByName( solution.getName() ).isPresent() == true ) throw new MyException( 409, "Ребилитационное лечение с таким наименованием уже существует");
-        if( rehabilitationSolutionRepository.findById( solution.getIdRehabilitationSolution() ).isPresent() == true ) throw new MyException( 409, "Ребилитационное лечение с таким ИД уже существует");
+    public RehabilitationSolution saveRehabilitationSolution(RehabilitationSolution solution) throws Exception{
+        if( rehabilitationSolutionRepository.findByName( solution.getName() ).isPresent()) throw new MyException( 409, "Ребилитационное лечение с таким наименованием уже существует");
+        if( rehabilitationSolutionRepository.findById( solution.getIdRehabilitationSolution() ).isPresent() ) throw new MyException( 409, "Ребилитационное лечение с таким ИД уже существует");
         return rehabilitationSolutionRepository.save( solution );
     }
  }

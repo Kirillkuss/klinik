@@ -12,19 +12,16 @@ import java.util.List;
 public class DoctorService {
 
     private final DoctorRerository doctorRerository;
-
     public List<Doctor> allDoctor(){
         return doctorRerository.findAll();
     }
-
     public List<Doctor> findByFIO( String word ) throws Exception{
         List<Doctor> response = doctorRerository.findDoctorByFIO( word );
-        if( response.isEmpty() == true ) throw new MyException( 404, "По данному запросу ничего не найдено");
+        if( response.isEmpty() ) throw new MyException( 404, "По данному запросу ничего не найдено");
         return response;
     }
-
     public Doctor saveDoctor( Doctor doctor ) throws Exception{
-        if ( doctorRerository.findById( doctor.getIdDoctor() ).isPresent() == true) throw new MyException( 409, "Пользователь с таким ИД уще существует");
+        if ( doctorRerository.findById( doctor.getIdDoctor() ).isPresent()) throw new MyException( 409, "Пользователь с таким ИД уще существует");
         return doctorRerository.save( doctor );
     }
 

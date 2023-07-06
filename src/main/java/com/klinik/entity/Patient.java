@@ -2,11 +2,23 @@ package com.klinik.entity;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table( name = "patient")
@@ -15,9 +27,9 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode
+@JsonInclude( Include.NON_NULL )
 public class Patient implements Serializable {
 
-         
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_patient")
@@ -25,7 +37,6 @@ public class Patient implements Serializable {
             description = "ИД пациента",
             example     = "100",
             required    = true )
-    @JsonInclude(Include.NON_NULL) 
     private Long idPatient;
 
     @Column( name = "surname")
@@ -69,29 +80,7 @@ public class Patient implements Serializable {
     private String address;
 
     @Hidden
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "document_id", referencedColumnName = "id_document")
-    @JsonInclude(Include.NON_NULL)
+    @OneToOne( cascade = CascadeType.ALL )
+    @JoinColumn( name = "document_id", referencedColumnName = "id_document" ) 
     private Document document;
-        
-    public Patient(Long idPatient,  String surname, String name, String fullName, Gender gender ,String phone, String address, Document document ){
-        this.idPatient = idPatient;
-        this.surname = surname;
-        this.name = name;
-        this.fullName = fullName;
-        this.gender = gender;
-        this.phone = phone;
-        this.address = address;
-        this.document = document;
-    }
-
-    public Patient(  String surname, String name, String fullName, Gender gender ,String phone, String address ){
-        this.surname = surname;
-        this.name = name;
-        this.fullName = fullName;
-        this.gender = gender;
-        this.phone = phone;
-        this.address = address;
-    }
-
 }

@@ -13,17 +13,15 @@ import java.util.List;
 public class DocumentService {
 
     public final DocumentRepository documentRepository;
-
-    public List<Document> getAllDocuments() throws Exception{
+    public List<Document> getAllDocuments(){
         return documentRepository.findAll();
     }
-
     @Transactional
     public Document addDocument( Document document ) throws Exception{
-        if ( documentRepository.findByIdDocument( document.getIdDocument()).isEmpty() == false ) throw new MyException( 409, "Документ с таким ИД документа уже существует, используйте другой ИД");
-        if ( documentRepository.findByNumar( document.getNumar()) != null ) throw new MyException( 409, "Документ с таким номером документа уже существует");
-        if ( documentRepository.findByPolis( document.getPolis()) != null ) throw new MyException( 409, "Документ с таким полисом уже существует");
-        if ( documentRepository.findBySnils( document.getSnils()) != null ) throw new MyException( 409, "Документ с таким СНИЛСом уже существует");
+        if ( documentRepository.findById( document.getIdDocument()).isPresent() ) throw new MyException( 409, "Документ с таким ИД документа уже существует, используйте другой ИД");
+        if ( documentRepository.findByNumar( document.getNumar()).isPresent() ) throw new MyException( 409, "Документ с таким номером документа уже существует");
+        if ( documentRepository.findByPolis( document.getPolis()).isPresent() ) throw new MyException( 409, "Документ с таким полисом уже существует");
+        if ( documentRepository.findBySnils( document.getSnils()).isPresent() ) throw new MyException( 409, "Документ с таким СНИЛСом уже существует");
         return documentRepository.save( document );
     }
 

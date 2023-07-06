@@ -2,11 +2,26 @@ package com.klinik.entity;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
-import javax.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -17,6 +32,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
+@JsonInclude(Include.NON_NULL)
 public class CardPatient  implements Serializable {
 
     @Id
@@ -26,7 +42,6 @@ public class CardPatient  implements Serializable {
             description = "ИД карты пациента",
             example     = "100",
             required    = true )
-    @JsonInclude(Include.NON_NULL)
     private Long idCardPatient;
 
     @Column( name = "diagnosis")
@@ -62,41 +77,11 @@ public class CardPatient  implements Serializable {
             joinColumns         = @JoinColumn(name = "card_patient_id", referencedColumnName = "id_card_patient"),
             inverseJoinColumns  = @JoinColumn(name = "type_complaint_id", referencedColumnName = "id_type_complaint")
     )
-    @JsonInclude(Include.NON_NULL)
     private List<TypeComplaint> typeComplaint = new ArrayList<>();
 
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pacient_id", referencedColumnName = "id_patient")
-    @JsonInclude(Include.NON_NULL)
     private Patient patient;
-
-
-    public CardPatient(Long idCardPatient, String diagnosis, Boolean allergy,  String note, String сonclusion , List<TypeComplaint> typeComplaint, Patient patient){
-        this.idCardPatient = idCardPatient;
-        this.diagnosis = diagnosis;
-        this.allergy = allergy;
-        this.note = note;
-        this.сonclusion = сonclusion;
-        this.typeComplaint = typeComplaint;
-        this.patient = patient;
-    }
-
-    public CardPatient(String diagnosis, Boolean allergy,  String note, String сonclusion , List<TypeComplaint> typeComplaint, Patient patient){
-        this.diagnosis = diagnosis;
-        this.allergy = allergy;
-        this.note = note;
-        this.сonclusion = сonclusion;
-        this.typeComplaint = typeComplaint;
-        this.patient = patient;
-    }
-
-    public CardPatient(String diagnosis, Boolean allergy,  String note, String сonclusion , Patient patient){
-        this.diagnosis = diagnosis;
-        this.allergy = allergy;
-        this.note = note;
-        this.сonclusion = сonclusion;
-        this.patient = patient;
-    }
 
 }

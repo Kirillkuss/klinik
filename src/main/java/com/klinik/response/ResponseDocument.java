@@ -10,34 +10,17 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Setter
 @Getter
-public class ResponseDocument<T> extends BaseResponse{
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ResponseDocument<T> {
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Document> documents;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Document document;
-
-
     public ResponseDocument(){
     }
-
-    public ResponseDocument( Integer code, String message){
-        super( code, message);
-    }
-
-    public ResponseDocument( Integer code, String message, List<Document> documents ){
-        super( code, message);
+    public ResponseDocument(  List<Document> documents ){
         this.documents = documents;
     }
-
-    public ResponseDocument( Integer code, String message, Document document ){
-        super( code, message);
+    public ResponseDocument(  Document document ){
         this.document = document;
     }
-
-    public static ResponseDocument error( int code, Throwable e ){
-        return new ResponseDocument( code , null == e.getMessage() ? "System malfunction" : e.getMessage());
-    }
-
 }

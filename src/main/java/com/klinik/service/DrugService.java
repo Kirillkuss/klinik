@@ -23,15 +23,15 @@ public class DrugService {
     }
     public Drug saveDrug( Drug drug,  Long idDrugTreatment ) throws Exception{
         Optional<DrugTreatment> drugTreatment = drugTreatmentRepository.findById( idDrugTreatment );
-        if ( drugTreatment.isEmpty() == true ) throw new MyException( 400, "Медикаментозное лечение с таким ИД не существует");
-        if ( drugRepository.findById( drug.getIdDrug()).isPresent() == true ) throw new MyException( 409, "Препарат с такми ИД уже существует");
-        if ( drugRepository.findByName( drug.getName() ).isPresent() == true ) throw new MyException( 409, "Препарат с такми наименованием уже существует");
+        if ( drugTreatment.isEmpty() ) throw new MyException( 400, "Медикаментозное лечение с таким ИД не существует");
+        if ( drugRepository.findById( drug.getIdDrug()).isPresent() ) throw new MyException( 409, "Препарат с такми ИД уже существует");
+        if ( drugRepository.findByName( drug.getName() ).isPresent() ) throw new MyException( 409, "Препарат с такми наименованием уже существует");
         drug.setDrugTreatment( drugTreatment.get() );
         return drugRepository.save( drug );
     }
     public List<Drug> findByIdDrugTreatment( Long id  ) throws Exception {
         List<Drug> response = drugRepository.findByIdDrugTreatment( id );
-        if( response.isEmpty() == true ) throw new MyException( 404, "По данному запросу ничего не найдено");
+        if( response.isEmpty() ) throw new MyException( 404, "По данному запросу ничего не найдено");
         return response;
     }
 }

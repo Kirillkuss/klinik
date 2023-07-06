@@ -21,6 +21,6 @@ public class RehabilitationSolutionController implements IRehabilitationSolution
         return new ResponseEntity<>( rehabilitationSolutionService.findByName( name ), HttpStatus.OK );
     }
     public ResponseEntity<RehabilitationSolution> save( RehabilitationSolution solution ) throws Exception{
-        return new ResponseEntity<>( rehabilitationSolutionService.saveRS( solution ), HttpStatus.CREATED );
+        return new ResponseEntity<>( rehabilitationSolutionService.saveRehabilitationSolution( solution ), HttpStatus.CREATED );
     }
 }

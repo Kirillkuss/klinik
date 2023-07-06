@@ -16,9 +16,9 @@ public class DrugTreatmentService {
     public List<DrugTreatment> getAll(){
         return drugTreatmentRepository.findAll();
     }
-    public DrugTreatment addDrugTreatment( DrugTreatment drug_treatment ) throws Exception{
-        if ( drugTreatmentRepository.findById( drug_treatment.getIdDrugTreatment()).isPresent() == true ) throw new MyException( 409, "Медикаментозное лечение с таким ИД уже существует");
-        if ( drugTreatmentRepository.findByName( drug_treatment.getName() ).isPresent() == true ) throw new MyException( 409, "Медикаментозное лечение с таким наименование уже существует");
-        return drugTreatmentRepository.save( drug_treatment );
+    public DrugTreatment addDrugTreatment( DrugTreatment drugTreatment ) throws Exception{
+        if ( drugTreatmentRepository.findById( drugTreatment.getIdDrugTreatment()).isPresent() ) throw new MyException( 409, "Медикаментозное лечение с таким ИД уже существует");
+        if ( drugTreatmentRepository.findByName( drugTreatment.getName() ).isPresent() ) throw new MyException( 409, "Медикаментозное лечение с таким наименование уже существует");
+        return drugTreatmentRepository.save( drugTreatment );
     }
 }

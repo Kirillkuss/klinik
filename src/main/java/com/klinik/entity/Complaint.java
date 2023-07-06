@@ -1,9 +1,18 @@
 package com.klinik.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -33,14 +42,5 @@ public class Complaint implements Serializable {
             example     = "Симптомы поражения пирамидного тракта",
             required    = true )
     private String functionalImpairment;
-
-    public Complaint( Long idComplaint, String functionalImpairment ){
-        this.idComplaint = idComplaint;
-        this.functionalImpairment = functionalImpairment;
-    }
-
-    public Complaint( String functionalImpairment ){
-        this.functionalImpairment = functionalImpairment;  
-    }
 
 }

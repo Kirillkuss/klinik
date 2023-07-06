@@ -16,7 +16,6 @@ public class ComplaintService {
     public List<Complaint> listComplaints() throws Exception{
         return complaintRepository.findAll();
     }
-    
     public Complaint saveСomplaint( Complaint сomplaint ) throws Exception{
         if( complaintRepository.findById( сomplaint.getIdComplaint() ).isEmpty() == false) throw new MyException( 409, "Справочник жалоба с таким ИД уже существует");
         if( complaintRepository.findByName( сomplaint.getFunctionalImpairment() ).isEmpty() == false ) throw new MyException( 409, "Справочник жалоба с таким наименованием уже существует");

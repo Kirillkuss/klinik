@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class MyException extends Exception{
 
-    private int code = 999;
+    private int code;
 
     public MyException(){
     }
