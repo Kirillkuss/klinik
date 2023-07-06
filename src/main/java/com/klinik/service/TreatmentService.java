@@ -44,8 +44,8 @@ public class TreatmentService {
                                    Long idRehabilitationSolution, Long idDoctor ) throws Exception{
         Optional<Drug> drug = drugRepository.findById( idDrug);
         Optional<Doctor> doctor = doctorRerository.findById( idDoctor );
-        Optional<RehabilitationSolution> rehabilitationSolution = rehabilitationSolutionRepository.findById(idRehabilitationSolution);
-        Optional<CardPatient> cardPatietn = cardPatientRepository.findById(idCardPatient );
+        Optional<RehabilitationSolution> rehabilitationSolution = rehabilitationSolutionRepository.findById( idRehabilitationSolution );
+        Optional<CardPatient> cardPatietn = cardPatientRepository.findById( idCardPatient );
         if( drug.isEmpty() ) throw new MyException( 400, "Указано неверное значение медикаментозного лечения, укажите другой");
         if( treatmentRepository.findById( treatment.getId_treatment()).isPresent() ) throw new MyException( 409, "Лечение с таким ИД уже существует, используйте другой");
         if( rehabilitationSolution.isEmpty()) throw new MyException( 400, "Указано неверное значение реабилитационного лечения, укажите другой");
@@ -53,8 +53,8 @@ public class TreatmentService {
         if( doctor.isEmpty() ) throw new MyException( 400, "Указано неверное значение ид доктора, укажите другой");
         treatment.setCard_patient_id( cardPatietn.get().getIdCardPatient() );
         treatment.setRehabilitation_solution( rehabilitationSolution.get() );
-        treatment.setDoctor( doctor.get());
-        treatment.setDrug( drug.get());
+        treatment.setDoctor( doctor.get() );
+        treatment.setDrug( drug.get() );
         return treatmentRepository.save( treatment );
     }
     /**
