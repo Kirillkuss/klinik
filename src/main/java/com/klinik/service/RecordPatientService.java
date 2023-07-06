@@ -25,10 +25,10 @@ public class RecordPatientService {
     }
     public RecordPatient saveRecordPatient( RecordPatient recordPatient, Long idDoctor, Long idCardPatient ) throws Exception{
         Optional<Doctor> doctor = doctorRerository.findById( idDoctor );
-        if ( doctor.isEmpty() == true ) throw new MyException( 404, "Нет доктора с таким идентификатором");
+        if ( doctor.isEmpty() ) throw new MyException( 404, "Нет доктора с таким идентификатором");
         Optional<CardPatient> cardPatient = cardPatientRepository.findById( idCardPatient );
-        if ( cardPatient.isEmpty() == true ) throw new MyException( 400, "Нет карты пациента с таким идентификатором");
-        if ( recordPatientRepository.findById( recordPatient.getIdRecord()).isPresent() == true) throw new MyException( 409, "Запись к врачу с таким ИД уже существует, установите другой ИД записи к врачу");
+        if ( cardPatient.isEmpty() ) throw new MyException( 400, "Нет карты пациента с таким идентификатором");
+        if ( recordPatientRepository.findById( recordPatient.getIdRecord()).isPresent()) throw new MyException( 409, "Запись к врачу с таким ИД уже существует, установите другой ИД записи к врачу");
         recordPatient.setDoctor( doctor.get() );
         recordPatient.setCardPatientId( cardPatient.get().getIdCardPatient());
         return recordPatientRepository.save( recordPatient );

@@ -33,7 +33,7 @@ public class Patient implements Serializable {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_patient")
-    @Schema( name        = "id_patient",
+    @Schema( name        = "idPatient",
             description = "ИД пациента",
             example     = "100",
             required    = true )

@@ -19,6 +19,7 @@ import javax.persistence.PersistenceContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -39,11 +40,13 @@ public class CardPatientService {
         cardСatient.setPatient( patient.get());
         return cardPatientRepository.save( cardСatient );
     }
-    public CardPatient findByPatientId( Long id ){
-        return cardPatientRepository.findByPatientId( id ).orElseThrow();
+    public CardPatient findByPatientId( Long id ){  
+        return cardPatientRepository.findByPatientId( id )
+                                    .orElseThrow( () -> new NoSuchElementException( "Карты с таким ИД пациента не существует" ));
     }
     public CardPatient findByIdCard( Long id ){
-        return cardPatientRepository.findById( id ).orElseThrow();
+        return cardPatientRepository.findById( id )
+                                    .orElseThrow( () -> new NoSuchElementException( "Карты с таким ИД карты не существует" ));
     }
     @Transactional
     public void addCardPatientComplaint( Long IdCard, Long IdComplaint ) throws Exception{

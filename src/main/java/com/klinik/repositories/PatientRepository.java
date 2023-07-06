@@ -14,8 +14,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query( "SELECT u FROM Patient u WHERE u.surname = :word or u.name = :word or u.fullName = :word or u.phone =:word")
     List<Patient> findPatientByWord( String word );
 
-    @Query( "SELECT u FROM Patient u WHERE u.document.idDocument = :id_document")
-    Patient findPatientByIdDocument( Long id_document );
+    @Query( "SELECT u FROM Patient u WHERE u.document.idDocument = :id")
+    Patient findPatientByIdDocument( Long id );
 
     @Query ( "SELECT u FROM Patient u WHERE u.phone = :phoneNumber")
     Patient findByPhone( String phoneNumber );

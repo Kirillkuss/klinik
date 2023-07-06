@@ -143,7 +143,7 @@ public class ReportService {
                             patient.setSurname( rs.getString(5));
                             patient.setName( rs.getString(6));
                             patient.setFullName( rs.getString(7));
-                            patient.setGender( rs.getInt(8) == 0 ? Gender.Man : Gender.Woman );
+                            patient.setGender( rs.getInt(8) == 0 ? Gender.MAN : Gender.WOMAN );
                             patient.setPhone( rs.getString(9));
                             patient.setAddress( rs.getString(10));
                             response.setCountTreatment( rs.getInt( 11 ));
@@ -231,7 +231,7 @@ public class ReportService {
                             patient.setSurname( rs.getString( 1 ));
                             patient.setName( rs.getString( 2 ));
                             patient.setFullName( rs.getString( 3 ));
-                            patient.setGender( rs.getInt( 4 ) == 0 ? Gender.Man : Gender.Woman );
+                            patient.setGender( rs.getInt( 4 ) == 0 ? Gender.MAN : Gender.WOMAN );
                             patient.setPhone( rs.getString( 5 ));
                             patient.setAddress( rs.getString( 6 ));
                             card.setDiagnosis( rs.getString( 7 ));

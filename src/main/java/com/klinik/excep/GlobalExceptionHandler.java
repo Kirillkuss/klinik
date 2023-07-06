@@ -52,7 +52,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
     public ResponseEntity<BaseResponse> errBaseResponse( NoSuchElementException ex ){
         log.error( "NoSuchElementException >>> " +  ex.getMessage() );
         return ResponseEntity.status( HttpStatus.NOT_FOUND )
-                             .body( new BaseResponse<>( 404, "По данному запросу ничего не найдено") );
+                             .body( new BaseResponse<>( 404, ex.getMessage() ));
     }
     
 }

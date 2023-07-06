@@ -23,8 +23,8 @@ public class CardPatientController implements ICardPatient{
     public ResponseEntity<CardPatient> getByIdPatient ( Long id ) throws Exception, MyException {
         return new ResponseEntity<>( cardPatientService.findByPatientId( id ), HttpStatus.OK );
     }
-    public ResponseEntity<CardPatient> saveCardPatient( CardPatient card_patient, Long id_patient) throws Exception, MyException{
-        return new ResponseEntity<>( cardPatientService.saveCardPatient( card_patient, id_patient ), HttpStatus.OK);
+    public ResponseEntity<CardPatient> saveCardPatient( CardPatient cardPatient, Long idPatient) throws Exception, MyException{
+        return new ResponseEntity<>( cardPatientService.saveCardPatient( cardPatient, idPatient ), HttpStatus.OK);
     }
     public ResponseEntity saveComplaintToCardPatient( Long idCard, Long idComplaint ) throws Exception, MyException{
         cardPatientService.addCardPatientComplaint( idCard, idComplaint );
