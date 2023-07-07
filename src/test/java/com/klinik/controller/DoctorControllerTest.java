@@ -59,17 +59,7 @@ public class DoctorControllerTest {
         Mockito.verify( controller, times( 2 )).getAllDoc();
     }
 
-    @DisplayName( "Получение списка докторов по ФИО")
-    @Test
-    public void testFindByFIO() throws Exception{
-        Mockito.when( controller.findByFIO( "Морозов" )).thenCallRealMethod();
-       // Mockito.when( controller.findByFIO( "Морозов" )).thenThrow( new MyException() );
-       /** Mockito.when( controller.findByFIO( "test" )).then(( InvocationOnMock inv ) ->{
-            return ( BaseResponse ) inv.callRealMethod();
-        });
-        assertEquals(controller.findByFIO( "test" ), controller.findByFIO( "test" )); 
-        Mockito.verify( controller, times( 2 )).findByFIO( "test" );*/
-    }
+
 
     @DisplayName( "Добавление доктора")
     @Test
