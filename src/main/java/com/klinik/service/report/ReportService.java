@@ -14,20 +14,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
-import com.klinik.entity.CardPatient;
-import com.klinik.entity.Doctor;
-import com.klinik.entity.Gender;
-import com.klinik.entity.Patient;
 import com.klinik.entity.RecordPatient;
-import com.klinik.entity.TypeComplaint;
-import com.klinik.entity.Complaint;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.CardPatientRepository;
+import com.klinik.repositories.RecordPatientRepository;
 import com.klinik.response.ReportDrug;
 import com.klinik.response.report.CardPatinetReport;
 import com.klinik.response.report.RecordPatientReport;
 import com.klinik.response.report.ResponseReport;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -38,6 +32,7 @@ public class ReportService {
     private EntityManager em;
 
     private final CardPatientRepository cardPatientRepository;
+    private final RecordPatientRepository recordPatientRepository;
 
     /**
      * Отчет по виду ребилитационного лечения за период времени
@@ -118,8 +113,8 @@ public class ReportService {
      */
     public CardPatinetReport reportInformationAboutPatient(Long idCardPatient) throws Exception, MyException {
         CardPatinetReport response = new CardPatinetReport();
-        CardPatient card = cardPatientRepository.findById(idCardPatient)
-                            .orElseThrow(() -> new NoSuchElementException("Карты пациента с таким ИД не существует"));
+        response.setCard(cardPatientRepository.findById(idCardPatient)
+                .orElseThrow(() -> new NoSuchElementException("Карты пациента с таким ИД не существует")));
         try {
             String sql2 = "SELECT t.name as name_solution, COUNT( u.rehabilitation_solution_id ) as count_solution FROM Treatment u"
                     + " left join Rehabilitation_solution t on t.id_rehabilitation_solution = u.rehabilitation_solution_id"
@@ -129,7 +124,6 @@ public class ReportService {
             session = em.unwrap(Session.class);
             session.doWork((Connection conn) -> {
                 try {
-
                     List<ResponseReport> treatment = new ArrayList<>();
                     try (PreparedStatement st2 = conn.prepareStatement(sql2)) {
                         st2.setLong(1, idCardPatient);
@@ -143,12 +137,11 @@ public class ReportService {
                             }
                         }
                     }
-                    response.setCard(card);
+
                 } catch (SQLException ex) {
                     java.util.logging.Logger.getLogger(ReportService.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
-             
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(ReportService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -158,100 +151,18 @@ public class ReportService {
     /**
      * Отчет по записям пациента за период времени
      * 
-     * @param IdPatient
-     * @param dateFrom
-     * @param dateTo
-     * @return
+     * @param IdPatient - Ид пацинента 
+     * @param dateFrom  - Время записи с 
+     * @param dateTo    - Время записи по 
+     * @return RecordPatientReport
      * @throws Exception
      */
-    public RecordPatientReport reportByPatietnWithRecordPatient(Long IdPatient, LocalDateTime dateFrom,
-            LocalDateTime dateTo) throws Exception {
+    public RecordPatientReport reportByPatietnWithRecordPatient( Long IdPatient, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception {
         RecordPatientReport report = new RecordPatientReport();
-        try {
-            String SQL = "SELECT p.surname, p.name, p.full_name, p.gender, p.phone, p.address, c.diagnosis, c.allergy, c.note, c.сonclusion, count(r.id_record) FROM Patient p "
-                    + " left join Card_patient c on c.pacient_id = p.id_patient "
-                    + " left join Record_patient r on r.card_patient_id = c.id_card_patient "
-                    + " where p.id_patient = ? and r.date_record BETWEEN ? and ?"
-                    + " GROUP BY p.surname, p.name, p.full_name, p.gender, p.phone, p.address, c.diagnosis, c.allergy, c.note, c.сonclusion";
-            String SQL2 = "SELECT r.id_record, r.date_record, r.date_appointment, r.number_room,d.id_doctor, d.surname, d.name, d.full_name  FROM Record_patient r "
-                    + " left join  Doctor d on d.id_doctor = r.doctor_id"
-                    + " left join Card_patient c on c.id_card_patient = card_patient_id"
-                    + " left join Patient p on p.id_patient = c.pacient_id"
-                    + " where p.id_patient = ? and r.date_record BETWEEN ? and ?";
-            String SQL3 = "SELECT s.name FROM Card_patient c "
-                    + " left join Patient p on id_patient = c.pacient_id "
-                    + " left join Card_patient_Complaint cpc on cpc.card_patient_id = c.id_card_patient "
-                    + " left join Type_complaint s on s.id_type_complaint = cpc.type_complaint_id "
-                    + " where p.id_patient = ?";
-            Session session;
-            session = em.unwrap(Session.class);
-            session.doWork((Connection conn) -> {
-                try (PreparedStatement ps = conn.prepareStatement(SQL)) {
-                    ps.setLong(1, IdPatient);
-                    ps.setTimestamp(2, Timestamp.valueOf(dateFrom));
-                    ps.setTimestamp(3, Timestamp.valueOf(dateTo));
-                    try (ResultSet rs = ps.executeQuery()) {
-                        while (rs.next()) {
-                            Patient patient = new Patient();
-                            CardPatient card = new CardPatient();
-                            List<RecordPatient> list = new ArrayList<>();
-                            patient.setSurname(rs.getString(1));
-                            patient.setName(rs.getString(2));
-                            patient.setFullName(rs.getString(3));
-                            patient.setGender(rs.getInt(4) == 0 ? Gender.MAN : Gender.WOMAN);
-                            patient.setPhone(rs.getString(5));
-                            patient.setAddress(rs.getString(6));
-                            card.setDiagnosis(rs.getString(7));
-                            card.setAllergy(rs.getBoolean(8));
-                            card.setNote(rs.getString(9));
-                            card.setСonclusion(rs.getString(10));
-                            card.setPatient(patient);
-                            try (PreparedStatement ps2 = conn.prepareStatement(SQL2)) {
-                                ps2.setLong(1, IdPatient);
-                                ps2.setTimestamp(2, Timestamp.valueOf(dateFrom));
-                                ps2.setTimestamp(3, Timestamp.valueOf(dateTo));
-                                try (ResultSet rs2 = ps2.executeQuery()) {
-                                    while (rs2.next()) {
-                                        RecordPatient record_patient = new RecordPatient();
-                                        Doctor doctor = new Doctor();
-                                        record_patient.setIdRecord(rs2.getLong(1));
-                                        record_patient.setDateRecord(rs2.getTimestamp(2).toLocalDateTime());
-                                        record_patient.setDateAppointment(rs2.getTimestamp(3).toLocalDateTime());
-                                        record_patient.setNumberRoom(rs2.getLong(4));
-                                        doctor.setIdDoctor(rs2.getLong(5));
-                                        doctor.setSurname(rs2.getString(6));
-                                        doctor.setName(rs2.getString(7));
-                                        doctor.setFullName(rs2.getString(8));
-                                        record_patient.setDoctor(doctor);
-                                        list.add(record_patient);
-                                    }
-                                }
-                            }
-                            List<TypeComplaint> listTypeComplaint = new ArrayList<>();
-                            try (PreparedStatement ps3 = conn.prepareStatement(SQL3)) {
-                                ps3.setLong(1, IdPatient);
-                                try (ResultSet rs3 = ps3.executeQuery()) {
-                                    while (rs3.next()) {
-                                        TypeComplaint typeComplaint = new TypeComplaint();
-                                        typeComplaint.setName(rs3.getString(1));
-                                        listTypeComplaint.add(typeComplaint);
-                                    }
-                                }
-                            }
-                            card.setTypeComplaint(listTypeComplaint);
-                            report.setCard(card);
-                            report.setCountRecordForTime(rs.getLong(11));
-                            report.setListRecordPatient(list);
-                        }
-                    }
-                } catch (SQLException ex) {
-                    java.util.logging.Logger.getLogger(ReportService.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-
-        } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(ReportService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        List<RecordPatient> list = recordPatientRepository.findByParam(IdPatient, dateFrom, dateTo);
+        report.setCard(cardPatientRepository.findByPatientId(IdPatient).orElseThrow(() -> new NoSuchElementException( "Пациента с таким ИД не существует" )));
+        report.setCountRecordForTime(list.stream().count());
+        report.setListRecordPatient(list);
         return report;
     }
 

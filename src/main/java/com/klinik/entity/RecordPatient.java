@@ -19,6 +19,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -75,6 +77,7 @@ public class RecordPatient implements Serializable {
              description = "ИД карты",
              example     = "1",
              required    = true )
+             @JsonIgnore
     private Long cardPatientId;
 
 }
