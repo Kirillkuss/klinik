@@ -1,7 +1,9 @@
 package com.klinik.response;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -9,6 +11,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @Getter
 @Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class BaseResponse<T> {
@@ -22,18 +26,9 @@ public class BaseResponse<T> {
     @Schema (description = "Ответ", name = "response")
     private T response;
 
-    public BaseResponse(){
-    }
-
     public BaseResponse(Integer code, String massage){
         this.code = code;
         this.message = massage;
-    }
-
-    public BaseResponse(Integer code, String message, T response){
-        this.code = code;
-        this.message = message;
-        this.response = response;
     }
 
     public static BaseResponse success() {
