@@ -17,7 +17,7 @@ public class RecordPatientController implements IRecordPatinet {
 
     private final RecordPatientService recordPatientService;
     public ResponseEntity<List<RecordPatient>> allListRecordPatient() throws Exception, MyException{
-        return new ResponseEntity<>( recordPatientService.allListRecordPatient(), HttpStatus.OK );
+        return new ResponseEntity<>( recordPatientService.findAll(), HttpStatus.OK );
     }
     public ResponseEntity addRecordPatient( RecordPatient recordPatient, Long idDoctor, Long idCardPatient ) throws Exception, MyException{
         return new ResponseEntity<>( recordPatientService.saveRecordPatient( recordPatient,  idDoctor, idCardPatient ), HttpStatus.CREATED );                
