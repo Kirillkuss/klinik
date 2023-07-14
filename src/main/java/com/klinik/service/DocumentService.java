@@ -13,6 +13,7 @@ import java.util.List;
 public class DocumentService {
 
     public final DocumentRepository documentRepository;
+    
     public List<Document> getAllDocuments(){
         return documentRepository.findAll();
     }

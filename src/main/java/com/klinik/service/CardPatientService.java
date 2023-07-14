@@ -17,6 +17,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CardPatientService {
+    
 
     @PersistenceContext
     EntityManager em;
