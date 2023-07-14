@@ -1,67 +1,85 @@
 package com.klinik.service;
 
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
-
-import com.klinik.entity.CardPatient;
-import com.klinik.entity.Doctor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import com.klinik.entity.RecordPatient;
 import com.klinik.repositories.CardPatientRepository;
 import com.klinik.repositories.DoctorRerository;
 import com.klinik.repositories.RecordPatientRepository;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Этот класс предназнаен для тестирования сервиса RecordPatientService")
 public class RecordPatientServiceTest {
 
-    @Mock
-    private RecordPatientRepository recordPatientRepository;
-
-    @Mock
-    private DoctorRerository doctorRepository;
-
-    @Mock
-    private CardPatientRepository cardPatientRepository;
-
-    @InjectMocks
+    @Autowired
     private RecordPatientService recordPatientService;
 
+    @MockBean
+    private static RecordPatientRepository recordPatientRepository;
+    @MockBean
+    private static DoctorRerository        doctorRerository;
+    @MockBean
+    private static CardPatientRepository   cardPatientRepository;
+
+    private final List<RecordPatient> listRecordPatients = new ArrayList<>();
+
+    @TestConfiguration
+    static class RecordPatientServiceTestConfiguration {
+ 
+        @Bean
+        public RecordPatientService recordPatientService() {
+            return new RecordPatientService(recordPatientRepository, doctorRerository, cardPatientRepository);
+        }
+    }
+
     @BeforeEach
-    public void setup() {
-        MockitoAnnotations.openMocks( this );
+    public void setUp() {
+        recordPatientService = mock ( RecordPatientService.class  );
     }
 
     @Test
-    public void saveRecordPatient_ValidInput_ShouldSaveSuccessfully() throws Exception {
-        // Arrange
-        RecordPatient recordPatient = new RecordPatient();
-        recordPatient.setCardPatientId( 1L );
-        Long idDoctor = 1L;
-        Long idCardPatient = 1L;
-        Doctor doctor = new Doctor();
-        CardPatient cardPatient = new CardPatient();
-
-        when(recordPatientRepository.findById(recordPatient.getIdRecord())).thenReturn(Optional.empty());
-        when(doctorRepository.findById(idDoctor)).thenReturn(Optional.of(doctor));
-        when(cardPatientRepository.findById(idCardPatient)).thenReturn(Optional.of(cardPatient));
-        when(cardPatientRepository.findById(idCardPatient)).thenReturn(Optional.of(cardPatient));
-    }
-
-    @Test
-    public void testAllListRecordPatient() throws Exception{
-        List<CardPatient> list = new ArrayList<>();
-        Mockito.when( cardPatientRepository.findAll() ).thenReturn( list );
-        Mockito.when( cardPatientRepository.findAll() ).then(( InvocationOnMock inv ) ->{
-            return ( List<CardPatient> ) inv.callRealMethod();
+    @DisplayName( "Получение всех запицесей к врачу ")
+    public void testFindAll() throws Exception {
+        Mockito.when( recordPatientService.findAll() ).thenReturn( listRecordPatients );
+        Mockito.when( recordPatientService.findAll() ).then(( InvocationOnMock inv ) ->{
+            return ( List<RecordPatient> ) inv.callRealMethod();
         });
     }
+
+    @Test
+    @DisplayName( "Поиск записей пациента по параметрам")
+    public void testFindByParam() throws Exception{
+        Long id = 1L;
+        LocalDateTime date = LocalDateTime.now();
+        Mockito.when( recordPatientService.findByParam( id, date, date )).thenReturn( listRecordPatients );
+        Mockito.when( recordPatientService.findByParam( id, date, date )).then(( InvocationOnMock inv ) ->{
+            return ( List<RecordPatient> ) inv.callRealMethod();
+        });
+    }
+
+    @Test
+    @DisplayName("Добавить запись")
+    public void testSaveRecordPatient() throws Exception{
+        RecordPatient recordPatient = new RecordPatient();
+        Long idDoctor = 1L;
+        Long idCardPatient = 1L;
+        Mockito.when( recordPatientService.saveRecordPatient( recordPatient, idDoctor, idCardPatient )).thenReturn( recordPatient );
+        Mockito.when( recordPatientService.saveRecordPatient( recordPatient, idDoctor, idCardPatient )).then(( InvocationOnMock inv ) ->{
+            return ( RecordPatient ) inv.callRealMethod();
+        }); 
+
+    }
+
 
 }
 

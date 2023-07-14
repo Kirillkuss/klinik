@@ -2,6 +2,7 @@ package com.klinik.entity;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ import javax.persistence.Table;
 @Setter
 @Getter
 @RequiredArgsConstructor
+@AllArgsConstructor
 @ToString
 @EqualsAndHashCode
 @JsonInclude( Include.NON_NULL )

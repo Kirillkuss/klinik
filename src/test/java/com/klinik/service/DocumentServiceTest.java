@@ -1,34 +1,21 @@
 package com.klinik.service;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import javax.persistence.EntityManager;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
 import com.klinik.entity.Document;
 import com.klinik.repositories.DocumentRepository;
-/** 
-@Disabled
+
 @DisplayName( "Класс предназначен для тестирования сервиса DocumentService")
-*/
 @DataJpaTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)
 
@@ -44,37 +31,26 @@ public class DocumentServiceTest {
 
     @BeforeEach
     public void setUp() {
-        //documentRepository = mock( DocumentRepository.class );
-        service = new DocumentService(documentRepository);
-        //service.documentRepository = mock(DocumentRepository.class );
-        
-    }
-
-    @AfterEach
-    public void tearDown() {
+        service = new DocumentService(documentRepository); 
     }
 
     @DisplayName("Получение списка документов")
     @Test
     public void testGetAllDocuments() throws Exception{
-        //Mockito.when( service.getAllDocuments()).thenCallRealMethod();
         Mockito.when( service.getAllDocuments()).thenReturn( list );
         Mockito.when( service.getAllDocuments()).then(( InvocationOnMock inv ) ->{
             return ( List<Document> ) inv.callRealMethod();
         });
-        //assertNotNull( service.getAllDocuments()); 
        }
 
     @DisplayName("Получение списка документов")
     @Test
     public void testSave() throws Exception{
         Document document = new Document();
-      //  Mockito.when( service.getAllDocuments()).thenCallRealMethod();
         Mockito.when( service.addDocument( document )).thenReturn( document );
         Mockito.when( service.addDocument( document )).then(( InvocationOnMock inv ) ->{
             return ( Document ) inv.callRealMethod();
         });
-        //assertNotNull( service.getAllDocuments()); 
        }   
 
     
