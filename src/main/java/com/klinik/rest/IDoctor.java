@@ -1,5 +1,6 @@
 package com.klinik.rest;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
     @ApiResponse( responseCode = "400", description = "Плохой запрос",    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
     @ApiResponse( responseCode = "500", description = "Ошибка сервера",   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
+@SecurityRequirement(name = "Bearer Authentication")
 public interface IDoctor {
     @GetMapping(value = "/all")
     @Operation( description = "Список всех докторов", summary = "Список всех докторов")
