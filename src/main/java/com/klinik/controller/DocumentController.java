@@ -22,4 +22,9 @@ public class DocumentController implements IDocument{
         return new ResponseEntity<>( documentService.addDocument( document ), HttpStatus.CREATED );
     }
 
+    @Override
+    public ResponseEntity<Document> findById(Long id) {
+        return new ResponseEntity<>( documentService.findById( id ), HttpStatus.OK ); 
+    }
+
 }

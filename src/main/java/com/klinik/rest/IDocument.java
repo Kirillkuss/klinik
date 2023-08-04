@@ -25,11 +25,17 @@ import io.swagger.v3.oas.annotations.tags.Tag;
         @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
 public interface IDocument {
+
     @GetMapping(value = "/list")
     @Operation( description = "Список всех документов", summary = "Список всех документов")
     public ResponseEntity<List<Document>> getAllDocuments() throws Exception, MyException;
+
     @Operation( description = "Добавить документ", summary = "Добавить документ")
     @RequestMapping( method = RequestMethod.POST , value = "/add/{docum}")
     public ResponseEntity<Document> addDocument( Document document ) throws Exception, MyException;
+
+    @Operation( description = "Найти документ", summary = "Найти документ")
+    @RequestMapping( method = RequestMethod.GET , value = "/find")
+    public ResponseEntity<Document> findById( Long id ) ;
     
 }
