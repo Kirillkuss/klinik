@@ -7,7 +7,10 @@
     <title>Klinika</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 	<script type="text/javascript">
-	$(document).ready(function() {
+
+
+	/**$(document).ready(function() {
+		refreshTable();
 		$.getJSON('http://localhost:8081/web/documents/list', function(json) {
 			var tr=[];
 			for (var i = 0; i < json.length; i++) {
@@ -22,8 +25,9 @@
 			}
 			$('table').append($(tr.join('')));
 		});
-	})
+	})*/
 </script>
+
 </head>	
   <body>
 		
@@ -33,16 +37,19 @@
 			<nav class="navbar" style="background-color: #e3f2fd;">
 				<div class="container-fluid">
 				  <a class="navbar-brand" href="#"></a>
+				    <!-- Добавить документ -->
+					<button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#staticBackdrop" > Добавить документ</button>
+					<!-- Поиск -->
 				  <form class="d-flex" role="search">
 					<input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск" id="id">
-					<button class="btn btn-outline-success" data-dismiss="alert" type="button" id="liveAlertBtn">Поиск</button>
+					<button class="btn btn-outline-success" data-dismiss="alert" type="button" id="findByIdDocument">Поиск</button>
 				  </form>
 				</div>
 			  </nav>
 		</div>
 	  </nav>
 	<script type="text/javascript">
-		$("button").click(function() {
+		$("#findByIdDocument").click(function(e){
 				var id = $('#id').val();
 					$.ajax({
 						type: "GET",
@@ -52,7 +59,6 @@
 						cache: false,
 						success: function( json ) {
 							var tr=[];
-							$('table').html($(tr.join('')));
 							tr.push('<tr>');
 							tr.push('<td>' + json.idDocument + '</td>');
 							tr.push('<td>' + json.typeDocument + '</td>');
@@ -62,17 +68,15 @@
 							tr.push('<td>' + json.polis + '</td>');
 							tr.push('</tr>');
 							$('table').append($(tr.join('')));
-							
-				
-						},
-						error: function ( error ){
-							alert( error.status + " Ошибка ответа");
+						}, error: function ( error ){
+							$('#errorAlert').text(error.status + " : " + error.statusText  ).show();
+							$('#responseЕrror').modal( 'show' );
 						}
 					});
 				});
 	</script>
 
-	<table class="table table-success table-striped table-hover">
+	<table class="table table-success table-striped table-hover" id = "tableDocument">
 		<thead>
 		  <tr>
 			<th scope="col">№</th>
@@ -87,7 +91,84 @@
 		</tbody>
 	  </table>
 
-	 
+  <!-- Модальное окно - добавление документа -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h1 class="modal-title fs-5" id="staticBackdropLabel">Добавление документа:</h1>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+		</div>
+		<div class="modal-body">
+			<label for="document-id" class="col-form-label">ИД:</label>
+			<input type="text" class="form-control" id="idDocument">
+			<label for="document-type" class="col-form-label">Тип документа:</label>
+			<input type="text" class="form-control" id="typeDocument">
+			<label for="document-seria" class="col-form-label">Серия:</label>
+			<input type="text" class="form-control" id="seria">
+			<label for="document-numar" class="col-form-label">Номер:</label>
+			<input type="text" class="form-control" id="numar">
+			<label for="document-snils" class="col-form-label">СНИЛС:</label>
+			<input type="text" class="form-control" id="snils">
+			<label for="document-polis" class="col-form-label">Полис:</label>
+			<input type="text" class="form-control" id="polis">
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+		  <button type="button" class="btn btn-success" data-bs-dismiss="modal" id = "addDocument">Добавить</button>
+		  <script type="text/javascript">
+			$("#addDocument").on('click', function (event){
+				event.preventDefault();
+				var idDocument =  $('#idDocument').val();
+				var typeDocument = $('#typeDocument').val();
+				var seria = $('#seria').val();
+				var numar = $('#numar').val();
+				var snils = $('#snils').val();
+				var polis = $('#polis').val();
+					$.ajax({
+						type: "POST",
+						contentType: "application/json; charset=utf-8",
+						url: "http://localhost:8081/web/documents/add/{docum}",
+						data: JSON.stringify({idDocument: idDocument, typeDocument: typeDocument, seria: seria, numar: numar, snils: snils, polis: polis}),
+						cache: false,
+						success: function( json ) {
+							var tr=[];
+							tr.push('<tr>');
+							tr.push('<td>' + json.idDocument + '</td>');
+							tr.push('<td>' + json.typeDocument + '</td>');
+							tr.push('<td>' + json.seria + '</td>');
+							tr.push('<td>' + json.numar + '</td>');
+							tr.push('<td>' + json.snils + '</td>');
+							tr.push('<td>' + json.polis + '</td>');
+							tr.push('</tr>');
+							$('table').append($(tr.join('')));
+						}, error: function ( error ){
+							$('#errorAlert').text(error.status + " : " + error.statusText  ).show();
+							$('#responseЕrror').modal( 'show' );
+						}
+					});
+				});
+		</script>
+		</div>
+	  </div>
+	</div>
+</div>
+
+<!-- Модальное окно ошибки-->
+<div class="modal fade" id="responseЕrror" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h1 class="modal-title fs-5" id="staticBackdropLabel">Ошибка</h1>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+		</div>
+		<div class="alert alert-danger" role="alert" id="errorAlert"></div>
+	  </div>
+	</div>
+	
+
+  </div>
+
 
 	  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>

@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RequestMapping( value = "documents")
 @Tag(name = "3. Documents", description = "Документ пациента")
@@ -32,7 +33,7 @@ public interface IDocument {
 
     @Operation( description = "Добавить документ", summary = "Добавить документ")
     @RequestMapping( method = RequestMethod.POST , value = "/add/{docum}")
-    public ResponseEntity<Document> addDocument( Document document ) throws Exception, MyException;
+    public ResponseEntity<Document> addDocument(@RequestBody Document document ) throws Exception, MyException;
 
     @Operation( description = "Найти документ", summary = "Найти документ")
     @RequestMapping( method = RequestMethod.GET , value = "/find")
