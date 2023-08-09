@@ -6,6 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Klinika</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<style>
+		table, th, td {
+			width: 40px; 
+			height:30px; 
+			border: solid 1px green; 
+			text-align: center;
+			
+		}
+		table, td{
+			cursor: pointer;
+		}
+
+		input{
+			border: solid 1px green; 
+		}
+	</style>
+	
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$.getJSON('http://localhost:8081/web/documents/list', function(json) {
@@ -34,9 +51,6 @@
 				<div class="container-fluid">
 				  <a class="navbar-brand" href="#"></a>
 				    <!-- Добавить документ -->
-					<form>
-						<button type="button" class="btn btn-success "  data-bs-toggle="modal" data-bs-target="#exampleModal" > Добавить документ</button>
-					</form>
 					<!-- Поиск -->
 				  <form class="d-flex" role="search">
 					<input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск" id="id" required>
@@ -44,6 +58,10 @@
 				  </form>
 				</div>
 			</nav>
+			<h1></h1>
+			<form>
+				<button type="button" class="btn btn-outline-dark"  data-bs-toggle="modal" data-bs-target="#exampleModal" > Добавить документ</button>
+			</form>
 	</div>
 
   <!-- Поиск по ИД -->
@@ -76,8 +94,8 @@
 	</script>
 
   <!-- Таблица -->
-	<table class="table table-success table-striped table-hover" id = "tableDocument">
-		<thead>
+	<table class="table table-success table-striped table-hover" id = "tableDocument" >
+		<thead class="table-group-divider">
 		  <tr>
 			<th scope="col">№</th>
 			<th scope="col">Тип документа</th>
@@ -157,7 +175,7 @@
 			</script>
 		  </div>
 		</div>	
-	</form>	  
+	</form>	
 
 <!-- Модальное окно ошибки-->
 <div class="modal fade" id="responseЕrror" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
