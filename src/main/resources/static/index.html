@@ -7,30 +7,26 @@
     <title>Klinika</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 	<script type="text/javascript">
-
-
-	/**$(document).ready(function() {
-		refreshTable();
-		$.getJSON('http://localhost:8081/web/documents/list', function(json) {
-			var tr=[];
-			for (var i = 0; i < json.length; i++) {
-				tr.push('<tr>');
-				tr.push('<td>' + json[i].idDocument + '</td>');
-				tr.push('<td>' + json[i].typeDocument + '</td>');
-				tr.push('<td>' + json[i].seria + '</td>');
-				tr.push('<td>' + json[i].numar + '</td>');
-				tr.push('<td>' + json[i].snils + '</td>');
-				tr.push('<td>' + json[i].polis + '</td>');
-				tr.push('</tr>');
-			}
-			$('table').append($(tr.join('')));
+		$(document).ready(function() {
+			$.getJSON('http://localhost:8081/web/documents/list', function(json) {
+				var tr=[];
+				for (var i = 0; i < json.length; i++) {
+					tr.push('<tr>');
+					tr.push('<td>' + json[i].idDocument + '</td>');
+					tr.push('<td>' + json[i].typeDocument + '</td>');
+					tr.push('<td>' + json[i].seria + '</td>');
+					tr.push('<td>' + json[i].numar + '</td>');
+					tr.push('<td>' + json[i].snils + '</td>');
+					tr.push('<td>' + json[i].polis + '</td>');
+					tr.push('</tr>');
+				}
+				$('table').append($(tr.join('')));
+			});
 		});
-	})*/
-</script>
-
+	</script>
 </head>	
   <body>
-		
+	
 	<div class="text-bg-success p-3">
 			<h1> Klinika   </h1>
 			<h5><span class="badge bg-secondary">Version 1.0</span></h5>
@@ -38,16 +34,19 @@
 				<div class="container-fluid">
 				  <a class="navbar-brand" href="#"></a>
 				    <!-- Добавить документ -->
-					<button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#staticBackdrop" > Добавить документ</button>
+					<form>
+						<button type="button" class="btn btn-success "  data-bs-toggle="modal" data-bs-target="#exampleModal" > Добавить документ</button>
+					</form>
 					<!-- Поиск -->
 				  <form class="d-flex" role="search">
-					<input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск" id="id">
-					<button class="btn btn-outline-success" data-dismiss="alert" type="button" id="findByIdDocument">Поиск</button>
+					<input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск" id="id" required>
+					<button class="btn btn-outline-success"  type="button" id="findByIdDocument">Поиск</button>
 				  </form>
 				</div>
-			  </nav>
-		</div>
-	  </nav>
+			</nav>
+	</div>
+
+  <!-- Поиск по ИД -->
 	<script type="text/javascript">
 		$("#findByIdDocument").click(function(e){
 				var id = $('#id').val();
@@ -69,13 +68,14 @@
 							tr.push('</tr>');
 							$('table').append($(tr.join('')));
 						}, error: function ( error ){
-							$('#errorAlert').text(error.status + " : " + error.statusText  ).show();
+							$('#errorAlert').text( error.responseText ).show();
 							$('#responseЕrror').modal( 'show' );
 						}
 					});
-				});
+				});		
 	</script>
 
+  <!-- Таблица -->
 	<table class="table table-success table-striped table-hover" id = "tableDocument">
 		<thead>
 		  <tr>
@@ -91,68 +91,73 @@
 		</tbody>
 	  </table>
 
-  <!-- Модальное окно - добавление документа -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h1 class="modal-title fs-5" id="staticBackdropLabel">Добавление документа:</h1>
-		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-		</div>
-		<div class="modal-body">
-			<label for="document-id" class="col-form-label">ИД:</label>
-			<input type="text" class="form-control" id="idDocument">
-			<label for="document-type" class="col-form-label">Тип документа:</label>
-			<input type="text" class="form-control" id="typeDocument">
-			<label for="document-seria" class="col-form-label">Серия:</label>
-			<input type="text" class="form-control" id="seria">
-			<label for="document-numar" class="col-form-label">Номер:</label>
-			<input type="text" class="form-control" id="numar">
-			<label for="document-snils" class="col-form-label">СНИЛС:</label>
-			<input type="text" class="form-control" id="snils">
-			<label for="document-polis" class="col-form-label">Полис:</label>
-			<input type="text" class="form-control" id="polis">
-		</div>
-		<div class="modal-footer">
-		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-		  <button type="button" class="btn btn-success" data-bs-dismiss="modal" id = "addDocument">Добавить</button>
-		  <script type="text/javascript">
-			$("#addDocument").on('click', function (event){
-				event.preventDefault();
-				var idDocument =  $('#idDocument').val();
-				var typeDocument = $('#typeDocument').val();
-				var seria = $('#seria').val();
-				var numar = $('#numar').val();
-				var snils = $('#snils').val();
-				var polis = $('#polis').val();
-					$.ajax({
-						type: "POST",
-						contentType: "application/json; charset=utf-8",
-						url: "http://localhost:8081/web/documents/add/{docum}",
-						data: JSON.stringify({idDocument: idDocument, typeDocument: typeDocument, seria: seria, numar: numar, snils: snils, polis: polis}),
-						cache: false,
-						success: function( json ) {
-							var tr=[];
-							tr.push('<tr>');
-							tr.push('<td>' + json.idDocument + '</td>');
-							tr.push('<td>' + json.typeDocument + '</td>');
-							tr.push('<td>' + json.seria + '</td>');
-							tr.push('<td>' + json.numar + '</td>');
-							tr.push('<td>' + json.snils + '</td>');
-							tr.push('<td>' + json.polis + '</td>');
-							tr.push('</tr>');
-							$('table').append($(tr.join('')));
-						}, error: function ( error ){
-							$('#errorAlert').text(error.status + " : " + error.statusText  ).show();
-							$('#responseЕrror').modal( 'show' );
-						}
+
+	<form id="testForm">
+		<!-- Модальное окно -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">ДОБАВИТЬ ДОКУМЕНТ</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+			  </div>
+			  <div class="modal-body">
+				   <label for="document-id" class="col-form-label">ИД:</label>
+				  <input type="text" class="form-control" id="idDocument" placeholder = "Ид документа"  required>
+				  <label for="document-type" class="col-form-label">Тип документа:</label>
+				  <input type="text" class="form-control" id="typeDocument" placeholder = "Тип документа" required>
+				  <label for="document-seria" class="col-form-label">Серия:</label>
+				  <input type="text" class="form-control" id="seria" placeholder = "Серия" required>
+				  <label for="document-numar" class="col-form-label">Номер:</label>
+				  <input type="text" class="form-control" id="numar" placeholder = "Номер" required>
+				  <label for="document-snils" class="col-form-label">СНИЛС:</label>
+				  <input type="text" class="form-control" id="snils" placeholder = "СНИЛС" required>
+				  <label for="document-polis" class="col-form-label">Полис:</label>
+				  <input type="text" class="form-control" id="polis" placeholder = "Полис" required>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+				<button type="submit" class="btn btn-success"  id = "addDocumentTwo">Сохранить изменения</button>
+			  </div>
+			</div>
+			<script type="text/javascript">
+				$("#testForm").submit( function (event){
+					event.preventDefault();
+					var idDocument =  $('#idDocument').val();
+					var typeDocument = $('#typeDocument').val();
+					var seria = $('#seria').val();
+					var numar = $('#numar').val();
+					var snils = $('#snils').val();
+					var polis = $('#polis').val();
+						$.ajax({
+							type: "POST",
+							contentType: "application/json; charset=utf-8",
+							url: "http://localhost:8081/web/documents/add/{docum}",
+							data: JSON.stringify({idDocument: idDocument, typeDocument: typeDocument, seria: seria, numar: numar, snils: snils, polis: polis}),
+							cache: false,
+							success: function( json ) {
+								var tr=[];
+								tr.push('<tr>');
+								tr.push('<td>' + json.idDocument + '</td>');
+								tr.push('<td>' + json.typeDocument + '</td>');
+								tr.push('<td>' + json.seria + '</td>');
+								tr.push('<td>' + json.numar + '</td>');
+								tr.push('<td>' + json.snils + '</td>');
+								tr.push('<td>' + json.polis + '</td>');
+								tr.push('</tr>');
+								$('table').append($(tr.join('')));
+
+								location.reload();
+							}, error: function ( error ){
+								$('#errorAlert').text( error.responseText  ).show();
+								$('#responseЕrror').modal( 'show' );
+							}
+						});
 					});
-				});
-		</script>
-		</div>
-	  </div>
-	</div>
-</div>
+			</script>
+		  </div>
+		</div>	
+	</form>	  
 
 <!-- Модальное окно ошибки-->
 <div class="modal fade" id="responseЕrror" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -162,30 +167,12 @@
 		  <h1 class="modal-title fs-5" id="staticBackdropLabel">Ошибка</h1>
 		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
 		</div>
-		<div class="alert alert-danger" role="alert" id="errorAlert"></div>
+		<div class="alert alert-warning" role="alert" id="errorAlert"></div>
 	  </div>
 	</div>
-	
-
-  </div>
-
-
+</div>
 	  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
 	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-      <script type="importmap">
-		{
-		  "imports": {
-			"@popperjs/core": "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.min.js",
-			"bootstrap": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.esm.min.js"
-		  }
-		}
-		</script>
-		<script type="module">
-		  import * as bootstrap from 'bootstrap'
-	
-		  new bootstrap.Popover(document.getElementById('popoverButton'))
-		</script>
-	
 	</body>
 </html>
