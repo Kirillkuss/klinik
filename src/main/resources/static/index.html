@@ -7,40 +7,17 @@
     <title>Klinika</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 	<style>
-		table, th, td {
+		tbody > tr.highlight > td {
+    		background: rgb(221, 167, 19);
+		}
+		table, th, td, tr {
 			width: 40px; 
 			height:30px; 
 			border: solid 1px green; 
-			text-align: center;
-			
-		}
-		table, td{
-			cursor: pointer;
-		}
-
-		input{
-			border: solid 1px green; 
+			text-align: center;	 
 		}
 	</style>
 	
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$.getJSON('http://localhost:8081/web/documents/list', function(json) {
-				var tr=[];
-				for (var i = 0; i < json.length; i++) {
-					tr.push('<tr>');
-					tr.push('<td>' + json[i].idDocument + '</td>');
-					tr.push('<td>' + json[i].typeDocument + '</td>');
-					tr.push('<td>' + json[i].seria + '</td>');
-					tr.push('<td>' + json[i].numar + '</td>');
-					tr.push('<td>' + json[i].snils + '</td>');
-					tr.push('<td>' + json[i].polis + '</td>');
-					tr.push('</tr>');
-				}
-				$('table').append($(tr.join('')));
-			});
-		});
-	</script>
 </head>	
   <body>
 	
@@ -62,7 +39,7 @@
 			<form>
 				<button type="button" class="btn btn-outline-dark"  data-bs-toggle="modal" data-bs-target="#exampleModal" > Добавить документ</button>
 			</form>
-	</div>
+		</div>
 
   <!-- Поиск по ИД -->
 	<script type="text/javascript">
@@ -84,18 +61,19 @@
 							tr.push('<td>' + json.snils + '</td>');
 							tr.push('<td>' + json.polis + '</td>');
 							tr.push('</tr>');
-							$('table').append($(tr.join('')));
+							$('tbody:even').empty();
+							$('table').prepend($(tr.join('')));
 						}, error: function ( error ){
-							$('#errorAlert').text( error.responseText ).show();
-							$('#responseЕrror').modal( 'show' );
+							$('#errorToast').text( error.responseText ).show();
+							$('#liveToastBtn').click();
 						}
 					});
 				});		
 	</script>
 
   <!-- Таблица -->
-	<table class="table table-success table-striped table-hover" id = "tableDocument" >
-		<thead class="table-group-divider">
+	<table class="table table-success " id = "tableDocument" >
+		<thead class="table-group-divider ">
 		  <tr>
 			<th scope="col">№</th>
 			<th scope="col">Тип документа</th>
@@ -107,6 +85,33 @@
 		</thead>
 		<tbody class="table-group-divider">
 		</tbody>
+
+		<script type="text/javascript">
+
+
+			if ( "id:empty" ){
+				$(document).ready(function() {
+				$('table tbody').on('mousedown', 'tr', function(e) {
+    				$(this).addClass('highlight').siblings().removeClass('highlight');
+				});
+				$.getJSON('http://localhost:8081/web/documents/list', function(json) {
+					var tr=[];
+					for (var i = 0; i < json.length; i++) {
+						tr.push('<tr>');
+						tr.push('<td>' + json[i].idDocument + '</td>');
+						tr.push('<td>' + json[i].typeDocument + '</td>');
+						tr.push('<td>' + json[i].seria + '</td>');
+						tr.push('<td>' + json[i].numar + '</td>');
+						tr.push('<td>' + json[i].snils + '</td>');
+						tr.push('<td>' + json[i].polis + '</td>');
+						tr.push('</tr>');
+					}
+					$('table').append($(tr.join('')));
+				});
+			});
+			};
+
+		</script>
 	  </table>
 
 
@@ -167,8 +172,8 @@
 
 								location.reload();
 							}, error: function ( error ){
-								$('#errorAlert').text( error.responseText  ).show();
-								$('#responseЕrror').modal( 'show' );
+								$('#errorToast').text( error.responseText ).show();
+								$('#liveToastBtn').click();
 							}
 						});
 					});
@@ -177,18 +182,25 @@
 		</div>	
 	</form>	
 
-<!-- Модальное окно ошибки-->
-<div class="modal fade" id="responseЕrror" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	<div class="modal-dialog">
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h1 class="modal-title fs-5" id="staticBackdropLabel">Ошибка</h1>
-		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+		<!-- Всплывающие сообщение о ошибке-->
+		<div class="toast-container position-fixed bottom-0 end-0 p-3" id="liveToastBtn">
+			<div id="liveToast" class="toast" role="alert" role="alert" data-bs-delay="2000" data-bs-autohide="true" aria-live="assertive" aria-atomic="true" >
+				<div class="toast-header text-bg-secondary" >
+					<strong class="me-auto" >ERROR</strong>
+					<button type="close" class="btn-close" data-bs-dismiss="toast" aria-label="Закрыть"></button>
+				</div>
+				<div class="toast-body text-bg-warning" id ="errorToast"></div>
+				<script>
+					$("#liveToastBtn").click(function() {
+					$(".toast").toast('show');
+					});
+				</script>
+			</div>
 		</div>
-		<div class="alert alert-warning" role="alert" id="errorAlert"></div>
-	  </div>
-	</div>
-</div>
+	
+
+
+
 	  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
 	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
