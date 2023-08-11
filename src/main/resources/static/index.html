@@ -1,24 +1,22 @@
 <!doctype html>
 <html lang="ru">
-  <head>
-	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Klinika</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-	<style>
-		tbody > tr.highlight > td {
-    		background: rgb(221, 167, 19);
-		}
-		table, th, td, tr {
-			width: 40px; 
-			height:30px; 
-			border: solid 1px green; 
-			text-align: center;	 
-		}
-	</style>
-	
-</head>	
+  	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Klinika</title>
+		<link rel="stylesheet" href="img/color.css">
+		<script type = "text/javascript" src="img/script.js"></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+		<style>	
+			table, th, td, tr {
+				width: 40px; 
+				height:30px; 
+				border: solid 1px green; 
+				text-align: center;	 
+				}  
+		</style>
+	</head>	
   <body>
 	
 	<div class="text-bg-success p-3">
@@ -30,47 +28,22 @@
 				    <!-- Добавить документ -->
 					<!-- Поиск -->
 				  <form class="d-flex" role="search">
-					<input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск" id="id" required>
+					<input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск" id="idFound" required>
 					<button class="btn btn-outline-success"  type="button" id="findByIdDocument">Поиск</button>
 				  </form>
 				</div>
 			</nav>
 			<h1></h1>
 			<form>
-				<button type="button" class="btn btn-outline-dark"  data-bs-toggle="modal" data-bs-target="#exampleModal" > Добавить документ</button>
+				<button type="button" class="btn btn-outline-dark"  data-bs-toggle="modal" data-bs-target="#exampleModal" om> Добавить документ</button>
 			</form>
+			<!-- Поиск по ИД -->
+			<script>
+				findById();
+			</script>
 		</div>
 
-  <!-- Поиск по ИД -->
-	<script type="text/javascript">
-		$("#findByIdDocument").click(function(e){
-				var id = $('#id').val();
-					$.ajax({
-						type: "GET",
-						contentType: "application/json; charset=utf-8",
-						url: "http://localhost:8081/web/documents/find",
-						data:{ id: id } ,
-						cache: false,
-						success: function( json ) {
-							var tr=[];
-							tr.push('<tr>');
-							tr.push('<td>' + json.idDocument + '</td>');
-							tr.push('<td>' + json.typeDocument + '</td>');
-							tr.push('<td>' + json.seria + '</td>');
-							tr.push('<td>' + json.numar + '</td>');
-							tr.push('<td>' + json.snils + '</td>');
-							tr.push('<td>' + json.polis + '</td>');
-							tr.push('</tr>');
-							$('tbody:even').empty();
-							$('table').prepend($(tr.join('')));
-						}, error: function ( error ){
-							$('#errorToast').text( error.responseText ).show();
-							$('#liveToastBtn').click();
-						}
-					});
-				});		
-	</script>
-
+  
   <!-- Таблица -->
 	<table class="table table-success " id = "tableDocument" >
 		<thead class="table-group-divider ">
@@ -85,32 +58,9 @@
 		</thead>
 		<tbody class="table-group-divider">
 		</tbody>
-
+		<!-- Список всх документов -->
 		<script type="text/javascript">
-
-
-			if ( "id:empty" ){
-				$(document).ready(function() {
-				$('table tbody').on('mousedown', 'tr', function(e) {
-    				$(this).addClass('highlight').siblings().removeClass('highlight');
-				});
-				$.getJSON('http://localhost:8081/web/documents/list', function(json) {
-					var tr=[];
-					for (var i = 0; i < json.length; i++) {
-						tr.push('<tr>');
-						tr.push('<td>' + json[i].idDocument + '</td>');
-						tr.push('<td>' + json[i].typeDocument + '</td>');
-						tr.push('<td>' + json[i].seria + '</td>');
-						tr.push('<td>' + json[i].numar + '</td>');
-						tr.push('<td>' + json[i].snils + '</td>');
-						tr.push('<td>' + json[i].polis + '</td>');
-						tr.push('</tr>');
-					}
-					$('table').append($(tr.join('')));
-				});
-			});
-			};
-
+			listDocument();
 		</script>
 	  </table>
 
@@ -143,40 +93,9 @@
 				<button type="submit" class="btn btn-success"  id = "addDocumentTwo">Сохранить изменения</button>
 			  </div>
 			</div>
+			<!-- Добавить документ -->
 			<script type="text/javascript">
-				$("#testForm").submit( function (event){
-					event.preventDefault();
-					var idDocument =  $('#idDocument').val();
-					var typeDocument = $('#typeDocument').val();
-					var seria = $('#seria').val();
-					var numar = $('#numar').val();
-					var snils = $('#snils').val();
-					var polis = $('#polis').val();
-						$.ajax({
-							type: "POST",
-							contentType: "application/json; charset=utf-8",
-							url: "http://localhost:8081/web/documents/add/{docum}",
-							data: JSON.stringify({idDocument: idDocument, typeDocument: typeDocument, seria: seria, numar: numar, snils: snils, polis: polis}),
-							cache: false,
-							success: function( json ) {
-								var tr=[];
-								tr.push('<tr>');
-								tr.push('<td>' + json.idDocument + '</td>');
-								tr.push('<td>' + json.typeDocument + '</td>');
-								tr.push('<td>' + json.seria + '</td>');
-								tr.push('<td>' + json.numar + '</td>');
-								tr.push('<td>' + json.snils + '</td>');
-								tr.push('<td>' + json.polis + '</td>');
-								tr.push('</tr>');
-								$('table').append($(tr.join('')));
-
-								location.reload();
-							}, error: function ( error ){
-								$('#errorToast').text( error.responseText ).show();
-								$('#liveToastBtn').click();
-							}
-						});
-					});
+ 				AddDocument();
 			</script>
 		  </div>
 		</div>	
@@ -198,8 +117,6 @@
 			</div>
 		</div>
 	
-
-
 
 	  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
