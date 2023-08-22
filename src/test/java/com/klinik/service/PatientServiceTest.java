@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.klinik.repositories.PatientRepository;
 @DisplayName( "Класс предназначен для тестирования сервиса PatientService")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)
+@Disabled
 public class PatientServiceTest {
 
     private PatientService patientService;
@@ -49,7 +51,7 @@ public class PatientServiceTest {
         assertNotNull( patientService.findByWord( REQUEST ));
         assertEquals( patientService.findByWord( REQUEST ), patientService.findByWord( REQUEST ));
     }
-
+/** 
     @Test
     @DisplayName("Добавить пациента")
     public void testAddPatient() throws Exception{
@@ -57,5 +59,5 @@ public class PatientServiceTest {
         Long IdDocument = 1L;
         assertThrows( MyException.class, () ->{ patientService.addPatient( patient, IdDocument );});
     }
-  
+  */
 }

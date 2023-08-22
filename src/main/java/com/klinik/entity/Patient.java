@@ -25,8 +25,6 @@ import javax.persistence.Table;
 @Table( name = "patient")
 @Setter
 @Getter
-@RequiredArgsConstructor
-@AllArgsConstructor
 @ToString
 @EqualsAndHashCode
 @JsonInclude( Include.NON_NULL )
