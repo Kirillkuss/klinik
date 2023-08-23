@@ -1,0 +1,25 @@
+tbody > tr.highlight > td {
+  background: rgb(221, 167, 19);
+}
+
+form{
+  position:relative;
+  left:200px;
+  top: -30px;
+  }
+
+.accordion, .accordion-header:after {
+width: 200px; 
+height:30px; 
+}
+.accordion, .card-header.collapsed:after  {
+content: '\f068';
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  width: 89.5%;
+}
+
+
