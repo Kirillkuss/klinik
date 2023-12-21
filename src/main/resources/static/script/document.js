@@ -1,6 +1,12 @@
 function findByWordDocument() {
     $(document.getElementById("findByWordDocument")).on( "click",function(){
         var word = $('#wordFound').val();
+        if(  word.length  == 0 ){
+            $('tbody:even').empty();
+            lazyDocument(1, 15);
+            $('#errorToast').text( 'Значение поля поиск не может быть пустым' ).show();
+            $('#liveToastBtn').click();
+        }else{
             $.ajax({
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
@@ -26,6 +32,8 @@ function findByWordDocument() {
                     $('#liveToastBtn').click();
                 }
             });
+        }
+
     });	
 };
 
@@ -120,34 +128,34 @@ function AddDocument() {
                 i--;
             }
             $('tbody:even').empty();
-            lazyDocument(i, 10);
+            lazyDocument(i, 15);
         });
 
         $(document.getElementById("Next")).on( "click",function(){
-            if( document.querySelectorAll('#tableDocument tbody tr').length < 10 ){
+            if( document.querySelectorAll('#tableDocument tbody tr').length < 15 ){
                 i;
             }else{
                 i++;
             }
             $('tbody:even').empty();
-            lazyDocument(i, 10);
+            lazyDocument(i, 15);
         });
 
         $(document.getElementById("first")).on( "click",function(){
             i = 1;
             $('tbody:even').empty();
-            lazyDocument(i, 10);
+            lazyDocument(i, 15);
         });
 
         $(document.getElementById("second")).on( "click",function(){
             i = 2;
             $('tbody:even').empty();
-            lazyDocument(i, 10);
+            lazyDocument(i, 15);
         });
 
         $(document.getElementById("third")).on( "click",function(){
             i = 3;
             $('tbody:even').empty();
-            lazyDocument(i, 10);
+            lazyDocument(i, 15);
         });
     }

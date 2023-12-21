@@ -14,10 +14,17 @@
 				height:20px; 
 				border: solid 1px green; 
 				text-align: center;	 
-				}       
+				}
+      #fixedDiv{
+				position: fixed;
+				top: 860px;
+				width: 1718px;
+				height: 300px;   
+			}	       
 		</style>
 	</head>	
   <body>
+    <h1></h1>
     <div class="text-bg-success p-3" >
         <h1> Klinika   </h1>
         <h5><span class="badge bg-secondary">Version 1.0</span></h5>
@@ -33,16 +40,6 @@
         <h1></h1>
         <form style = "position:relative; left:0px; top: 0px;">
             <button type="button" class="btn btn-outline-dark"  data-bs-toggle="modal" data-bs-target="#exampleModal" om> Добавить пациента</button>
-            <!-- Страницы-->
-			      <nav aria-label="Page navigation ">
-              <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="btn btn-outline-dark" href="#" id="PreviousPatient">Пред.</a></li>
-                <li class="page-item"><a class="btn btn-outline-dark" href="#" id="firstPatient">1</a></li>
-                <li class="page-item"><a class="btn btn-outline-dark" href="#" id="secondPatient">2</a></li>
-                <li class="page-item"><a class="btn btn-outline-dark" href="#" id="thirdPatient">3</a></li>
-                <li class="page-item"><a class="btn btn-outline-dark" href="#" id="NextPatient">След.</a></li>
-              </ul>
-            </nav>
         </form>
         <script>
             switchTable();
@@ -66,12 +63,24 @@
       </thead>
       <tbody class="table-group-divider">
       </tbody>
-
       <script type="text/javascript">
-          lazyPatients(1,10);
+          lazyPatients(1,15);
       </script>
-
       </table>
+
+    <!--нижняя часть страницы-->
+	  <div id = "fixedDiv" class="text-bg-success p-4">
+      <!-- Страницы-->
+      <nav aria-label="Page navigation ">
+          <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="btn btn-outline-dark" href="#" id="PreviousPatient">Пред.</a></li>
+            <li class="page-item"><a class="btn btn-outline-dark" href="#" id="firstPatient">1</a></li>
+            <li class="page-item"><a class="btn btn-outline-dark" href="#" id="secondPatient">2</a></li>
+            <li class="page-item"><a class="btn btn-outline-dark" href="#" id="thirdPatient">3</a></li>
+            <li class="page-item"><a class="btn btn-outline-dark" href="#" id="NextPatient">След.</a></li>
+          </ul>
+        </nav>
+    </div>
 
     <form id="testForm">
         <!-- Модальное окно -->

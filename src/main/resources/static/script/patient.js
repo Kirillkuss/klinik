@@ -91,6 +91,12 @@ function AddPatient() {
 function findByWordPatient() {
     $(document.getElementById("findByPatient")).on( "click",function(){
         var word = $('#wordParam').val();
+        if(  word.length  == 0 ){
+            $('tbody:even').empty();
+            lazyPatients(1, 15);
+            $('#errorToast').text( 'Значение поля поиск не может быть пустым' ).show();
+            $('#liveToastBtn').click();
+        }else{
             $.ajax({
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
@@ -117,6 +123,7 @@ function findByWordPatient() {
                     $('#liveToastBtn').click();
                 }
             });
+        }
     });	
 };
 
@@ -130,34 +137,34 @@ function switchTable(){
             i--;
         }
         $('tbody:even').empty();
-        lazyPatients(i, 10);
+        lazyPatients(i, 15);
     });
 
     $(document.getElementById("NextPatient")).on( "click",function(){
-        if( document.querySelectorAll('#tablePatient tbody tr').length < 10 ){
+        if( document.querySelectorAll('#tablePatient tbody tr').length < 15 ){
             i;
         }else{
             i++;
         }
         $('tbody:even').empty();
-        lazyPatients(i, 10);
+        lazyPatients(i, 15);
     });
 
     $(document.getElementById("firstPatient")).on( "click",function(){
         i = 1;
         $('tbody:even').empty();
-        lazyPatients(i, 10);
+        lazyPatients(i, 15);
     });
 
     $(document.getElementById("secondPatient")).on( "click",function(){
         i = 2;
         $('tbody:even').empty();
-        lazyPatients(i, 10);
+        lazyPatients(i, 15);
     });
 
     $(document.getElementById("thirdPatient")).on( "click",function(){
         i = 3;
         $('tbody:even').empty();
-        lazyPatients(i, 10);
+        lazyPatients(i, 15);
     });
 }
