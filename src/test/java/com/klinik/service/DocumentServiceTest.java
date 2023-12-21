@@ -2,6 +2,9 @@ package com.klinik.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -25,6 +28,9 @@ public class DocumentServiceTest {
     @MockBean 
     private DocumentRepository documentRepository;
 
+    @MockBean 
+    private EntityManager entityManager;
+
     @InjectMocks
     private DocumentService service ;
 
@@ -32,7 +38,7 @@ public class DocumentServiceTest {
 
     @BeforeEach
     public void setUp() {
-        service = new DocumentService(documentRepository); 
+        service = new DocumentService(documentRepository, entityManager); 
     }
 
     @DisplayName("Получение списка документов")

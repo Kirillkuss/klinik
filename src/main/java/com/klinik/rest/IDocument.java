@@ -10,6 +10,7 @@ import com.klinik.entity.Document;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponseError;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -36,7 +37,11 @@ public interface IDocument {
     public ResponseEntity<Document> addDocument(@RequestBody Document document ) throws Exception, MyException;
 
     @Operation( description = "Найти документ", summary = "Найти документ")
-    @RequestMapping( method = RequestMethod.GET , value = "/find")
-    public ResponseEntity<Document> findById( Long id ) ;
+    @RequestMapping( method = RequestMethod.GET , value = "/find/{word}")
+    public ResponseEntity<List<Document>> findByWord( @Parameter( description = "Параметр поиска") String word ) ;
+
+    @GetMapping(value = "/list/{page}{size}")
+    @Operation( description = "Список документов", summary = "Список документов")
+    public ResponseEntity<List<Document>> getLazyDocument( int page, int size);
     
 }

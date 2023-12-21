@@ -1,52 +1,22 @@
-function findByIdDocument() {
-    $(document.getElementById("findByIdDocument")).on( "click",function(){
-        var id = $('#idFound').val();
+function findByWordDocument() {
+    $(document.getElementById("findByWordDocument")).on( "click",function(){
+        var word = $('#wordFound').val();
             $.ajax({
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
-                url: "http://localhost:8081/web/documents/find",
-                data:{ id: id } ,
-                cache: false,
-                success: function( json ) {
-                    var tr=[];
-                    tr.push('<tr>');
-                    tr.push('<td>' + json.idDocument + '</td>');
-                    tr.push('<td>' + json.typeDocument + '</td>');
-                    tr.push('<td>' + json.seria + '</td>');
-                    tr.push('<td>' + json.numar + '</td>');
-                    tr.push('<td>' + json.snils + '</td>');
-                    tr.push('<td>' + json.polis + '</td>');
-                    tr.push('</tr>');
-                    $('tbody:even').empty();
-                    $('table').prepend($(tr.join('')));
-                }, error: function ( error ){
-                    $('#errorToast').text( error.responseText ).show();
-                    $('#liveToastBtn').click();
-                }
-            });
-    });	
-};
-
-function findByWordPatient() {
-    $(document.getElementById("findByPatient")).on( "click",function(){
-        var word = $('#wordParam').val();
-            $.ajax({
-                type: "GET",
-                contentType: "application/json; charset=utf-8",
-                url: "http://localhost:8081/web/patients/find/{word}",
+                url: "http://localhost:8082/web/documents/find/{word}",
                 data:{ word: word } ,
                 cache: false,
                 success: function( json ) {
                     var tr=[];
                     for (var i = 0; i < json.length; i++) {
                         tr.push('<tr>');
-                        tr.push('<td>' + json[i].idPatient + '</td>');
-                        tr.push('<td>' + json[i].surname + '</td>');
-                        tr.push('<td>' + json[i].name + '</td>');
-                        tr.push('<td>' + json[i].fullName + '</td>');
-                        tr.push('<td>' + json[i].gender + '</td>');
-                        tr.push('<td>' + json[i].phone + '</td>');
-                        tr.push('<td>' + json[i].address + '</td>');
+                        tr.push('<td>' + json[i].idDocument + '</td>');
+                        tr.push('<td>' + json[i].typeDocument + '</td>');
+                        tr.push('<td>' + json[i].seria + '</td>');
+                        tr.push('<td>' + json[i].numar + '</td>');
+                        tr.push('<td>' + json[i].snils + '</td>');
+                        tr.push('<td>' + json[i].polis + '</td>');
                         tr.push('</tr>');
                     }
                     $('tbody:even').empty();
@@ -64,7 +34,7 @@ function listDocument() {
     $('table tbody').on('mousedown', 'tr', function(e) {
         $(this).addClass('highlight').siblings().removeClass('highlight');
     });
-    $.getJSON('http://localhost:8081/web/documents/list', function(json) {
+    $.getJSON('http://localhost:8082/web/documents/list', function(json) {
         var tr=[];
         for (var i = 0; i < json.length; i++) {
             tr.push('<tr>');
@@ -93,7 +63,7 @@ function AddDocument() {
             $.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                url: "http://localhost:8081/web/documents/add/{docum}",
+                url: "http://localhost:8082/web/documents/add/{docum}",
                 data: JSON.stringify({idDocument: idDocument, typeDocument: typeDocument, seria: seria, numar: numar, snils: snils, polis: polis}),
                 cache: false,
                 success: function( json ) {
@@ -116,3 +86,68 @@ function AddDocument() {
             });
         });
     };
+
+
+    function lazyDocument( page, size) {
+        $(document).ready(function() {
+        $('table tbody').on('mousedown', 'tr', function(e) {
+            $(this).addClass('highlight').siblings().removeClass('highlight');
+        });
+        $.getJSON('http://localhost:8082/web/documents/list/{page}{size}?page='+page+'&size='+size, function(json) {
+            var tr=[];
+            for (var i = 0; i < json.length; i++) {
+                tr.push('<tr>');
+                tr.push('<td>' + json[i].idDocument + '</td>');
+                tr.push('<td>' + json[i].typeDocument + '</td>');
+                tr.push('<td>' + json[i].seria + '</td>');
+                tr.push('<td>' + json[i].numar + '</td>');
+                tr.push('<td>' + json[i].snils + '</td>');
+                tr.push('<td>' + json[i].polis + '</td>');
+                tr.push('</tr>');
+                }
+                $('table').append($(tr.join('')));
+            });
+        });
+    };
+
+
+    function switchTable(){
+        i = 2;
+        $(document.getElementById("Previous")).on( "click",function(){
+            if( i < 2 ){
+                i = 1;
+            }else{
+                i--;
+            }
+            $('tbody:even').empty();
+            lazyDocument(i, 10);
+        });
+
+        $(document.getElementById("Next")).on( "click",function(){
+            if( document.querySelectorAll('#tableDocument tbody tr').length < 10 ){
+                i;
+            }else{
+                i++;
+            }
+            $('tbody:even').empty();
+            lazyDocument(i, 10);
+        });
+
+        $(document.getElementById("first")).on( "click",function(){
+            i = 1;
+            $('tbody:even').empty();
+            lazyDocument(i, 10);
+        });
+
+        $(document.getElementById("second")).on( "click",function(){
+            i = 2;
+            $('tbody:even').empty();
+            lazyDocument(i, 10);
+        });
+
+        $(document.getElementById("third")).on( "click",function(){
+            i = 3;
+            $('tbody:even').empty();
+            lazyDocument(i, 10);
+        });
+    }

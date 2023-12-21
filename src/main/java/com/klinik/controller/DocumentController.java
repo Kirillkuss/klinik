@@ -23,8 +23,13 @@ public class DocumentController implements IDocument{
     }
 
     @Override
-    public ResponseEntity<Document> findById(Long id) {
-        return new ResponseEntity<>( documentService.findById( id ), HttpStatus.OK ); 
+    public ResponseEntity<List<Document>> findByWord(String word) {
+        return new ResponseEntity<>( documentService.findByWord( word ), HttpStatus.OK ); 
+    }
+
+    @Override
+    public ResponseEntity<List<Document>> getLazyDocument(int page, int size) {
+        return new ResponseEntity<>( documentService.getLazyDocuments( page, size ), HttpStatus.OK ); 
     }
 
 }

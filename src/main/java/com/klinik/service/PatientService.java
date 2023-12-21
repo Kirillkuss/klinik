@@ -12,13 +12,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class PatientService {
 
     private final PatientRepository patientRepository;
-    private final DocumentRepository documentRepository; 
+    private final DocumentRepository documentRepository;
+    
+    private final EntityManager entityManager;
 
     public List<Patient> getAllPatients(){
         log.info( "Alls Patient");
@@ -41,6 +45,13 @@ public class PatientService {
         if ( response.isEmpty() == true ) throw new MyException( 404, "По данному запросу ничего не найдено");
         log.info( "findByWord Patient");
         return response;
+    }
+
+    public List<Patient> getLazyLoad( int page, int size){
+        return entityManager.createNativeQuery( "select * from Patient", Patient.class)
+                            .setFirstResult((page - 1) * size)
+                            .setMaxResults(size)
+                            .getResultList();
     }
 
 }

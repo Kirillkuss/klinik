@@ -10,12 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.persistence.EntityManager;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class DocumentService {
 
     public final DocumentRepository documentRepository;
+
+    private final EntityManager em;
     
     public List<Document> getAllDocuments(){
         log.info( "getAllDocuments" );
@@ -31,9 +35,18 @@ public class DocumentService {
         return documentRepository.save( document );
     }
 
-    public Document findById( Long id ){
-        log.info( "findById" );
-        return documentRepository.findById( id ).orElseThrow( () -> new NoSuchElementException( "Документа с таким ид не существует " ));
+    public List<Document> findByWord( String word ){
+        log.info( "findByWord" );
+        List<Document> list = documentRepository.findByWord( word );
+        if( list.isEmpty() ) throw new NoSuchElementException("По данному запросму ничего не найдено");
+        return list;
+    }
+
+    public List<Document> getLazyDocuments(int page, int size){
+        return em.createNativeQuery( "select * from Document", Document.class)
+                 .setFirstResult((page - 1) * size)
+                 .setMaxResults(size)
+                 .getResultList();
     }
 
 

@@ -1,9 +1,32 @@
+function lazyPatients( page, size) {
+    $(document).ready(function() {
+    $('table tbody').on('mousedown', 'tr', function(e) {
+        $(this).addClass('highlight').siblings().removeClass('highlight');
+    });
+    $.getJSON('http://localhost:8082/web/patients/list/{page}{size}?page='+page+'&size='+size, function(json) {
+        var tr=[];
+        for (var i = 0; i < json.length; i++) {
+            tr.push('<tr>');
+            tr.push('<td>' + json[i].idPatient + '</td>');
+            tr.push('<td>' + json[i].surname + '</td>');
+            tr.push('<td>' + json[i].name + '</td>');
+            tr.push('<td>' + json[i].fullName + '</td>');
+            tr.push('<td>' + json[i].gender + '</td>');
+            tr.push('<td>' + json[i].phone + '</td>');
+            tr.push('<td>' + json[i].address + '</td>');
+            tr.push('</tr>');
+            }
+            $('table').append($(tr.join('')));
+        });
+    });
+};
+
 function listPatient() {
     $(document).ready(function() {
     $('table tbody').on('mousedown', 'tr', function(e) {
         $(this).addClass('highlight').siblings().removeClass('highlight');
     });
-    $.getJSON('http://localhost:8081/web/patients/all', function(json) {
+    $.getJSON('http://localhost:8082/web/patients/all', function(json) {
         var tr=[];
         for (var i = 0; i < json.length; i++) {
             tr.push('<tr>');
@@ -35,7 +58,7 @@ function AddPatient() {
             $.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                url: "http://localhost:8081/web/patients/add/{pat}{id-document}?id=" + idDocument,
+                url: "http://localhost:8082/web/patients/add/{pat}{id-document}?id=" + idDocument,
                 data: JSON.stringify ({idPatient: idPatient,
                                       surname: surname,
                                       name: name,
@@ -64,3 +87,77 @@ function AddPatient() {
         });
     });
 };
+
+function findByWordPatient() {
+    $(document.getElementById("findByPatient")).on( "click",function(){
+        var word = $('#wordParam').val();
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: "http://localhost:8082/web/patients/find/{word}",
+                data:{ word: word } ,
+                cache: false,
+                success: function( json ) {
+                    var tr=[];
+                    for (var i = 0; i < json.length; i++) {
+                        tr.push('<tr>');
+                        tr.push('<td>' + json[i].idPatient + '</td>');
+                        tr.push('<td>' + json[i].surname + '</td>');
+                        tr.push('<td>' + json[i].name + '</td>');
+                        tr.push('<td>' + json[i].fullName + '</td>');
+                        tr.push('<td>' + json[i].gender + '</td>');
+                        tr.push('<td>' + json[i].phone + '</td>');
+                        tr.push('<td>' + json[i].address + '</td>');
+                        tr.push('</tr>');
+                    }
+                    $('tbody:even').empty();
+                    $('table').prepend($(tr.join('')));
+                }, error: function ( error ){
+                    $('#errorToast').text( error.responseText ).show();
+                    $('#liveToastBtn').click();
+                }
+            });
+    });	
+};
+
+
+function switchTable(){
+    i = 2;
+    $(document.getElementById("PreviousPatient")).on( "click",function(){
+        if( i < 2 ){
+            i = 1;
+        }else{
+            i--;
+        }
+        $('tbody:even').empty();
+        lazyPatients(i, 10);
+    });
+
+    $(document.getElementById("NextPatient")).on( "click",function(){
+        if( document.querySelectorAll('#tablePatient tbody tr').length < 10 ){
+            i;
+        }else{
+            i++;
+        }
+        $('tbody:even').empty();
+        lazyPatients(i, 10);
+    });
+
+    $(document.getElementById("firstPatient")).on( "click",function(){
+        i = 1;
+        $('tbody:even').empty();
+        lazyPatients(i, 10);
+    });
+
+    $(document.getElementById("secondPatient")).on( "click",function(){
+        i = 2;
+        $('tbody:even').empty();
+        lazyPatients(i, 10);
+    });
+
+    $(document.getElementById("thirdPatient")).on( "click",function(){
+        i = 3;
+        $('tbody:even').empty();
+        lazyPatients(i, 10);
+    });
+}
