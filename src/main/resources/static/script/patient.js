@@ -1,3 +1,8 @@
+/**
+ * Ленивый поиск пациентов
+ * @param {*} page - страница
+ * @param {*} size - размер
+ */
 function lazyPatients( page, size) {
     $(document).ready(function() {
     $('table tbody').on('mousedown', 'tr', function(e) {
@@ -20,7 +25,9 @@ function lazyPatients( page, size) {
         });
     });
 };
-
+/**
+ * Список всех пациентов
+ */
 function listPatient() {
     $(document).ready(function() {
     $('table tbody').on('mousedown', 'tr', function(e) {
@@ -43,7 +50,9 @@ function listPatient() {
         });
     });
 };
-
+/**
+ * Добавить пациента
+ */
 function AddPatient() {
     $("#testForm").submit( function (event){
         event.preventDefault();
@@ -87,7 +96,9 @@ function AddPatient() {
         });
     });
 };
-
+/**
+ * Поиск пациента по параметрам
+ */
 function findByWordPatient() {
     $(document.getElementById("findByPatient")).on( "click",function(){
         var word = $('#wordParam').val();
@@ -126,8 +137,9 @@ function findByWordPatient() {
         }
     });	
 };
-
-
+/**
+ * Нумерация страниц
+ */
 function switchTable(){
     i = 2;
     $(document.getElementById("PreviousPatient")).on( "click",function(){

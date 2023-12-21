@@ -1,0 +1,31 @@
+form{
+    position:relative;
+    left:200px;
+    top: -30px;
+}
+
+.accordion-collapse{
+    background-color: #d9ecd5;
+}
+
+#accButtonOne{
+    background-color:rgb(91, 194, 91);
+}
+
+#fixedLeft{
+    position: fixed;
+    width: 199px;
+    height: 1000px;  
+}
+ 
+#accordionExample{
+    position: fixed;
+    top: 0px;
+    left:0px;
+    width: 199px;
+    height: 800px;  
+}
+
+.accordion, .card-header.collapsed:after  {
+    content: '\f068';
+}

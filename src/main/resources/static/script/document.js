@@ -1,3 +1,6 @@
+/**
+ * Поиск документов по параметрам
+ */
 function findByWordDocument() {
     $(document.getElementById("findByWordDocument")).on( "click",function(){
         var word = $('#wordFound').val();
@@ -36,7 +39,9 @@ function findByWordDocument() {
 
     });	
 };
-
+/**
+ * Список всех страниц
+ */
 function listDocument() {
     $(document).ready(function() {
     $('table tbody').on('mousedown', 'tr', function(e) {
@@ -58,7 +63,9 @@ function listDocument() {
         });
     });
 };
-
+/**
+ * Добавить документ
+ */
 function AddDocument() {
     $("#testForm").submit( function (event){
         event.preventDefault();
@@ -94,8 +101,11 @@ function AddDocument() {
             });
         });
     };
-
-
+    /**
+     * Ленивая загрука
+     * @param {*} page - страница 
+     * @param {*} size - размер
+     */
     function lazyDocument( page, size) {
         $(document).ready(function() {
         $('table tbody').on('mousedown', 'tr', function(e) {
@@ -117,8 +127,9 @@ function AddDocument() {
             });
         });
     };
-
-
+    /**
+     * Нумерация страниц
+     */
     function switchTable(){
         i = 2;
         $(document.getElementById("Previous")).on( "click",function(){
