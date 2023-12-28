@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -15,6 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class DocumentController implements IDocument{
 
     private final DocumentService documentService;
+
+    /**
+     * for soap 
+     */
+    @CrossOrigin
     public ResponseEntity<List<Document>> getAllDocuments() throws Exception, MyException{
         return new ResponseEntity<>( documentService.getAllDocuments(), HttpStatus.OK );
     }
