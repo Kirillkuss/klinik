@@ -13,7 +13,7 @@ function findByWordDocument() {
             $.ajax({
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
-                url: "http://localhost:8082/web/documents/find/{word}",
+                url: "https://localhost:8082/web/documents/find/{word}",
                 data:{ word: word } ,
                 cache: false,
                 success: function( json ) {
@@ -47,7 +47,7 @@ function listDocument() {
     $('table tbody').on('mousedown', 'tr', function(e) {
         $(this).addClass('highlight').siblings().removeClass('highlight');
     });
-    $.getJSON('http://localhost:8082/web/documents/list', function(json) {
+    $.getJSON('https://localhost:8082/web/documents/list', function(json) {
         var tr=[];
         for (var i = 0; i < json.length; i++) {
             tr.push('<tr>');
@@ -78,7 +78,7 @@ function AddDocument() {
             $.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                url: "http://localhost:8082/web/documents/add/{docum}",
+                url: "https://localhost:8082/web/documents/add/{docum}",
                 data: JSON.stringify({idDocument: idDocument, typeDocument: typeDocument, seria: seria, numar: numar, snils: snils, polis: polis}),
                 cache: false,
                 success: function( json ) {
@@ -111,7 +111,7 @@ function AddDocument() {
         $('table tbody').on('mousedown', 'tr', function(e) {
             $(this).addClass('highlight').siblings().removeClass('highlight');
         });
-        $.getJSON('http://localhost:8082/web/documents/list/{page}{size}?page='+page+'&size='+size, function(json) {
+        $.getJSON('https://localhost:8082/web/documents/list/{page}{size}?page='+page+'&size='+size, function(json) {
             var tr=[];
             for (var i = 0; i < json.length; i++) {
                 tr.push('<tr>');

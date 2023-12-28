@@ -8,7 +8,7 @@ function lazyPatients( page, size) {
     $('table tbody').on('mousedown', 'tr', function(e) {
         $(this).addClass('highlight').siblings().removeClass('highlight');
     });
-    $.getJSON('http://localhost:8082/web/patients/list/{page}{size}?page='+page+'&size='+size, function(json) {
+    $.getJSON('https://localhost:8082/web/patients/list/{page}{size}?page='+page+'&size='+size, function(json) {
         var tr=[];
         for (var i = 0; i < json.length; i++) {
             tr.push('<tr>');
@@ -33,7 +33,7 @@ function listPatient() {
     $('table tbody').on('mousedown', 'tr', function(e) {
         $(this).addClass('highlight').siblings().removeClass('highlight');
     });
-    $.getJSON('http://localhost:8082/web/patients/all', function(json) {
+    $.getJSON('https://localhost:8082/web/patients/all', function(json) {
         var tr=[];
         for (var i = 0; i < json.length; i++) {
             tr.push('<tr>');
@@ -67,7 +67,7 @@ function AddPatient() {
             $.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                url: "http://localhost:8082/web/patients/add/{pat}{id-document}?id=" + idDocument,
+                url: "https://localhost:8082/web/patients/add/{pat}{id-document}?id=" + idDocument,
                 data: JSON.stringify ({idPatient: idPatient,
                                       surname: surname,
                                       name: name,
@@ -111,7 +111,7 @@ function findByWordPatient() {
             $.ajax({
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
-                url: "http://localhost:8082/web/patients/find/{word}",
+                url: "https://localhost:8082/web/patients/find/{word}",
                 data:{ word: word } ,
                 cache: false,
                 success: function( json ) {

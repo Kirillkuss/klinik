@@ -12,11 +12,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
                                   version = "1.0.0",
                                   description = "КЛИНИК АПИ"))
 public class KlinikApplication {
-
     public static void main(String[] args) {
-        SpringApplication.run(KlinikApplication.class, args);
+        SpringApplication application = new SpringApplication(KlinikApplication.class);
+            application.setAdditionalProfiles("ssl");
+            application.run(args);
         log.info( " Klinika start success " );
     }
-    
 
 }

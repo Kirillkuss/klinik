@@ -16,12 +16,15 @@ import java.util.List;
 public class RecordPatientController implements IRecordPatinet {
 
     private final RecordPatientService recordPatientService;
-    public ResponseEntity<List<RecordPatient>> allListRecordPatient() throws Exception, MyException{
+
+    public ResponseEntity<List<RecordPatient>> allListRecordPatient(){
         return new ResponseEntity<>( recordPatientService.findAll(), HttpStatus.OK );
     }
+
     public ResponseEntity addRecordPatient( RecordPatient recordPatient, Long idDoctor, Long idCardPatient ) throws Exception, MyException{
         return new ResponseEntity<>( recordPatientService.saveRecordPatient( recordPatient,  idDoctor, idCardPatient ), HttpStatus.CREATED );                
     }
+    
     public ResponseEntity<List<RecordPatient>> findByParams( Long id, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception, MyException{
         return new ResponseEntity<>( recordPatientService.findByParam( id, dateFrom, dateTo ), HttpStatus.OK );
     } 
