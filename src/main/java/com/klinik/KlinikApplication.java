@@ -16,7 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class KlinikApplication {
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(KlinikApplication.class);
-            application.setAdditionalProfiles("ssl");
+            //application.setAdditionalProfiles("tls");
             application.run(args);
         log.info( " Klinika start success " );
     }
