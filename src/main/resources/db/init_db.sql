@@ -12,7 +12,7 @@ CREATE TABLE Patient(
 	surname VARCHAR ( 30 ) NOT NULL,
 	name VARCHAR ( 30 ) NOT NULL,
 	full_name VARCHAR ( 30 ) NOT NULL,
-	gender VARCHAR ( 5 ) NOT NULL,
+	gender smallint NOT NULL,
 	phone  VARCHAR ( 12 ) NOT NULL UNIQUE,
 	address VARCHAR ( 100 ) NOT NULL ,
 	document_id int unique references public.Document ( id_document )
@@ -55,7 +55,7 @@ CREATE TABLE Drug(
 	id_drug serial PRIMARY KEY,
 	name VARCHAR ( 255 ) NOT NULL UNIQUE,
 	drug_treatment_id int8 NOT NULL,
-	FOREIGN KEY (drug_id) REFERENCES public.Drug_treatment(id_drug)
+	FOREIGN KEY (drug_treatment_id) REFERENCES public.Drug_treatment(id_drug_treatment)
 );
 
 CREATE TABLE Treatment (
@@ -69,7 +69,7 @@ CREATE TABLE Treatment (
 	FOREIGN KEY (rehabilitation_solution_id) REFERENCES public.Rehabilitation_solution(id_rehabilitation_solution),
 	FOREIGN KEY (doctor_id) REFERENCES public.Doctor(id_doctor),
     FOREIGN KEY (card_patient_id) REFERENCES public.Card_patient(id_card_patient),
-    FOREIGN KEY (drug_id) REFERENCES public.Drug(id_dr)
+    FOREIGN KEY (drug_id) REFERENCES public.Drug(id_drug)
 );
 
 CREATE TABLE Record_patient(
@@ -97,5 +97,3 @@ CREATE TABLE Card_patient_Complaint(
 	FOREIGN KEY (card_patient_id) REFERENCES Card_patient(id_card_patient),
 	FOREIGN KEY (type_complaint_id) REFERENCES Type_complaint(id_type_complaint)
 );
-
-ALTER TABLE public.patient ALTER COLUMN gender TYPE smallint USING gender::smallint;
