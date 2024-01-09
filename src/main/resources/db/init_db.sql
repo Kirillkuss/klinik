@@ -43,18 +43,18 @@ CREATE TABLE Card_patient(
 	allergy   bool NOT NULL,
 	note VARCHAR ( 255 ),
 	сonclusion VARCHAR ( 255 ),
-	pacient_id int unique references public.Patient ( id_patient )
+	patient_id int unique NOT NULL references public.Patient ( id_patient )
 );
 
 CREATE TABLE Drug_treatment(
-    id_drug serial PRIMARY KEY,
+    id_drug_treatment serial PRIMARY KEY,
     name VARCHAR ( 255 ) NOT NULL
 );
 
 CREATE TABLE Drug(
-	id_dr serial PRIMARY KEY,
+	id_drug serial PRIMARY KEY,
 	name VARCHAR ( 255 ) NOT NULL UNIQUE,
-	drug_id int8 NOT NULL,
+	drug_treatment_id int8 NOT NULL,
 	FOREIGN KEY (drug_id) REFERENCES public.Drug_treatment(id_drug)
 );
 
@@ -97,3 +97,5 @@ CREATE TABLE Card_patient_Complaint(
 	FOREIGN KEY (card_patient_id) REFERENCES Card_patient(id_card_patient),
 	FOREIGN KEY (type_complaint_id) REFERENCES Type_complaint(id_type_complaint)
 );
+
+ALTER TABLE public.patient ALTER COLUMN gender TYPE smallint USING gender::smallint;

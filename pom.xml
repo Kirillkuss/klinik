@@ -14,7 +14,7 @@
     <name>klinik</name>
     <description>klinik</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
     </properties>
 
     <repositories>

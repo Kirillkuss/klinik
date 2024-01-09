@@ -57,7 +57,7 @@ public class Treatment implements Serializable {
 
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "drug_id", referencedColumnName = "id_dr")
+    @JoinColumn(name = "drug_id", referencedColumnName = "id_drug")
     private  Drug drug;
 
     @Hidden

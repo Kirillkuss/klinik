@@ -1,5 +1,5 @@
 # Klinika
-* Spring Boot
+ 
 * Spring MVC
 * Spring Data
 * Postgres

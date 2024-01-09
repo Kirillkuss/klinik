@@ -78,8 +78,8 @@ public class ReportService {
         List<ReportDrug> response = new ArrayList<>();
         try {
             String request = "SELECT dt.name , COUNT( u.drug_id ) as count_drug_treatment, COUNT(DISTINCT u.card_patient_id) as count_patient FROM Treatment u "
-                    + " left join Drug d on d.id_dr = u.drug_id "
-                    + " left join Drug_treatment dt on dt.id_drug = d.drug_id"
+                    + " left join Drug d on d.id_drug = u.drug_id "
+                    + " left join Drug_treatment dt on dt.id_drug_treatment = d.drug_treatment_id"
                     + " where u.time_start_treatment BETWEEN ? and ? group by dt.name ";
             Session session = em.unwrap(Session.class);
             session.doWork((Connection conn) -> {
