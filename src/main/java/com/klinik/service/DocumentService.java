@@ -43,6 +43,7 @@ public class DocumentService {
     }
 
     public List<Document> getLazyDocuments(int page, int size){
+        log.info( "getLazyDocuments >>> page: " + page + " size: " + size );
         return em.createNativeQuery( "select * from Document", Document.class)
                  .setFirstResult((page - 1) * size)
                  .setMaxResults(size)

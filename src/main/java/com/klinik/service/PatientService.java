@@ -48,6 +48,7 @@ public class PatientService {
     }
 
     public List<Patient> getLazyLoad( int page, int size){
+        log.info( "getLazyPatients >>> page: " + page + " size: " + size );
         return entityManager.createNativeQuery( "select * from Patient", Patient.class)
                             .setFirstResult((page - 1) * size)
                             .setMaxResults(size)
