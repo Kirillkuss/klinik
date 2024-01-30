@@ -19,7 +19,7 @@ import lombok.ToString;
 @JsonInclude(Include.NON_NULL)
 public class ResponseReport {
 
-    private String name_rehabilitation_treatment;
-    private Long   count_treatment;
-    private Long   count_patient;
+    private String nameRehabilitationTreatment;
+    private Long   countTreatment;
+    private Long   countPatient;
 }

@@ -24,6 +24,7 @@
     </appender>
     
     <root level="info">
+        <!--appender-ref ref="logstash" /!-->
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </root>

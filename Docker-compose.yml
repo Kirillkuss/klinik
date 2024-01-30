@@ -1,10 +1,45 @@
-version: '3.4'
-
-volumes:
-  pg_project:
-
+version: "3.4"
 services:
-  Klinik:
+  elasticsearch:
+    image: elasticsearch:8.12.0
+    container_name: elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+    networks:
+      - klinika-es
+
+  kibana:
+    image: kibana:8.12.0
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_URL: "http://elasticsearch:9200"
+    ports:
+      - 5601:5601
+    networks:
+      - klinika-es
+
+  logstash:
+    image: logstash:8.12.0
+    container_name: logstash
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - ./pipeline:/etc/logstash/conf.d
+    ports:
+      - "5000:5000"
+    networks:
+      - klinika-es
+  klinika:
     image: klinika
     ports:
       - "8082:8080"
@@ -17,4 +52,9 @@ services:
       - SPRING_DATASOURCE_PASSWORD=admin
       - SPRING_JPA_HIBERNATE_DDL_AUTO=none
       - ADDITIONAL_PATH=/klinika/swagger-ui/index.html
+      - LOGSTASH_HOST=logstash:5000
+    networks:
+      - klinika-es
+networks:
+  klinika-es:
 
