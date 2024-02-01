@@ -5,14 +5,14 @@ import com.klinik.entity.Patient;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.DocumentRepository;
 import com.klinik.repositories.PatientRepository;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
+
 
 @Slf4j
 @Service
@@ -48,6 +48,7 @@ public class PatientService {
     }
 
     public List<Patient> getLazyLoad( int page, int size){
+        log.info( "getLazyPatients - page >> " + page + " size >> " + size );
         return entityManager.createNativeQuery( "select * from Patient", Patient.class)
                             .setFirstResult((page - 1) * size)
                             .setMaxResults(size)

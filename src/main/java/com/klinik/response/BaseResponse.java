@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -15,7 +16,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class BaseResponse<T> {
+public class BaseResponse<T> implements Serializable {
 
     @Schema (description = "Код сообщения", name = "Код сообщения",  example = "200")
     private Integer code = 0;

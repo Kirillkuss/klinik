@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import javax.persistence.EntityManager;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import com.klinik.entity.RecordPatient;
@@ -18,6 +17,7 @@ import com.klinik.response.ReportDrug;
 import com.klinik.response.report.CardPatinetReport;
 import com.klinik.response.report.RecordPatientReport;
 import com.klinik.response.report.ResponseReport;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import java.sql.Types;
 import java.sql.CallableStatement;
@@ -53,7 +53,7 @@ public class ReportService {
                             ResponseReport responseReport = new ResponseReport();
                             responseReport.setNameRehabilitationTreatment(set.getString("name_solution"));
                             responseReport.setCountTreatment(set.getLong("count_solution"));
-                            responseReport.setCountPatient(set.getLong("count_patients"));
+                            responseReport.setCountPatient(set.getLong("count_patient"));
                             report.add(responseReport);
                         }
                     }

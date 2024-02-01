@@ -3,6 +3,8 @@ package com.klinik.service;
 import com.klinik.entity.Document;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.DocumentRepository;
+
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -10,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import javax.persistence.EntityManager;
 
 @Slf4j
 @Service
@@ -19,7 +20,7 @@ public class DocumentService {
 
     public final DocumentRepository documentRepository;
 
-    private final EntityManager em;
+    private final EntityManager entityManager;
     
     public List<Document> getAllDocuments(){
         log.info( "getAllDocuments" );
@@ -43,10 +44,11 @@ public class DocumentService {
     }
 
     public List<Document> getLazyDocuments(int page, int size){
-        return em.createNativeQuery( "select * from Document", Document.class)
-                 .setFirstResult((page - 1) * size)
-                 .setMaxResults(size)
-                 .getResultList();
+        log.info( "getLazyDocuments  - page >> " + page + " size >> " + size );
+        return entityManager.createNativeQuery( "select * from Document", Document.class)
+                            .setFirstResult((page - 1) * size)
+                            .setMaxResults(size)
+                            .getResultList();
     }
 
 
