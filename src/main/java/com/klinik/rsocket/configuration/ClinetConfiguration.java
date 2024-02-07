@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.util.MimeTypeUtils;
 import reactor.util.retry.Retry;
-
+/** 
 @Configuration
 public class ClinetConfiguration {
 
@@ -17,4 +17,4 @@ public class ClinetConfiguration {
                       .dataMimeType( MimeTypeUtils.APPLICATION_JSON )
                       .tcp( "localhost", 7000);
     }
-}
+}*/

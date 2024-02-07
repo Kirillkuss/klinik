@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.AllArgsConstructor;
 
 //Klient
-
+/** 
 @RestController
 @AllArgsConstructor
 public class DoctorRSocketRestController {
@@ -26,4 +26,4 @@ public class DoctorRSocketRestController {
         return rSocketRequester.route( "doctorFIO").data( fio ).retrieveFlux( String.class );
     }
 
-}
+}*/

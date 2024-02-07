@@ -13,14 +13,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DoctorController implements IDoctor{
 
-   private final DoctorService doctorService;
-    public ResponseEntity<List<Doctor>> getAllDoc() throws Exception{
-        return new ResponseEntity<>( doctorService.allDoctor(), HttpStatus.OK );
+    private final DoctorService doctorService;
+
+    public ResponseEntity<List<Doctor>> getAllDoc( int page, int size ) throws Exception{
+        return new ResponseEntity<>( doctorService.allDoctor( page, size ), HttpStatus.OK );
     }
-    public ResponseEntity<List<Doctor>> findByFIO( String word ) throws Exception{
-        return new ResponseEntity<>( doctorService.findByFIO( word ), HttpStatus.OK); 
+    public ResponseEntity<List<Doctor>> findByFIO( String word, int page, int size  ) throws Exception{
+        return new ResponseEntity<>( doctorService.findByFIO( word, page, size ), HttpStatus.OK); 
     }
     public ResponseEntity<Doctor> addDoctor( Doctor doctor ) throws Exception{
         return new ResponseEntity<>(  doctorService.saveDoctor( doctor ), HttpStatus.OK );
+    }
+
+    @Override
+    public ResponseEntity<List<Doctor>>  getLazyDoctors(int page, int size) {
+        return new ResponseEntity<>( doctorService.getLazyDoctor( page, size ), HttpStatus.OK );
+    }
+    @Override
+    public ResponseEntity<Long> getCountDoctors() {
+        return new ResponseEntity<>( doctorService.getCountDoctors(), HttpStatus.OK );
     }
 }

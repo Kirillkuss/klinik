@@ -9,23 +9,21 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 import java.util.List;
 import java.util.Optional;
-
-
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class PatientService {
 
-    private final PatientRepository patientRepository;
+    private final PatientRepository  patientRepository;
     private final DocumentRepository documentRepository;
-    
-    private final EntityManager entityManager;
+    private final EntityManager      entityManager;
 
     public List<Patient> getAllPatients(){
-        log.info( "Alls Patient");
+        log.info( "All Patients");
         return patientRepository.findAll();
     }
 
@@ -47,12 +45,18 @@ public class PatientService {
         return response;
     }
 
+    @SuppressWarnings("unchecked")
     public List<Patient> getLazyLoad( int page, int size){
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         log.info( "getLazyPatients - page >> " + page + " size >> " + size );
-        return entityManager.createNativeQuery( "select * from Patient", Patient.class)
-                            .setFirstResult((page - 1) * size)
-                            .setMaxResults(size)
-                            .getResultList();
+        List<Patient> response =  entityManager.createNativeQuery( "select * from Patient", Patient.class)
+                                               .setFirstResult((page - 1) * size)
+                                               .setMaxResults(size)
+                                               .getResultList();
+        stopWatch.stop();
+        log.info( "Method execution time - getLazyLoadPatient >> " +  + stopWatch.getTotalTimeMillis() + " ms" );
+        return response;                       
     }
 
 }

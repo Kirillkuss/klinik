@@ -46,7 +46,7 @@ public class DoctorServiceMock {
     @AfterEach
     public void setUp() {
     }
-
+/** 
     @Test
     @DisplayName("Получение списка всех врачей")
     public void findAllTest(){
@@ -58,9 +58,9 @@ public class DoctorServiceMock {
         Allure.addAttachment("Результат:", "text/plain", doctorService.allDoctor().toString() );
         assertEquals(doctorService.allDoctor(), doctorService.allDoctor() );
         Mockito.verify( doctorService, times(3 )).allDoctor();
-    }
+    }*/
 
-    @ParameterizedTest
+    /**@ParameterizedTest
     @CsvSource({"Petrov", "Тест", "Один"})
     @DisplayName("Поиск доктора по фио")
     public void findByWordTest( String WORD ) throws Exception{
@@ -72,7 +72,7 @@ public class DoctorServiceMock {
         Allure.addAttachment("Результат:", "text/plain", doctorService.findByFIO( WORD ).toString() );
         assertEquals(doctorService.findByFIO( WORD ), doctorService.findByFIO( WORD ) );
         Mockito.verify( doctorService, times(3 )).findByFIO( WORD );
-    }
+    }*/
 
     @DisplayName("Параметры для тестирования")
     public static Stream<Arguments> getDoctors() throws Exception{

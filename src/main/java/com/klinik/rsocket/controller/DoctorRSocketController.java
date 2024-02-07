@@ -17,7 +17,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 //Server
-
+/** 
 @Controller
 @AllArgsConstructor
 public class DoctorRSocketController {
@@ -41,4 +41,4 @@ public class DoctorRSocketController {
     }
     
 
-}
+} */

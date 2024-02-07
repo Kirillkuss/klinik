@@ -67,7 +67,7 @@ function listDocument() {
  * Добавить документ
  */
 function AddDocument() {
-    $("#testForm").submit( function (event){
+    $("#testFormDocument").submit( function (event){
         event.preventDefault();
         var idDocument =  $('#idDocument').val();
         var typeDocument = $('#typeDocument').val();

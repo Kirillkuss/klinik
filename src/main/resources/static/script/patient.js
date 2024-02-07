@@ -54,7 +54,7 @@ function listPatient() {
  * Добавить пациента
  */
 function AddPatient() {
-    $("#testForm").submit( function (event){
+    $("#testFormPatient").submit( function (event){
         event.preventDefault();
         var idPatient  = $('#idPatient').val();
         var surname    = $('#surname').val();
@@ -79,15 +79,14 @@ function AddPatient() {
                 success: function( json ) {
                     var tr=[];
                     tr.push('<tr>');
-                    tr.push('<td>' + json[i].idPatient + '</td>');
-                    tr.push('<td>' + json[i].surname + '</td>');
-                    tr.push('<td>' + json[i].name + '</td>');
-                    tr.push('<td>' + json[i].fullName + '</td>');
-                    tr.push('<td>' + json[i].gender + '</td>');
-                    tr.push('<td>' + json[i].phone + '</td>');
-                    tr.push('<td>' + json[i].address + '</td>');
+                    tr.push('<td>' + json.idPatient + '</td>');
+                    tr.push('<td>' + json.surname + '</td>');
+                    tr.push('<td>' + json.name + '</td>');
+                    tr.push('<td>' + json.fullName + '</td>');
+                    tr.push('<td>' + json.gender + '</td>');
+                    tr.push('<td>' + json.phone + '</td>');
+                    tr.push('<td>' + json.address + '</td>');
                     tr.push('</tr>');
-                    
                     location.reload();
                 }, error: function ( error ){
                     $('#errorToast').text( error.responseText ).show();

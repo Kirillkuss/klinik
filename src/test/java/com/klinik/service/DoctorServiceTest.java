@@ -3,40 +3,49 @@ package com.klinik.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.instancio.Instancio;
+import org.instancio.Select;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.transaction.annotation.Transactional;
+import com.klinik.KlinikApplication;
 import com.klinik.entity.Doctor;
 import com.klinik.excep.MyException;
 
-@SpringBootTest
-@Disabled
 @DisplayName( "Тест предназначен для тестирования сервиса DoctorService")
+@SpringBootTest( webEnvironment = WebEnvironment.RANDOM_PORT, classes = KlinikApplication.class )
+@Disabled
 public class DoctorServiceTest {
 
     @Autowired DoctorService doctorService;
 
+    @Test
+    public void testFirst(){
+        System.out.println( doctorService);
+    }
+
     @DisplayName( "Список всех врачей")
     @Test
 	public void testGetAll() throws Exception {
-        assertNotNull(doctorService.allDoctor());
-        assertEquals( doctorService.allDoctor(), doctorService.allDoctor() );
+        assertNotNull(doctorService.allDoctor(1,100));
+        assertEquals( doctorService.allDoctor(1,100), doctorService.allDoctor(1,100) );
 	}
 
     @DisplayName( "Поиск доктора по слову")
     @Test
 	public void testFindByWord() throws Exception {
-        assertNotNull(doctorService.findByFIO(  "Тест" ));
+        assertNotNull(doctorService.findByFIO(  "Тест", 1, 10 ));
 	}
 
     @DisplayName( "Ошибка - По данному запросу ничего не найдено")
     @Test
 	public void testFindByWordError() throws Exception {
         assertThrows( MyException.class, () -> {
-            doctorService.findByFIO( "xjhchjdsd23545" );
+            doctorService.findByFIO( "xjhchjdsd23545", 1, 100 );
         });  
 	}
 
@@ -48,14 +57,23 @@ public class DoctorServiceTest {
         });  
 	}
 
+    @Test
     @Transactional
     @DisplayName("Добавить доктора")
-    @Test
 	public void testSaveDoctor() throws Exception {
         doctorService.saveDoctor( new Doctor(15L,
                                               "Calam",
                                                  "Calam",
                                              "Calam" ));
 	}
+
+    @Test
+    @Transactional
+    @DisplayName("Добавить доктора генерируя данные через Instancio")
+    public void testSaveDocotr() throws Exception{
+        Doctor doctor =  Instancio.of(Doctor.class).ignore(Select.field(Doctor::getIdDoctor)).create();
+        doctor.setIdDoctor( -1L );
+        assertNotNull( doctorService.saveDoctor( doctor ));
+    }
 
 }
