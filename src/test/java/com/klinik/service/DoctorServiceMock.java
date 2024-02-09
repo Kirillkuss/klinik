@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,7 +25,6 @@ import com.klinik.entity.Doctor;
 import com.klinik.repositories.DoctorRerository;
 import io.qameta.allure.Allure;
 
-@Disabled
 @DataJpaTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)
 @DisplayName("Тестирование сервиса DoctorService from Mock")
@@ -46,33 +44,33 @@ public class DoctorServiceMock {
     @AfterEach
     public void setUp() {
     }
-/** 
+
     @Test
     @DisplayName("Получение списка всех врачей")
     public void findAllTest(){
-        Mockito.when( doctorService.allDoctor() ).thenCallRealMethod();
-        Mockito.when( doctorService.allDoctor() ).thenReturn( new ArrayList<>());
-        Mockito.when( doctorService.allDoctor() ).then(( InvocationOnMock inv ) ->{
+        Mockito.when( doctorService.allDoctor(1, 15) ).thenCallRealMethod();
+        Mockito.when( doctorService.allDoctor(1, 15)  ).thenReturn( new ArrayList<>());
+        Mockito.when( doctorService.allDoctor(1, 15)  ).then(( InvocationOnMock inv ) ->{
            return ( List<Doctor> ) inv.callRealMethod(); 
         });
-        Allure.addAttachment("Результат:", "text/plain", doctorService.allDoctor().toString() );
-        assertEquals(doctorService.allDoctor(), doctorService.allDoctor() );
-        Mockito.verify( doctorService, times(3 )).allDoctor();
-    }*/
+        Allure.addAttachment("Результат:", "text/plain", doctorService.allDoctor(1, 15) .toString() );
+        assertEquals(doctorService.allDoctor(1, 15) , doctorService.allDoctor(1, 15)  );
+        Mockito.verify( doctorService, times(3 )).allDoctor(1, 15) ;
+    }
 
-    /**@ParameterizedTest
+    @ParameterizedTest
     @CsvSource({"Petrov", "Тест", "Один"})
     @DisplayName("Поиск доктора по фио")
     public void findByWordTest( String WORD ) throws Exception{
-        Mockito.when( doctorService.findByFIO( WORD )).thenCallRealMethod();
-        Mockito.when( doctorService.findByFIO( WORD ) ).thenReturn( new ArrayList<>());
-        Mockito.when( doctorService.findByFIO( WORD ) ).then(( InvocationOnMock inv ) ->{
+        Mockito.when( doctorService.findByFIO( WORD, 1, 15 )).thenCallRealMethod();
+        Mockito.when( doctorService.findByFIO( WORD, 1, 15 ) ).thenReturn( new ArrayList<>());
+        Mockito.when( doctorService.findByFIO( WORD, 1, 15 ) ).then(( InvocationOnMock inv ) ->{
            return ( List<Doctor> ) inv.callRealMethod(); 
         });
-        Allure.addAttachment("Результат:", "text/plain", doctorService.findByFIO( WORD ).toString() );
-        assertEquals(doctorService.findByFIO( WORD ), doctorService.findByFIO( WORD ) );
-        Mockito.verify( doctorService, times(3 )).findByFIO( WORD );
-    }*/
+        Allure.addAttachment("Результат:", "text/plain", doctorService.findByFIO( WORD, 1, 15 ).toString() );
+        assertEquals(doctorService.findByFIO( WORD, 1, 15 ), doctorService.findByFIO( WORD, 1, 15 ) );
+        Mockito.verify( doctorService, times(3 )).findByFIO( WORD, 1, 15 );
+    }
 
     @DisplayName("Параметры для тестирования")
     public static Stream<Arguments> getDoctors() throws Exception{

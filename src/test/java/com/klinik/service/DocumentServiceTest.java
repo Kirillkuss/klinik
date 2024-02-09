@@ -2,11 +2,8 @@ package com.klinik.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.persistence.EntityManager;
-
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -22,7 +19,6 @@ import com.klinik.repositories.DocumentRepository;
 @DisplayName( "Класс предназначен для тестирования сервиса DocumentService")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)
-@Disabled
 public class DocumentServiceTest {
 
     @MockBean 

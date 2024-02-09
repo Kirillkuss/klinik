@@ -17,7 +17,6 @@ import com.klinik.repositories.ComplaintRepository;
 import com.klinik.repositories.TypeComplaintRepository;
 
 @SpringBootTest
-@Disabled
 public class TypeComplaintTest {
 
     private List<TypeComplaint> listComplaints = new ArrayList<>();

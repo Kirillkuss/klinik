@@ -19,7 +19,6 @@ import com.klinik.repositories.PatientRepository;
 @DisplayName( "Класс предназначен для тестирования сервиса PatientService")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)
-@Disabled
 public class PatientServiceTest {
 
     private PatientService patientService;

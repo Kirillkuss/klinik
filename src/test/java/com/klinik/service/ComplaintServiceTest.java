@@ -16,7 +16,6 @@ import com.klinik.excep.MyException;
 import com.klinik.repositories.ComplaintRepository;
 
 @SpringBootTest( webEnvironment = WebEnvironment.RANDOM_PORT )
-@Disabled
 public class ComplaintServiceTest {
 
     @Autowired
