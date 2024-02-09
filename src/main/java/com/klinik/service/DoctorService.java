@@ -16,7 +16,7 @@ import java.util.List;
 public class DoctorService {
 
     @Autowired public  DoctorRerository doctorRerository;
-    @Autowired private EntityManager    entityManager;
+    @Autowired EntityManager    entityManager;
 
     @SuppressWarnings("unchecked")
     public List<Doctor> allDoctor( int page, int size ){

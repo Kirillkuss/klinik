@@ -16,6 +16,8 @@ import com.klinik.excep.MyException;
 import com.klinik.repositories.DocumentRepository;
 import com.klinik.repositories.PatientRepository;
 
+import io.qameta.allure.Allure;
+
 @DisplayName( "Класс предназначен для тестирования сервиса PatientService")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)
@@ -42,6 +44,7 @@ public class PatientServiceTest {
     public void testGetAllPatients() throws Exception{
         assertNotNull( patientService.getAllPatients() );
         assertEquals( patientService.getAllPatients() , patientService.getAllPatients() );
+        Allure.addAttachment("Результат:", "text/plain",  patientService.getAllPatients().toString() );
     }
 
     @Test
@@ -51,6 +54,7 @@ public class PatientServiceTest {
         assertThrows( MyException.class, () -> {patientService.findByWord( "2323424dfsdfs");});
         assertNotNull( patientService.findByWord( REQUEST ));
         assertEquals( patientService.findByWord( REQUEST ), patientService.findByWord( REQUEST ));
+        Allure.addAttachment("Результат:", "text/plain",  patientService.findByWord( REQUEST ).toString() );
     }
 /** 
     @Test
