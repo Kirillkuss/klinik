@@ -73,8 +73,9 @@ public class DoctorServiceTest {
     public void testSaveDocotr() throws Exception{
         Doctor doctor =  Instancio.of(Doctor.class).ignore(Select.field(Doctor::getIdDoctor)).create();
         doctor.setIdDoctor( -1L );
-        assertNotNull( doctorService.saveDoctor( doctor ));
-        Allure.addAttachment("Результат:", "text/plain",  doctorService.saveDoctor( doctor ).toString() );
+        Doctor response = doctorService.saveDoctor( doctor );
+        assertNotNull( response );
+        Allure.addAttachment("Результат:", "text/plain",  response.toString() );
     }
 
 }
