@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.hibernate.Session;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
+import com.klinik.aspect.GlobalOperation;
 import com.klinik.entity.RecordPatient;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.CardPatientRepository;
@@ -29,6 +32,7 @@ public class ReportService {
     private final EntityManager entityManager;
     private final CardPatientRepository cardPatientRepository;
     private final RecordPatientRepository recordPatientRepository;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     /**
      * Отчет по виду ребилитационного лечения за период времени
@@ -39,9 +43,10 @@ public class ReportService {
      * @throws Exception
      * @throws MyException
      */
+    @GlobalOperation(operation = "getStatReport")
     public List<ResponseReport> getStatReport(LocalDateTime dateFrom, LocalDateTime dateTo) throws Exception {
         List<ResponseReport> report = new ArrayList<>();
-            entityManager.unwrap(Session.class).doWork((Connection conn) -> {
+             entityManager.unwrap(Session.class).doWork((Connection conn) -> {
                 try (CallableStatement cs = conn.prepareCall("{ call report_stat( ?,?,? ) }")) {
                     conn.setAutoCommit(false);
                     cs.setTimestamp(1, Timestamp.valueOf( dateFrom ));
@@ -69,6 +74,7 @@ public class ReportService {
      * @return List<ReportDrug>
      * @throws Exception
      */
+    @GlobalOperation(operation = "reportStatDrug")
     public List<ReportDrug> reportStatDrug( LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception {
         List<ReportDrug> response = new ArrayList<>();
             entityManager.unwrap(Session.class).doWork((Connection conn) -> {
@@ -99,11 +105,12 @@ public class ReportService {
      * @return ResponsePatientReport
      * @throws Exception
      */
+    @GlobalOperation(operation = "reportInformationAboutPatient")
     public CardPatinetReport reportInformationAboutPatient(Long idCardPatient) throws Exception {
         CardPatinetReport response = new CardPatinetReport();
         response.setCard(cardPatientRepository.findById(idCardPatient).orElseThrow(() -> new NoSuchElementException("Карты пациента с таким ИД не существует")));
         entityManager.unwrap(Session.class).doWork((Connection conn) -> {
-            try(CallableStatement cs = conn.prepareCall("{ call record_patient( ?,?)}")){
+            try(CallableStatement cs = conn.prepareCall("{call record_patient(?,?)}")){
                 conn.setAutoCommit(false);
                 cs.setLong(1, idCardPatient);
                 cs.registerOutParameter(2, Types.OTHER);
@@ -132,13 +139,29 @@ public class ReportService {
      * @return RecordPatientReport
      * @throws Exception
      */
+    @GlobalOperation(operation = "reportByPatietnWithRecordPatient")
     public RecordPatientReport reportByPatietnWithRecordPatient( Long IdPatient, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception {
         RecordPatientReport report = new RecordPatientReport();
+        // NamedParameterJdbcTemplate
+        String sql = "SELECT r.* FROM Record_patient r LEFT JOIN Card_patient c ON c.id_card_patient = r.card_patient_id " +
+                     "LEFT JOIN Patient p ON p.id_patient = c.patient_id WHERE p.id_patient = :patientId AND ( r.date_record BETWEEN :startDate AND :endDate )";
+         MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("patientId", IdPatient);
+        parameters.addValue("startDate", dateFrom);
+        parameters.addValue("endDate", dateTo);
+        List<RecordPatient> listJdbc = namedParameterJdbcTemplate.query( sql, parameters, (rs, rowNum) -> {
+            RecordPatient record = new RecordPatient();
+            record.setIdRecord(rs.getLong("id_record"));
+            record.setDateRecord( rs.getTimestamp( "date_record").toLocalDateTime() );
+            record.setDateAppointment( rs.getTimestamp( "date_appointment").toLocalDateTime() );
+            record.setNumberRoom( rs.getLong( "number_room" ));
+        return record;
+        });
+
         List<RecordPatient> list = recordPatientRepository.findByParam(IdPatient, dateFrom, dateTo);
-        report.setCard(cardPatientRepository.findByPatientId( IdPatient )
-                                            .orElseThrow( () -> new NoSuchElementException( "Пациента с таким ИД не существует" )));
+        report.setCard( cardPatientRepository.findByPatientId( IdPatient ).orElseThrow( () -> new NoSuchElementException( "Пациента с таким ИД не существует" )));
         report.setCountRecordForTime( list.stream().count() );
-        report.setListRecordPatient( list );
+        report.setListRecordPatient( listJdbc );
         return report;
     }
 
