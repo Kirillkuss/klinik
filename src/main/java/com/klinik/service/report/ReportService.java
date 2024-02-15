@@ -87,10 +87,10 @@ public class ReportService {
                     try (ResultSet rs = (ResultSet) cs.getObject( 3 )) {
                         while (rs.next()) {
                             ReportDrug drug = new ReportDrug();
-                            drug.setNameDrugTreatment(rs.getString("name"));
-                            drug.setCountDrugTreatment(rs.getLong("count_drug_treatment"));
-                            drug.setCountPatient(rs.getLong("count_patient"));
-                            response.add(drug);
+                            drug.setNameDrugTreatment( rs.getString("name" ));
+                            drug.setCountDrugTreatment( rs.getLong("count_drug_treatment" ));
+                            drug.setCountPatient( rs.getLong("count_patient" ));
+                            response.add( drug );
                         }
                     }
                 }
