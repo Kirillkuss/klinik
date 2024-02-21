@@ -14,6 +14,4 @@ public interface DoctorRerository extends JpaRepository<Doctor, Long> {
     @Query( "SELECT u FROM Doctor u WHERE u.surname = :word or u.name = :word or u.fullName = :word ")
     List<Doctor> findDoctorByFIO( String word );
 
-    @Query("SELECT u FROM Doctor u WHERE u.idDoctor = :id")
-    Doctor findByIdDoctor( Long id );
 }

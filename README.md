@@ -16,3 +16,5 @@
 * java 17
 * Jenkins
 * jmeter
+* Caching in Spring
+* Redis

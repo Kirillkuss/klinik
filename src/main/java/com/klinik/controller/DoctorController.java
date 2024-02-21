@@ -18,6 +18,7 @@ public class DoctorController implements IDoctor{
     public ResponseEntity<List<Doctor>> getAllDoc( int page, int size ) throws Exception{
         return new ResponseEntity<>( doctorService.allDoctor( page, size ), HttpStatus.OK );
     }
+    
     public ResponseEntity<List<Doctor>> findByFIO( String word, int page, int size  ) throws Exception{
         return new ResponseEntity<>( doctorService.findByFIO( word, page, size ), HttpStatus.OK); 
     }
@@ -32,5 +33,10 @@ public class DoctorController implements IDoctor{
     @Override
     public ResponseEntity<Long> getCountDoctors() {
         return new ResponseEntity<>( doctorService.getCountDoctors(), HttpStatus.OK );
+    }
+
+    @Override
+    public ResponseEntity<Doctor> findById(Long id) {
+        return new ResponseEntity<>( doctorService.findByIdDoctor( id ), HttpStatus.OK );
     }
 }

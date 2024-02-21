@@ -47,5 +47,9 @@ public interface IDoctor {
 
     @GetMapping("/counts")
     public ResponseEntity<Long> getCountDoctors();
+
+    @GetMapping(value = "/{id}")
+    @Operation( description = "Поиск по ИД", summary = "Поиск по ИД")
+    public ResponseEntity<Doctor> findById(Long id ) ;
     
 }

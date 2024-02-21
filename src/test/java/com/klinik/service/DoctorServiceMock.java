@@ -42,13 +42,13 @@ public class DoctorServiceMock {
     private DoctorRerository doctorRerository;
 
     @Autowired EntityManager entityManager;
-
+/** 
     @BeforeEach
     public void tearDown() {
         doctorService  = mock( DoctorService.class );
         doctorService.doctorRerository = doctorRerository;
         doctorService.entityManager = entityManager;
-    }
+    }*/
     
     @AfterEach
     public void setUp() {

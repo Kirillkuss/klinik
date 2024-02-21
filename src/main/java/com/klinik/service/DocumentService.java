@@ -6,6 +6,7 @@ import com.klinik.excep.MyException;
 import com.klinik.repositories.DocumentRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -19,6 +20,7 @@ public class DocumentService {
 
     private final EntityManager entityManager;
     
+    @Cacheable(value = "cacheDocumentOne")
     @GlobalOperation(operation = "getAllDocuments")
     public List<Document> getAllDocuments(){
         return documentRepository.findAll();
@@ -41,6 +43,7 @@ public class DocumentService {
         return list;
     }
 
+    @Cacheable(value = "cacheDocumentTwo")
     @GlobalOperation(operation = "getLazyDocuments")
     public List<Document> getLazyDocuments(int page, int size){
         return entityManager.createNativeQuery( "select * from Document", Document.class)

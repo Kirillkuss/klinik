@@ -2,9 +2,9 @@ package com.klinik.redis.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import com.klinik.redis.model.Student;
+import com.klinik.redis.model.Session;
 
 @Repository
-public interface StudentRepository extends CrudRepository<Student, String> {
+public interface SessionRepository extends CrudRepository<Session, String> {
     
 }
