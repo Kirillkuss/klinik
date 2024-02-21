@@ -9,7 +9,6 @@ import org.springframework.data.redis.core.RedisKeyValueAdapter;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import com.klinik.redis.model.Person;
 
 @Configuration
 @ComponentScan("com.klinik.redis")
