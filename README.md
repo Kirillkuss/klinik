@@ -18,3 +18,15 @@
 * jmeter
 * Caching in Spring
 * Redis
+
+
+* Cassandra
+ ( cmd )
+1. Запуск
+docker run --name my_cassandra_db -d cassandra:latest
+2. Подключение к контейнеру
+docker exec -it my_cassandra_db cqlsh
+3. Создаение KEYSPACE
+CREATE KEYSPACE IF NOT EXISTS testkeyspace WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 } AND DURABLE_WRITES = true ;
+4. Проверка созданного keyspace
+DESCRIBE KEYSPACES;

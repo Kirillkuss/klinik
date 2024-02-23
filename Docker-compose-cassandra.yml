@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+# APP Klinika
+  klinika:
+    image: klinika
+    ports:
+      - "8082:8082"
+    build:
+      context: .
+    container_name: klinika
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/Klinika
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+      - ADDITIONAL_PATH=/klinika/swagger-ui/index.html
+      - CASSANDRA_KEYSPACE=testkeyspace
+    networks:
+      - klinika-es
+#DB CASSANDRA
+  cassandra:
+    image: cassandra:latest
+    container_name: my_cassandra_db
+    ports:
+      - "9042:9042"
+    environment:
+      - CASSANDRA_KEYSPACE=testkeyspace
+      - MAX_HEAP_SIZE=256M
+      - HEAP_NEWSIZE=100M
+    networks:
+      - klinika-es 
+#DB REDIS
+  redis:
+    image: redis:latest
+    container_name: my-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - klinika-es
+#NETWORK      
+networks:
+  klinika-es:
