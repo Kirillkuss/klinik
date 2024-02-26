@@ -96,7 +96,7 @@ public class DoctorService {
      */
     public Doctor findByIdDoctor( Long idDoctor ){
         Doctor doctor = new Doctor();
-        if ( doctorRepositoryRedis.findById( idDoctor.toString() ).isEmpty() ){
+         if ( doctorRepositoryRedis.findById( idDoctor.toString() ).isEmpty() ){
             doctor = doctorRerository.findById( idDoctor ).orElse( null );
             doctorRepositoryRedis.save( new com.klinik.redis.model.Doctor( doctor.getIdDoctor().toString(), doctor, LocalDateTime.now() ));
             log.info( "Save redisDoctor ");
