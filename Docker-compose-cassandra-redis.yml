@@ -15,12 +15,16 @@ services:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=none
       - ADDITIONAL_PATH=/klinika/swagger-ui/index.html
       - CASSANDRA_KEYSPACE=testkeyspace
+      - CASSANDRA_HOST=cassandra
+    links:
+     - cassandra
+     - redis
     networks:
       - klinika-es
 #DB CASSANDRA
   cassandra:
     image: cassandra:latest
-    container_name: my_cassandra_db
+    container_name: cassandra
     ports:
       - "9042:9042"
     environment:
@@ -32,7 +36,7 @@ services:
 #DB REDIS
   redis:
     image: redis:latest
-    container_name: my-redis
+    container_name: redis
     ports:
       - "6379:6379"
     networks:

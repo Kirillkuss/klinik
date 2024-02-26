@@ -14,10 +14,10 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
                           enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP )
 public class RedisConfig {
     
-    @Bean
+    /**@Bean
     public RedisConnectionFactory redisConnectionFactory() {
         return new JedisConnectionFactory();
-    }
+    }*/
 
     /**
      * RedisTemplate для entity Person

@@ -10,5 +10,5 @@ import org.springframework.data.cassandra.repository.config.EnableCassandraRepos
 @ComponentScan("com.klinik.cassandra")
 @EnableCassandraRepositories( basePackages = "com.klinik.cassandra.repository")
 public class CassandraConfig {
-    
+
 }
