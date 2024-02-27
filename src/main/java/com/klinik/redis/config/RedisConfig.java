@@ -2,19 +2,13 @@ package com.klinik.redis.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisKeyValueAdapter;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
 @Configuration
 @ComponentScan("com.klinik.redis")
-@EnableRedisRepositories( basePackages = "com.klinik.redis.repository",
-                          enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP )
+@EnableRedisRepositories( basePackages = "com.klinik.redis.repository")
 public class RedisConfig {
-    /** 
-    @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        return new JedisConnectionFactory();
-    }*/
+     
     /**
      * RedisTemplate для entity Session
      * @param connectionFactory
