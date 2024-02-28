@@ -24,6 +24,11 @@
     </repository>
     </repositories>
     <dependencies>
+        <!--Mongo-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
         <!--Cassandra-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
