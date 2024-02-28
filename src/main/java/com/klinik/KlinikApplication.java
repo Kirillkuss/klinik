@@ -10,9 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @Slf4j 
 @SpringBootApplication
-@OpenAPIDefinition( info = @Info( title = "КЛИНИК АПИ",
-                                  version = "1.0.0",
-                                  description = "КЛИНИК АПИ"))
+@OpenAPIDefinition( info = @Info( title = "КЛИНИК АПИ", version = "1.0.0", description = "КЛИНИК АПИ"))
 public class KlinikApplication {
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(KlinikApplication.class);
