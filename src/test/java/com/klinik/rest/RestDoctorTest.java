@@ -8,7 +8,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Link;
+import io.qameta.allure.Owner;
 import io.qameta.allure.TmsLink;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -17,6 +19,7 @@ import io.qameta.allure.Feature;
 
 @Feature("Тест АПИ для сущности Doctor")
 @DisplayName("Тест АПИ для сущности Doctor")
+@Owner(value = "Barysevich K. A.")
 public class RestDoctorTest {
 
     @Description("Получение списка врачей")
@@ -73,6 +76,7 @@ public class RestDoctorTest {
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/findByFIO")
     @TmsLink("TEST-3545")
     @ParameterizedTest
+    @Epic(value = "Получение врачей по ФИО")
     @CsvSource({"1, 14, Test", "2, 5, Mouse", "8, 10, Elk"})
     public void testGetByFIO(int page, int size, String fio) {
         RestAssured.baseURI = "http://localhost:8082";
