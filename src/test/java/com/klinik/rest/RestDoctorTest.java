@@ -2,12 +2,19 @@ package com.klinik.rest;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
+
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.klinik.entity.Doctor;
 
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -64,19 +71,23 @@ public class RestDoctorTest {
         Allure.addAttachment("Результат:", "application/json", response.andReturn().asString() );
     }
 
+    @DisplayName("Параметры для тестирования")
+    public static Stream<Arguments> getParams() throws Exception{
+        return Stream.of( Arguments.of( new Doctor( -1L, "GERP", "DERT", "ERYT") ) );
+    }
+
     @Feature("Добавить врача")
     @Description("Добавить врача")
     @DisplayName("Вызов метода POST: http://localhost:8082/web/doctors/add")
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/addDoctor")
-    @Test
-    public void testAddDoctor(  ){
-        String requestBody = "{ \"idDoctor\": \"-1\", \"surname\": \"Monstr\", \"name\": \"TERT\", \"fullName\": \"DERK\" }";
+    @ParameterizedTest
+    @MethodSource("getParams")
+    public void testAddDoctor( Doctor doctor ){
         RestAssured.baseURI = "http://localhost:8082";
-        Response response = given().when().contentType(ContentType.JSON).body( requestBody ).post("/web/doctors/add");
+        Response response = given().when().contentType(ContentType.JSON).body( doctor ).post("/web/doctors/add");
         response.then().statusCode(200);
         Allure.addAttachment("Результат:", "application/json", response.andReturn().asString() );
     }
-
 
     @Feature("Получение врачей по ФИО")
     @Description("Получение врачей по ФИО")
