@@ -15,7 +15,12 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import com.klinik.entity.Document;
 import com.klinik.repositories.DocumentRepository;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 
+@Epic(value = "Тестирование класса DocumentService")
+@Owner(value = "Barysevich K. A.")
 @DisplayName( "Класс предназначен для тестирования сервиса DocumentService")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)
@@ -37,6 +42,7 @@ public class DocumentServiceTest {
         service = new DocumentService(documentRepository, entityManager); 
     }
 
+    @Feature("Метод getAllDocuments - Получение списка документов")
     @DisplayName("Получение списка документов")
     @Test
     public void testGetAllDocuments() throws Exception{
@@ -46,6 +52,7 @@ public class DocumentServiceTest {
         });
        }
 
+    @Feature("Метод addDocument - Получение списка документов")
     @DisplayName("Получение списка документов")
     @Test
     public void testSave() throws Exception{

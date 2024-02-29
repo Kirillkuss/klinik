@@ -15,11 +15,15 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import com.klinik.entity.Complaint;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.ComplaintRepository;
-
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 
+@Epic(value = "Тестирование сервиса и репозитория для сущности жалобы")
 @DisplayName("Тестирование сервиса и репозитория для сущности жалобы")
+@Owner(value = "Barysevich K. A.")
 @SpringBootTest( webEnvironment = WebEnvironment.RANDOM_PORT )
 public class ComplaintServiceTest {
 
@@ -31,6 +35,7 @@ public class ComplaintServiceTest {
 
     Complaint complaint = new Complaint();
 
+    @Feature("Метод listComplaints() - Получение списка жалоб")
     @DisplayName( "Получение списка жалоб")
     @Description( "Получение списка жалоб")
     @RepeatedTest( 7 )
@@ -41,6 +46,7 @@ public class ComplaintServiceTest {
     }
 
     @Test
+    @Feature("Метод saveСomplaint() - Добавить жалобу")
     @DisplayName( "Добавить жалобу" ) 
     @Description( "Добавить жалобу" )
     public void testSaveСomplaint() throws Exception{

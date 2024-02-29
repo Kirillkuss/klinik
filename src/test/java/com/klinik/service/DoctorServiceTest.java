@@ -14,20 +14,20 @@ import org.springframework.transaction.annotation.Transactional;
 import com.klinik.KlinikApplication;
 import com.klinik.entity.Doctor;
 import com.klinik.excep.MyException;
-
 import io.qameta.allure.Allure;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 
+@Epic(value = "Тест предназначен для тестирования сервиса DoctorService")
+@Owner(value = "Barysevich K. A.")
 @DisplayName( "Тест предназначен для тестирования сервиса DoctorService")
 @SpringBootTest( webEnvironment = WebEnvironment.RANDOM_PORT, classes = KlinikApplication.class )
 public class DoctorServiceTest {
 
     @Autowired DoctorService doctorService;
 
-    @Test
-    public void testFirst(){
-        System.out.println( doctorService);
-    }
-
+    @Feature("Метод allDoctor - Получение списка врачей")
     @DisplayName( "Список всех врачей")
     @Test
 	public void testGetAll() throws Exception {
@@ -36,6 +36,7 @@ public class DoctorServiceTest {
         Allure.addAttachment("Результат:", "text/plain", doctorService.allDoctor(3, 25) .toString() );
 	}
 
+    @Feature("Метод findByFIO - Поиск доктора по слову")
     @DisplayName( "Поиск доктора по слову")
     @Test
 	public void testFindByWord() throws Exception {
@@ -43,6 +44,7 @@ public class DoctorServiceTest {
         Allure.addAttachment("Результат:", "text/plain", doctorService.findByFIO(  "Тест", 1, 10 ).toString() );
 	}
 
+    @Feature("Метод findByFIO - По данному запросу ничего не найдено")
     @DisplayName( "Ошибка - По данному запросу ничего не найдено")
     @Test
 	public void testFindByWordError() throws Exception {
@@ -51,6 +53,7 @@ public class DoctorServiceTest {
         });  
 	}
 
+    @Feature("Метод saveDoctor - Ошибка - По данному запросу ничего не найдено")
     @DisplayName( "Ошибка - По данному запросу ничего не найдено")
     @Test
 	public void testSaveDoctorError() throws Exception {
@@ -61,6 +64,7 @@ public class DoctorServiceTest {
 
     @Test
     @Transactional
+    @Feature("Метод saveDoctor - Добавить доктора")
     @DisplayName("Добавить доктора")
 	public void testSaveDoctor() throws Exception {
         Doctor doctor = doctorService.saveDoctor( new Doctor(15L,"Calam","Calam", "Calam" ));
@@ -69,6 +73,7 @@ public class DoctorServiceTest {
 
     @Test
     @Transactional
+    @Feature("Метод saveDoctor - Добавить доктора генерируя данные через Instancio")
     @DisplayName("Добавить доктора генерируя данные через Instancio")
     public void testSaveDocotr() throws Exception{
         Doctor doctor =  Instancio.of(Doctor.class).ignore(Select.field(Doctor::getIdDoctor)).create();

@@ -1,15 +1,12 @@
 package com.klinik.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Stream;
-
-import javax.swing.text.html.parser.Entity;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,16 +21,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.klinik.entity.Doctor;
 import com.klinik.repositories.DoctorRerository;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 import jakarta.persistence.EntityManager;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)
 @DisplayName("Тестирование сервиса DoctorService from Mock")
+@Epic(value = "Тестирование сервиса DoctorService from Mock")
+@Owner(value = "Barysevich K. A.")
 public class DoctorServiceMock {
 
     private DoctorService doctorService;
@@ -50,11 +50,8 @@ public class DoctorServiceMock {
         doctorService.entityManager = entityManager;
     }
     
-    @AfterEach
-    public void setUp() {
-    }
-
     @Test
+    @Feature("Метод allDoctor - Получение списка всех врачей")
     @DisplayName("Получение списка всех врачей")
     public void findAllTest(){
         Mockito.when( doctorService.allDoctor(1, 15) ).thenCallRealMethod();
@@ -68,6 +65,7 @@ public class DoctorServiceMock {
     }
 
     @ParameterizedTest
+    @Feature("Метод findByFIO - Поиск доктора по фио")
     @CsvSource({"Petrov", "Тест", "Один"})
     @DisplayName("Поиск доктора по фио")
     public void findByWordTest( String WORD ) throws Exception{
@@ -89,16 +87,16 @@ public class DoctorServiceMock {
 
 
     @ParameterizedTest
+    @Feature("Метод saveDoctor - Добавить доктора")
     @MethodSource("getDoctors")
     @DisplayName("Добавить доктора")
     public void saveDoctorTest( ) throws Exception{
-        Doctor doctor = new Doctor( -1L, "FIRST2", "FIRST1", "FIRST5" );
+        Doctor doctor = new Doctor(  new Random().nextLong(), "FIRST2", "FIRST1", "FIRST5" );
         Mockito.when( doctorService.saveDoctor( doctor )).thenCallRealMethod();
         Mockito.when( doctorService.saveDoctor( doctor )).thenReturn( new Doctor() );
         Mockito.when( doctorService.saveDoctor( doctor )).then(( InvocationOnMock inv ) ->{
             return ( Doctor ) inv.callRealMethod();
         });
-        //doctorService.saveDoctor( doctor );
         //Allure.addAttachment("Результат:", "text/plain", doctorService.saveDoctor( doctor ).toString() );
        // assertNotNull(doctorService.saveDoctor( doctor ));
       //  Mockito.verify( doctorService, times(2 )).saveDoctor( doctor );

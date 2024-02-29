@@ -10,6 +10,9 @@ import com.klinik.entity.RecordPatient;
 import com.klinik.repositories.CardPatientRepository;
 import com.klinik.repositories.DoctorRerository;
 import com.klinik.repositories.RecordPatientRepository;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 import static org.mockito.Mockito.mock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,6 +21,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@Owner(value = "Barysevich K. A.")
+@Epic(value = "Этот класс предназнаен для тестирования сервиса RecordPatientService")
 @DisplayName("Этот класс предназнаен для тестирования сервиса RecordPatientService")
 public class RecordPatientServiceTest {
 
@@ -48,7 +53,8 @@ public class RecordPatientServiceTest {
     }
 
     @Test
-    @DisplayName( "Получение всех запицесей к врачу ")
+    @Feature("Получение всех запицесей к врачу")
+    @DisplayName( "Получение всех запицесей к врачу")
     public void testFindAll() throws Exception {
         Mockito.when( recordPatientService.findAll() ).thenReturn( listRecordPatients );
         Mockito.when( recordPatientService.findAll() ).then(( InvocationOnMock inv ) ->{
@@ -57,6 +63,7 @@ public class RecordPatientServiceTest {
     }
 
     @Test
+    @Feature("Поиск записей пациента по параметрам")
     @DisplayName( "Поиск записей пациента по параметрам")
     public void testFindByParam() throws Exception{
         Long id = 1L;
@@ -68,6 +75,7 @@ public class RecordPatientServiceTest {
     }
 
     @Test
+    @Feature("Добавить запись")
     @DisplayName("Добавить запись")
     public void testSaveRecordPatient() throws Exception{
         RecordPatient recordPatient = new RecordPatient();

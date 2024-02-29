@@ -15,9 +15,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.DocumentRepository;
 import com.klinik.repositories.PatientRepository;
-
 import io.qameta.allure.Allure;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 
+@Epic(value = "Класс предназначен для тестирования сервиса PatientService")
+@Owner(value = "Barysevich K. A.")
 @DisplayName( "Класс предназначен для тестирования сервиса PatientService")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)
@@ -40,6 +44,7 @@ public class PatientServiceTest {
     }
     
     @Test
+    @Feature("Получение списка всех пациентов")
     @DisplayName("Получение списка всех пациентов")
     public void testGetAllPatients() throws Exception{
         assertNotNull( patientService.getAllPatients() );
@@ -48,6 +53,7 @@ public class PatientServiceTest {
     }
 
     @Test
+    @Feature("Поиск по слову")
     @DisplayName("Поиск по слову")
     public void testFindByWord() throws Exception{
         String REQUEST = "Петр";
