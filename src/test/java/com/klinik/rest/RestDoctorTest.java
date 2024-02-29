@@ -3,9 +3,12 @@ package com.klinik.rest;
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -17,18 +20,17 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.qameta.allure.Feature;
 
-//@Feature("Тест АПИ для сущности Doctor")
 @Epic(value = "Тест АПИ для сущности Doctor")
 @DisplayName("Тест АПИ для сущности Doctor")
 @Owner(value = "Barysevich K. A.")
 public class RestDoctorTest {
 
+    @Feature("Получение списка врачей")
     @Description("Получение списка врачей")
     @DisplayName("Вызов метода GET: http://localhost:8082/web/doctors?page=page&size=size")
-    @ParameterizedTest
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getAllDoc")
+    @ParameterizedTest
     @CsvSource({"1, 10", "500, 30", "1000, 4"})
-    @Feature("Получение списка врачей")
     public void testGetAllDocuments( int page, int size ){
         RestAssured.baseURI = "http://localhost:8082";
         Response response = given().when().get("/web/doctors?page=" + page + "&size=" + size );
@@ -36,10 +38,11 @@ public class RestDoctorTest {
         Allure.addAttachment("Результат:", "application/json", response.andReturn().asString() );
     }
 
-    @Test
+    @Feature("Получение количества врачей")
     @Description("Получение количества врачей")
     @DisplayName("Вызов метода GET: http://localhost:8082/web/doctors/counts")
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getCountDoctors")
+    @RepeatedTest( 2 )
     @TmsLink("TEST-3545")
     public void testGetDoctorCounts() {
         RestAssured.baseURI = "http://localhost:8082";
@@ -48,10 +51,11 @@ public class RestDoctorTest {
         Allure.addAttachment("Результат:", "application/json", response.andReturn().asString() );
     }
 
-    @Description("Получение списка врачей  (LAZY)")
+    @Feature("Получение списка врачей (LAZY)")
+    @Description("Получение списка врачей (LAZY)")
     @DisplayName("Вызов метода POST: http://localhost:8082/web/doctors/lazy?page=1&size=12")
-    @ParameterizedTest
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getLazyDoctors")
+    @ParameterizedTest
     @CsvSource({"1, 14", "486, 50", "851, 12"})
     public void testGetDocumentsLazy( int page, int size ){
         RestAssured.baseURI = "http://localhost:8082";
@@ -60,10 +64,11 @@ public class RestDoctorTest {
         Allure.addAttachment("Результат:", "application/json", response.andReturn().asString() );
     }
 
+    @Feature("Добавить врача")
     @Description("Добавить врача")
     @DisplayName("Вызов метода POST: http://localhost:8082/web/doctors/add")
-    @Test
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/addDoctor")
+    @Test
     public void testAddDoctor(  ){
         String requestBody = "{ \"idDoctor\": \"-1\", \"surname\": \"Monstr\", \"name\": \"TERT\", \"fullName\": \"DERK\" }";
         RestAssured.baseURI = "http://localhost:8082";
@@ -73,13 +78,12 @@ public class RestDoctorTest {
     }
 
 
+    @Feature("Получение врачей по ФИО")
     @Description("Получение врачей по ФИО")
     @DisplayName("Вызов метода GET: http://localhost:8082/web/doctors/fio/{word}{page}{size}?word=Test&page=1&size=10")
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/findByFIO")
     @TmsLink("TEST-3545")
     @ParameterizedTest
-    //@Epic(value = "Получение врачей по ФИО")
-    @Feature("Получение врачей по ФИО")
     @CsvSource({"1, 14, Test", "2, 5, Mouse", "8, 10, Elk"})
     public void testGetByFIO(int page, int size, String fio) {
         RestAssured.baseURI = "http://localhost:8082";
