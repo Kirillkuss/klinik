@@ -26,12 +26,14 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Flaky;
 
 @Epic(value = "Тест АПИ для сущности Doctor")
 @DisplayName("Тест АПИ для сущности Doctor")
 @Owner(value = "Barysevich K. A.")
 public class RestDoctorTest {
 
+    @Flaky
     @Feature("Получение списка врачей")
     @Description("Получение списка врачей")
     @DisplayName("Вызов метода GET: http://localhost:8082/web/doctors?page=page&size=size")
@@ -45,6 +47,7 @@ public class RestDoctorTest {
         Allure.addAttachment("Результат:", "application/json", response.andReturn().asString() );
     }
 
+    @Flaky
     @Feature("Получение количества врачей")
     @Description("Получение количества врачей")
     @DisplayName("Вызов метода GET: http://localhost:8082/web/doctors/counts")
@@ -58,6 +61,7 @@ public class RestDoctorTest {
         Allure.addAttachment("Результат:", "application/json", response.andReturn().asString() );
     }
 
+    @Flaky
     @Feature("Получение списка врачей (LAZY)")
     @Description("Получение списка врачей (LAZY)")
     @DisplayName("Вызов метода POST: http://localhost:8082/web/doctors/lazy?page=1&size=12")
@@ -76,6 +80,7 @@ public class RestDoctorTest {
         return Stream.of( Arguments.of( new Doctor( -1L, "GERP", "DERT", "ERYT") ) );
     }
 
+    @Flaky
     @Feature("Добавить врача")
     @Description("Добавить врача")
     @DisplayName("Вызов метода POST: http://localhost:8082/web/doctors/add")
@@ -89,6 +94,7 @@ public class RestDoctorTest {
         Allure.addAttachment("Результат:", "application/json", response.andReturn().asString() );
     }
 
+    @Flaky
     @Feature("Получение врачей по ФИО")
     @Description("Получение врачей по ФИО")
     @DisplayName("Вызов метода GET: http://localhost:8082/web/doctors/fio/{word}{page}{size}?word=Test&page=1&size=10")
