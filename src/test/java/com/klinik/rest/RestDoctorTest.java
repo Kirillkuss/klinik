@@ -22,33 +22,24 @@ import io.qameta.allure.Feature;
 @DisplayName("Тест АПИ для сущности Doctor")
 public class RestDoctorTest {
 
-    @Test
-    @Description("Получение количества врачей 2")
-    @DisplayName("Получение количества врачей 2")
-    @TmsLink("TEST-1234")
-    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getCountDoctors")
-    public void testGetDoctorCountsTWo() {
-        when().request("GET", "http://localhost:8082/web/doctors/counts").then().statusCode(200);
-    } 
 
     @Test
-    @Description("Получение количества врачей 1")
-    @DisplayName("Получение количества врачей 1")
+    @Description("Получение количества врачей")
+    @DisplayName("Вызов метода GET: http://localhost:8082/web/doctors?page=page&size=size")
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getCountDoctors")
     @TmsLink("TEST-3545")
     public void testGetDoctorCounts() {
         RestAssured.baseURI = "http://localhost:8082";
         Response response = given().when().get("/web/doctors/counts");
         response.then().statusCode(200);
-        Allure.addAttachment("Результат:", "text/plain", response.andReturn().asString() );
+        Allure.addAttachment("Результат:", "application/json", response.andReturn().asString() );
     }
 
     @Description("Получение списка врачей")
-    @DisplayName("Получение списка врачей")
+    @DisplayName("Вызов метода GET: http://localhost:8082/web/doctors/counts")
     @ParameterizedTest
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getAllDoc")
-    @CsvSource({"1, 10", "5, 30", "40, 4"})
-    @Step("\"Получение списка врачей страница -> {page} и размер -> {size}")
+    @CsvSource({"1, 10", "500, 30", "1000, 4"})
     public void testGetDocAll( int page, int size ){
         RestAssured.baseURI = "http://localhost:8082";
         Response response = given().when().get("/web/doctors?page=" + page + "&size=" + size );
