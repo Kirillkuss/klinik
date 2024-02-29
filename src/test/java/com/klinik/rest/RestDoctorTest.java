@@ -20,9 +20,9 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.qameta.allure.Feature;
 
+@Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование АПИ - DoctorController")
 @DisplayName("Тестирование АПИ - DoctorControllerr")
-@Owner(value = "Barysevich K. A.")
 public class RestDoctorTest {
 
     @Feature("Получение списка врачей")

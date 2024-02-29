@@ -31,9 +31,9 @@ import jakarta.persistence.EntityManager;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)
+@Owner(value = "Barysevich K. A.")
 @DisplayName("Тестирование сервиса DoctorService from Mock")
 @Epic(value = "Тестирование сервиса DoctorService from Mock")
-@Owner(value = "Barysevich K. A.")
 public class DoctorServiceMock {
 
     private DoctorService doctorService;

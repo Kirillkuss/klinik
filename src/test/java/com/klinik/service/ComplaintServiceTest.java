@@ -21,9 +21,9 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 
+@Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование сервиса и репозитория для сущности жалобы")
 @DisplayName("Тестирование сервиса и репозитория для сущности жалобы")
-@Owner(value = "Barysevich K. A.")
 @SpringBootTest( webEnvironment = WebEnvironment.RANDOM_PORT )
 public class ComplaintServiceTest {
 

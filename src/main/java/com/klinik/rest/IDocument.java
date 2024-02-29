@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.klinik.entity.Document;
 import com.klinik.excep.MyException;
 import com.klinik.response.BaseResponseError;
@@ -28,20 +30,20 @@ import org.springframework.web.bind.annotation.RequestBody;
     })
 public interface IDocument {
 
-    @GetMapping(value = "/list")
+    @GetMapping(value = "")
     @Operation( description = "Список всех документов", summary = "Список всех документов")
     public ResponseEntity<List<Document>> getAllDocuments() throws Exception, MyException;
 
     @Operation( description = "Добавить документ", summary = "Добавить документ")
-    @RequestMapping( method = RequestMethod.POST , value = "/add/{docum}")
+    @RequestMapping( method = RequestMethod.POST , value = "/add")
     public ResponseEntity<Document> addDocument(@RequestBody Document document ) throws Exception, MyException;
 
     @Operation( description = "Найти документ", summary = "Найти документ")
-    @RequestMapping( method = RequestMethod.GET , value = "/find/{word}")
-    public ResponseEntity<List<Document>> findByWord( @Parameter( description = "Параметр поиска") String word ) ;
+    @RequestMapping( method = RequestMethod.GET , value = "/find")
+    public ResponseEntity<List<Document>> findByWord(  @RequestParam @Parameter( description = "Параметр поиска") String word ) ;
 
-    @GetMapping(value = "/list/{page}{size}")
+    @GetMapping(value = "/list")
     @Operation( description = "Список документов", summary = "Список документов")
-    public ResponseEntity<List<Document>> getLazyDocument( int page, int size);
+    public ResponseEntity<List<Document>> getLazyDocument( @RequestParam int page, @RequestParam int size);
     
 }

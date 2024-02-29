@@ -19,8 +19,8 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 
-@Epic(value = "Тестирование класса DocumentService")
 @Owner(value = "Barysevich K. A.")
+@Epic(value = "Тестирование класса DocumentService")
 @DisplayName( "Класс предназначен для тестирования сервиса DocumentService")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)

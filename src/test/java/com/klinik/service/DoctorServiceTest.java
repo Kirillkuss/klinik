@@ -19,8 +19,8 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 
-@Epic(value = "Тест предназначен для тестирования сервиса DoctorService")
 @Owner(value = "Barysevich K. A.")
+@Epic(value = "Тест предназначен для тестирования сервиса DoctorService")
 @DisplayName( "Тест предназначен для тестирования сервиса DoctorService")
 @SpringBootTest( webEnvironment = WebEnvironment.RANDOM_PORT, classes = KlinikApplication.class )
 public class DoctorServiceTest {
