@@ -53,7 +53,7 @@ public class RestDoctorTest {
         RestAssured.baseURI = "http://localhost:8082";
         Response response = given().when().get("/web/doctors?page=" + page + "&size=" + size );
         response.then().statusCode(200);
-        Allure.addAttachment("Результат:", "text/plain", response.andReturn().asString() );
+        Allure.addAttachment("Результат:", "application/json", response.andReturn().asString() );
     }
 
 }
