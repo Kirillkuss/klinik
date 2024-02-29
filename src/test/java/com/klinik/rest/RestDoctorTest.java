@@ -17,7 +17,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.qameta.allure.Feature;
 
-@Feature("Тест АПИ для сущности Doctor")
+//@Feature("Тест АПИ для сущности Doctor")
+@Epic(value = "Тест АПИ для сущности Doctor")
 @DisplayName("Тест АПИ для сущности Doctor")
 @Owner(value = "Barysevich K. A.")
 public class RestDoctorTest {
@@ -27,6 +28,7 @@ public class RestDoctorTest {
     @ParameterizedTest
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getAllDoc")
     @CsvSource({"1, 10", "500, 30", "1000, 4"})
+    @Feature("Получение списка врачей")
     public void testGetAllDocuments( int page, int size ){
         RestAssured.baseURI = "http://localhost:8082";
         Response response = given().when().get("/web/doctors?page=" + page + "&size=" + size );
@@ -76,7 +78,8 @@ public class RestDoctorTest {
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/findByFIO")
     @TmsLink("TEST-3545")
     @ParameterizedTest
-    @Epic(value = "Получение врачей по ФИО")
+    //@Epic(value = "Получение врачей по ФИО")
+    @Feature("Получение врачей по ФИО")
     @CsvSource({"1, 14, Test", "2, 5, Mouse", "8, 10, Elk"})
     public void testGetByFIO(int page, int size, String fio) {
         RestAssured.baseURI = "http://localhost:8082";
