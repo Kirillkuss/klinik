@@ -1,5 +1,5 @@
 package com.klinik.rest;
-/**
+
 import static io.restassured.RestAssured.given;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -20,8 +20,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.qameta.allure.Feature;
 
-@Epic(value = "Тест АПИ для сущности Doctor")
-@DisplayName("Тест АПИ для сущности Doctor")
+@Epic(value = "Тестирование АПИ - DoctorController")
+@DisplayName("Тестирование АПИ - DoctorControllerr")
 @Owner(value = "Barysevich K. A.")
 public class RestDoctorTest {
 
@@ -115,4 +115,4 @@ public class RestDoctorTest {
             Allure.addAttachment("Ошибка:", "application/json", ex.getMessage() );
         }
     }
-} */
+} 
