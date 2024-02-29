@@ -20,7 +20,7 @@ import io.qameta.allure.Feature;
 public class RestDoctorTest {
 
     @Description("Получение списка врачей")
-    @DisplayName("Вызов метода GET: http://localhost:8082/web/doctors/counts")
+    @DisplayName("Вызов метода GET: http://localhost:8082/web/doctors?page=page&size=size")
     @ParameterizedTest
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getAllDoc")
     @CsvSource({"1, 10", "500, 30", "1000, 4"})
@@ -33,7 +33,7 @@ public class RestDoctorTest {
 
     @Test
     @Description("Получение количества врачей")
-    @DisplayName("Вызов метода GET: http://localhost:8082/web/doctors?page=page&size=size")
+    @DisplayName("Вызов метода GET: http://localhost:8082/web/doctors/counts")
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getCountDoctors")
     @TmsLink("TEST-3545")
     public void testGetDoctorCounts() {
