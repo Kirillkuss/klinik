@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Features;
+import io.qameta.allure.Step;
 import io.qameta.allure.Stories;
 import io.qameta.allure.TmsLink;
 import io.restassured.RestAssured;
@@ -54,11 +55,12 @@ public class RestDoctorTest {
     @DisplayName("Получение списка врачей")
     @ParameterizedTest
     @CsvSource({"1, 10", "5, 30", "40, 4"})
+    @Step("\"Получение списка врачей страница -> {page} и размер -> {size}")
     public void testGetDocAll( int page, int size ){
         RestAssured.baseURI = "http://localhost:8082";
         Response response = given().when().get("/web/doctors?page=" + page + "&size=" + size );
         response.then().statusCode(200);
-        Allure.addAttachment("Результат:", "text/plain", response.andReturn().asString() );
+        //Allure.addAttachment("Результат:", "text/plain", response.andReturn().asString() );
     }
 
 }
