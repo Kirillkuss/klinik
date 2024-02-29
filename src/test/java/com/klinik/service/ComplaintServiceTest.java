@@ -42,7 +42,7 @@ public class ComplaintServiceTest {
     public void testListComplaints() throws Exception{
         assertNotNull( complaintService.listComplaints() );
         assertEquals( complaintService.listComplaints(), complaintService.listComplaints() );
-        Allure.addAttachment("Результат:", "text/plain", complaintService.listComplaints().toString() );
+        Allure.addAttachment("Результат:", "application/json", complaintService.listComplaints().toString() );
     }
 
     @Test

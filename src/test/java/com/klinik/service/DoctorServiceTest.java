@@ -33,7 +33,7 @@ public class DoctorServiceTest {
 	public void testGetAll() throws Exception {
         assertNotNull(doctorService.allDoctor(1,100));
         assertEquals( doctorService.allDoctor(1,100), doctorService.allDoctor(1,100) );
-        Allure.addAttachment("Результат:", "text/plain", doctorService.allDoctor(3, 25) .toString() );
+        Allure.addAttachment("Результат:", "application/json", doctorService.allDoctor(3, 25) .toString() );
 	}
 
     @Feature("Метод findByFIO - Поиск доктора по слову")
@@ -41,7 +41,7 @@ public class DoctorServiceTest {
     @Test
 	public void testFindByWord() throws Exception {
         assertNotNull(doctorService.findByFIO(  "Тест", 1, 10 ));
-        Allure.addAttachment("Результат:", "text/plain", doctorService.findByFIO(  "Тест", 1, 10 ).toString() );
+        Allure.addAttachment("Результат:", "application/json", doctorService.findByFIO(  "Тест", 1, 10 ).toString() );
 	}
 
     @Feature("Метод findByFIO - По данному запросу ничего не найдено")
@@ -68,7 +68,7 @@ public class DoctorServiceTest {
     @DisplayName("Добавить доктора")
 	public void testSaveDoctor() throws Exception {
         Doctor doctor = doctorService.saveDoctor( new Doctor(15L,"Calam","Calam", "Calam" ));
-        Allure.addAttachment("Результат:", "text/plain", doctor.toString() );
+        Allure.addAttachment("Результат:", "application/json", doctor.toString() );
 	}
 
     @Test
@@ -80,7 +80,7 @@ public class DoctorServiceTest {
         doctor.setIdDoctor( -1L );
         Doctor response = doctorService.saveDoctor( doctor );
         assertNotNull( response );
-        Allure.addAttachment("Результат:", "text/plain",  response.toString() );
+        Allure.addAttachment("Результат:", "application/json",  response.toString() );
     }
 
 }

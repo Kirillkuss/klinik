@@ -59,7 +59,7 @@ public class DoctorServiceMock {
         Mockito.when( doctorService.allDoctor(1, 15)  ).then(( InvocationOnMock inv ) ->{
            return ( List<Doctor> ) inv.callRealMethod(); 
         });
-        Allure.addAttachment("Результат:", "text/plain", doctorService.allDoctor(1, 15) .toString() );
+        Allure.addAttachment("Результат:", "application/json", doctorService.allDoctor(1, 15) .toString() );
         assertEquals(doctorService.allDoctor(1, 15) , doctorService.allDoctor(1, 15)  );
         Mockito.verify( doctorService, times(3 )).allDoctor(1, 15) ;
     }
@@ -74,7 +74,7 @@ public class DoctorServiceMock {
         Mockito.when( doctorService.findByFIO( WORD, 1, 15 ) ).then(( InvocationOnMock inv ) ->{
            return ( List<Doctor> ) inv.callRealMethod(); 
         });
-        Allure.addAttachment("Результат:", "text/plain", doctorService.findByFIO( WORD, 1, 15 ).toString() );
+        Allure.addAttachment("Результат:", "application/json", doctorService.findByFIO( WORD, 1, 15 ).toString() );
         assertEquals(doctorService.findByFIO( WORD, 1, 15 ), doctorService.findByFIO( WORD, 1, 15 ) );
         Mockito.verify( doctorService, times(3 )).findByFIO( WORD, 1, 15 );
     }
