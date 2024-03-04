@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <persistence-unit name="testKlinika" >
+    <class>com.klinik.entity.CardPatient</class>
+    <class>com.klinik.entity.Complaint</class>
+    <class>com.klinik.entity.Doctor</class>
+    <class>com.klinik.entity.Document</class>
+    <class>com.klinik.entity.Drug</class>
+    <class>com.klinik.entity.DrugTreatment</class>
+    <class>com.klinik.entity.Patient</class>
+    <class>com.klinik.entity.RecordPatient</class>
+    <class>com.klinik.entity.RehabilitationSolution</class>
+    <class>com.klinik.entity.Treatment</class>
+    <class>com.klinik.entity.TypeComplaint</class>
+        <properties>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Klinika"/>
+            <property name="jakarta.persistence.jdbc.user" value="postgres"/>
+            <property name="jakarta.persistence.jdbc.password" value="admin"/>
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+        </properties>
+    </persistence-unit>
+</persistence>

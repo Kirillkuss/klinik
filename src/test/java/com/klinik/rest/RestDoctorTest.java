@@ -85,8 +85,8 @@ public class RestDoctorTest {
     @Description("Добавить врача")
     @DisplayName("Вызов метода POST: http://localhost:8082/web/doctors/add")
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/addDoctor")
-    @ParameterizedTest
-    @MethodSource("getParams")
+        @ParameterizedTest
+        @MethodSource("getParams")
     public void testAddDoctor( Doctor doctor ){
         try{
             RestAssured.baseURI = "http://localhost:8082";
