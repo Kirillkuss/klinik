@@ -23,12 +23,9 @@ import io.qameta.allure.Feature;
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование АПИ - DoctorController")
 @DisplayName("Тестирование АПИ - DoctorControllerr")
-public class RestDoctorTest  {
+public class RestDoctorTest implements IRestDoctor {
 
-    @Feature("Получение списка врачей")
-    @Description("Получение списка врачей")
-    @DisplayName("Вызов метода GET: http://localhost:8082/web/doctors?page=page&size=size")
-    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getAllDoc")
+    @Override
     @ParameterizedTest
     @CsvSource({"1, 10", "500, 30", "1000, 4"})
     public void testGetAllDocuments(int page, int size) {
