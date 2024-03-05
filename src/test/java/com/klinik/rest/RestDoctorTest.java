@@ -23,12 +23,15 @@ import io.qameta.allure.Feature;
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование АПИ - DoctorController")
 @DisplayName("Тестирование АПИ - DoctorControllerr")
-public class RestDoctorTest implements IRestDoctor {
+public class RestDoctorTest {
 
-    @Override
+    @Feature("Получение списка врачей")
+    @Description("Получение списка врачей")
+    @DisplayName("Вызов метода GET: http://localhost:8082/web/doctors?page=page&size=size")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getAllDoc")
     @ParameterizedTest
     @CsvSource({"1, 10", "500, 30", "1000, 4"})
-    public void testGetAllDocuments(int page, int size) {
+    public void testGetAllDocuments( int page, int size ){
         try{
             RestAssured.baseURI = "http://localhost:8082";
             Response response = given().when().get("/web/doctors?page=" + page + "&size=" + size );
@@ -112,6 +115,4 @@ public class RestDoctorTest implements IRestDoctor {
             Allure.addAttachment("Ошибка:", "application/json", ex.getMessage() );
         }
     }
-
-
 } 
