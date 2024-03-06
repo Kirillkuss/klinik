@@ -1,9 +1,7 @@
 package com.klinik.rest;
 
 import static io.restassured.RestAssured.given;
-
 import java.util.stream.Stream;
-
 import org.instancio.Instancio;
 import org.instancio.Select;
 import org.junit.jupiter.api.DisplayName;
@@ -12,10 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import com.klinik.entity.Doctor;
 import com.klinik.entity.Document;
-
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -31,53 +26,65 @@ import io.restassured.response.Response;
 @DisplayName("Тестирование АПИ - DocumentController")
 public class RestDocumentTest {
 
+    private final String PATH = "https://localhost:8082";
+    private final String TYPE = "application/json";
+
     @Feature("Получение списка документов")
     @Description("Получение списка документов")
-    @DisplayName("Вызов метода GET: http://localhost:8082/web/documents/list")
-    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/3.%20Documents/getAllDocuments")
+    @DisplayName("Вызов метода GET: https://localhost:8082/web/documents/list")
+    @Link(name = "swagger", url = "https://localhost:8082/web/swagger-ui/index.html#/3.%20Documents/getAllDocuments")
     @Test
     public  void testGetAllDocument(){
         try{
-            RestAssured.baseURI = "http://localhost:8082";
-            Response response = given().when().get("/web/documents");
-            response.then().statusCode(200);
-            Allure.addAttachment("Результат:", "application/json", response.andReturn().asString() );
+            RestAssured.baseURI = PATH;
+            Response response = given().when()
+                                       .get("/web/documents");
+            response.then()
+                    .statusCode(200);
+            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", "application/json", ex.getMessage() );
+            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
         }
     }
 
     @Feature("Получение списка документов Lazy")
     @Description("Получение списка документов Lazy")
-    @DisplayName("Вызов метода GET: http://localhost:8082/web/documents/list?page=1&size=2")
-    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/3.%20Documents/getLazyDocument")
+    @DisplayName("Вызов метода GET: https://localhost:8082/web/documents/list?page=1&size=2")
+    @Link(name = "swagger", url = "https://localhost:8082/web/swagger-ui/index.html#/3.%20Documents/getLazyDocument")
     @ParameterizedTest
     @CsvSource({"1, 3", "5, 13", "13, 34"})
     public void testGetDocumentsLazy( int page, int size ){
         try{
-            RestAssured.baseURI = "http://localhost:8082";
-            Response response = given().queryParam("page", page).queryParam("size", size).when().get("/web/documents/list");
-            response.then().statusCode(200);
-            Allure.addAttachment("Результат:", "application/json", response.andReturn().asString() );
+            RestAssured.baseURI = PATH;
+            Response response = given().queryParam("page", page)
+                                       .queryParam("size", size)
+                                       .when()
+                                       .get("/web/documents/list");
+            response.then()
+                    .statusCode(200);
+            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", "application/json", ex.getMessage() );
+            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
         }
     }
 
     @Feature("Найти документ")
     @Description("Найти документ")
-    @DisplayName("Вызов метода GET: http://localhost:8082/web/documents/find?word=123243455")
-    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/3.%20Documents/findByWord_1")
+    @DisplayName("Вызов метода GET: https://localhost:8082/web/documents/find?word=123243455")
+    @Link(name = "swagger", url = "https://localhost:8082/web/swagger-ui/index.html#/3.%20Documents/findByWord_1")
     @ParameterizedTest
     @CsvSource({"123-456-789-01", "123243455"})
     public void testGetByWord( String word ){
         try{
-            RestAssured.baseURI = "http://localhost:8082";
-            Response response = given().queryParam("word", word ).when().get("/web/documents/find");
-            response.then().statusCode(200);
-            Allure.addAttachment("Результат:", "application/json", response.andReturn().asString() );
+            RestAssured.baseURI = PATH;
+            Response response = given().queryParam("word", word )
+                                       .when()
+                                       .get("/web/documents/find");
+            response.then()
+                    .statusCode(200);
+            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", "application/json", ex.getMessage() );
+            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
         }
     }
 
@@ -90,18 +97,22 @@ public class RestDocumentTest {
 
     @Feature("Добавить документ")
     @Description("Добавить документ")
-    @DisplayName("Вызов метода POST: http://localhost:8082/web/documents/add")
-    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/3.%20Documents/addDocument")
+    @DisplayName("Вызов метода POST: https://localhost:8082/web/documents/add")
+    @Link(name = "swagger", url = "https://localhost:8082/web/swagger-ui/index.html#/3.%20Documents/addDocument")
     @ParameterizedTest
     @MethodSource("getParams")
     public void testAddDocument( Document document ){
         try{
-            RestAssured.baseURI = "http://localhost:8082";
-            Response response = given().when().contentType(ContentType.JSON).body( document ).post("/web/documents/add");
-            response.then().statusCode( 201 );
-            Allure.addAttachment("Результат:", "application/json", response.andReturn().asString() );
+            RestAssured.baseURI = PATH;
+            Response response = given().when()
+                                       .contentType(ContentType.JSON)
+                                       .body( document )
+                                       .post("/web/documents/add");
+            response.then()
+                    .statusCode( 201 );
+            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", "application/json", ex.getMessage() );
+            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
         }
     }
     
