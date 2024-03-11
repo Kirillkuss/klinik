@@ -24,18 +24,20 @@
     </repository>
     </repositories>
     <dependencies>
-        <!--Redis-->
-        <!--dependency>
+        <!--Neo4j-->
+        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.lettuce</groupId>
-                    <artifactId>lettuce-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency!-->
+            <artifactId>spring-boot-starter-data-neo4j</artifactId>
+        </dependency>
+        <!--Neo4j test-->
+        <dependency>
+            <groupId>org.neo4j.test</groupId>
+            <artifactId>neo4j-harness</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
 
+        <!--Redis-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
