@@ -26,7 +26,7 @@ public class PersonNeo4j {
 
     @Hidden
     @Id
-    private UUID id;
+    private String id;
  
     @Schema( name  = "surname", description = "Фамилия", example = "Пупкин", required = true )
     private String surname;

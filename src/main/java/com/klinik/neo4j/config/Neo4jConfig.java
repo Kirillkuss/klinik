@@ -11,10 +11,9 @@ import org.neo4j.cypherdsl.core.renderer.Dialect;
 @EnableNeo4jRepositories( basePackages = "com.klinik.neo4j.repository")
 public class Neo4jConfig {
 
-     @Bean
+    @Bean
     org.neo4j.cypherdsl.core.renderer.Configuration cypherDslConfiguration() {
-        return org.neo4j.cypherdsl.core.renderer.Configuration.newConfig()
-                .withDialect(Dialect.NEO4J_5).build();
+        return org.neo4j.cypherdsl.core.renderer.Configuration.newConfig().withDialect(Dialect.NEO4J_5).build();
     }
     
 }

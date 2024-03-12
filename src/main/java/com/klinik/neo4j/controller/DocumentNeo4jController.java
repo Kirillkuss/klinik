@@ -44,10 +44,9 @@ public class DocumentNeo4jController implements INeo4jDocument {
 
     @Override
     public ResponseEntity<PersonNeo4j> addPerson(PersonNeo4j person) {
-        person.setId( UUID.randomUUID());
+        person.setId( UUID.randomUUID().toString());
         person.getDocumentNeo4j().setId( UUID.randomUUID().toString());
         return new ResponseEntity<PersonNeo4j>( personNeo4jRepository.save( person ), HttpStatus.CREATED );
     }
     
-
 }
