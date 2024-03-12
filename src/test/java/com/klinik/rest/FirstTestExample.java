@@ -1,4 +1,4 @@
-package com.klinik.example;
+package com.klinik.rest;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -20,7 +20,7 @@ public class FirstTestExample {
        @Feature("Test Method")
        @DisplayName("Test Method")
        @Description("Test Method")
-       public void testMethod() {
+       public void testHowToDoParam() {
            String parameter = "HELLO MOUSE TEST";
            Allure.parameter( "testMethod parameter ", parameter );
            System.out.println( parameter );
