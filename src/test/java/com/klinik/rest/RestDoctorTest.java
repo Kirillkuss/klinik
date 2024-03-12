@@ -140,6 +140,7 @@ public class RestDoctorTest {
        public void testHowToDoParam() {
            String parameter = "HELLO MOUSE TEST";
            Allure.parameter( "testMethod parameter ", parameter );
+           Allure.addAttachment("Результат:", TYPE, parameter );
            System.out.println( parameter );
            assertNotNull(parameter);
        }
