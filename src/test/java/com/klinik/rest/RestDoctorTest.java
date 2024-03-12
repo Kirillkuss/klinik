@@ -1,9 +1,12 @@
 package com.klinik.rest;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -129,4 +132,15 @@ public class RestDoctorTest {
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
         }
     }
+
+         @Test
+       @Feature("Test Method")
+       @DisplayName("Test Method")
+       @Description("Test Method")
+       public void testHowToDoParam() {
+           String parameter = "HELLO MOUSE TEST";
+           Allure.parameter( "testMethod parameter ", parameter );
+           System.out.println( parameter );
+           assertNotNull(parameter);
+       }
 } 
