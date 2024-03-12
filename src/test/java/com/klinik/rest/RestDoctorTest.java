@@ -132,16 +132,4 @@ public class RestDoctorTest {
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
         }
     }
-
-         @Test
-       @Feature("Test Method")
-       @DisplayName("Test Method")
-       @Description("Test Method")
-       public void testHowToDoParam() {
-           String parameter = "HELLO MOUSE TEST";
-           Allure.parameter( "testMethod parameter ", parameter );
-           Allure.addAttachment("Результат:", TYPE, parameter );
-           System.out.println( parameter );
-           assertNotNull(parameter);
-       }
 } 
