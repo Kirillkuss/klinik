@@ -10,4 +10,5 @@
     <include file = "generate-data-department.xml" relativeToChangelogFile = "true"/>
     <include file = "generate-data-doctor.xml" relativeToChangelogFile = "true"/>
     <include file = "changeset-doctor-table.xml" relativeToChangelogFile = "true"/>
+    <!--include file = "delete-doctor.xml" relativeToChangelogFile = "true"/!-->
 </databaseChangeLog>
