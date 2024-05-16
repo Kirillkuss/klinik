@@ -1,11 +1,10 @@
 package com.klinik.redis.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
-
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Doctor {
+public class Doctor implements Serializable {
     
     @Id
     private String id;

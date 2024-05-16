@@ -3,6 +3,8 @@ package com.klinik.service;
 import com.klinik.aspect.GlobalOperation;
 import com.klinik.entity.Doctor;
 import com.klinik.excep.MyException;
+import com.klinik.mapper.DoctorImpl;
+import com.klinik.mapper.DoctorMapper;
 import com.klinik.redis.repository.DoctorRepositoryRedis;
 import com.klinik.repositories.DoctorRerository;
 import jakarta.persistence.EntityManager;
@@ -15,19 +17,18 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @Service
 @CacheConfig(cacheNames={"doctors"})
 public class DoctorService {
 
-    @Autowired private DoctorRerository doctorRerository;
-    @Autowired private EntityManager    entityManager;
+    @Autowired private DoctorRerository      doctorRerository;
+    @Autowired private EntityManager         entityManager;
     @Autowired private DoctorRepositoryRedis doctorRepositoryRedis;
+    @Autowired private DoctorImpl            doctorImpl;
 
     @Cacheable(keyGenerator = "customKeyGenerator") 
     @GlobalOperation(operation = "allDoctor")
@@ -55,7 +56,7 @@ public class DoctorService {
                             .getResultList();
     }
 
-    @Cacheable
+    @Cacheable(keyGenerator = "customKeyGenerator")
     @GlobalOperation(operation = "getCountDoctors")
     public Long getCountDoctors(){
         // Method execution time ~ 60 ms 
@@ -97,8 +98,8 @@ public class DoctorService {
     public Doctor findByIdDoctor( Long idDoctor ){
         Doctor doctor = new Doctor();
          if ( doctorRepositoryRedis.findById( idDoctor.toString() ).isEmpty() ){
-            doctor = doctorRerository.findById( idDoctor ).orElse( null );
-            doctorRepositoryRedis.save( new com.klinik.redis.model.Doctor( doctor.getIdDoctor().toString(), doctor, LocalDateTime.now() ));
+            doctor = doctorRerository.findById( idDoctor ).orElseThrow( () -> new NoSuchElementException( "Doctor not found"));
+            doctorRepositoryRedis.save( doctorImpl.doctorToRedis( doctor ));
             log.info( "Save redisDoctor ");
         }else{
             com.klinik.redis.model.Doctor redisDoctor = doctorRepositoryRedis.findById( idDoctor.toString() ).orElse( null );
