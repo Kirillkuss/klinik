@@ -1,6 +1,8 @@
 package com.klinik.redis.controller;
 
 import java.util.Iterator;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,23 +26,27 @@ public class SessionController implements RestSession{
     DoctorRepositoryRedis doctorRepositoryRedis;
 
     @Override
-    public ResponseEntity<Iterator<Session>> getAllStudents() {
-        return ResponseEntity.ok( sessionService.getAllSession() );
+    public ResponseEntity<Iterator<Session>> getAllSessions() {
+        Iterable<Session> iterableSession = () ->  sessionService.getAllSession();
+        return ResponseEntity.ok( StreamSupport.stream( iterableSession.spliterator(), false).filter( s -> s != null ).iterator());
     }
 
     @Override
-    public ResponseEntity<Session> getMethodName( String id ) {
+    public ResponseEntity<Session> getFindByIdSession( String id ) {
         return ResponseEntity.ok( sessionService.getSessiontById( id ));
     }
 
     @Override
-    public ResponseEntity<Session> postMethodName( Session session ) {
+    public ResponseEntity<Session> getAddSession( Session session ) {
         return ResponseEntity.ok( sessionService.getAddSession( session ));
     }
 
     @Override
     public ResponseEntity<Iterable<Doctor>> getAllDoctors() {
-        return  ResponseEntity.ok( doctorRepositoryRedis.findAll());
+        return  ResponseEntity.ok( StreamSupport.stream( doctorRepositoryRedis.findAll()
+                                                                              .spliterator(), false)
+                                                                              .filter( s -> s != null )
+                                                                              .toList() );
     }
 
 }

@@ -31,15 +31,15 @@ public interface RestSession {
 
     @GetMapping()
     @Operation( description = "Список всех сессий", summary = "Список всех сессий")
-    public ResponseEntity<Iterator<Session>> getAllStudents();
+    public ResponseEntity<Iterator<Session>> getAllSessions();
 
     @GetMapping("/{id}")
     @Operation( description = "Поиск по ИД", summary = "Поиск по ИД")
-    public ResponseEntity<Session> getMethodName(@RequestParam String id);
+    public ResponseEntity<Session> getFindByIdSession(@RequestParam String id);
 
     @PostMapping("/add/{session}")
     @Operation( description = "Добавить сессию", summary = "Добавить сессию")
-    public ResponseEntity<Session> postMethodName(@RequestBody Session student);
+    public ResponseEntity<Session> getAddSession(@RequestBody Session student);
 
     @GetMapping("/doctors")
     public ResponseEntity<Iterable<Doctor>> getAllDoctors();
