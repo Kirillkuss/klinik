@@ -1,14 +1,10 @@
 package com.klinik.redis.controller;
 
 import java.util.Iterator;
-import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.klinik.redis.model.Doctor;
 import com.klinik.redis.model.Session;
 import com.klinik.redis.repository.DoctorRepositoryRedis;
@@ -27,6 +23,10 @@ public class SessionController implements RestSession{
 
     @Override
     public ResponseEntity<Iterator<Session>> getAllSessions() {
+        /**
+         * Iterator<Session> iteratorSession = sessionService.getAllSession();
+         * Stream.generate( () ->  null ).takeWhile( x -> iteratorSession.hasNext() ).map( s -> iteratorSession.next() ).filter( t -> t != null ).iterator();
+         */
         Iterable<Session> iterableSession = () ->  sessionService.getAllSession();
         return ResponseEntity.ok( StreamSupport.stream( iterableSession.spliterator(), false).filter( s -> s != null ).iterator());
     }
