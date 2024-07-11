@@ -1,433 +1,264 @@
-2023-07-07 12:08:20,664 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 9776 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 12:08:20,667 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 12:08:21,312 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 12:08:21,367 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 48 ms. Found 11 JPA repository interfaces.
-2023-07-07 12:08:21,702 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
-2023-07-07 12:08:21,708 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8081"]
-2023-07-07 12:08:21,708 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 12:08:21,708 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 12:08:21,796 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 12:08:21,796 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1088 ms
-2023-07-07 12:08:21,881 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 12:08:21,997 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 12:08:22,026 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 12:08:22,048 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 12:08:22,113 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 12:08:22,164 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 12:08:22,599 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 12:08:22,606 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 12:08:23,869 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8081"]
-2023-07-07 12:08:23,885 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
-2023-07-07 12:08:23,894 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 3.867 seconds (JVM running for 4.892)
-2023-07-07 12:08:23,896 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 12:08:34,199 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8081-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-07-07 12:08:34,199 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8081-exec-1] Initializing Servlet 'dispatcherServlet'
-2023-07-07 12:08:34,201 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8081-exec-1] Completed initialization in 2 ms
-2023-07-07 12:08:35,016 INFO org.springdoc.api.AbstractOpenApiResource [http-nio-8081-exec-6] Init duration for springdoc-openapi is: 458 ms
-2023-07-07 13:06:07,359 WARN com.zaxxer.hikari.pool.HikariPool$HouseKeeper [HikariPool-1 housekeeper] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=51m45s179ms298µs900ns).
-2023-07-07 13:34:22,971 WARN com.zaxxer.hikari.pool.HikariPool$HouseKeeper [HikariPool-1 housekeeper] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7m15s211ms380µs400ns).
-2023-07-07 13:35:37,196 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:35:37,199 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2023-07-07 13:35:37,207 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2023-07-07 13:35:40,936 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 23212 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 13:35:40,938 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 13:35:41,407 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 13:35:41,462 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 46 ms. Found 11 JPA repository interfaces.
-2023-07-07 13:35:41,793 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
-2023-07-07 13:35:41,797 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:35:41,797 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 13:35:41,797 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 13:35:41,885 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 13:35:41,886 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 902 ms
-2023-07-07 13:35:41,961 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 13:35:42,063 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 13:35:42,090 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 13:35:42,112 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 13:35:42,175 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 13:35:42,229 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 13:35:42,617 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 13:35:42,622 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:35:43,828 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:35:43,842 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
-2023-07-07 13:35:43,850 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 3.211 seconds (JVM running for 3.772)
-2023-07-07 13:35:43,852 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 13:40:46,635 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:40:46,637 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2023-07-07 13:40:46,642 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2023-07-07 13:40:49,019 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 16104 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 13:40:49,022 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 13:40:49,488 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 13:40:49,546 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 48 ms. Found 11 JPA repository interfaces.
-2023-07-07 13:40:49,873 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
-2023-07-07 13:40:49,880 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:40:49,880 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 13:40:49,880 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 13:40:49,963 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 13:40:49,964 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 897 ms
-2023-07-07 13:40:50,035 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 13:40:50,136 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 13:40:50,162 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 13:40:50,183 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 13:40:50,248 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 13:40:50,303 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 13:40:50,694 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 13:40:50,700 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:40:51,922 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:40:51,939 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
-2023-07-07 13:40:51,948 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 3.202 seconds (JVM running for 3.892)
-2023-07-07 13:40:51,950 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 13:41:09,138 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:41:09,140 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2023-07-07 13:41:09,142 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2023-07-07 13:41:11,499 ERROR org.springframework.boot.SpringApplication [main] Application run failed
-java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
-ERROR in ch.qos.logback.core.pattern.parser.Compiler@1e636ea3 - Failed to instantiate converter class [ch.qos.logback.classic.pattern.ThrowableProxyConverter] as a composite converter for keyword [throwable] ch.qos.logback.core.util.IncompatibleClassException
-ERROR in ch.qos.logback.core.pattern.parser.Compiler@1e636ea3 - Failed to create converter for [%throwable] keyword
-	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:344)
-	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:298)
-	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:246)
-	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:223)
-	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
-	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
-	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
-	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:131)
-	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:85)
-	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:66)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:120)
-	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:114)
-	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:65)
-	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:344)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:302)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
-	at com.klinik.KlinikApplication.main(KlinikApplication.java:17)
-Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
-ERROR in ch.qos.logback.core.pattern.parser.Compiler@1e636ea3 - Failed to instantiate converter class [ch.qos.logback.classic.pattern.ThrowableProxyConverter] as a composite converter for keyword [throwable] ch.qos.logback.core.util.IncompatibleClassException
-ERROR in ch.qos.logback.core.pattern.parser.Compiler@1e636ea3 - Failed to create converter for [%throwable] keyword
-	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:179)
-	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:80)
-	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
-	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:132)
-	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:329)
-	... 18 common frames omitted
-2023-07-07 13:41:20,188 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 6280 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 13:41:20,191 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 13:41:20,745 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 13:41:20,801 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 49 ms. Found 11 JPA repository interfaces.
-2023-07-07 13:41:21,130 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
-2023-07-07 13:41:21,137 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:41:21,139 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 13:41:21,139 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 13:41:21,228 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 13:41:21,229 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 979 ms
-2023-07-07 13:41:21,311 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 13:41:21,423 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 13:41:21,457 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 13:41:21,481 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 13:41:21,561 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 13:41:21,624 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 13:41:22,109 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 13:41:22,114 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:41:23,500 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:41:23,516 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
-2023-07-07 13:41:23,529 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 3.662 seconds (JVM running for 4.172)
-2023-07-07 13:41:23,531 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 13:41:27,819 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:41:27,820 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2023-07-07 13:41:27,823 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2023-07-07 13:41:30,192 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 7512 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 13:41:30,194 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 13:41:30,661 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 13:41:30,716 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 45 ms. Found 11 JPA repository interfaces.
-2023-07-07 13:41:31,034 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
-2023-07-07 13:41:31,039 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:41:31,039 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 13:41:31,040 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 13:41:31,124 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 13:41:31,124 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 877 ms
-2023-07-07 13:41:31,198 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 13:41:31,296 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 13:41:31,323 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 13:41:31,343 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 13:41:31,410 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 13:41:31,466 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 13:41:31,856 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 13:41:31,861 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:41:33,130 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:41:33,146 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
-2023-07-07 13:41:33,154 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 3.241 seconds (JVM running for 3.927)
-2023-07-07 13:41:33,156 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 13:41:50,252 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:41:50,254 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2023-07-07 13:41:50,256 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2023-07-07 13:41:52,640 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 19464 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 13:41:52,643 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 13:41:53,107 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 13:41:53,159 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 43 ms. Found 11 JPA repository interfaces.
-2023-07-07 13:41:53,468 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
-2023-07-07 13:41:53,473 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:41:53,473 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 13:41:53,473 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 13:41:53,558 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 13:41:53,558 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 868 ms
-2023-07-07 13:41:53,639 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 13:41:53,851 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 13:41:53,876 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 13:41:53,900 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 13:41:53,968 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 13:41:54,017 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 13:41:54,410 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 13:41:54,417 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:41:55,689 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:41:55,707 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
-2023-07-07 13:41:55,716 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 3.355 seconds (JVM running for 4.008)
-2023-07-07 13:41:55,718 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 13:42:12,234 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:42:12,235 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2023-07-07 13:42:12,239 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2023-07-07 13:42:14,543 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 21088 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 13:42:14,545 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 13:42:15,014 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 13:42:15,070 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 47 ms. Found 11 JPA repository interfaces.
-2023-07-07 13:42:15,396 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
-2023-07-07 13:42:15,401 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:42:15,403 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 13:42:15,403 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 13:42:15,493 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 13:42:15,493 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 901 ms
-2023-07-07 13:42:15,577 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 13:42:15,680 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 13:42:15,705 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 13:42:15,724 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 13:42:15,790 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 13:42:15,849 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 13:42:16,262 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 13:42:16,267 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:42:17,492 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:42:17,508 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
-2023-07-07 13:42:17,518 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 3.251 seconds (JVM running for 3.956)
-2023-07-07 13:42:17,520 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 13:42:24,316 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:42:24,318 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2023-07-07 13:42:24,320 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2023-07-07 13:42:26,685 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 1952 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 13:42:26,688 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 13:42:27,162 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 13:42:27,219 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 48 ms. Found 11 JPA repository interfaces.
-2023-07-07 13:42:27,531 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
-2023-07-07 13:42:27,536 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:42:27,538 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 13:42:27,539 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 13:42:27,625 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 13:42:27,625 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 888 ms
-2023-07-07 13:42:27,700 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 13:42:27,797 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 13:42:27,824 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 13:42:27,848 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 13:42:27,920 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 13:42:27,985 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 13:42:28,390 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 13:42:28,394 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:42:29,600 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:42:29,616 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
-2023-07-07 13:42:29,625 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 3.237 seconds (JVM running for 3.904)
-2023-07-07 13:42:29,627 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 13:42:38,689 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:42:38,691 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2023-07-07 13:42:38,693 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2023-07-07 13:42:41,001 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 9008 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 13:42:41,004 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 13:42:41,473 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 13:42:41,528 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 46 ms. Found 11 JPA repository interfaces.
-2023-07-07 13:42:41,853 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
-2023-07-07 13:42:41,858 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:42:41,859 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 13:42:41,859 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 13:42:41,939 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 13:42:41,939 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 890 ms
-2023-07-07 13:42:42,024 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 13:42:42,124 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 13:42:42,150 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 13:42:42,171 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 13:42:42,232 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 13:42:42,282 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 13:42:42,651 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 13:42:42,657 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:42:43,868 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:42:43,884 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
-2023-07-07 13:42:43,893 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 3.183 seconds (JVM running for 3.836)
-2023-07-07 13:42:43,897 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 13:42:54,942 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:42:54,944 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2023-07-07 13:42:54,946 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2023-07-07 13:42:57,210 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 13892 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 13:42:57,213 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 13:42:57,679 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 13:42:57,732 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 44 ms. Found 11 JPA repository interfaces.
-2023-07-07 13:42:58,047 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
-2023-07-07 13:42:58,055 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:42:58,056 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 13:42:58,056 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 13:42:58,138 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 13:42:58,139 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 880 ms
-2023-07-07 13:42:58,222 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 13:42:58,433 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 13:42:58,458 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 13:42:58,478 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 13:42:58,537 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 13:42:58,587 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 13:42:58,959 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 13:42:58,964 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:43:00,187 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:43:00,202 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
-2023-07-07 13:43:00,211 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 3.286 seconds (JVM running for 3.925)
-2023-07-07 13:43:00,213 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 13:43:12,073 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:43:12,075 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2023-07-07 13:43:12,077 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2023-07-07 13:43:14,408 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 21620 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 13:43:14,410 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 13:43:14,874 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 13:43:14,927 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 48 ms. Found 11 JPA repository interfaces.
-2023-07-07 13:43:15,238 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
-2023-07-07 13:43:15,243 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:43:15,244 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 13:43:15,245 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 13:43:15,330 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 13:43:15,330 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 870 ms
-2023-07-07 13:43:15,403 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 13:43:15,606 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 13:43:15,630 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 13:43:15,650 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 13:43:15,710 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 13:43:15,765 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 13:43:16,166 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 13:43:16,171 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:43:17,353 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:43:17,368 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
-2023-07-07 13:43:17,377 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 3.256 seconds (JVM running for 3.924)
-2023-07-07 13:43:17,380 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 13:43:33,355 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:43:33,357 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2023-07-07 13:43:33,359 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2023-07-07 13:43:35,703 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 16548 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 13:43:35,706 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 13:43:36,176 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 13:43:36,231 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 48 ms. Found 11 JPA repository interfaces.
-2023-07-07 13:43:36,550 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
-2023-07-07 13:43:36,556 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:43:36,557 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 13:43:36,557 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 13:43:36,643 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 13:43:36,643 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 891 ms
-2023-07-07 13:43:36,718 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 13:43:36,936 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 13:43:36,960 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 13:43:36,980 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 13:43:37,044 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 13:43:37,100 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 13:43:37,477 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 13:43:37,482 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:43:38,707 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:43:38,724 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
-2023-07-07 13:43:38,734 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 3.331 seconds (JVM running for 3.976)
-2023-07-07 13:43:38,736 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 13:43:49,500 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:43:49,502 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2023-07-07 13:43:49,504 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2023-07-07 13:44:46,000 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.7 on barysevich_k with PID 22476 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 13:44:46,004 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 13:44:47,260 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 13:44:47,382 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 104 ms. Found 11 JPA repository interfaces.
-2023-07-07 13:44:48,130 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
-2023-07-07 13:44:48,143 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:44:48,144 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 13:44:48,144 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 13:44:48,283 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 13:44:48,285 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 2204 ms
-2023-07-07 13:44:48,487 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 13:44:48,682 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 13:44:48,744 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 13:44:48,796 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 13:44:48,983 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 13:44:49,143 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 13:44:49,849 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 13:44:49,858 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:44:51,681 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:44:51,711 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
-2023-07-07 13:44:51,726 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 6.204 seconds (JVM running for 6.688)
-2023-07-07 13:44:51,737 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 13:47:21,235 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 15708 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 13:47:21,238 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 13:47:21,751 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 13:47:21,809 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 51 ms. Found 11 JPA repository interfaces.
-2023-07-07 13:47:22,128 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
-2023-07-07 13:47:22,134 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:47:22,135 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 13:47:22,135 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 13:47:22,228 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 13:47:22,229 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 944 ms
-2023-07-07 13:47:22,304 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 13:47:22,404 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 13:47:22,430 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 13:47:22,450 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 13:47:22,515 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 13:47:22,562 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 13:47:22,936 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 13:47:22,940 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:47:24,133 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8081"]
-2023-07-07 13:47:24,147 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
-2023-07-07 13:47:24,156 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 3.304 seconds (JVM running for 4.037)
-2023-07-07 13:47:24,158 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 13:47:45,124 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 13:47:45,125 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2023-07-07 13:47:45,127 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2023-07-07 14:07:42,903 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 15968 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 14:07:42,906 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 14:07:43,965 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 14:07:44,048 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 70 ms. Found 11 JPA repository interfaces.
-2023-07-07 14:07:44,600 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8082 (http)
-2023-07-07 14:07:44,628 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8082"]
-2023-07-07 14:07:44,630 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 14:07:44,631 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 14:07:44,890 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 14:07:44,890 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1921 ms
-2023-07-07 14:07:45,190 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 14:07:45,432 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 14:07:45,489 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 14:07:45,552 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 14:07:45,689 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 14:07:45,813 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 14:07:46,289 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 14:07:46,295 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 14:07:47,611 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8082"]
-2023-07-07 14:07:47,627 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8082 (http) with context path ''
-2023-07-07 14:07:47,637 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 5.206 seconds (JVM running for 5.93)
-2023-07-07 14:07:47,639 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 14:08:10,278 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 14:08:10,280 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2023-07-07 14:08:10,285 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
-2023-07-07 14:08:13,901 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on barysevich_k with PID 20108 (D:\JAVA\klinik\target\classes started by Asus in D:\JAVA\klinik)
-2023-07-07 14:08:13,907 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2023-07-07 14:08:14,452 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-07 14:08:14,534 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 76 ms. Found 11 JPA repository interfaces.
-2023-07-07 14:08:14,845 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8082 (http)
-2023-07-07 14:08:14,850 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8082"]
-2023-07-07 14:08:14,850 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
-2023-07-07 14:08:14,850 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
-2023-07-07 14:08:14,940 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
-2023-07-07 14:08:14,940 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 989 ms
-2023-07-07 14:08:15,034 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
-2023-07-07 14:08:15,147 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
-2023-07-07 14:08:15,180 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-07 14:08:15,203 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
-2023-07-07 14:08:15,269 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-07-07 14:08:15,328 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
-2023-07-07 14:08:15,731 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-07 14:08:15,738 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-07 14:08:17,074 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8082"]
-2023-07-07 14:08:17,089 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8082 (http) with context path ''
-2023-07-07 14:08:17,099 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 3.495 seconds (JVM running for 3.974)
-2023-07-07 14:08:17,101 INFO com.klinik.KlinikApplication [main]  Klinika start success 
-2023-07-07 14:38:08,409 WARN com.zaxxer.hikari.pool.HikariPool$HouseKeeper [HikariPool-1 housekeeper] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7m52s769ms528µs300ns).
+2024-07-11 15:13:02,049 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.4.Final
+2024-07-11 15:13:02,057 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on pc-barysevich with PID 20324 (D:\Project\dev\klinik\target\classes started by barysevich_k in D:\Project\dev\klinik)
+2024-07-11 15:13:02,058 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2024-07-11 15:13:02,926 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-11 15:13:03,014 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 78 ms. Found 11 JPA repository interfaces.
+2024-07-11 15:13:03,682 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8082 (http)
+2024-07-11 15:13:03,693 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8082"]
+2024-07-11 15:13:03,694 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2024-07-11 15:13:03,695 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
+2024-07-11 15:13:03,825 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2024-07-11 15:13:03,826 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1714 ms
+2024-07-11 15:13:03,980 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2024-07-11 15:13:04,156 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2024-07-11 15:13:04,210 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-11 15:13:04,261 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
+2024-07-11 15:13:04,418 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-07-11 15:13:04,542 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-07-11 15:13:05,219 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-07-11 15:13:05,230 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-11 15:13:06,105 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5b78a946, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@37c762aa, org.springframework.security.web.context.SecurityContextPersistenceFilter@34f32575, org.springframework.security.web.header.HeaderWriterFilter@6802c10e, org.springframework.security.web.csrf.CsrfFilter@612531a3, org.springframework.security.web.authentication.logout.LogoutFilter@2d399e88, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@34cb1310, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@2b5a04b0, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@50d91a0f, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@4c438f66, org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationFilter@7ac47f14, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7c013560, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@11ad327f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@13087c75, org.springframework.security.web.session.SessionManagementFilter@29693b1d, org.springframework.security.web.access.ExceptionTranslationFilter@626ff077, org.springframework.security.web.access.intercept.AuthorizationFilter@7402bfe7]
+2024-07-11 15:13:07,289 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8082"]
+2024-07-11 15:13:07,313 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8082 (http) with context path ''
+2024-07-11 15:13:07,323 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 5.764 seconds (JVM running for 6.152)
+2024-07-11 15:13:07,326 INFO com.klinik.KlinikApplication [main]  Klinika start success 
+2024-07-11 15:13:13,323 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8082-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-11 15:13:13,324 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8082-exec-1] Initializing Servlet 'dispatcherServlet'
+2024-07-11 15:13:13,326 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8082-exec-1] Completed initialization in 1 ms
+2024-07-11 15:13:20,145 INFO org.springdoc.api.AbstractOpenApiResource [http-nio-8082-exec-3] Init duration for springdoc-openapi is: 517 ms
+2024-07-11 15:25:24,629 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.4.Final
+2024-07-11 15:25:24,634 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on pc-barysevich with PID 8444 (D:\Project\dev\klinik\target\classes started by barysevich_k in D:\Project\dev\klinik)
+2024-07-11 15:25:24,636 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2024-07-11 15:25:25,524 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-11 15:25:25,605 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 69 ms. Found 11 JPA repository interfaces.
+2024-07-11 15:25:26,264 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8082 (http)
+2024-07-11 15:25:26,278 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8082"]
+2024-07-11 15:25:26,279 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2024-07-11 15:25:26,280 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
+2024-07-11 15:25:26,402 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2024-07-11 15:25:26,403 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1707 ms
+2024-07-11 15:25:26,443 ERROR org.springframework.boot.web.embedded.tomcat.TomcatStarter [main] Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'securityConfiguration' defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\SecurityConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'keycloakLogoutHandler' defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\KeycloakLogoutHandler.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'securityConfiguration': Requested bean is currently in creation: Is there an unresolvable circular reference?
+2024-07-11 15:25:26,469 INFO org.apache.juli.logging.DirectJDKLog [main] Stopping service [Tomcat]
+2024-07-11 15:25:26,477 WARN org.springframework.context.support.AbstractApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+2024-07-11 15:25:26,490 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [main] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2024-07-11 15:25:26,512 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter [main] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+???????
+|  securityConfiguration defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\SecurityConfiguration.class]
+?     ?
+|  keycloakLogoutHandler defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\KeycloakLogoutHandler.class]
+???????
+
+
+Action:
+
+Relying upon circular references is discouraged and they are prohibited by default. Update your application to remove the dependency cycle between beans. As a last resort, it may be possible to break the cycle automatically by setting spring.main.allow-circular-references to true.
+
+2024-07-11 15:25:35,658 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.4.Final
+2024-07-11 15:25:35,674 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on pc-barysevich with PID 22612 (D:\Project\dev\klinik\target\classes started by barysevich_k in D:\Project\dev\klinik)
+2024-07-11 15:25:35,677 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2024-07-11 15:25:36,543 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-11 15:25:36,619 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 67 ms. Found 11 JPA repository interfaces.
+2024-07-11 15:25:37,265 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8082 (http)
+2024-07-11 15:25:37,275 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8082"]
+2024-07-11 15:25:37,276 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2024-07-11 15:25:37,288 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
+2024-07-11 15:25:37,414 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2024-07-11 15:25:37,414 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1677 ms
+2024-07-11 15:25:37,445 ERROR org.springframework.boot.web.embedded.tomcat.TomcatStarter [main] Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'securityConfiguration' defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\SecurityConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'keycloakLogoutHandler' defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\KeycloakLogoutHandler.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'securityConfiguration': Requested bean is currently in creation: Is there an unresolvable circular reference?
+2024-07-11 15:25:37,468 INFO org.apache.juli.logging.DirectJDKLog [main] Stopping service [Tomcat]
+2024-07-11 15:25:37,477 WARN org.springframework.context.support.AbstractApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+2024-07-11 15:25:37,494 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [main] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2024-07-11 15:25:37,512 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter [main] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+???????
+|  securityConfiguration defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\SecurityConfiguration.class]
+?     ?
+|  keycloakLogoutHandler defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\KeycloakLogoutHandler.class]
+???????
+
+
+Action:
+
+Relying upon circular references is discouraged and they are prohibited by default. Update your application to remove the dependency cycle between beans. As a last resort, it may be possible to break the cycle automatically by setting spring.main.allow-circular-references to true.
+
+2024-07-11 15:26:17,980 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.4.Final
+2024-07-11 15:26:18,020 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on pc-barysevich with PID 24288 (D:\Project\dev\klinik\target\classes started by barysevich_k in D:\Project\dev\klinik)
+2024-07-11 15:26:18,022 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2024-07-11 15:26:18,774 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-11 15:26:18,852 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 69 ms. Found 11 JPA repository interfaces.
+2024-07-11 15:26:19,472 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8082 (http)
+2024-07-11 15:26:19,483 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8082"]
+2024-07-11 15:26:19,484 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2024-07-11 15:26:19,484 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
+2024-07-11 15:26:19,603 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2024-07-11 15:26:19,603 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1523 ms
+2024-07-11 15:26:19,632 ERROR org.springframework.boot.web.embedded.tomcat.TomcatStarter [main] Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'securityConfiguration' defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\SecurityConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'keycloakLogoutHandler' defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\KeycloakLogoutHandler.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'securityConfiguration': Requested bean is currently in creation: Is there an unresolvable circular reference?
+2024-07-11 15:26:19,656 INFO org.apache.juli.logging.DirectJDKLog [main] Stopping service [Tomcat]
+2024-07-11 15:26:19,664 WARN org.springframework.context.support.AbstractApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+2024-07-11 15:26:19,675 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [main] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2024-07-11 15:26:19,692 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter [main] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+???????
+|  securityConfiguration defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\SecurityConfiguration.class]
+?     ?
+|  keycloakLogoutHandler defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\KeycloakLogoutHandler.class]
+???????
+
+
+Action:
+
+Despite circular references being allowed, the dependency cycle between beans could not be broken. Update your application to remove the dependency cycle.
+
+2024-07-11 15:27:46,511 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.4.Final
+2024-07-11 15:27:46,548 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on pc-barysevich with PID 22860 (D:\Project\dev\klinik\target\classes started by barysevich_k in D:\Project\dev\klinik)
+2024-07-11 15:27:46,550 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2024-07-11 15:27:47,389 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-11 15:27:47,469 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 69 ms. Found 11 JPA repository interfaces.
+2024-07-11 15:27:48,069 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8082 (http)
+2024-07-11 15:27:48,080 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8082"]
+2024-07-11 15:27:48,081 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2024-07-11 15:27:48,081 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
+2024-07-11 15:27:48,203 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2024-07-11 15:27:48,204 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1587 ms
+2024-07-11 15:27:48,230 ERROR org.springframework.boot.web.embedded.tomcat.TomcatStarter [main] Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'securityConfiguration' defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\SecurityConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'keycloakLogoutHandler' defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\KeycloakLogoutHandler.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.web.client.RestTemplate' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2024-07-11 15:27:48,253 INFO org.apache.juli.logging.DirectJDKLog [main] Stopping service [Tomcat]
+2024-07-11 15:27:48,261 WARN org.springframework.context.support.AbstractApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+2024-07-11 15:27:48,270 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [main] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2024-07-11 15:27:48,289 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter [main] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.klinik.security.KeycloakLogoutHandler required a bean of type 'org.springframework.web.client.RestTemplate' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'org.springframework.web.client.RestTemplate' in your configuration.
+
+2024-07-11 15:29:36,975 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.4.Final
+2024-07-11 15:29:37,006 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on pc-barysevich with PID 16316 (D:\Project\dev\klinik\target\classes started by barysevich_k in D:\Project\dev\klinik)
+2024-07-11 15:29:37,008 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2024-07-11 15:29:37,763 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-11 15:29:37,844 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 71 ms. Found 11 JPA repository interfaces.
+2024-07-11 15:29:38,436 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8082 (http)
+2024-07-11 15:29:38,445 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8082"]
+2024-07-11 15:29:38,445 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2024-07-11 15:29:38,446 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
+2024-07-11 15:29:38,560 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2024-07-11 15:29:38,561 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1494 ms
+2024-07-11 15:29:38,600 ERROR org.springframework.boot.web.embedded.tomcat.TomcatStarter [main] Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'securityConfiguration' defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\SecurityConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'keycloakLogoutHandler' defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\KeycloakLogoutHandler.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'securityConfiguration': Requested bean is currently in creation: Is there an unresolvable circular reference?
+2024-07-11 15:29:38,621 INFO org.apache.juli.logging.DirectJDKLog [main] Stopping service [Tomcat]
+2024-07-11 15:29:38,628 WARN org.springframework.context.support.AbstractApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+2024-07-11 15:29:38,638 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [main] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2024-07-11 15:29:38,657 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter [main] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+???????
+|  securityConfiguration defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\SecurityConfiguration.class]
+?     ?
+|  keycloakLogoutHandler defined in file [D:\Project\dev\klinik\target\classes\com\klinik\security\KeycloakLogoutHandler.class]
+???????
+
+
+Action:
+
+Despite circular references being allowed, the dependency cycle between beans could not be broken. Update your application to remove the dependency cycle.
+
+2024-07-11 15:30:22,843 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.4.Final
+2024-07-11 15:30:22,873 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on pc-barysevich with PID 6956 (D:\Project\dev\klinik\target\classes started by barysevich_k in D:\Project\dev\klinik)
+2024-07-11 15:30:22,875 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2024-07-11 15:30:23,694 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-11 15:30:23,781 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 76 ms. Found 11 JPA repository interfaces.
+2024-07-11 15:30:24,382 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8082 (http)
+2024-07-11 15:30:24,393 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8082"]
+2024-07-11 15:30:24,393 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2024-07-11 15:30:24,394 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
+2024-07-11 15:30:24,524 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2024-07-11 15:30:24,524 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1591 ms
+2024-07-11 15:30:24,672 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2024-07-11 15:30:24,859 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2024-07-11 15:30:24,914 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-11 15:30:24,961 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
+2024-07-11 15:30:25,122 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-07-11 15:30:25,237 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-07-11 15:30:25,845 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-07-11 15:30:25,866 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-11 15:30:26,745 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@739be7ec, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1df2e767, org.springframework.security.web.context.SecurityContextPersistenceFilter@50d91a0f, org.springframework.security.web.header.HeaderWriterFilter@11ad327f, org.springframework.security.web.csrf.CsrfFilter@1f6d3a81, org.springframework.security.web.authentication.logout.LogoutFilter@6a6e410c, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@2a0881f1, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@7a85454b, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@1d126f07, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@4d0d568f, org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationFilter@6a358906, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@52b6561b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@445b4594, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2c7aba7c, org.springframework.security.web.session.SessionManagementFilter@167f9043, org.springframework.security.web.access.ExceptionTranslationFilter@229fe7ab, org.springframework.security.web.access.intercept.AuthorizationFilter@7ac47f14]
+2024-07-11 15:30:27,747 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8082"]
+2024-07-11 15:30:27,770 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8082 (http) with context path ''
+2024-07-11 15:30:27,778 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 5.399 seconds (JVM running for 5.772)
+2024-07-11 15:30:27,781 INFO com.klinik.KlinikApplication [main]  Klinika start success 
+2024-07-11 15:31:15,956 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.4.Final
+2024-07-11 15:31:15,987 INFO org.springframework.boot.StartupInfoLogger [main] Starting KlinikApplication using Java 17.0.2 on pc-barysevich with PID 6092 (D:\Project\dev\klinik\target\classes started by barysevich_k in D:\Project\dev\klinik)
+2024-07-11 15:31:15,988 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2024-07-11 15:31:16,767 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-11 15:31:16,848 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 71 ms. Found 11 JPA repository interfaces.
+2024-07-11 15:31:17,461 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8082 (http)
+2024-07-11 15:31:17,473 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8082"]
+2024-07-11 15:31:17,474 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2024-07-11 15:31:17,474 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
+2024-07-11 15:31:17,604 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2024-07-11 15:31:17,605 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1560 ms
+2024-07-11 15:31:17,748 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2024-07-11 15:31:17,927 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2024-07-11 15:31:17,981 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-11 15:31:18,028 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.10.Final
+2024-07-11 15:31:18,186 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-07-11 15:31:18,305 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-07-11 15:31:18,943 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-07-11 15:31:18,952 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-11 15:31:19,833 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4b37d1a4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@34114276, org.springframework.security.web.context.SecurityContextPersistenceFilter@8ad182c, org.springframework.security.web.header.HeaderWriterFilter@9863ed5, org.springframework.security.web.csrf.CsrfFilter@7dd2a5f7, org.springframework.security.web.authentication.logout.LogoutFilter@3a225534, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@4806fbf7, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@4280b20b, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@7a689979, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@73c6ae15, org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationFilter@1f602930, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@218e186b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6b9fc5c7, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5923210, org.springframework.security.web.session.SessionManagementFilter@7010c9e4, org.springframework.security.web.access.ExceptionTranslationFilter@ff12b53, org.springframework.security.web.access.intercept.AuthorizationFilter@4b808427]
+2024-07-11 15:31:21,014 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8082"]
+2024-07-11 15:31:21,036 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8082 (http) with context path ''
+2024-07-11 15:31:21,045 INFO org.springframework.boot.StartupInfoLogger [main] Started KlinikApplication in 5.56 seconds (JVM running for 5.932)
+2024-07-11 15:31:21,048 INFO com.klinik.KlinikApplication [main]  Klinika start success 
+2024-07-11 15:31:30,904 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8082-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-11 15:31:30,905 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8082-exec-1] Initializing Servlet 'dispatcherServlet'
+2024-07-11 15:31:30,907 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8082-exec-1] Completed initialization in 2 ms
+2024-07-11 15:31:40,656 INFO org.springdoc.api.AbstractOpenApiResource [http-nio-8082-exec-2] Init duration for springdoc-openapi is: 476 ms

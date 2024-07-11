@@ -28,7 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
         @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
         @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
-@SecurityRequirement(name = "Bearer Authentication")
+//@SecurityRequirement(name = "Bearer Authentication")
 public interface ITreatment {
     //@GetMapping(value = "/all")
     @Operation( description = "Получение списка всех лечений", summary = "Получение списка всех лечений")
