@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@RequestMapping( value = "doctors")
+@RequestMapping( value = "klinika/doctors")
 @Tag(name = "1. Doctors", description = "Доктора:")
 @ApiResponses(value = {
     @ApiResponse( responseCode = "200", description = "Успешно", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Doctor.class))) }),

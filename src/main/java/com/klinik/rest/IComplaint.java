@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@RequestMapping( value = "complaints")
+@RequestMapping( value = "klinika/complaints")
 @Tag(name = "6. Сomplaint", description = "Справочник: Жалобы и под жалобы ")
 @ApiResponses(value = {
         @ApiResponse( responseCode = "200", description = "Успешно",        content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Complaint.class))) }),

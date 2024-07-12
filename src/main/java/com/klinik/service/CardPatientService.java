@@ -1,11 +1,7 @@
 package com.klinik.service;
 
 import com.klinik.entity.CardPatient;
-import com.klinik.entity.Document;
-import com.klinik.entity.Gender;
 import com.klinik.entity.Patient;
-import com.klinik.entity.TypeComplaint;
-import com.klinik.entity.Complaint;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.CardPatientRepository;
 import com.klinik.repositories.PatientRepository;
@@ -14,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
