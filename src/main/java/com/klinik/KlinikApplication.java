@@ -17,4 +17,5 @@ public class KlinikApplication {
         SpringApplication.run(KlinikApplication.class, args);
         log.info( " Klinika start success " );
     }
+
 }
