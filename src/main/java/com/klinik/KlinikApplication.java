@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource; 
 
+
+//http://localhost:8082/login
 @Slf4j 
 @PropertySource("classpath:application.properties")
 @SpringBootApplication
