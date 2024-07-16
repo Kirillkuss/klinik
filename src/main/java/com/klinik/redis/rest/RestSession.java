@@ -35,11 +35,11 @@ public interface RestSession {
 
     @GetMapping("/{id}")
     @Operation( description = "Поиск по ИД", summary = "Поиск по ИД")
-    public ResponseEntity<Session> getMethodName(@RequestParam String id);
+    public ResponseEntity<Session> getFindById(@RequestParam String id);
 
     @PostMapping("/add/{session}")
     @Operation( description = "Добавить сессию", summary = "Добавить сессию")
-    public ResponseEntity<Session> postMethodName(@RequestBody Session student);
+    public ResponseEntity<Session> addSession(@RequestBody Session session);
 
     @GetMapping("/doctors")
     public ResponseEntity<Iterable<Doctor>> getAllDoctors();

@@ -1,6 +1,7 @@
 package com.klinik.redis.controller;
 
 import java.util.Iterator;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -29,18 +30,20 @@ public class SessionController implements RestSession{
     }
 
     @Override
-    public ResponseEntity<Session> getMethodName( String id ) {
+    public ResponseEntity<Session> getFindById( String id ) {
         return ResponseEntity.ok( sessionService.getSessiontById( id ));
     }
 
     @Override
-    public ResponseEntity<Session> postMethodName( Session session ) {
+    public ResponseEntity<Session> addSession( Session session ) {
         return ResponseEntity.ok( sessionService.getAddSession( session ));
     }
 
     @Override
     public ResponseEntity<Iterable<Doctor>> getAllDoctors() {
-        return  ResponseEntity.ok( doctorRepositoryRedis.findAll());
+        return  ResponseEntity.ok( StreamSupport.stream( doctorRepositoryRedis.findAll().spliterator(), false)
+                                                .filter( f -> f != null)
+                                                .toList() );
     }
 
 }
