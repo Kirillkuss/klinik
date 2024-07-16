@@ -1,77 +1,98 @@
 package com.klinik.security;
 
-import com.nimbusds.jose.jwk.JWKSet;
-import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
-import org.springframework.beans.factory.annotation.Value;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
-import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
-import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
+import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
+import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
-import com.nimbusds.jose.jwk.JWK;
-import com.nimbusds.jose.jwk.RSAKey;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 
 @Configuration
-@EnableWebSecurity
+@PropertySource("application-google.properties")
 public class SecurityConfiguration {
 
-    @Value("${jwt.public.key}")
-    RSAPublicKey publicKey;
-
-    @Value("${jwt.private.key}")
-    RSAPrivateKey privateKey;
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+            .antMatchers("/login", "/loginFailure", "/")
+            .permitAll()
+            .anyRequest()
+            .authenticated()
+            .and()
+            .oauth2Login()
+            .loginPage("/login")
+            .authorizationEndpoint()
+            .baseUri("/oauth2/authorize-client")
+            .authorizationRequestRepository(authorizationRequestRepository())
+            .and()
+            .tokenEndpoint()
+            .accessTokenResponseClient(accessTokenResponseClient())
+            .and()
+            .defaultSuccessUrl("/web")
+            .failureUrl("/loginFailure");
+        return http.build();
+    }
 
     @Bean
-    public SecurityFilterChain filterChain( HttpSecurity httpSecurity ) throws Exception{
-        return httpSecurity.authorizeHttpRequests( s -> s
-                .antMatchers( "/auth/**", "/swagger-ui-custom.html", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/webjars/**",
-                        "/swagger-ui/index.html", "/api-docs/**","/api/**", "/")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated())
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS )
-                .and().oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .exceptionHandling( ex -> ex.authenticationEntryPoint( new BearerTokenAuthenticationEntryPoint())
-                        .accessDeniedHandler( new BearerTokenAccessDeniedHandler()).and())
+    public AuthorizationRequestRepository<OAuth2AuthorizationRequest> authorizationRequestRepository() {
+        return new HttpSessionOAuth2AuthorizationRequestRepository();
+    }
+
+    @Bean
+    public OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient() {
+        DefaultAuthorizationCodeTokenResponseClient accessTokenResponseClient = new DefaultAuthorizationCodeTokenResponseClient();
+        return accessTokenResponseClient;
+    }
+
+    private static List<String> clients = Arrays.asList("google");
+
+    public ClientRegistrationRepository clientRegistrationRepository() {
+        return new InMemoryClientRegistrationRepository( clients.stream()
+                                                                .map( c -> getRegistration( c ))
+                                                                .filter( registration -> registration != null )
+                                                                .collect( Collectors.toList() ));
+    }
+
+    public OAuth2AuthorizedClientService authorizedClientService() {
+        return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository());
+    }
+
+    private static String CLIENT_PROPERTY_KEY = "spring.security.oauth2.client.registration.";
+
+    @Autowired
+    private Environment env;
+
+    private ClientRegistration getRegistration(String client) {
+        String clientId = env.getProperty(CLIENT_PROPERTY_KEY + client + ".client-id");
+        if (clientId == null) {
+            return null;
+        }
+        String clientSecret = env.getProperty(CLIENT_PROPERTY_KEY + client + ".client-secret");
+        if (client.equals("google")) {
+            return CommonOAuth2Provider.GOOGLE.getBuilder(client)
+                .clientId(clientId)
+                .clientSecret(clientSecret)
                 .build();
+        }
+
+        return null;
     }
 
-    @Bean
-    UserDetailsService allUsers(){
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.builder()
-                .passwordEncoder( p -> p )
-                .username("admin")
-                .password("admin")
-                .authorities("USER")
-                .roles("USER")
-                .build());
-        return manager;
-    }
 
-    @Bean
-    JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withPublicKey( this.publicKey ).build();
-    }
-
-    @Bean
-    JwtEncoder jwtEncoder(){
-        JWK jwk = new RSAKey.Builder( this.publicKey ).privateKey( this.privateKey ).build();
-        return new NimbusJwtEncoder( new ImmutableJWKSet<>( new JWKSet( jwk )));
-
-    }
 }
