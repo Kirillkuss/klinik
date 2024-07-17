@@ -21,6 +21,7 @@ public class DoctorController implements IDoctor{
         return new ResponseEntity<>( doctorService.findByFIO( word ), HttpStatus.OK); 
     }
     public ResponseEntity<Doctor> addDoctor( Doctor doctor ) throws Exception{
+        
         return new ResponseEntity<>(  doctorService.saveDoctor( doctor ), HttpStatus.OK );
     }
 }

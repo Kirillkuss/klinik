@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -21,6 +22,7 @@ import org.springframework.security.oauth2.client.web.AuthorizationRequestReposi
 import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @PropertySource("application-google.properties")
@@ -29,11 +31,12 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/login", "/loginFailure", "/")
-            .permitAll()
-            .anyRequest()
-            .authenticated()
+                .antMatchers("/login", "/loginFailure", "/")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
             .and()
+            .csrf(AbstractHttpConfigurer::disable)
             .oauth2Login()
             .loginPage("/login")
             .authorizationEndpoint()
@@ -45,6 +48,7 @@ public class SecurityConfiguration {
             .and()
             .defaultSuccessUrl("/web")
             .failureUrl("/loginFailure");
+
         return http.build();
     }
 
