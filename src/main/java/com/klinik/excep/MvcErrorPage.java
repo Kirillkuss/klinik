@@ -1,4 +1,4 @@
-package com.klinik.security;
+package com.klinik.excep;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;

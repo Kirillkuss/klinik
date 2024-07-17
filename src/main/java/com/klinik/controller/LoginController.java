@@ -1,4 +1,4 @@
-package com.klinik.security;
+package com.klinik.controller;
 
 import java.util.HashMap;
 import java.util.Map;

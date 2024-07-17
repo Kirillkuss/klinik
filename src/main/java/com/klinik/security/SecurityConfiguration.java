@@ -22,34 +22,36 @@ import org.springframework.security.oauth2.client.web.AuthorizationRequestReposi
 import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @PropertySource("application-google.properties")
+@RequiredArgsConstructor
 public class SecurityConfiguration {
+
+    private static String CLIENT_PROPERTY_KEY = "spring.security.oauth2.client.registration.";
+
+    private final  Environment env;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/login", "/loginFailure", "/")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-            .and()
-            .csrf(AbstractHttpConfigurer::disable)
-            .oauth2Login()
-            .loginPage("/login")
-            .authorizationEndpoint()
-            .baseUri("/oauth2/authorize-client")
-            .authorizationRequestRepository(authorizationRequestRepository())
-            .and()
-            .tokenEndpoint()
-            .accessTokenResponseClient(accessTokenResponseClient())
-            .and()
-            .defaultSuccessUrl("/web")
-            .failureUrl("/loginFailure");
-
-        return http.build();
+        return http.authorizeRequests( requests -> requests
+                    .antMatchers( "/login", "/loginFailure", "/" )
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated())
+                    .csrf( AbstractHttpConfigurer::disable )
+                    .oauth2Login( login -> login
+                        .loginPage("/login")
+                        .authorizationEndpoint()
+                        .baseUri("/oauth2/authorize-client")
+                        .authorizationRequestRepository( authorizationRequestRepository() )
+                        .and()
+                        .tokenEndpoint()
+                        .accessTokenResponseClient( accessTokenResponseClient() )
+                        .and()
+                        .defaultSuccessUrl("/web")
+                        .failureUrl("/loginFailure")).build();
     }
 
     @Bean
@@ -63,23 +65,17 @@ public class SecurityConfiguration {
         return accessTokenResponseClient;
     }
 
-    private static List<String> clients = Arrays.asList("google");
-
     public ClientRegistrationRepository clientRegistrationRepository() {
-        return new InMemoryClientRegistrationRepository( clients.stream()
-                                                                .map( c -> getRegistration( c ))
-                                                                .filter( registration -> registration != null )
-                                                                .collect( Collectors.toList() ));
+        return new InMemoryClientRegistrationRepository( Arrays.asList("google")
+                                                               .stream()
+                                                               .map( c -> getRegistration( c ))
+                                                               .filter( registration -> registration != null )
+                                                               .collect( Collectors.toList() ));
     }
 
     public OAuth2AuthorizedClientService authorizedClientService() {
         return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository());
     }
-
-    private static String CLIENT_PROPERTY_KEY = "spring.security.oauth2.client.registration.";
-
-    @Autowired
-    private Environment env;
 
     private ClientRegistration getRegistration(String client) {
         String clientId = env.getProperty(CLIENT_PROPERTY_KEY + client + ".client-id");
@@ -93,7 +89,6 @@ public class SecurityConfiguration {
                 .clientSecret(clientSecret)
                 .build();
         }
-
         return null;
     }
 
