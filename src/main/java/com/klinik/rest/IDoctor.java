@@ -29,8 +29,8 @@ public interface IDoctor {
     @GetMapping(value = "/fio/{word}")
     @Operation( description = "Поиск врача по ФИО", summary = "Поиск врача по ФИО")
     public ResponseEntity findByFIO(@Parameter( description = "ФИО врача") String word ) throws Exception;
-    @PostMapping( value = "/add/{doc}")
+    @PostMapping( value = "/add")
     @Operation( description = "Добавить доктора", summary = "Добавить доктора")
-    public ResponseEntity addDoctor( Doctor doc ) throws Exception;
+    public ResponseEntity addDoctor( Doctor doctor ) throws Exception;
     
 }

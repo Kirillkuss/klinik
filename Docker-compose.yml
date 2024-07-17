@@ -5,16 +5,28 @@ volumes:
 
 services:
   Klinik:
-    image: app2
+    image: klinika
     ports:
-      - "8081:8080"
+      - "8082:8082"
     build:
       context: .
-    container_name: app2
+    container_name: klinika_app
+    depends_on:
+      - pg_db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/Klinika
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5434/Klinika
       - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=1111
+      - SPRING_DATASOURCE_PASSWORD=admin
       - SPRING_JPA_HIBERNATE_DDL_AUTO=none
-      - ADDITIONAL_PATH=/klinika/swagger-ui/index.html
 
+  pg_db:
+    image: postgres
+    container_name: postgres_db
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=Klinika
+    volumes:
+      - ./src/main/resources/db/init_db.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - ${POSTGRES_PORT:-5434}:5432

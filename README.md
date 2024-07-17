@@ -1,2 +1,14 @@
 # Klinika
-Pet prod
+Pet prod Spring Boot with OAuth via Google
+
+1. Add Credentia 
+https://console.cloud.google.com/apis/credentials?project
+
+![alt text](src/main/resources/image.png)
+
+![alt text](src/main/resources/image-1.png)
+
+![alt text](src/main/resources/image-2.png)
+
+2. Add Client ID and secret into application-google.properties
+
