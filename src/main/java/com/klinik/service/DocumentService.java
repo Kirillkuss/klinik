@@ -3,8 +3,7 @@ package com.klinik.service;
 import com.klinik.entity.Document;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.DocumentRepository;
-
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

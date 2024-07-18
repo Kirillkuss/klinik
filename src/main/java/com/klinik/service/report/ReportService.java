@@ -17,7 +17,7 @@ import com.klinik.response.ReportDrug;
 import com.klinik.response.report.CardPatinetReport;
 import com.klinik.response.report.RecordPatientReport;
 import com.klinik.response.report.ResponseReport;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import java.sql.Types;
 import java.sql.CallableStatement;

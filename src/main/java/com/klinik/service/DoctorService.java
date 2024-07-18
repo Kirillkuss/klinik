@@ -3,10 +3,9 @@ package com.klinik.service;
 import com.klinik.entity.Doctor;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.DoctorRerository;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.util.List;
 

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 
 
 //http://localhost:8082/login
+//http://localhost:8082/swagger-ui/index.html
 @Slf4j 
 @PropertySource("classpath:application.properties")
 @SpringBootApplication

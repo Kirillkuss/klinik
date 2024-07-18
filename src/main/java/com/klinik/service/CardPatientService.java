@@ -6,7 +6,7 @@ import com.klinik.excep.MyException;
 import com.klinik.repositories.CardPatientRepository;
 import com.klinik.repositories.PatientRepository;
 import com.klinik.repositories.TypeComplaintRepository;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

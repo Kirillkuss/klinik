@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
+    <springProperty scope="context" name="logstash.host" source="logstash.host"/>
     <property name="LOGS" value="./logs" />
 
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern> %red(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %green(%C{1.}): %msg%n%throwable </Pattern>
+            <pattern>%cyan(%d{HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%logger{36}) - %msg%n</pattern>
         </layout>
     </appender>
 
     <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOGS}/klinik.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            <Pattern>%d %p %C{1} [%t] %m%n</Pattern>
         </encoder>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -22,8 +22,14 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
-    
+
+    <!--appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>${logstash.host}</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender!-->
+
     <root level="info">
+        <!--appender-ref ref="logstash" /!-->
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </root>

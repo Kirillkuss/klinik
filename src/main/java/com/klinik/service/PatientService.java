@@ -5,7 +5,7 @@ import com.klinik.entity.Patient;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.DocumentRepository;
 import com.klinik.repositories.PatientRepository;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
