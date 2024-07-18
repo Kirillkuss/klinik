@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
@@ -54,21 +55,24 @@ public class SecurityConfiguration {
 
 
     @Bean
-    public SecurityFilterChain resourceServerFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth
-            .requestMatchers(new AntPathRequestMatcher("/*", HttpMethod.OPTIONS.name()))
+    public SecurityFilterChain resourceServerFilterChain( HttpSecurity http ) throws Exception {
+        return http.authorizeHttpRequests( auth -> auth
+            .requestMatchers( new AntPathRequestMatcher( "/*", HttpMethod.OPTIONS.name() ))
             .permitAll()
-            .requestMatchers(new AntPathRequestMatcher("/*"))
-            .hasRole("role_klinika")
-            .requestMatchers(new AntPathRequestMatcher("/"))
+            .requestMatchers(new AntPathRequestMatcher( "/*" ))
+            .hasRole( "role_klinika" )
+            .requestMatchers(new AntPathRequestMatcher( "/" ))
             .permitAll()
             .anyRequest()
-            .authenticated());
-        http.oauth2ResourceServer(oauth2 -> oauth2
-            .jwt(Customizer.withDefaults()));
-        http.oauth2Login(Customizer.withDefaults())
-            .logout(logout -> logout.addLogoutHandler(keycloakLogoutHandler).logoutSuccessUrl("/"));
-        return http.build();
+            .authenticated())
+            .csrf( AbstractHttpConfigurer::disable )
+            .oauth2ResourceServer( oauth2 -> oauth2
+                .jwt( Customizer.withDefaults() ))
+                .oauth2Login( Customizer.withDefaults() )
+                .logout( logout -> logout
+                    .addLogoutHandler( keycloakLogoutHandler )
+                    .logoutSuccessUrl( "/" ))
+                    .build();
     }
 
 

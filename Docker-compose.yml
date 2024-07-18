@@ -5,12 +5,12 @@ volumes:
 
 services:
   Klinik:
-    image: app2
+    image: klinika
     ports:
-      - "8081:8080"
+      - "8082:8082"
     build:
       context: .
-    container_name: app2
+    container_name: klinika_app
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/Klinika
       - SPRING_DATASOURCE_USERNAME=postgres
