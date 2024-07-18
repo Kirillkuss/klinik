@@ -3,7 +3,6 @@ package com.klinik.rest;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +28,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
         @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) }),
         @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponse.class))) })
     })
-//@SecurityRequirement(name = "Bearer Authentication")
 public interface IReport {
     @Operation( description = "Отчет по виду ребилитационного лечения за период времени", summary = "Отчет по виду ребилитационного лечения за период времени")
     @GetMapping("/rehabilitation-treatments/{from}{to}")

@@ -23,26 +23,22 @@ public class OpenAPISecurityConfig {
 
     @Bean
     public OpenAPI openAPI() {
-        return new OpenAPI().components(new Components()
-            .addSecuritySchemes(OAUTH_SCHEME_NAME, createOAuthScheme()))
-            .addSecurityItem(new SecurityRequirement().addList(OAUTH_SCHEME_NAME));
+        return new OpenAPI().components( new Components().addSecuritySchemes( OAUTH_SCHEME_NAME, createOAuthScheme() ))
+                            .addSecurityItem( new SecurityRequirement().addList( OAUTH_SCHEME_NAME ));
     }
 
     private SecurityScheme createOAuthScheme() {
-        OAuthFlows flows = createOAuthFlows();
         return new SecurityScheme().type(SecurityScheme.Type.OAUTH2)
-            .flows(flows);
+                                   .flows( createOAuthFlows() );
     }
 
     private OAuthFlows createOAuthFlows() {
-        OAuthFlow flow = createAuthorizationCodeFlow();
-        return new OAuthFlows().implicit(flow);
+        return new OAuthFlows().implicit( createAuthorizationCodeFlow() );
     }
 
     private OAuthFlow createAuthorizationCodeFlow() {
-        return new OAuthFlow()
-            .authorizationUrl(authServerUrl + "/realms/" + realm + "/protocol/openid-connect/auth")
-            .scopes(new Scopes().addString("full_access", "full access"));
+        return new OAuthFlow().authorizationUrl( authServerUrl + "/realms/" + realm + "/protocol/openid-connect/auth" )
+                              .scopes( new Scopes().addString( "full_access", "full access" ));
     }
 
 }

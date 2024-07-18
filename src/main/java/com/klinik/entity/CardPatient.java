@@ -81,7 +81,7 @@ public class CardPatient  implements Serializable {
 
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pacient_id", referencedColumnName = "id_patient")
+    @JoinColumn(name = "patient_id", referencedColumnName = "id_patient")
     private Patient patient;
 
 }
