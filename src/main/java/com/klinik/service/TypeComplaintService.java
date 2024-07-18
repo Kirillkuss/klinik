@@ -16,6 +16,7 @@ public class TypeComplaintService {
 
     private final ComplaintRepository     complaintRepository;
     private final TypeComplaintRepository typeComplaintRepository;
+
     public List<TypeComplaint> findAll(){
         return typeComplaintRepository.findAll();
     }

@@ -13,7 +13,7 @@ public class ComplaintService {
 
     private final ComplaintRepository complaintRepository;
 
-    public List<Complaint> listComplaints() throws Exception{
+    public List<Complaint> listComplaints(){
         return complaintRepository.findAll();
     }
     public Complaint saveСomplaint( Complaint сomplaint ) throws Exception{

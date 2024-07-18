@@ -1,8 +1,11 @@
 package com.klinik.rest;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.klinik.entity.Doctor;
 import com.klinik.response.BaseResponseError;
@@ -23,14 +26,27 @@ import io.swagger.v3.oas.annotations.tags.Tag;
     @ApiResponse( responseCode = "500", description = "Ошибка сервера",   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
 public interface IDoctor {
-    @GetMapping(value = "/all")
+
+    @GetMapping()
     @Operation( description = "Список всех докторов", summary = "Список всех докторов")
-    public ResponseEntity  getAllDoc() throws Exception;
-    @GetMapping(value = "/fio/{word}")
+    public ResponseEntity<List<Doctor>>  getAllDoc( int page, int size ) throws Exception;
+
+    @GetMapping(value = "/fio/{word}{page}{size}")
     @Operation( description = "Поиск врача по ФИО", summary = "Поиск врача по ФИО")
-    public ResponseEntity findByFIO(@Parameter( description = "ФИО врача") String word ) throws Exception;
+    public ResponseEntity<List<Doctor>> findByFIO( @Parameter( description = "ФИО врача") String word,
+                                                   @Parameter( description = "страница") int page,
+                                                   @Parameter( description = "размер") int size  ) throws Exception;
+
     @PostMapping( value = "/add")
     @Operation( description = "Добавить доктора", summary = "Добавить доктора")
-    public ResponseEntity addDoctor( Doctor doctor ) throws Exception;
+    public ResponseEntity<Doctor> addDoctor(@RequestBody Doctor doc ) throws Exception;
+
+    @PostMapping("/lazy")
+    @Operation( description ="Ленивая загрузка", summary = "Ленивая загрузка")
+    public ResponseEntity<List<Doctor>> getLazyDoctors( int page, int size );
+
+    @GetMapping("/counts")
+    @Operation( description = "Количество врачей", summary = "Количество врачей")
+    public ResponseEntity<Long> getCountDoctors();
     
 }

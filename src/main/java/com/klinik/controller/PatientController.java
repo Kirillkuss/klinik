@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class PatientController implements IPatient{
 
     private final PatientService  patientService;
+    
     public ResponseEntity<List<Patient>> getAllPatients() throws Exception, MyException{
         return new ResponseEntity<>(patientService.getAllPatients(), HttpStatus.OK );
     }
@@ -23,6 +24,10 @@ public class PatientController implements IPatient{
     }
     public ResponseEntity<List<Patient>> findByWord( String word ) throws Exception, MyException{
         return new ResponseEntity<>( patientService.findByWord( word ), HttpStatus.OK );
+    }
+    @Override
+    public ResponseEntity<List<Patient>> getLazyLoad(int page, int size) {
+        return new ResponseEntity<>( patientService.getLazyLoad( page, size ), HttpStatus.OK );
     }
 
  }

@@ -1,6 +1,7 @@
 package com.klinik.repositories;
 
 import com.klinik.entity.Document;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,5 +14,7 @@ public interface DocumentRepository extends JpaRepository<Document,Long> {
     @Query( "SELECT u FROM Document u WHERE u.snils = :snils")
     Optional<Document> findBySnils( String snils );
     @Query( "SELECT u FROM Document u WHERE u.polis = :polis")
-    Optional<Document> findByPolis( String polis );    
+    Optional<Document> findByPolis( String polis );
+    @Query("SELECT u FROM Document u WHERE u.numar = :word or u.snils = :word or u.polis = :word")
+    List<Document> findByWord( String word );    
 }

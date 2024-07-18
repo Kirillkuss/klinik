@@ -27,9 +27,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
         @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
 public interface IRecordPatinet {
-        //@GetMapping(value = "/list")
+
+    //@GetMapping(value = "/list")
     @Operation( description = "Список всех записей пациентов к врачу", summary = "Список всех записей пациентов к врачу")
-    public ResponseEntity<List<RecordPatient>> allListRecordPatient() throws Exception, MyException;
+    public ResponseEntity<List<RecordPatient>> allListRecordPatient( );
+
     @PostMapping (value = "/add/{record}{id-doctor}{id-card}")
     @Operation( description = "Добавить запись пациента к врачу", summary = "Добавить запись пациента к врачу")
     public ResponseEntity<RecordPatient> addRecordPatient( RecordPatient record,
