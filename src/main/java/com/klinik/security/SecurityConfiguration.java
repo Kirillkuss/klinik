@@ -104,8 +104,8 @@ public class SecurityConfiguration {
 
 
     private ClientRegistration mailClientRegistration() {
-        return ClientRegistration.withRegistrationId("Mail") .clientId("fd2a54869ccb4957979dfdfba68f7e6f")
-        .clientSecret("2d64faf6859c42ff930df511a4f9bb78")
+        return ClientRegistration.withRegistrationId("Mail") .clientId("")
+        .clientSecret("")
         .redirectUri( "http://localhost:8082/login/oauth2/code/mail")
         .tokenUri("https://oauth.mail.ru/token")
         .authorizationUri("https://oauth.mail.ru/login")
