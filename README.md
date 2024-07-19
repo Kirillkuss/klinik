@@ -19,3 +19,7 @@ The Redirect URI for Google is http://localhost:8080/login/oauth2/code/google
 The Callback URL for GitHub is http://localhost:8080/login/oauth2/code/github
 
 ![alt text](src/main/resources/images/image-3.png)
+
+4. Add https://oauth.mail.ru/app/
+
+https://id.vk.com/about/business/go/docs/en/vkid/latest/oauth/oauth-mail/index#XOAUTH2
