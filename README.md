@@ -4,7 +4,7 @@ Pet prod Spring Boot 6 with OAuth via Google and GitHub
 1. Add Credentia 
 https://console.cloud.google.com/apis/credentials?project
 
-The Redirect URI for Google is http://localhost:8080/login/oauth2/code/google
+The Redirect URI for Google is http://localhost:8082/login/oauth2/code/google
 
 ![alt text](src/main/resources/images/image.png)
 
@@ -16,7 +16,7 @@ The Redirect URI for Google is http://localhost:8080/login/oauth2/code/google
 
 3. Add https://github.com/settings/applications/new
 
-The Callback URL for GitHub is http://localhost:8080/login/oauth2/code/github
+The Callback URL for GitHub is http://localhost:8082/login/oauth2/code/github
 
 ![alt text](src/main/resources/images/image-3.png)
 
