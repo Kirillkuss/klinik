@@ -1,11 +1,7 @@
 package com.klinik.service;
 
 import com.klinik.entity.CardPatient;
-import com.klinik.entity.Document;
-import com.klinik.entity.Gender;
 import com.klinik.entity.Patient;
-import com.klinik.entity.TypeComplaint;
-import com.klinik.entity.Complaint;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.CardPatientRepository;
 import com.klinik.repositories.PatientRepository;

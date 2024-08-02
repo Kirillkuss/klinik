@@ -97,3 +97,20 @@ CREATE TABLE Card_patient_Complaint(
 	FOREIGN KEY (card_patient_id) REFERENCES Card_patient(id_card_patient),
 	FOREIGN KEY (type_complaint_id) REFERENCES Type_complaint(id_type_complaint)
 );
+
+CREATE TABLE kl_user(
+	id serial PRIMARY KEY,
+	login VARCHAR( 50 ) NOT NULL,
+	password VARCHAR( 250 ) NOT NULL,
+	role VARCHAR( 5 ) NOT NULL,
+	email VARCHAR( 50 ),
+	salt VARCHAR( 250 ) NOT NULL 
+);
+
+CREATE TABLE Key_Entity(
+	id_key serial PRIMARY KEY,
+	key_alice VARCHAR ( 255 ) NOT NULL,
+	key_public VARCHAR ( 255 ) NOT NULL, 
+	key_private VARCHAR ( 255 ) NOT NULL 
+);
+

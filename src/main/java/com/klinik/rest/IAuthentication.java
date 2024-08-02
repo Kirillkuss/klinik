@@ -1,6 +1,7 @@
 package com.klinik.rest;
 
 import com.klinik.entity.User;
+import com.klinik.request.AuthRequest;
 import com.klinik.response.BaseResponse;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -24,5 +25,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface IAuthentication {
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> login(@RequestBody User user );
+    public ResponseEntity<BaseResponse> login(@RequestBody AuthRequest authRequest );
 }

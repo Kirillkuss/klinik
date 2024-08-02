@@ -13,16 +13,16 @@ import lombok.ToString;
 @ToString
 public class ResponseReport {
 
-    private String name_rehabilitation_treatment;
-    private Long   count_treatment;
+    private String nameRehabilitationTreatment;
+    private Long   countTreatment;
 
     @JsonInclude(Include.NON_NULL)
-    private Long count_patient;
+    private Long countPatient;
     public ResponseReport(){
     }
-    public ResponseReport( String name_rehabilitation_treatment,Long count_treatment, Long count_patient){
-        this.name_rehabilitation_treatment = name_rehabilitation_treatment;
-        this.count_treatment = count_treatment;
-        this.count_patient = count_patient;
+    public ResponseReport( String nameRehabilitationTreatment,Long countTreatment, Long countPatient){
+        this.nameRehabilitationTreatment = nameRehabilitationTreatment;
+        this.countTreatment = countTreatment;
+        this.countPatient = countPatient;
     }
 }
