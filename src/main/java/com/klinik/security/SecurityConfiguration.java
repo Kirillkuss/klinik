@@ -2,9 +2,7 @@ package com.klinik.security;
 
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.encrypt.Encryptors;
-import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -34,16 +30,21 @@ import java.security.interfaces.RSAPublicKey;
 public class SecurityConfiguration {
 
     private final GenerateKeystore generateKeystore = new GenerateKeystore();
+    private final GenerateKeysDataBase generateKeysDataBase;
 
+    /**
+     * Из фалов pem
+     */
     @Value("${jwt.public.key}")
-    RSAPublicKey publicKeyAppPr;
+    RSAPublicKey publicKeyPem;
 
     @Value("${jwt.private.key}")
-    RSAPrivateKey privateKeyAppPr;
-
+    RSAPrivateKey privateKeyPem;
+    /**
+     * из хранилища keystore
+     */
     RSAPublicKey publicKey = generateKeystore.getPublicKey().orElseThrow();
     RSAPrivateKey privateKey = generateKeystore.getPrivateKey().orElseThrow();
-
 
     @Bean
     public SecurityFilterChain filterChain( HttpSecurity httpSecurity ) throws Exception{
@@ -65,7 +66,7 @@ public class SecurityConfiguration {
                                         .build();
     }
 
-    @Bean
+       @Bean
     JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey( this.publicKey ).build();
     }
@@ -75,6 +76,23 @@ public class SecurityConfiguration {
         JWK jwk = new RSAKey.Builder( this.publicKey ).privateKey( this.privateKey ).build();
         return new NimbusJwtEncoder( new ImmutableJWKSet<>( new JWKSet( jwk )));
     }
+    /**
+     * Через БД
+     * @return
+     * @throws Exception
+     */
+   /**@Bean
+    JwtDecoder jwtDecoder() throws Exception {
+        return NimbusJwtDecoder.withPublicKey( generateKeysDataBase.getRSAPublicKey().orElseThrow() ).build();
+    }
+
+    @Bean
+    JwtEncoder jwtEncoder()  throws Exception{
+        JWK jwk = new RSAKey.Builder( generateKeysDataBase.getRSAPublicKey().orElseThrow() )
+                            .privateKey( generateKeysDataBase.getRSAPrivateKey().orElseThrow() )
+                            .build();
+        return new NimbusJwtEncoder( new ImmutableJWKSet<>( new JWKSet( jwk )));
+    }*/
 
     @Bean
     public PasswordEncoder passwordEncoder() {

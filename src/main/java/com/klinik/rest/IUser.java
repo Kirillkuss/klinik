@@ -32,11 +32,18 @@ public interface IUser {
     public ResponseEntity<User> addUser( @RequestBody UserRequest userRequest);
 
     @RequestMapping(method = RequestMethod.GET, path = "/keys")
-    @Operation( description = "Обновить ключи", summary = "Обновить ключи")
+    @Operation( description = "Обновить ключи public.pem and private.pem", summary = "Обновить ключи public.pem and private.pem")
     public ResponseEntity<BaseResponse> updateKeys() throws Exception;
     
     @RequestMapping(method = RequestMethod.GET, path = "/keystore")
     @Operation( description = "Обновить keystore", summary = "Обновить keystore")
-    public ResponseEntity<BaseResponse> updateKeystore() throws Exception; 
+    public ResponseEntity<BaseResponse> updateKeystore() throws Exception;
+    
+    @RequestMapping(method = RequestMethod.GET, path = "/encrypt")
+    @Operation( description = "Обновить encryption", summary = "Обновить encryption")
+    public ResponseEntity<BaseResponse> updateEncryption() throws Exception;
+    @RequestMapping(method = RequestMethod.GET, path = "/database/keys")
+    @Operation( description = "Обновить ключи в базе", summary = "Обновить ключи в базе")
+    public ResponseEntity<BaseResponse> updateDataBase() throws Exception;
     
 }

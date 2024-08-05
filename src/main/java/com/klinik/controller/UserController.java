@@ -8,6 +8,7 @@ import com.klinik.request.UserRequest;
 import com.klinik.response.BaseResponse;
 import com.klinik.rest.IUser;
 import com.klinik.security.GenerateKeys;
+import com.klinik.security.GenerateKeysDataBase;
 import com.klinik.security.GenerateKeystore;
 import com.klinik.security.SaltGenerator;
 import com.klinik.service.UserService;
@@ -17,10 +18,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController implements IUser {
 
-    private final UserService userService;
-    private final GenerateKeys generateKey;
-    private final GenerateKeystore generateKeystore;
-    private final SaltGenerator saltGenerator;
+    private final UserService          userService;
+    private final GenerateKeys         generateKey;
+    private final GenerateKeystore     generateKeystore;
+    private final SaltGenerator        saltGenerator;
+    private final GenerateKeysDataBase generateKeysDataBase;
 
     @Override
     public ResponseEntity<User> addUser( UserRequest userRequest) {
@@ -38,8 +40,21 @@ public class UserController implements IUser {
     @SuppressWarnings("rawtypes")
     @Override
     public ResponseEntity<BaseResponse> updateKeystore() throws Exception {
-        saltGenerator.addKeys();
         generateKeystore.updateKeyToKeystore();
+        return ResponseEntity.status(HttpStatus.OK)
+                             .body( new BaseResponse<>( 200, "success"));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponse> updateEncryption() throws Exception {
+        saltGenerator.updateEncryptionKey();
+        return ResponseEntity.status(HttpStatus.OK)
+                             .body( new BaseResponse<>( 200, "success"));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponse> updateDataBase() throws Exception {
+        generateKeysDataBase.updateKeyToDataBase();
         return ResponseEntity.status(HttpStatus.OK)
                              .body( new BaseResponse<>( 200, "success"));
     }

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/auth")
-@Tag(name = "JWT",description = "Получение токена:")
+@Tag(name = "1. JWT",description = "Получение токена:")
 @ApiResponses(value = {
         @ApiResponse( responseCode = "200" , description = "Authentication success", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponseEntity.class ))) }),
         @ApiResponse( responseCode = "400", description = "Bad Request",content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = ResponseEntity.class ))) }),

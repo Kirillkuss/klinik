@@ -20,45 +20,33 @@ public class SaltGenerator {
     private String encryptionKey;
 
     private static final String KEYSTORE_PATH = "src/main/resources/keys/encryption.key";
-    private static final String ALPHABET      = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-    public static String generateSalt(int length) {
-        StringBuilder sb = new StringBuilder();
-        SecureRandom random = new SecureRandom();
-        for (int i = 0; i < length; i++) {
-            int randomIndex = random.nextInt(ALPHABET.length());
-            sb.append(ALPHABET.charAt(randomIndex));
-        }
-        return sb.toString();
-    }
 
     @Bean
     public TextEncryptor textEncryptor() {
-        System.out.println( encryptionKey );
-        return Encryptors.text(encryptionKey, generateSalt());
+        return Encryptors.text( Base64.getEncoder()
+                                      .encodeToString( encryptionKey.getBytes()) , "dc018ad7495d789f5144e85da324b2c0");
     }
 
-    // Метод для генерации соли
+    // Метод для генерации соли для TextEncryptor
     private String generateSalt() {
         byte[] salt = new byte[16];
         SecureRandom secureRandom = new SecureRandom();
         secureRandom.nextBytes(salt);
         return new String(Hex.encode(salt));
     }
-    public void addKeys(){
-           SecureRandom secureRandom = new SecureRandom();
-            byte[] keyBytes = new byte[32]; 
-            secureRandom.nextBytes(keyBytes);
-            String encryptionKey = Base64.getEncoder().encodeToString(keyBytes);
-            log.info("Generated Encryption Key");
-            try (FileWriter writer = new FileWriter(KEYSTORE_PATH)) {
-                writer.write(encryptionKey);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            
+    /**
+     * Обновление Encryption
+     */
+    public void updateEncryptionKey(){
+        SecureRandom secureRandom = new SecureRandom();
+        byte[] keyBytes = new byte[32]; 
+        secureRandom.nextBytes(keyBytes);
+        log.info("Generated Encryption Key");
+        try (FileWriter writer = new FileWriter( KEYSTORE_PATH )) {
+            writer.write( Base64.getEncoder().encodeToString( keyBytes ));
+        } catch (IOException e) {
+            log.error( "Error writing encryption key to file: {}", KEYSTORE_PATH, e );
         }
-
-
+    }
     
 }

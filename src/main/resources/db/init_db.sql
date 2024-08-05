@@ -110,7 +110,8 @@ CREATE TABLE kl_user(
 CREATE TABLE Key_Entity(
 	id_key serial PRIMARY KEY,
 	key_alice VARCHAR ( 255 ) NOT NULL,
-	key_public VARCHAR ( 255 ) NOT NULL, 
-	key_private VARCHAR ( 255 ) NOT NULL 
+	date_create timestamp(6) NOT NULL,
+	key_public TEXT NOT NULL, 
+	key_private TEXT  NOT NULL
 );
 

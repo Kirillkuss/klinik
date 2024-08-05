@@ -7,7 +7,6 @@ import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +26,8 @@ public class GenerateKeys {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
         keyPairGenerator.initialize(2048);
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
-        PrivateKey privateKey = keyPair.getPrivate();
-        PublicKey publicKey = keyPair.getPublic();
-        savePublicKey(publicKey, "public.pem");
-        savePrivateKey(privateKey, "private.pem");
+        savePublicKey( keyPair.getPublic(), "public.pem");
+        savePrivateKey( keyPair.getPrivate(), "private.pem");
         log.info( "Update keys execute success");
     }
     /**
@@ -42,10 +39,13 @@ public class GenerateKeys {
     private void savePublicKey( PublicKey publicKey, String fileName ) throws Exception {
         try (FileOutputStream fos = new FileOutputStream(new File( path, fileName))) {
             fos.write("-----BEGIN PUBLIC KEY-----\n".getBytes());
-            fos.write( Base64.getEncoder()
-                             .encodeToString( new X509EncodedKeySpec( publicKey.getEncoded() )
-                             .getEncoded() ).getBytes());
-            fos.write("\n-----END PUBLIC KEY-----\n".getBytes());
+            String encodedKey = Base64.getEncoder().encodeToString(new PKCS8EncodedKeySpec(publicKey.getEncoded()).getEncoded());
+            String[] lines = encodedKey.split("(?<=\\G.{64})");
+            for (String line : lines) {
+                fos.write(line.getBytes());
+                fos.write("\n".getBytes()); 
+            }
+            fos.write("-----END PUBLIC KEY-----\n".getBytes());
         }
     }
     /**
@@ -55,13 +55,16 @@ public class GenerateKeys {
      * @throws Exception
      */
     private void savePrivateKey( PrivateKey privateKey, String fileName ) throws Exception {
-        try (FileOutputStream fos = new FileOutputStream(new File( path , fileName))) {
+        try (FileOutputStream fos = new FileOutputStream(new File(path, fileName))) {
             fos.write("-----BEGIN PRIVATE KEY-----\n".getBytes());
-            fos.write( Base64.getEncoder()
-                             .encodeToString( new PKCS8EncodedKeySpec( privateKey.getEncoded() )
-                             .getEncoded() ).getBytes() );
-            fos.write("\n-----END PRIVATE KEY-----\n".getBytes());
-        }
+            String encodedKey = Base64.getEncoder().encodeToString(new PKCS8EncodedKeySpec(privateKey.getEncoded()).getEncoded());
+            String[] lines = encodedKey.split("(?<=\\G.{64})");
+            for (String line : lines) {
+                fos.write(line.getBytes());
+                fos.write("\n".getBytes()); 
+            }
+            fos.write("-----END PRIVATE KEY-----\n".getBytes());
+        } 
     }
    
 }
