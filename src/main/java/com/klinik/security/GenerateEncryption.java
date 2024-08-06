@@ -4,28 +4,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Base64;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.encrypt.Encryptors;
-import org.springframework.security.crypto.encrypt.TextEncryptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.codec.Hex;
+import org.springframework.stereotype.Service;
 
 @Slf4j
-@Configuration
-public class SaltGenerator {
-
-    @Value("${encryption.key}")
-    private String encryptionKey;
+@Service
+public class GenerateEncryption {
 
     private static final String KEYSTORE_PATH = "src/main/resources/keys/encryption.key";
-
-    @Bean
-    public TextEncryptor textEncryptor() {
-        return Encryptors.text( Base64.getEncoder()
-                                      .encodeToString( encryptionKey.getBytes()) , "dc018ad7495d789f5144e85da324b2c0");
-    }
 
     // Метод для генерации соли для TextEncryptor
     private String generateSalt() {

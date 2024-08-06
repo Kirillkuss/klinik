@@ -39,7 +39,7 @@ public class SecurityConfiguration {
     RSAPublicKey publicKeyPem;
 
     @Value("${jwt.private.key}")
-    RSAPrivateKey privateKeyPem;
+    RSAPrivateKey privateKeyPem; 
     /**
      * из хранилища keystore
      */
@@ -66,7 +66,7 @@ public class SecurityConfiguration {
                                         .build();
     }
 
-       @Bean
+    /**@Bean
     JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey( this.publicKey ).build();
     }
@@ -75,13 +75,13 @@ public class SecurityConfiguration {
     JwtEncoder jwtEncoder(){
         JWK jwk = new RSAKey.Builder( this.publicKey ).privateKey( this.privateKey ).build();
         return new NimbusJwtEncoder( new ImmutableJWKSet<>( new JWKSet( jwk )));
-    }
+    }*/
     /**
      * Через БД
      * @return
      * @throws Exception
      */
-   /**@Bean
+   @Bean
     JwtDecoder jwtDecoder() throws Exception {
         return NimbusJwtDecoder.withPublicKey( generateKeysDataBase.getRSAPublicKey().orElseThrow() ).build();
     }
@@ -92,7 +92,7 @@ public class SecurityConfiguration {
                             .privateKey( generateKeysDataBase.getRSAPrivateKey().orElseThrow() )
                             .build();
         return new NimbusJwtEncoder( new ImmutableJWKSet<>( new JWKSet( jwk )));
-    }*/
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

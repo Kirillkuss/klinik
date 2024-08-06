@@ -10,7 +10,7 @@ import com.klinik.rest.IUser;
 import com.klinik.security.GenerateKeys;
 import com.klinik.security.GenerateKeysDataBase;
 import com.klinik.security.GenerateKeystore;
-import com.klinik.security.SaltGenerator;
+import com.klinik.security.GenerateEncryption;
 import com.klinik.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +21,7 @@ public class UserController implements IUser {
     private final UserService          userService;
     private final GenerateKeys         generateKey;
     private final GenerateKeystore     generateKeystore;
-    private final SaltGenerator        saltGenerator;
+    private final GenerateEncryption        saltGenerator;
     private final GenerateKeysDataBase generateKeysDataBase;
 
     @Override

@@ -29,39 +29,41 @@ public class GenerateKeysDataBase {
 
     private final KeyEntityRepository keyEntityRepository;
     private final TextEncryptor textEncryptor;
-
     private final String alice = "admin";
 
     @Value("${jwt.public.key}")
-    RSAPublicKey publicKeyAppPr;
+    RSAPublicKey publicKey;
 
     @Value("${jwt.private.key}")
-    RSAPrivateKey privateKeyAppPr;
+    RSAPrivateKey privateKey;
 
     @PostConstruct
     public void init() throws Exception{
         if( keyEntityRepository.findByKeyAlias( alice ).isEmpty()){
-            saveKey( alice, getValue( publicKeyAppPr.getEncoded() ),
-                            getValue( privateKeyAppPr.getEncoded() ));
+            saveKey( alice, getValue( publicKey.getEncoded() ),
+                            getValue( privateKey.getEncoded() ));
             log.info( "add keys to database!");                
         }
+        //System.out.println("public >>>" + getPublicKey());
+        //System.out.println("getRSAPublicKey >>>" + getRSAPublicKey());
+        //System.out.println("getPrivateKey >>>" + getRSAPrivateKey());
     }
     /**
      * обновление ключа через pem файлы
      */
-    public void updateKeyToDataBaseFromPem(){
+   public void updateKeyToDataBaseFromPem(){
         Optional<KeyEntity> keyEntity = keyEntityRepository.findByKeyAlias( alice );
         if( keyEntity.isEmpty()){
-            saveKey( alice, getValue( publicKeyAppPr.getEncoded() ),
-                            getValue( privateKeyAppPr.getEncoded() ));
+            saveKey( alice, getValue( publicKey.getEncoded() ),
+                            getValue( privateKey.getEncoded() ));
             log.info( "add keys to database!");                
         }else{
             KeyEntity request = keyEntity.get();
-            request.setPrivateKey( textEncryptor.encrypt( getValue( privateKeyAppPr.getEncoded() )));
-            request.setPublicKey( textEncryptor.encrypt( getValue( publicKeyAppPr.getEncoded() )));
+            request.setPrivateKey( textEncryptor.encrypt( getValue( privateKey.getEncoded() )));
+            request.setPublicKey( textEncryptor.encrypt( getValue( publicKey.getEncoded() )));
             request.setDateCreate( LocalDateTime.now() );
             keyEntityRepository.save( request );
-            log.info( "updates keys to database!");   
+            log.info( "updates keys to database froom pem files!");   
         }
     }
     /**
@@ -72,16 +74,16 @@ public class GenerateKeysDataBase {
         Optional<KeyEntity> keyEntity = keyEntityRepository.findByKeyAlias( alice );
         KeyPair keyPair = getKeyPair();
         if( keyEntity.isEmpty()){
-            saveKey( alice, getValue( publicKeyAppPr.getEncoded() ),
-                            getValue( privateKeyAppPr.getEncoded() ));
+            saveKey( alice, getValue( publicKey.getEncoded() ),
+                            getValue( privateKey.getEncoded() ));
             log.info( "add keys to database!");                
         }else{
             KeyEntity request = keyEntity.get();
-            request.setPrivateKey( textEncryptor.encrypt( getValue( new PKCS8EncodedKeySpec( keyPair.getPublic().getEncoded() ).getEncoded() )));
-            request.setPublicKey( textEncryptor.encrypt( getValue( new PKCS8EncodedKeySpec( keyPair.getPrivate().getEncoded() ).getEncoded() )));
+            request.setPublicKey( textEncryptor.encrypt( getValue(keyPair.getPublic().getEncoded() )));
+            request.setPrivateKey(textEncryptor.encrypt( getValue(keyPair.getPrivate().getEncoded() )));
             request.setDateCreate( LocalDateTime.now() );
             keyEntityRepository.save( request );
-            log.info( "updates keys to database!");   
+            log.info( "updates keys to database from KeyPairGenerator!");   
         }
     }
     /**
@@ -100,7 +102,7 @@ public class GenerateKeysDataBase {
      * @param encode - кодировка
      * @return String
      */
-    private String getValue ( byte[] encode ){
+    private String getValue( byte[] encode ){
         return Base64.getEncoder().encodeToString( encode );
     }
 
@@ -126,7 +128,7 @@ public class GenerateKeysDataBase {
     public KeyEntity getKey(String keyAlias) {
         KeyEntity keyEntity = keyEntityRepository.findByKeyAlias(keyAlias).orElseThrow();
         if (keyEntity != null) {
-            keyEntity.setPublicKey(textEncryptor.decrypt(keyEntity.getPublicKey()));
+            keyEntity.setPublicKey( textEncryptor.decrypt(keyEntity.getPublicKey()));
             keyEntity.setPrivateKey(textEncryptor.decrypt(keyEntity.getPrivateKey()));
         }
         return keyEntity;
@@ -151,8 +153,9 @@ public class GenerateKeysDataBase {
      */
     public Optional<RSAPublicKey> getRSAPublicKey(){
         try{
-            return Optional.of((RSAPublicKey) KeyFactory.getInstance("RSA")
-                                                        .generatePublic( new X509EncodedKeySpec( Base64.getDecoder().decode( getPublicKey() ))));
+            return Optional.of(( RSAPublicKey ) KeyFactory.getInstance("RSA")
+                                                                 .generatePublic( new X509EncodedKeySpec( Base64.getDecoder()
+                                                                                                                .decode( getPublicKey() ))));
         }catch( Exception ex ){
             log.error( "ERROR getRSAPublicKey >>> " + ex.getMessage());
             return Optional.empty();
@@ -168,6 +171,7 @@ public class GenerateKeysDataBase {
                                                          .generatePrivate( new PKCS8EncodedKeySpec( Base64.getDecoder().decode( getPrivateKey() ))));
         } catch (Exception ex ) {
             log.error( "ERROR getRSAPrivateKey >>> " + ex.getMessage());
+            ex.printStackTrace( System.err );
             return Optional.empty();
         }
     }
@@ -179,5 +183,6 @@ public class GenerateKeysDataBase {
         secureRandom.nextBytes(salt);
         return new String(Hex.encode(salt));
     }
+
 
 }
