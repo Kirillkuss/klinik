@@ -63,6 +63,4 @@ public class KeyEntity {
              required     = true )
     private String privateKey;
 
-
-    
 }

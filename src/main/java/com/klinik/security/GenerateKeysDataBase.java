@@ -42,11 +42,8 @@ public class GenerateKeysDataBase {
         if( keyEntityRepository.findByKeyAlias( alice ).isEmpty()){
             saveKey( alice, getValue( publicKey.getEncoded() ),
                             getValue( privateKey.getEncoded() ));
-            log.info( "add keys to database!");                
+            log.info( "init keys to database!");                
         }
-        //System.out.println("public >>>" + getPublicKey());
-        //System.out.println("getRSAPublicKey >>>" + getRSAPublicKey());
-        //System.out.println("getPrivateKey >>>" + getRSAPrivateKey());
     }
     /**
      * обновление ключа через pem файлы
@@ -175,14 +172,4 @@ public class GenerateKeysDataBase {
             return Optional.empty();
         }
     }
-
-    // Метод для генерации соли для TextEncryptor
-    private String generateSalt() {
-        byte[] salt = new byte[16];
-        SecureRandom secureRandom = new SecureRandom();
-        secureRandom.nextBytes(salt);
-        return new String(Hex.encode(salt));
-    }
-
-
 }

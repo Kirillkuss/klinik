@@ -75,6 +75,7 @@ public class GenerateKeystore {
         try{
             return Optional.of ((RSAPublicKey) getKeyStore().getCertificate("klinikaKey").getPublicKey());
         }catch( Exception ex ){
+            log.error("ERROR getPublicKey > " + ex.getMessage() );
             return Optional.empty();
         }
     }
@@ -86,6 +87,7 @@ public class GenerateKeystore {
         try{
             return Optional.of( (RSAPrivateKey) getKeyStore().getKey("klinikaKey", "klinika".toCharArray()));
         }catch( Exception ex ){
+            log.error("ERROR getPrivateKey > " + ex.getMessage() );
             return Optional.empty();
         }
     }
@@ -132,11 +134,11 @@ public class GenerateKeystore {
      */
     private X500NameBuilder getX500NameBuilder(){
         X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
-        builder.addRDN(BCStyle.CN, "klinika"); // Common Name
-        builder.addRDN(BCStyle.O, "Mouse");         // Organization
-        builder.addRDN(BCStyle.OU, "Mouse");           // Organizational Unit
-        builder.addRDN(BCStyle.L, "Minsk");             // Locality
-        builder.addRDN(BCStyle.ST, "null");            // State
+        builder.addRDN(BCStyle.CN, "klinika"); 
+        builder.addRDN(BCStyle.O, "Mouse");         
+        builder.addRDN(BCStyle.OU, "Mouse");           
+        builder.addRDN(BCStyle.L, "Minsk");            
+        builder.addRDN(BCStyle.ST, "null");         
         builder.addRDN(BCStyle.C, "BYN");   
         return builder;
     }
