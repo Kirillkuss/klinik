@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.codec.Hex;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.stereotype.Service;
 import com.klinik.entity.KeyEntity;
@@ -20,7 +19,6 @@ import java.security.KeyFactory;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.SecureRandom;
 
 @Slf4j
 @Service
@@ -142,7 +140,7 @@ public class GenerateKeysDataBase {
      * @return String
      */
     private String getPrivateKey(){
-        return  getKey( alice ).getPrivateKey();
+        return getKey( alice ).getPrivateKey();
     }
     /**
      * Формирование RSAPublicKey
@@ -151,8 +149,8 @@ public class GenerateKeysDataBase {
     public Optional<RSAPublicKey> getRSAPublicKey(){
         try{
             return Optional.of(( RSAPublicKey ) KeyFactory.getInstance("RSA")
-                                                                 .generatePublic( new X509EncodedKeySpec( Base64.getDecoder()
-                                                                                                                .decode( getPublicKey() ))));
+                                                          .generatePublic( new X509EncodedKeySpec( Base64.getDecoder()
+                                                                                                         .decode( getPublicKey() ))));
         }catch( Exception ex ){
             log.error( "ERROR getRSAPublicKey >>> " + ex.getMessage());
             return Optional.empty();
@@ -165,10 +163,10 @@ public class GenerateKeysDataBase {
     public Optional<RSAPrivateKey> getRSAPrivateKey() {
         try {
             return Optional.of((RSAPrivateKey) KeyFactory.getInstance("RSA")
-                                                         .generatePrivate( new PKCS8EncodedKeySpec( Base64.getDecoder().decode( getPrivateKey() ))));
+                                                         .generatePrivate( new PKCS8EncodedKeySpec( Base64.getDecoder()
+                                                                                                          .decode( getPrivateKey() ))));
         } catch (Exception ex ) {
             log.error( "ERROR getRSAPrivateKey >>> " + ex.getMessage());
-            ex.printStackTrace( System.err );
             return Optional.empty();
         }
     }

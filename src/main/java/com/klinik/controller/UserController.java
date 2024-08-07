@@ -34,7 +34,7 @@ public class UserController implements IUser {
     @SuppressWarnings("rawtypes")
     @Override
     public ResponseEntity<BaseResponse> updateKeys() throws Exception {
-        generateKey.generateKeys();
+        generateKey.generatePemKeys();
         return ResponseEntity.status(HttpStatus.OK)
                              .body( new BaseResponse<>( 200, "success"));
     }
