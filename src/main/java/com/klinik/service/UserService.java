@@ -4,6 +4,9 @@ import java.security.SecureRandom;
 import java.util.Base64;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +39,7 @@ public class UserService {
             userRepository.save(  user );
         } 
     }
- 
+
     /**
      * Генерация соли
      * @return String
@@ -142,5 +145,7 @@ public class UserService {
             throw new IllegalArgumentException("Invalid role!");
         }
     }
+
+
 
 }

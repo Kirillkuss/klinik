@@ -1,97 +1,36 @@
 package com.klinik.security;
 
-import com.nimbusds.jose.jwk.JWKSet;
-import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
-import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
-import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.web.SecurityFilterChain;
-import com.nimbusds.jose.jwk.JWK;
-import com.nimbusds.jose.jwk.RSAKey;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
+import com.klinik.entity.Role;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    private final GenerateKeystore generateKeystore = new GenerateKeystore();
-    private final GenerateKeysDataBase generateKeysDataBase;
-
-    /**
-     * Из фалов pem
-     */
-    @Value("${jwt.public.key}")
-    RSAPublicKey publicKeyPem;
-
-    @Value("${jwt.private.key}")
-    RSAPrivateKey privateKeyPem; 
-    /**
-     * из хранилища keystore
-     */
-    RSAPublicKey publicKey = generateKeystore.getPublicKey().orElseThrow();
-    RSAPrivateKey privateKey = generateKeystore.getPrivateKey().orElseThrow();
-
+    private final CustomAuthenticationProvider customAuthenticationProvider;
     @Bean
-    public SecurityFilterChain filterChain( HttpSecurity httpSecurity ) throws Exception{
-        return httpSecurity.authorizeHttpRequests(request -> request
-                            .antMatchers( "/auth/**",  "/swagger-ui/**","/swagger-ui/index.html", "/api/**", "/" )
-                            .permitAll()
-                            .anyRequest()
-                            .authenticated())
-                            .csrf(csrf -> csrf
-                                .disable())
-                                .sessionManagement( management -> management
-                                    .sessionCreationPolicy( SessionCreationPolicy.STATELESS ))
-                                    .oauth2ResourceServer( OAuth2ResourceServerConfigurer::jwt )
-                                    .exceptionHandling(ex -> ex
-                                        .authenticationEntryPoint( new BearerTokenAuthenticationEntryPoint() )
-                                        .accessDeniedHandler( new BearerTokenAccessDeniedHandler() )
-                                        .and())
-                                        .build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.authorizeRequests(requests -> requests
+                        .antMatchers("/**")
+                        .hasAnyRole( Role.ADMIN.name(), Role.USER.name())
+                        .anyRequest()
+                        .authenticated())
+                            .formLogin(login -> login
+                            .permitAll())
+                            .logout(logout -> logout
+                                .permitAll())
+                                .authenticationProvider(customAuthenticationProvider) 
+                        .csrf(csrf -> csrf.disable()).build(); 
     }
 
-    /**@Bean
-    JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withPublicKey( this.publicKey ).build();
-    }
-
-    @Bean
-    JwtEncoder jwtEncoder(){
-        JWK jwk = new RSAKey.Builder( this.publicKey ).privateKey( this.privateKey ).build();
-        return new NimbusJwtEncoder( new ImmutableJWKSet<>( new JWKSet( jwk )));
-    }*/
-    /**
-     * Через БД
-     * @return
-     * @throws Exception
-     */
-   @Bean
-    JwtDecoder jwtDecoder() throws Exception {
-        return NimbusJwtDecoder.withPublicKey( generateKeysDataBase.getRSAPublicKey().orElseThrow() ).build();
-    }
-
-    @Bean
-    JwtEncoder jwtEncoder()  throws Exception{
-        JWK jwk = new RSAKey.Builder( generateKeysDataBase.getRSAPublicKey().orElseThrow() )
-                            .privateKey( generateKeysDataBase.getRSAPrivateKey().orElseThrow() )
-                            .build();
-        return new NimbusJwtEncoder( new ImmutableJWKSet<>( new JWKSet( jwk )));
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
