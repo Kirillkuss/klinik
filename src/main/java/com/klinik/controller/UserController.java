@@ -7,10 +7,10 @@ import com.klinik.entity.User;
 import com.klinik.request.UserRequest;
 import com.klinik.response.BaseResponse;
 import com.klinik.rest.IUser;
-import com.klinik.security.GenerateEncryption;
-import com.klinik.security.GenerateKeys;
-import com.klinik.security.GenerateKeysDataBase;
-import com.klinik.security.GenerateKeystore;
+import com.klinik.security.generate.GenerateEncryption;
+import com.klinik.security.generate.GenerateKeys;
+import com.klinik.security.generate.GenerateKeysDataBase;
+import com.klinik.security.generate.GenerateKeystore;
 import com.klinik.service.UserService;
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.klinik.security;
+package com.klinik.security.generate;
 
 import java.util.Base64;
 import org.springframework.beans.factory.annotation.Value;

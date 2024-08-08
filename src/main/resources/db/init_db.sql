@@ -104,7 +104,8 @@ CREATE TABLE kl_user(
 	password VARCHAR( 250 ) NOT NULL,
 	role VARCHAR( 5 ) NOT NULL,
 	email VARCHAR( 50 ),
-	salt VARCHAR( 250 ) NOT NULL 
+	salt VARCHAR( 250 ) NOT NULL,
+	status BOOLEAN DEFAULT FALSE 
 );
 
 CREATE TABLE Key_Entity(
@@ -114,4 +115,14 @@ CREATE TABLE Key_Entity(
 	key_public TEXT NOT NULL, 
 	key_private TEXT  NOT NULL
 );
+
+CREATE TABLE User_Blocking(
+	id_block serial PRIMARY KEY,
+	date_block timestamp(6) NOT NULL,
+	date_plan_unblock timestamp(6),
+	date_unblock timestamp(6),
+	user_id int8 NOT NULL,
+	status BOOLEAN,
+	FOREIGN KEY (user_id) REFERENCES public.kl_user(id)
+)
 

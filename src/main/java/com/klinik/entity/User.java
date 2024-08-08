@@ -73,12 +73,17 @@ public class User implements Serializable {
     @Column( name = "salt")
     private String salt;
 
-    public User ( String login, String password, Role role, String email , String salt){
+    
+    @Column( name = "status")
+    private Boolean status;
+
+    public User ( String login, String password, Role role, String email , String salt,Boolean status ){
         this.login = login;
         this.password = password;
         this.role = role;
         this.email = email;
         this.salt = salt;
+        this.status = status;
     }
 
 }

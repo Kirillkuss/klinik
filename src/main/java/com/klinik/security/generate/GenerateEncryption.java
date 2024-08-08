@@ -1,4 +1,4 @@
-package com.klinik.security;
+package com.klinik.security.generate;
 
 import java.io.FileWriter;
 import java.io.IOException;

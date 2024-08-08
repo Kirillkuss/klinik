@@ -1,4 +1,4 @@
-package com.klinik.security;
+package com.klinik.security.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    private final CustomAuthenticationProvider customAuthenticationProvider;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeRequests(requests -> requests
@@ -23,13 +22,19 @@ public class SecurityConfiguration {
                         .hasAnyRole( Role.ADMIN.name(), Role.USER.name())
                         .anyRequest()
                         .authenticated())
-                            .formLogin(login -> login
-                            .permitAll())
-                            .logout(logout -> logout
-                                .permitAll())
-                                .authenticationProvider(customAuthenticationProvider) 
-                        .csrf(csrf -> csrf.disable()).build(); 
+                            .formLogin( login -> login.permitAll() )
+                            .logout( logout -> logout.permitAll() )
+                            .csrf( csrf -> csrf.disable() )
+                            .build();
+
+        /**return http.authorizeHttpRequests( request -> request.antMatchers("/**")
+                        .hasAnyRole( Role.ADMIN.name(), Role.USER.name())
+                        .anyRequest()
+                        .authenticated())
+                        .httpBasic(Customizer.withDefaults())
+                        .build();*/
     }
+
 
 
     @Bean

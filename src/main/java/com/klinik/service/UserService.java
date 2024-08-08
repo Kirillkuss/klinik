@@ -34,7 +34,8 @@ public class UserService {
                                 passwordEncoder.encode( secret + "admin" + salt ),
                                 Role.ADMIN,
                           "Admin@mail.com",
-                                salt );
+                                salt,
+                                false );
         if ( userRepository.findByLogin( user.getLogin() ).isEmpty() ){
             userRepository.save(  user );
         } 
@@ -64,8 +65,10 @@ public class UserService {
                                               passwordEncoder.encode( secret + userRequest.getPassword() + salt ),
                                               Role.valueOf( userRequest.getRole() ),
                                               userRequest.getEmail(),
-                                              salt ));
+                                              salt,
+                                              false ));
     }
+    
     /**
      * Проверка пароля при авторизации
      * @param rawPassword
@@ -145,7 +148,15 @@ public class UserService {
             throw new IllegalArgumentException("Invalid role!");
         }
     }
-
+    /**
+     * Блокировка пользователя 
+     * @param login - логин 
+     */
+    public void blockUser(String login){ 
+        User user =  userRepository.findByLogin( login ).orElseThrow();
+        user.setStatus( true );
+        userRepository.save( user );
+    }
 
 
 }
