@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Вход в систему</title>
+    <link rel="stylesheet" href="/src/main/resources/static/css/style.css"> <!-- Подключите ваш CSS файл -->
+</head>
+<body>
+    <div class="container">
+        <h1>Вход в систему</h1>
+        <div th:if="${session.error}">
+            <p style="color: red;" th:text="${session.error}"></p>
+            <script>
+                window.onload = function() {
+                    fetch("/clear-error-message", { method: "POST" });
+                };
+            </script>
+        </div>
+
+        <form action="/web/login" method="post">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" name="username" required><br><br>
+
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required><br><br>
+
+            <button type="submit">Войти</button>
+        </form>
+       
+    </div>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Patient</title>
+		<link rel="stylesheet" href="css/color.css">
+		<script type = "text/javascript" src="script/patient.js"></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+		<style>	
+			table, th, td, tr {
+				width: 10px; 
+				height:20px; 
+				border: solid 1px green; 
+				text-align: center;	 
+				}
+      #fixedDiv{
+				position: fixed;
+				top: 860px;
+				width: 1718px;
+				height: 300px;   
+			}	       
+		</style>
+	</head>	
+  <body>
+    <h1></h1>
+    <div class="text-bg-success p-3" >
+      <h1> Klinika</h1>
+        <h5><span class="badge bg-secondary">Version 1.0</span></h5>
+        <nav class="navbar" style="background-color: #e3f2fd;">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#"></a>
+              <form class="d-flex" role="search" style = "position:relative; left:0px; top: 0px;">
+                <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск" id="wordParam" required>
+                <button class="btn btn-outline-success"  type="button" id="findByPatient">Поиск</button>
+              </form>
+            </div>
+        </nav>
+        <h1></h1>
+        <form style = "position:relative; left:0px; top: 0px;">
+            <button type="button" class="btn btn-outline-dark"  data-bs-toggle="modal" data-bs-target="#exampleModal" om> Добавить пациента</button>
+        </form>
+        <!-- Поиск по слову и нумерация страниц -->
+        <script>
+            switchTable();
+            findByWordPatient(); 
+        </script>
+    </div>
+      <!-- Таблица -->
+      <table class="table table-success " id = "tablePatient" >
+        <thead class="table-group-divider ">
+          <tr>
+            <th scope="col">№</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
+            <th scope="col">Пол</th>
+            <th scope="col">Номер телефона</th>
+            <th scope="col">Адрес</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        </tbody>
+        <script type="text/javascript">
+            lazyPatients(1,15);
+        </script>
+      </table>
+    <!--нижняя часть страницы-->
+	  <div id = "fixedDiv" class="text-bg-success p-4">
+      <!-- Нумерация страниц-->
+      <nav aria-label="Page navigation ">
+          <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="btn btn-outline-dark" href="#" id="PreviousPatient">Пред.</a></li>
+            <li class="page-item"><a class="btn btn-outline-dark" href="#" id="firstPatient">1</a></li>
+            <li class="page-item"><a class="btn btn-outline-dark" href="#" id="secondPatient">2</a></li>
+            <li class="page-item"><a class="btn btn-outline-dark" href="#" id="thirdPatient">3</a></li>
+            <li class="page-item"><a class="btn btn-outline-dark" href="#" id="NextPatient">След.</a></li>
+          </ul>
+        </nav>
+    </div>
+
+    <form id="testFormPatient">
+        <!-- Модальное окно -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title fs-6" id="exampleModalLabel">ДОБАВИТЬ ПАЦИЕНТА</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+              </div>
+              <div class="modal-body">
+                    <label for="patient-id" class="col-form-label">ИД:</label>
+                    <input type="text" class="form-control" id="idPatient" placeholder = "Ид пацеинта"  required>
+
+                    <label for="patient-surname" class="col-form-label">Фамилия:</label>
+                    <input type="text" class="form-control" id="surname" placeholder = "Фимилия" required>
+
+                    <label for="patient-name" class="col-form-label">Имя:</label>
+                    <input type="text" class="form-control" id="name" placeholder = "Имя" required>
+
+                    <label for="patient-fullName" class="col-form-label">Отчество:</label>
+                    <input type="text" class="form-control" id="fullName" placeholder = "Отчество" required>
+
+                    <label for="patient-gender" class="col-form-label">Пол:</label>
+                    <input type="text" class="form-control" id="gender" placeholder = "Пол" required>
+
+                    <label for="patient-phone" class="col-form-label">Телефон:</label>
+                    <input type="text" class="form-control" id="phone" placeholder = "Телефон" required>
+
+                    <label for="patient-address" class="col-form-label">Адрес:</label>
+                    <input type="text" class="form-control" id="address" placeholder = "Адрес" required>
+
+                    <label for="patient-idDocument" class="col-form-label">Документ:</label>
+                    <input type="text" class="form-control" id="idDocument" placeholder = "Документ" required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn btn-success"  id = "addDocumentTwo">Сохранить изменения</button>
+              </div>
+            </div>
+            <!-- Добавить пацинета-->
+            <script type="text/javascript">
+                AddPatient();
+            </script>
+          </div>
+        </div>	
+    </form>	
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>
