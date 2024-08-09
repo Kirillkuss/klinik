@@ -1,7 +1,6 @@
 package com.klinik.service;
 
 import com.klinik.entity.RehabilitationSolution;
-import com.klinik.excep.MyException;
 import com.klinik.repositories.RehabilitationSolutionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,8 +21,12 @@ public class RehabilitationSolutionService {
                                                .orElseThrow(() ->new NoSuchElementException("Ребилитационное лечение c таким наименованием не существует"));
     }
     public RehabilitationSolution saveRehabilitationSolution(RehabilitationSolution solution) throws Exception{
-        if( rehabilitationSolutionRepository.findByName( solution.getName() ).isPresent()) throw new MyException( 409, "Ребилитационное лечение с таким наименованием уже существует");
-        if( rehabilitationSolutionRepository.findById( solution.getIdRehabilitationSolution() ).isPresent() ) throw new MyException( 409, "Ребилитационное лечение с таким ИД уже существует");
+        checkSaveRehabilitationSolution( solution );
         return rehabilitationSolutionRepository.save( solution );
+    }
+
+    private void checkSaveRehabilitationSolution( RehabilitationSolution solution ){
+        if( rehabilitationSolutionRepository.findByName( solution.getName() ).isPresent()) throw new IllegalArgumentException( "Ребилитационное лечение с таким наименованием уже существует");
+        if( rehabilitationSolutionRepository.findById( solution.getIdRehabilitationSolution() ).isPresent() ) throw new IllegalArgumentException( "Ребилитационное лечение с таким ИД уже существует");
     }
  }
