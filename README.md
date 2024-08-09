@@ -1,6 +1,11 @@
 # Klinika
 Pet prod
 
+1. Spring Boot
+2. mvc ( swagger )
+3. ui
+4. Auth
+
 Add keystore
 
 //klinika

@@ -1,4 +1,4 @@
-package com.klinik.controller;
+package com.klinik.controller.login;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
