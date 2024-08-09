@@ -23,6 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
@@ -30,10 +31,11 @@ import lombok.Setter;
 @Table( name = "User_Blocking")
 @Setter
 @Getter
-@RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class Blocking implements Serializable{
+
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -70,15 +72,22 @@ public class Blocking implements Serializable{
     private LocalDateTime dateUnblock;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
-
     @Column( name = "status")
     @Schema( name        = "status",
              description = "статус",
              example     = "true",
              required    = true )
     private Boolean status;
+
+    @Column( name = "status_block")
+    @Schema( name        = "statusBlock",
+             description = "Статус блокировки",
+             example     = "1",
+             required    = true )
+    private Integer statusBlock; 
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
     
 }

@@ -4,6 +4,7 @@ import java.security.SecureRandom;
 import java.util.Base64;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -153,7 +154,7 @@ public class UserService {
      * @param login - логин 
      */
     public void blockUser(String login){ 
-        User user =  userRepository.findByLogin( login ).orElseThrow();
+        User user =  userRepository.findByLogin( login ).orElseThrow( () -> new BadCredentialsException( "Not found user!" ));
         user.setStatus( true );
         userRepository.save( user );
     }

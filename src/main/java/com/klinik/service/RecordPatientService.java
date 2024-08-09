@@ -1,7 +1,5 @@
 package com.klinik.service;
 
-import com.klinik.entity.CardPatient;
-import com.klinik.entity.Doctor;
 import com.klinik.entity.RecordPatient;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.CardPatientRepository;

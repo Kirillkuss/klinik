@@ -122,6 +122,7 @@ CREATE TABLE User_Blocking(
 	date_plan_unblock timestamp(6),
 	date_unblock timestamp(6),
 	user_id int8 NOT NULL,
+	status_block int,
 	status BOOLEAN,
 	FOREIGN KEY (user_id) REFERENCES public.kl_user(id)
 )
