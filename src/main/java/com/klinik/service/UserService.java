@@ -1,20 +1,19 @@
 package com.klinik.service;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.klinik.entity.Role;
 import com.klinik.entity.User;
 import com.klinik.repositories.UserRepository;
 import com.klinik.request.UserRequest;
+import com.klinik.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -56,18 +55,22 @@ public class UserService {
      * @param user - пользователь 
      * @return User
      */
-    public User addUser( UserRequest userRequest   ){
+    public UserResponse addUser( UserRequest userRequest   ){
         validateUsername( userRequest.getLogin() );
         validateEmail( userRequest.getEmail());
         validatePassword( userRequest.getPassword() );
         validRole(userRequest.getRole() );
         String salt = generateSalt();
-        return userRepository.save( new User( userRequest.getLogin(),
+        User user =  userRepository.save( new User( userRequest.getLogin(),
                                               passwordEncoder.encode( secret + userRequest.getPassword() + salt ),
                                               Role.valueOf( userRequest.getRole() ),
                                               userRequest.getEmail(),
                                               salt,
                                               false ));
+        return new UserResponse( user.getLogin(),
+                                 user.getEmail(),
+                                 user.getRole(),
+                                 user.getStatus() );
     }
     
     /**
@@ -157,6 +160,24 @@ public class UserService {
         User user =  userRepository.findByLogin( login ).orElseThrow( () -> new BadCredentialsException( "Not found user!" ));
         user.setStatus( true );
         userRepository.save( user );
+    }
+
+    /**
+     * Cписок пользователей
+     * @return List UserResponse
+     */
+    public List<UserResponse> getUser(){
+        List<UserResponse> userResponse = new ArrayList<>();
+        userRepository.findAll()
+                      .stream()
+                      .forEach( user -> {
+            userResponse.add( new UserResponse( user.getLogin(),
+                                                user.getEmail(),
+                                                user.getRole(),
+                                                user.getStatus() ));
+
+            });
+        return userResponse;
     }
 
 

@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 //http://localhost:8082/web/swagger-ui/index.html
 //http://localhost:8082/web/login
+//http://localhost:8082/web/klinika
 @Slf4j 
 @SpringBootApplication
 @EnableScheduling

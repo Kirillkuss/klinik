@@ -1,11 +1,13 @@
 package com.klinik.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import com.klinik.entity.User;
 import com.klinik.request.UserRequest;
 import com.klinik.response.BaseResponse;
+import com.klinik.response.UserResponse;
 import com.klinik.rest.IUser;
 import com.klinik.security.generate.GenerateEncryption;
 import com.klinik.security.generate.GenerateKeys;
@@ -25,7 +27,7 @@ public class UserController implements IUser {
     private final GenerateKeysDataBase generateKeysDataBase;
 
     @Override
-    public ResponseEntity<User> addUser( UserRequest userRequest) {
+    public ResponseEntity<UserResponse> addUser( UserRequest userRequest) {
         return ResponseEntity.status(HttpStatus.OK)
                              .body( userService.addUser( userRequest ));
     }
@@ -57,6 +59,11 @@ public class UserController implements IUser {
         generateKeysDataBase.updateKeyToDataBase();
         return ResponseEntity.status(HttpStatus.OK)
                              .body( new BaseResponse<>( 200, "success"));
+    }
+
+    @Override
+    public ResponseEntity<List<UserResponse>> getUsers() {
+        return ResponseEntity.status( HttpStatus.OK ).body( userService.getUser() );
     }
     
 }

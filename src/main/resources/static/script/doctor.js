@@ -44,8 +44,8 @@ function lazyDoctors( page, size) {
     $('table tbody').on('mousedown', 'tr', function(e) {
         $(this).addClass('highlight').siblings().removeClass('highlight');
     });
-     //$.post('https://localhost:8082/web/doctors/lazy?page='+page+'&size='+size, function(json) {
-        $.get('http://localhost:8082/web/doctors/?page='+page+'&size='+size, function(json) {
+     $.post('http://localhost:8082/web/doctors/lazy?page='+page+'&size='+size, function(json) {
+       // $.get('http://localhost:8082/web/doctors/?page='+page+'&size='+size, function(json) {
         var tr=[];
         for (var i = 0; i < json.length; i++) {
             tr.push('<tr>');
