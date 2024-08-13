@@ -1,4 +1,4 @@
-package com.klinik.security;
+package com.klinik.security.generate;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,12 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class GenerateKeys {
 
+    
+    /**
+     * For docker-compose
+     */
+    //private final String path = "/app/keys";
     private final String path = "src/main/resources/keys";
     private final String split = "(?<=\\G.{64})";
-    /**
-     * Запись ключей
-     * @throws Exception
-     */
+
     public void generatePemKeys() throws Exception {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
         keyPairGenerator.initialize(2048);
@@ -31,12 +33,7 @@ public class GenerateKeys {
         savePrivateKey( keyPair.getPrivate(), "private.pem");
         log.info( "Update keys execute success");
     }
-    /**
-     * Сохранение публичного ключа в файле
-     * @param publicKey - ключ
-     * @param fileName  - название файла
-     * @throws Exception
-     */
+
     private void savePublicKey( PublicKey publicKey, String fileName ) throws Exception {
         try (FileOutputStream fos = new FileOutputStream(new File( path, fileName))) {
             fos.write("-----BEGIN PUBLIC KEY-----\n".getBytes());
@@ -53,12 +50,7 @@ public class GenerateKeys {
             log.error( "savePublicKey >>> " + ex.getMessage());
         }
     }
-    /**
-     * Сохранение приватного ключа в файле 
-     * @param privateKey - приватный ключ
-     * @param fileName - название файла
-     * @throws Exception
-     */
+
     private void savePrivateKey( PrivateKey privateKey, String fileName ) throws Exception {
         try (FileOutputStream fos = new FileOutputStream(new File(path, fileName))) {
             fos.write("-----BEGIN PRIVATE KEY-----\n".getBytes());
@@ -75,5 +67,4 @@ public class GenerateKeys {
             log.error( "savePrivateKey >>> " + ex.getMessage());
         } 
     }
-   
 }

@@ -1,4 +1,4 @@
-package com.klinik.security;
+package com.klinik.security.generate;
 
 import java.util.Base64;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +10,11 @@ import org.springframework.security.crypto.encrypt.TextEncryptor;
 @Configuration
 public class TextEncryptorGenerate {
 
+    
+    /**
+     * for docker-compose
+     */
+    //@Value("${ENCRYPTION_KEY}")
     @Value("${encryption.key}")
     private String encryptionKey;
 

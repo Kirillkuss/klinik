@@ -2,8 +2,6 @@ package com.klinik.rest;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +17,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RequestMapping( value = "record-patients")
@@ -30,9 +29,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
     })
 @SecurityRequirement(name = "Bearer Authentication")
 public interface IRecordPatinet {
-        //@GetMapping(value = "/list")
+
+    //@GetMapping(value = "/list")
     @Operation( description = "Список всех записей пациентов к врачу", summary = "Список всех записей пациентов к врачу")
-    public ResponseEntity<List<RecordPatient>> allListRecordPatient() throws Exception, MyException;
+    public ResponseEntity<List<RecordPatient>> allListRecordPatient( );
+
     @PostMapping (value = "/add/{record}{id-doctor}{id-card}")
     @Operation( description = "Добавить запись пациента к врачу", summary = "Добавить запись пациента к врачу")
     public ResponseEntity<RecordPatient> addRecordPatient( RecordPatient record,

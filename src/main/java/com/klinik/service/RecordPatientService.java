@@ -1,7 +1,5 @@
 package com.klinik.service;
 
-import com.klinik.entity.CardPatient;
-import com.klinik.entity.Doctor;
 import com.klinik.entity.RecordPatient;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.CardPatientRepository;
@@ -20,7 +18,8 @@ public class RecordPatientService {
     private final RecordPatientRepository recordPatientRepository;
     private final DoctorRerository        doctorRerository;
     private final CardPatientRepository   cardPatientRepository;
-    public List<RecordPatient> allListRecordPatient() {
+    
+    public List<RecordPatient> findAll() {
         return recordPatientRepository.findAll();
     }
     public RecordPatient saveRecordPatient( RecordPatient recordPatient, Long idDoctor, Long idCardPatient ) throws Exception{

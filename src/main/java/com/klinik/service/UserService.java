@@ -1,16 +1,19 @@
 package com.klinik.service;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.klinik.entity.Role;
 import com.klinik.entity.User;
 import com.klinik.repositories.UserRepository;
 import com.klinik.request.UserRequest;
+import com.klinik.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,13 +36,14 @@ public class UserService {
                                 passwordEncoder.encode( secret + "admin" + salt ),
                                 Role.ADMIN,
                           "Admin@mail.com",
-                                salt );
+                                salt,
+                                false );
         if ( userRepository.findByLogin( user.getLogin() ).isEmpty() ){
             userRepository.save(  user );
-            log.info( "init main user ");
+            log.info( "init main user");
         } 
     }
- 
+
     /**
      * Генерация соли
      * @return String
@@ -54,18 +58,24 @@ public class UserService {
      * @param user - пользователь 
      * @return User
      */
-    public User addUser( UserRequest userRequest   ){
+    public UserResponse addUser( UserRequest userRequest   ){
         validateUsername( userRequest.getLogin() );
         validateEmail( userRequest.getEmail());
         validatePassword( userRequest.getPassword() );
         validRole(userRequest.getRole() );
         String salt = generateSalt();
-        return userRepository.save( new User( userRequest.getLogin(),
+        User user =  userRepository.save( new User( userRequest.getLogin(),
                                               passwordEncoder.encode( secret + userRequest.getPassword() + salt ),
                                               Role.valueOf( userRequest.getRole() ),
                                               userRequest.getEmail(),
-                                              salt ));
+                                              salt,
+                                              false ));
+        return new UserResponse( user.getLogin(),
+                                 user.getEmail(),
+                                 user.getRole(),
+                                 user.getStatus() );
     }
+    
     /**
      * Проверка пароля при авторизации
      * @param rawPassword
@@ -145,5 +155,33 @@ public class UserService {
             throw new IllegalArgumentException("Invalid role!");
         }
     }
+    /**
+     * Блокировка пользователя 
+     * @param login - логин 
+     */
+    public void blockUser(String login){ 
+        User user =  userRepository.findByLogin( login ).orElseThrow( () -> new BadCredentialsException( "Not found user!" ));
+        user.setStatus( true );
+        userRepository.save( user );
+    }
+
+    /**
+     * Cписок пользователей
+     * @return List UserResponse
+     */
+    public List<UserResponse> getUser(){
+        List<UserResponse> userResponse = new ArrayList<>();
+        userRepository.findAll()
+                      .stream()
+                      .forEach( user -> {
+            userResponse.add( new UserResponse( user.getLogin(),
+                                                user.getEmail(),
+                                                user.getRole(),
+                                                user.getStatus() ));
+
+            });
+        return userResponse;
+    }
+
 
 }

@@ -1,4 +1,4 @@
-package com.klinik.security;
+package com.klinik.security.generate;
 
 import java.util.Random;
 import java.util.Base64;
@@ -28,10 +28,16 @@ public class GenerateKeysDataBase {
     private final KeyEntityRepository keyEntityRepository;
     private final TextEncryptor textEncryptor;
     private final String alice = "admin";
-
+    /**
+     * for docker-compose
+     */
+    //@Value("${JWT_PUBLIC_KEY}")
     @Value("${jwt.public.key}")
     RSAPublicKey publicKey;
-
+    /**
+     * for docker-compose
+     */
+    //@Value("${JWT_PRIVATE_KEY}")
     @Value("${jwt.private.key}")
     RSAPrivateKey privateKey;
 
@@ -43,9 +49,7 @@ public class GenerateKeysDataBase {
             log.info( "init keys to database!");                
         }
     }
-    /**
-     * обновление ключа через pem файлы
-     */
+
    public void updateKeyToDataBaseFromPem(){
         Optional<KeyEntity> keyEntity = keyEntityRepository.findByKeyAlias( alice );
         if( keyEntity.isEmpty()){
@@ -61,10 +65,7 @@ public class GenerateKeysDataBase {
             log.info( "updates keys to database froom pem files!");   
         }
     }
-    /**
-     * Обновлениче ключей в БД
-     * @throws Exception
-     */
+
     public void updateKeyToDataBase() throws Exception{
         Optional<KeyEntity> keyEntity = keyEntityRepository.findByKeyAlias( alice );
         KeyPair keyPair = getKeyPair();
@@ -81,33 +82,19 @@ public class GenerateKeysDataBase {
             log.info( "updates keys to database from KeyPairGenerator!");   
         }
     }
-    /**
-     * Получение KeyPair
-     * @return KeyPair
-     * @throws Exception
-     */
+
     private KeyPair getKeyPair() throws Exception{
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
         keyPairGenerator.initialize(2048);
         return keyPairGenerator.generateKeyPair();
     }
 
-    /**
-     * Кодирование строки 
-     * @param encode - кодировка
-     * @return String
-     */
+
     private String getValue( byte[] encode ){
         return Base64.getEncoder().encodeToString( encode );
     }
 
-    /**
-     * Сохранение ключей
-     * @param keyAlias   - владелец ключа
-     * @param publicKey  - публичный ключ
-     * @param privateKey - приваный ключ
-     * @return KeyEntity
-     */
+
     private KeyEntity saveKey(String keyAlias, String publicKey, String privateKey) {
         return keyEntityRepository.save( new KeyEntity( new Random().nextLong(),
                                                         keyAlias,
@@ -115,11 +102,7 @@ public class GenerateKeysDataBase {
                                                         textEncryptor.encrypt( publicKey ),
                                                         textEncryptor.encrypt( privateKey )));
     }
-    /**
-     * Получение ключа
-     * @param keyAlias - владелец ключа
-     * @return KeyEntity
-     */ 
+
     public KeyEntity getKey(String keyAlias) {
         KeyEntity keyEntity = keyEntityRepository.findByKeyAlias(keyAlias).orElseThrow();
         if (keyEntity != null) {
@@ -128,24 +111,15 @@ public class GenerateKeysDataBase {
         }
         return keyEntity;
     }
-    /**
-     * Получение публичного ключа
-     * @return String
-     */
+
     private String getPublicKey(){
         return getKey( alice ).getPublicKey();
     }  
-    /**
-     * Получение приватного ключа
-     * @return String
-     */
+
     private String getPrivateKey(){
         return getKey( alice ).getPrivateKey();
     }
-    /**
-     * Формирование RSAPublicKey
-     * @return Optional RSAPublicKey
-     */
+
     public Optional<RSAPublicKey> getRSAPublicKey(){
         try{
             return Optional.of(( RSAPublicKey ) KeyFactory.getInstance("RSA")
@@ -156,10 +130,7 @@ public class GenerateKeysDataBase {
             return Optional.empty();
         }
     }
-    /**
-     * Формирование RSAPrivateKey
-     * @return Optional RSAPrivateKey
-     */
+
     public Optional<RSAPrivateKey> getRSAPrivateKey() {
         try {
             return Optional.of((RSAPrivateKey) KeyFactory.getInstance("RSA")

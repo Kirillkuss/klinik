@@ -1,4 +1,4 @@
-package com.klinik.security;
+package com.klinik.security.generate;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,18 +12,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class GenerateEncryption {
 
+    /**
+     * For docker-compose
+     */
+    //private static final String KEYSTORE_PATH = "/app/keys/encryption.key";
     private static final String KEYSTORE_PATH = "src/main/resources/keys/encryption.key";
 
-    // Метод для генерации соли для TextEncryptor
+
     private String generateSalt() {
         byte[] salt = new byte[16];
         SecureRandom secureRandom = new SecureRandom();
         secureRandom.nextBytes(salt);
         return new String(Hex.encode(salt));
     }
-    /**
-     * Обновление Encryption
-     */
+
     public void updateEncryptionKey(){
         SecureRandom secureRandom = new SecureRandom();
         byte[] keyBytes = new byte[32]; 
@@ -35,5 +37,5 @@ public class GenerateEncryption {
             log.error( "Error writing encryption key to file: {}", KEYSTORE_PATH, e );
         }
     }
-    
+     
 }

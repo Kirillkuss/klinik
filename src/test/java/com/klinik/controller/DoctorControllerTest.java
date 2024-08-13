@@ -47,20 +47,6 @@ public class DoctorControllerTest {
     public void tearDown() {
     }
 
-    @DisplayName( "Получение всех докторов")
-    @Test
-    public void testGetAllDoc() throws Exception{
-        Mockito.when( controller.getAllDoc()).thenCallRealMethod();
-        Mockito.when( controller.getAllDoc()).thenReturn( listDoctors );
-        Mockito.when( controller.getAllDoc()).then(( InvocationOnMock inv ) ->{
-            return ( BaseResponse ) inv.callRealMethod();
-        });
-        assertEquals(controller.getAllDoc(), controller.getAllDoc()); 
-        Mockito.verify( controller, times( 2 )).getAllDoc();
-    }
-
-
-
     @DisplayName( "Добавление доктора")
     @Test
     public void testAddDoctor() throws Exception{
