@@ -1,14 +1,12 @@
-package com.klinik.controller;
+package com.klinik.controller.auth;
 
 import com.klinik.entity.Role;
 import com.klinik.entity.User;
 import com.klinik.repositories.UserRepository;
 import com.klinik.request.AuthRequest;
 import com.klinik.response.AuthResponse;
-import com.klinik.response.BaseResponse;
 import com.klinik.rest.IAuthentication;
 import com.klinik.service.UserService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

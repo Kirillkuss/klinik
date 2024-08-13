@@ -12,7 +12,9 @@ import com.klinik.entity.User;
 import com.klinik.repositories.UserRepository;
 import com.klinik.request.UserRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -34,6 +36,7 @@ public class UserService {
                                 salt );
         if ( userRepository.findByLogin( user.getLogin() ).isEmpty() ){
             userRepository.save(  user );
+            log.info( "init main user ");
         } 
     }
  
