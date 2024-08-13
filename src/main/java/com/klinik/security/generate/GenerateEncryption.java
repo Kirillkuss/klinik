@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class GenerateEncryption {
 
+    /**
+     * For docker-compose
+     */
+    //private static final String KEYSTORE_PATH = "/app/keys/encryption.key";
     private static final String KEYSTORE_PATH = "src/main/resources/keys/encryption.key";
 
 

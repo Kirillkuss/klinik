@@ -15,7 +15,9 @@ import com.klinik.repositories.UserRepository;
 import com.klinik.request.UserRequest;
 import com.klinik.response.UserResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -38,6 +40,7 @@ public class UserService {
                                 false );
         if ( userRepository.findByLogin( user.getLogin() ).isEmpty() ){
             userRepository.save(  user );
+            log.info( "init main user");
         } 
     }
 

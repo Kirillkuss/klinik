@@ -17,6 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class GenerateKeys {
 
+    
+    /**
+     * For docker-compose
+     */
+    //private final String path = "/app/keys";
     private final String path = "src/main/resources/keys";
     private final String split = "(?<=\\G.{64})";
 
