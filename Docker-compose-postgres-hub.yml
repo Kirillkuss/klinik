@@ -5,11 +5,9 @@ volumes:
 
 services:
   Klinik:
-    image: authklinik
+    image: kirillkus/authklinik
     ports:
       - "8082:8082"
-    build:
-      context: .
     container_name: authklinik
     depends_on:
       - pg_db
@@ -21,11 +19,6 @@ services:
       - JWT_PRIVATE_KEY=classpath:keys/private.pem
       - JWT_PUBLIC_KEY=classpath:keys/public.pem
       - ENCRYPTION_KEY=classpath:keys/encryption.key
-      # https
-      #- KEYSTORE=classpath:keystore/klinika.jks 
-      #- SERVER_SSL_KEY-STORE=classpath:keystore/klinika.jks  
-      #- SERVER_SSL_KEY-STORE-PASSWORD=
-      #- SERVER_SSL_KEY-STORE-ALIAS=  
     volumes:
       - ./src/main/resources/keys:/app/keys
       - ./src/main/resources/keystore:/app/keystore
@@ -38,7 +31,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=Klinika
     volumes:
-      # init db and fuctions
       - ./src/main/resources/db/init_db.sql:/docker-entrypoint-initdb.d/init.sql
       - ./src/main/resources/db/function.sql:/docker-entrypoint-initdb.d/function.sql
     ports:
