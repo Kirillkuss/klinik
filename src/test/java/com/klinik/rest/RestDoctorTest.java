@@ -24,7 +24,6 @@ import io.qameta.allure.TmsLink;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.qameta.allure.Feature;
 
 @Slf4j
 //@Disabled
@@ -37,7 +36,7 @@ public class RestDoctorTest {
     private static final String TYPE = "application/json";
     private final String authorization = "Authorization";
     private static String token;
-    private static String bearer = "Bearer " + token;
+    private static String bearer;
 
     @BeforeAll
     @DisplayName("Получение токена") 
@@ -55,6 +54,7 @@ public class RestDoctorTest {
             ObjectMapper objectMapper = new ObjectMapper();
             AuthResponse authResponse = objectMapper.readValue(response.asString(), AuthResponse.class);
             token = authResponse.getToken();
+            bearer = "Bearer " + token;
             Allure.addAttachment("token:", TYPE, token );
         }catch( Exception ex ){
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
