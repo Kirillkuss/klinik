@@ -33,28 +33,30 @@ import io.qameta.allure.Feature;
 @DisplayName("Тестирование АПИ - DoctorControllerr")
 public class RestDoctorTest {
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
     private static final String PATH = "http://localhost:8082";
     private static final String TYPE = "application/json";
     private static String token;
 
-    @BeforeAll 
+    @BeforeAll
+    @DisplayName("Получение токена") 
     public static void tearDown() {
         AuthRequest authRequest = new AuthRequest();
         authRequest.setLogin( "admin");
         authRequest.setPassword("admin");
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().contentType( TYPE ).body( authRequest ).when().post("/auth/login");
-            response.then()
-                    .statusCode(200);
+            Response response = given().contentType( TYPE )
+                                       .body( authRequest )
+                                       .when()
+                                       .post("/auth/login");                         
+            response.then().statusCode(200);
+            ObjectMapper objectMapper = new ObjectMapper();
             AuthResponse authResponse = objectMapper.readValue(response.asString(), AuthResponse.class);
             token = authResponse.getToken();
             Allure.addAttachment("token:", TYPE, token );
         }catch( Exception ex ){
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
         }
-
     }
     
     @Feature("Получение количества врачей")
@@ -74,9 +76,9 @@ public class RestDoctorTest {
         }
     }
 
-    @Feature("Получение списка врачей (LAZY)")
+    //@Feature("Получение списка врачей (LAZY)")
     @Description("Получение списка врачей (LAZY)")
-    @DisplayName("Вызов метода POST: http://localhost:8082/doctors/lazy?page=1&size=12")
+    @DisplayName("Получение списка врачей (LAZY)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/getLazyDoctors")
     @ParameterizedTest
     @CsvSource({"1, 14", "486, 50", "851, 12"})
