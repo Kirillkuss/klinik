@@ -5,16 +5,16 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.klinik.entity.Doctor;
+import com.klinik.entity.Document;
 import com.klinik.request.AuthRequest;
 import com.klinik.response.AuthResponse;
-import groovy.util.logging.Slf4j;
+import org.instancio.Instancio;
+import org.instancio.Select;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -25,11 +25,10 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-@Slf4j
 @Owner(value = "Barysevich K. A.")
-@Epic(value = "Тестирование АПИ - DoctorController")
-@DisplayName("Тестирование АПИ - DoctorControllerr")
-public class RestDoctorTest {
+@Epic(value = "Тестирование АПИ - DocumentController")
+@DisplayName("Тестирование АПИ - DocumentController")
+public class RestDocumentTest {
 
     private static final String PATH = "http://localhost:8082";
     private static final String TYPE = "application/json";
@@ -48,6 +47,7 @@ public class RestDoctorTest {
             Response response = given().contentType( TYPE )
                                        .body( authRequest )
                                        .when()
+                                       .contentType( ContentType.JSON )
                                        .post("/auth/login");                         
             response.then().statusCode(200);
             ObjectMapper objectMapper = new ObjectMapper();
@@ -59,18 +59,19 @@ public class RestDoctorTest {
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
         }
     }
-    
-    @Description("Получение количества врачей (GET)")
-    @DisplayName("Получение количества врачей (GET)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/getCountDoctors")
-    @RepeatedTest( 2 )
+
+    @Description("Получение всех документов (GET)")
+    @DisplayName("олучение всех документов  (GET)")
+    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/3.%20Documents/getAllDocuments")
+    @RepeatedTest( 1 )
     @TmsLink("TEST-3545")
-    public void testGetDoctorCounts() throws Exception {
+    public void testGetAllDocuments() throws Exception {
         try{
             RestAssured.baseURI = PATH;
             Response response = given().header( authorization, bearer )
                                        .when()
-                                       .get("/doctors/counts");
+                                       .contentType( ContentType.JSON )
+                                       .get("/documents/list");
             response.then().statusCode(200);
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
         }catch( Exception ex ){
@@ -78,19 +79,40 @@ public class RestDoctorTest {
         }
     }
 
-    @Description("Получение списка врачей (POST)")
-    @DisplayName("Получение списка врачей (POST)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/getLazyDoctors")
+    @Description("Получение всех документов (GET - Lazy)")
+    @DisplayName("олучение всех документов  (GET - Lazy)")
+    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/3.%20Documents/getLazyDocumentt")
     @ParameterizedTest
-    @CsvSource({"1, 14", "486, 50", "851, 12"})
-    public void testGetDocumentsLazy( int page, int size ){
+    @CsvSource({" 1, 14", "2, 5", "8, 10"})
+    public void testGetLazyDocuments( int page, int size ) throws Exception {
         try{
             RestAssured.baseURI = PATH;
             Response response = given().header( authorization, bearer )
                                        .queryParam("page", page)
                                        .queryParam("size", size)
                                        .when()
-                                       .post("/doctors/lazy");
+                                       .contentType( ContentType.JSON )
+                                       .get("/documents/list");
+            response.then().statusCode(200);
+            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+        }catch( Exception ex ){
+            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+        }
+    }
+
+    @Description("Получение документов по слову (GET)")
+    @DisplayName("Получение документов по слову (GET)")
+    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/3.%20Documents/getLazyDocumentt")
+    @ParameterizedTest
+    @CsvSource({"UWTBOOVPA", "BIPMHMWDEJ"})
+    public void testGetFindWord( String word ) throws Exception {
+        try{
+            RestAssured.baseURI = PATH;
+            Response response = given().header( authorization, bearer )
+                                       .queryParam("word", word )
+                                       .when()
+                                       .contentType( ContentType.JSON )
+                                       .get("/documents/find");
             response.then().statusCode(200);
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
         }catch( Exception ex ){
@@ -100,49 +122,30 @@ public class RestDoctorTest {
 
     @DisplayName("Параметры для тестирования")
     public static Stream<Arguments> getParams() throws Exception{
-        return Stream.of( Arguments.of( new Doctor( -1L, "GERP", "DERT", "ERYT") ) );
+        Document document = Instancio.of(Document.class).ignore(Select.field( Document::getIdDocument )).create();
+        document.setIdDocument( -1L );
+        return Stream.of( Arguments.of( document));
     }
- 
-    @Description("Добавить врача")
-    @DisplayName("Добавить врача (POST)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/addDoctor")
+
+    @Description("Добавить документ")
+    @DisplayName("Добавить документ (POST)")
+    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/3.%20Documents/addDocument")
     @ParameterizedTest
     @MethodSource("getParams")
-    public void testAddDoctor( Doctor doctor ){
-        try{
-            RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer ).when()
-                                       .contentType(ContentType.JSON)
-                                       .body( doctor )
-                                       .post("/doctors/add");
-            response.then()
-                    .statusCode(200);
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-        }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
-        }
-    }
-
-
-    @Description("Получение врачей по ФИО")
-    @DisplayName("Получение врачей по ФИО (GET)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/findByFIO")
-    @TmsLink("TEST-3545")
-    @ParameterizedTest
-    @CsvSource({"SECOND, 1, 14", "Mouse, 2, 5", "TEST, 8, 10"})
-    public void testGetByFIO(String word, int page, int size ) {
+    public void testAddDocument( Document document ){
         try{
             RestAssured.baseURI = PATH;
             Response response = given().header( authorization, bearer )
-                                       .queryParam("word", word)
-                                       .queryParam("page", page)
-                                       .queryParam("size", size)
                                        .when()
-                                       .get("/doctors/fio" );
-            response.then().statusCode(200);
+                                       .contentType( ContentType.JSON )
+                                       .body( document )
+                                       .post("/documents/add");
+            response.then()
+                    .statusCode( 201 );
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
         }catch( Exception ex ){
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
         }
-    } 
-} 
+    }
+  
+}
