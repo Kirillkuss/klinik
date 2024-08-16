@@ -35,11 +35,13 @@ public class RestDoctorTest {
 
     private static final String PATH = "http://localhost:8082";
     private static final String TYPE = "application/json";
+    private final String authorization = "Authorization";
     private static String token;
+    private static String bearer = "Bearer " + token;
 
     @BeforeAll
     @DisplayName("Получение токена") 
-    public static void tearDown() {
+    public static void setUpClass() {
         AuthRequest authRequest = new AuthRequest();
         authRequest.setLogin( "admin");
         authRequest.setPassword("admin");
@@ -59,16 +61,15 @@ public class RestDoctorTest {
         }
     }
     
-    @Feature("Получение количества врачей")
-    @Description("Получение количества врачей")
-    @DisplayName("Вызов метода GET: http://localhost:8082/doctors/counts")
+    @Description("Получение количества врачей (GET)")
+    @DisplayName("Получение количества врачей (GET)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/getCountDoctors")
-    @RepeatedTest( 1 )
+    @RepeatedTest( 2 )
     @TmsLink("TEST-3545")
     public void testGetDoctorCounts() throws Exception {
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header("Authorization", "Bearer " + token).when().get("/doctors/counts");
+            Response response = given().header( authorization, bearer ).when().get("/doctors/counts");
             response.then().statusCode(200);
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
         }catch( Exception ex ){
@@ -76,16 +77,15 @@ public class RestDoctorTest {
         }
     }
 
-    //@Feature("Получение списка врачей (LAZY)")
-    @Description("Получение списка врачей (LAZY)")
-    @DisplayName("Получение списка врачей (LAZY)")
+    @Description("Получение списка врачей (POST)")
+    @DisplayName("Получение списка врачей (POST)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/getLazyDoctors")
     @ParameterizedTest
     @CsvSource({"1, 14", "486, 50", "851, 12"})
     public void testGetDocumentsLazy( int page, int size ){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header("Authorization", "Bearer " + token)
+            Response response = given().header( authorization, bearer )
                                        .queryParam("page", page)
                                        .queryParam("size", size)
                                        .when()
@@ -102,16 +102,15 @@ public class RestDoctorTest {
         return Stream.of( Arguments.of( new Doctor( -1L, "GERP", "DERT", "ERYT") ) );
     }
  
-    @Feature("Добавить врача")
     @Description("Добавить врача")
-    @DisplayName("Вызов метода POST: http://localhost:8082/doctors/add")
+    @DisplayName("Добавить врача (POST)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/addDoctor")
     @ParameterizedTest
     @MethodSource("getParams")
     public void testAddDoctor( Doctor doctor ){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header("Authorization", "Bearer " + token).when()
+            Response response = given().header( authorization, bearer ).when()
                                        .contentType(ContentType.JSON)
                                        .body( doctor )
                                        .post("/doctors/add");
@@ -123,9 +122,9 @@ public class RestDoctorTest {
         }
     }
 
-    @Feature("Получение врачей по ФИО")
+
     @Description("Получение врачей по ФИО")
-    @DisplayName("Вызов метода GET: http://localhost:8082/doctors/fio/{word}{page}{size}?word=Test&page=1&size=10")
+    @DisplayName("Получение врачей по ФИО (GET)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/findByFIO")
     @TmsLink("TEST-3545")
     @ParameterizedTest
@@ -133,14 +132,13 @@ public class RestDoctorTest {
     public void testGetByFIO(String word, int page, int size ) {
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header("Authorization", "Bearer " + token)
+            Response response = given().header( authorization, bearer )
                                        .queryParam("word", word)
                                        .queryParam("page", page)
                                        .queryParam("size", size)
                                        .when()
                                        .get("/doctors/fio" );
-            response.then()
-                    .statusCode(200);
+            response.then().statusCode(200);
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
         }catch( Exception ex ){
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
