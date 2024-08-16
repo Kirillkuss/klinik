@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -13,6 +14,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class AuthResponse {
 
     @Schema (description = "Код сообщения", name = "Код сообщения",  example = "200")
@@ -21,6 +23,6 @@ public class AuthResponse {
     private String message = "успешно";
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Schema (description = "Токен", name = "Токен")
-    private String tocken;
+    private String token;
     
 }

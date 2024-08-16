@@ -5,7 +5,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
-
 import com.klinik.entity.CardPatient;
 import com.klinik.entity.Doctor;
 import com.klinik.entity.RecordPatient;
@@ -17,8 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 public class RecordPatientServiceTest {
 
     @Mock

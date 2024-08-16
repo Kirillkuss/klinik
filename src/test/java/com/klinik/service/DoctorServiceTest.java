@@ -1,4 +1,4 @@
-/**package com.klinik.service;
+package com.klinik.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -56,38 +56,38 @@ public class DoctorServiceTest {
     @DisplayName("Получение списка всех докторов")
     @Test
     public void testFindAll() throws Exception{
-        Mockito.when( service.allDoctor() ).thenCallRealMethod();
-        Mockito.when( service.allDoctor() ).thenReturn( list );
-        Mockito.when( service.allDoctor() ).thenAnswer(( InvocationOnMock inv ) ->{
+        Mockito.when( service.allDoctor(1, 10) ).thenCallRealMethod();
+        Mockito.when( service.allDoctor(1, 10) ).thenReturn( list );
+        Mockito.when( service.allDoctor(1, 10) ).thenAnswer(( InvocationOnMock inv ) ->{
             return ( List<Doctor>) inv.callRealMethod();
         });
-        assertNotNull( service.allDoctor() );
-        Mockito.verify( service, times( 1 )).allDoctor();
+        assertNotNull( service.allDoctor(1, 10) );
+        Mockito.verify( service, times( 1 )).allDoctor(1, 10);
     }
 
     @DisplayName("Поиск докторов по ФИО")
     @Test
     public void testFindByFIO() throws Exception{
         String word = "test";
-        Mockito.when( service.findByFIO( word )).thenCallRealMethod();
-        Mockito.when( service.findByFIO( word )).thenReturn( list );
-        Mockito.when( service.findByFIO( word )).then(( InvocationOnMock inv ) ->{
+        Mockito.when( service.findByFIO( word, 1, 10 )).thenCallRealMethod();
+        Mockito.when( service.findByFIO( word, 1, 10 )).thenReturn( list );
+        Mockito.when( service.findByFIO( word, 1, 10)).then(( InvocationOnMock inv ) ->{
             return ( List<Doctor> ) inv.callRealMethod();
         });
-        assertNotNull( service.findByFIO( word ));
-        Mockito.verify( service, times( 1 )).findByFIO( word );
+        assertNotNull( service.findByFIO( word, 1, 10 ));
+        Mockito.verify( service, times( 1 )).findByFIO( word, 1, 10 );
     }
 
     @DisplayName("Добавлени доктора")
     @Test
     public void testSaveDoctor() throws Exception{
-        Mockito.when( service.saveDoctor( doctor )).thenCallRealMethod();
-        Mockito.when( service.saveDoctor( doctor )).thenReturn( doctor );
-        Mockito.when( service.saveDoctor( doctor )).then(( InvocationOnMock inv ) ->{
+        Mockito.when( service.saveDoctor( doctor.orElseThrow() )).thenCallRealMethod();
+        Mockito.when( service.saveDoctor( doctor.orElseThrow()  )).thenReturn( doctor.orElseThrow()  );
+        Mockito.when( service.saveDoctor( doctor.orElseThrow()  )).then(( InvocationOnMock inv ) ->{
             return ( Doctor ) inv.callRealMethod();
         });
-        assertEquals( service.saveDoctor( doctor ), service.saveDoctor( doctor ));
-        Mockito.verify( service, times( 2 )).saveDoctor( doctor );
+        assertEquals( service.saveDoctor( doctor.orElseThrow()  ), service.saveDoctor( doctor.orElseThrow()  ));
+        Mockito.verify( service, times( 2 )).saveDoctor( doctor.orElseThrow()  );
     }
   
-}*/
+}

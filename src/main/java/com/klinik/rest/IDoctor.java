@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @SecurityRequirement(name = "Bearer Authentication")
 public interface IDoctor {
 
-    @GetMapping(value = "/fio/{word}{page}{size}")
+    @GetMapping(value = "/fio")
     @Operation( description = "Поиск врача по ФИО", summary = "Поиск врача по ФИО")
     public ResponseEntity<List<Doctor>> findByFIO( @Parameter( description = "ФИО врача") String word,
                                                    @Parameter( description = "страница") int page,
