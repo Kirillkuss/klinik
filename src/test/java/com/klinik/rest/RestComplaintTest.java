@@ -137,7 +137,7 @@ public class RestComplaintTest {
     @DisplayName("Параметры для тестирования")
     public static Stream<Arguments> getTypeComplaint() throws Exception{
         RequestTypeComplaint requestTypeComplaint = Instancio.of(RequestTypeComplaint.class).ignore(Select.field( RequestTypeComplaint::getIdComplaint )).create();
-        requestTypeComplaint.setIdComplaint( 1L );
+        requestTypeComplaint.setIdComplaint( 2L );
         return Stream.of( Arguments.of( requestTypeComplaint));
     }
 
@@ -153,7 +153,7 @@ public class RestComplaintTest {
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .body( requestTypeComplaint )
-                                       .post("complaints/typecomplaint");
+                                       .post("/complaints/typecomplain");
             response.then()
                     .statusCode( 201 );
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
