@@ -1,33 +1,23 @@
 package com.klinik.rest;
 
 import static io.restassured.RestAssured.given;
-
-import java.util.List;
 import java.util.stream.Stream;
-
-import org.instancio.Instancio;
-import org.instancio.Select;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.klinik.entity.CardPatient;
-import com.klinik.entity.Patient;
 import com.klinik.request.AuthRequest;
+import com.klinik.request.CoplaintRequest;
 import com.klinik.response.AuthResponse;
-
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
-import io.qameta.allure.TmsLink;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -76,13 +66,13 @@ public class RestCardPatientTest {
         cardPatient.setDiagnosis( "Рассеянный склероз");
         cardPatient.setNote("Есть аллергия на цитрамон");
         cardPatient.setСonclusion( "Болен");
-        return Stream.of( Arguments.of( cardPatient, 29L ));
+        return Stream.of( Arguments.of( cardPatient, 3L ));
     }
 
     @Description("Добавить карту пациента (POST)")
     @DisplayName("Добавить пациента (POST)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/4.%20Card%20Patient/saveCardPatient")
-   // @ParameterizedTest
+    //@ParameterizedTest
     @MethodSource("getParamsCard")
     public void testAddCardPatient( CardPatient cardPatient, Long idPatient ){
         try{
@@ -164,9 +154,25 @@ public class RestCardPatientTest {
         }
     }
 
-
-
-
-
-    
+    @Description("Добавление жалобы пациенту (POST)")
+    @DisplayName("Добавление жалобы пациенту (POST)")
+    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/4.%20Card%20Patient/saveComplaintToCardPatient")
+    //@ParameterizedTest
+    @CsvSource({"1, 1", "1, 2"})
+    public void testAddCoplaintToCard( Long idCard, Long idCoplaint  ) throws Exception {
+        CoplaintRequest coplaintRequest = new CoplaintRequest(idCard, idCoplaint);
+        try{
+            RestAssured.baseURI = PATH;
+            Response response = given().header( authorization, bearer )
+                                       .when()
+                                       .contentType( ContentType.JSON )
+                                       .body( coplaintRequest )
+                                       .post("/card-patinets/complaint");
+            response.then().statusCode(201);
+            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+        }catch( Exception ex ){
+            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+        }
+    }
+ 
 }
