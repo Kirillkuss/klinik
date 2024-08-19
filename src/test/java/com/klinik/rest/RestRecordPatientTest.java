@@ -1,13 +1,11 @@
 package com.klinik.rest;
 
 import static io.restassured.RestAssured.given;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -16,8 +14,6 @@ import com.klinik.entity.RecordPatient;
 import com.klinik.request.AuthRequest;
 import com.klinik.request.RequestRecordPatient;
 import com.klinik.response.AuthResponse;
-
-import groovy.util.logging.Log;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -136,20 +132,18 @@ public class RestRecordPatientTest {
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/5.%20Records%20Patients/findByParams")
     @ParameterizedTest
     @MethodSource("getFindParam")
-    public void testFindRecordPatient(  Long id, LocalDateTime from, LocalDateTime to) throws Exception {
+    public void testFindRecordPatient( Long id, LocalDateTime from, LocalDateTime to ) throws Exception {
         try{
             DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
             RestAssured.baseURI = PATH;
             Response response = given().header(authorization, bearer)
-            .queryParam("id", id)
-            .queryParam("dateFrom", from.format( formatter ))
-            .queryParam("dateTo", to.format( formatter ))
-            .when()
-            .contentType(ContentType.JSON)
-            .get("/record-patients/find/{id}", id ); 
-                     response.then()
-                             .statusCode(200);
-                             
+                                       .queryParam("id", id)
+                                       .queryParam("dateFrom", from.format( formatter ))
+                                       .queryParam("dateTo", to.format( formatter ))
+                                       .when()
+                                       .contentType(ContentType.JSON)
+                                       .get("/record-patients/find/{id}", id ); 
+                     response.then().statusCode(200); 
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
         }catch( Exception ex ){
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );

@@ -3,8 +3,10 @@ package com.klinik.rest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.klinik.entity.TypeComplaint;
+import com.klinik.request.RequestTypeComplaint;
 import com.klinik.entity.Complaint;
 import com.klinik.response.BaseResponseError;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,11 +32,11 @@ public interface        IComplaint {
     @Operation( description = "Получение справочника жалобы", summary = "Получение справочника жалобы")
     public ResponseEntity findAll() throws Exception;
     @Operation( description = "Добавление справочника жалобы", summary = "Добавление справочника жалобы")
-    @PostMapping( value = "/complaint/{request}")
-    public ResponseEntity saveСomplaint( Complaint complaint ) throws Exception;
+    @PostMapping( value = "/complaint")
+    public ResponseEntity saveСomplaint( @RequestBody Complaint complaint ) throws Exception;
     @Operation( description = "Добавление под жалобы", summary = "Добавление под жалобы")
-    @PostMapping( value = "/typecomplaint/{request}{id-complaint}")
-    public ResponseEntity saveTypeComplaint(TypeComplaint request, @Parameter( description = "ИД жалобы", example = "1") Long idcomplaint ) throws Exception;
+    @PostMapping( value = "/typecomplaint")
+    public ResponseEntity saveTypeComplaint( @RequestBody RequestTypeComplaint requestTypeComplaint ) throws Exception;
     @Operation( description = "Получение жалобы с под жалобами", summary = "Получение жалобы с под жалобами")
     @GetMapping( "/type/{id}")
     public ResponseEntity listComplaintWithTypeComplaints( @Parameter( description = "Ид жалобы", example = "1" )Long id ) throws Exception;

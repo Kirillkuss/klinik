@@ -41,7 +41,7 @@ public class TypeComplaint implements Serializable {
 
     @Column( name = "name")
     @Schema( name        = "name",
-             description = "Наименование поджалобы",
+             description = "Наименование под жалобы",
              example     = "Парапарезы",
              required    = true )
     private String name;

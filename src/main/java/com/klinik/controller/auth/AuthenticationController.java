@@ -54,7 +54,7 @@ public class AuthenticationController implements IAuthentication {
         return this.encoder.encode( JwtEncoderParameters.from( JwtClaimsSet.builder()
                                                                            .issuer("self")
                                                                            .issuedAt(now)
-                                                                           .expiresAt(now.plusSeconds(600L))// five minutes
+                                                                           .expiresAt(now.plusSeconds(60000L))// five minutes
                                                                            .subject(authRequest.getLogin())
                                                                            .claim("scope", scopes)
                                                                            .build())).getTokenValue();
