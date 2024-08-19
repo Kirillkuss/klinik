@@ -39,7 +39,7 @@ public interface IRecordPatinet {
     @PostMapping (value = "/add")
     @Operation( description = "Добавить запись пациента к врачу", summary = "Добавить запись пациента к врачу")
     public ResponseEntity<RecordPatient> addRecordPatient( @RequestBody RequestRecordPatient requestRecordPatient) throws Exception, MyException;
-    @GetMapping(value = "/find")
+    @GetMapping(value = "/find/{id}{from}{to}")
     @Operation( description = "Список всех записей пациентов к врачу по параметрам", summary = "Список всех записей пациентов к врачу по параметрам ")
     public ResponseEntity<List<RecordPatient>> findByParams( @Parameter(description = "ИД карты пациента", example = "1") Long id,
                                                               @Parameter(description = "Дата записи с:", example = "2023-02-19T12:47:07.605")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,

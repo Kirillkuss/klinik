@@ -92,28 +92,6 @@ public class RestCardPatientTest {
 
     }
 
-
-    
-    @Description("Поиск карты пациента по ид пациента (GET)")
-    @DisplayName("Поиск карты пациента по ид пациента (GET)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/2.%20Patient/getAllPatients")
-    @ParameterizedTest
-    @CsvSource({"10", "8"})
-    public void testGetCardPatientId( Long id ) throws Exception {
-        try{
-            RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
-                                       .queryParam("id", id)
-                                       .when()
-                                       .contentType( ContentType.JSON )
-                                       .get("/card-patinets/patient/{id}");
-            response.then().statusCode(200);
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-        }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
-        }
-    }
-
     @Description("Поиск карты пациента по документу пациента (GET)")
     @DisplayName("Поиск карты пациента по документу пациента  (GET)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/2.%20Patient/getAllPatients")
@@ -134,6 +112,26 @@ public class RestCardPatientTest {
         }
     }
 
+    @Description("Поиск карты пациента по ид пациента (GET)")
+    @DisplayName("Поиск карты пациента по ид пациента (GET)")
+    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/2.%20Patient/getAllPatients")
+    @ParameterizedTest
+    @CsvSource({"10", "8"})
+    public void testGetCardPatientId( Long id ) throws Exception {
+        try{
+            RestAssured.baseURI = PATH;
+            Response response = given().header( authorization, bearer )
+                                       .queryParam("id", id)
+                                       .when()
+                                       .contentType( ContentType.JSON )
+                                       .get("/card-patinets/patient/{id}", id);
+            response.then().statusCode(200);
+            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+        }catch( Exception ex ){
+            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+        }
+    }
+
     @Description("Поиск карты пациента по ид карты (GET)")
     @DisplayName("Поиск карты пациента по ид карты (GET)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/2.%20Patient/getAllPatients")
@@ -142,11 +140,12 @@ public class RestCardPatientTest {
     public void testGetCardId( Long id ) throws Exception {
         try{
             RestAssured.baseURI = PATH;
+            
             Response response = given().header( authorization, bearer )
-                                       .queryParam("id", id)
+                                       .queryParam("id", id )
                                        .when()
                                        .contentType( ContentType.JSON )
-                                       .get("/card-patinets/сard/{id}");
+                                       .get("/card-patinets/card/{id}", id );
             response.then().statusCode(200);
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
         }catch( Exception ex ){
