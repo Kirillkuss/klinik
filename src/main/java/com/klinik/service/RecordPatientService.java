@@ -6,11 +6,13 @@ import com.klinik.repositories.DoctorRerository;
 import com.klinik.repositories.RecordPatientRepository;
 import com.klinik.request.RequestRecordPatient;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RecordPatientService {
@@ -31,9 +33,11 @@ public class RecordPatientService {
         recordPatient.setNumberRoom(requestRecordPatient.getNumberRoom());
         recordPatient.setDoctor( doctorRerository.findById( requestRecordPatient.getIdDoctor() ).orElseThrow(() -> new NoSuchElementException( "Указан неверный идентификатор доктора") ) );
         recordPatient.setCardPatientId( cardPatientRepository.findById( requestRecordPatient.getIdCardPatient() ).map( s -> s.getIdCardPatient()).orElseThrow(() -> new NoSuchElementException( "Указан неверный идентификатор карты пациента") ));
+        log.info("saveRecordPatient >>>>");
         return recordPatientRepository.save( recordPatient );
     }
     public List<RecordPatient> findByParam( Long id, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception{
+        log.info("findByParam RecordPatient >>>> ");
      return recordPatientRepository.findByParamTwo(id, dateFrom, dateTo);
     }
 }

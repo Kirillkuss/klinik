@@ -3,6 +3,7 @@ package com.klinik.rest;
 import static io.restassured.RestAssured.given;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -133,11 +134,12 @@ public class RestRecordPatientTest {
     @MethodSource("getFindParam")
     public void testFindRecordPatient( Long id, LocalDateTime from, LocalDateTime to ) throws Exception {
         try{
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
             RestAssured.baseURI = PATH;
             Response response = given().header( authorization, bearer )
                                        .queryParam("id", id)
-                                       .queryParam("from", from)
-                                       .queryParam("to", to)
+                                       .queryParam("from", from.format(formatter))
+                                       .queryParam("to", to.format(formatter))
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .get("/record-patients/find");
