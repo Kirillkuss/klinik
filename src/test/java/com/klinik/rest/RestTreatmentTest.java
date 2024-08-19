@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
@@ -81,6 +82,28 @@ public class RestTreatmentTest {
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/treatments/find/treat/{id-card}", idCard );
+            response.then()
+                    .statusCode( 200 );
+            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+        }catch( Exception ex ){
+            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+        }
+    }
+
+    @Description("Получение списка лечений по параметрам(GET)")
+    @DisplayName("Получение списка лечений по параметрам(GET)")
+    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/7.%20Treatment/findByParamIdCardAndDateStart")
+    @ParameterizedTest
+    @CsvSource({"1, 1"})
+    public void testListTretmentsFind( Long idCard, Long idRehabilitationSolution){
+        try{
+            RestAssured.baseURI = PATH;
+            Response response = given().header(authorization, bearer)
+                                       .queryParam("idCard ", idCard)
+                                       .queryParam("idRehabilitationSolution ", idRehabilitationSolution)
+                                       .when()
+                                       .contentType(ContentType.JSON)
+                                       .get("/treatments/find/treatment/{id-card}{id-rehabilitation-solution}" );
             response.then()
                     .statusCode( 200 );
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );

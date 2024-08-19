@@ -98,7 +98,7 @@ public class RestComplaintTest {
                                        .queryParam( "id", id )
                                        .when()
                                        .contentType( ContentType.JSON )
-                                       .get("/complaints/type/{id}");
+                                       .get("/complaints/type/{id}", id );
             response.then()
                     .statusCode( 200 );
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
