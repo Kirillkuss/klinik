@@ -135,9 +135,9 @@ public class RestRecordPatientTest {
         try{
             RestAssured.baseURI = PATH;
             Response response = given().header( authorization, bearer )
-                                       .queryParam("id", idCard)
-                                       .queryParam("from", from)
-                                       .queryParam("to", to)
+                                       .pathParam("id", idCard)
+                                       .pathParam("from", from)
+                                       .pathParam("to", to)
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .get("/record-patients/find/{id}{from}{to}");
