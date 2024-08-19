@@ -140,7 +140,7 @@ public class RestRecordPatientTest {
                                        .pathParam("to", to)
                                        .when()
                                        .contentType( ContentType.JSON )
-                                       .get("/record-patients/find/{id}{from}{to}");
+                                       .get("/record-patients/find");
                      response.then()
                              .statusCode(200);
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
