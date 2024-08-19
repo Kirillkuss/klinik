@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
         @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
 @SecurityRequirement(name = "Bearer Authentication")
-public interface        IComplaint {
+public interface IComplaint {
     @GetMapping(value = "/list")
     @Operation( description = "Получение справочника жалобы", summary = "Получение справочника жалобы")
     public ResponseEntity findAll() throws Exception;
@@ -35,7 +35,7 @@ public interface        IComplaint {
     @PostMapping( value = "/complaint")
     public ResponseEntity saveСomplaint( @RequestBody Complaint complaint ) throws Exception;
     @Operation( description = "Добавление под жалобы", summary = "Добавление под жалобы")
-    @PostMapping( value = "/typecomplaint")
+    @PostMapping( value = "/typecomplain")
     public ResponseEntity saveTypeComplaint( @RequestBody RequestTypeComplaint requestTypeComplaint ) throws Exception;
     @Operation( description = "Получение жалобы с под жалобами", summary = "Получение жалобы с под жалобами")
     @GetMapping( "/type/{id}")

@@ -27,8 +27,8 @@ public class СomplaintController implements IComplaint {
     public ResponseEntity<TypeComplaint> saveTypeComplaint( RequestTypeComplaint requestTypeComplaint ) throws Exception{
         return new ResponseEntity<>( typeComplaintService.saveTypeComplaint( requestTypeComplaint ), HttpStatus.CREATED );
     }
-    public ResponseEntity<List<TypeComplaint>> listComplaintWithTypeComplaints( Long Id ) throws Exception{
-        return new ResponseEntity<>( typeComplaintService.findByIdComplaint( Id ), HttpStatus.OK );
+    public ResponseEntity<List<TypeComplaint>> listComplaintWithTypeComplaints( Long id ) throws Exception{
+        return new ResponseEntity<>( typeComplaintService.findByIdComplaint( id ), HttpStatus.OK );
     }
  
 }

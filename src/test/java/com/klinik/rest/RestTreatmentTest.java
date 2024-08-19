@@ -12,7 +12,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 import java.time.format.DateTimeFormatter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.klinik.entity.Treatment;
 import com.klinik.request.AuthRequest;
+import com.klinik.request.RequestTreatment;
 import com.klinik.response.AuthResponse;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -95,7 +97,7 @@ public class RestTreatmentTest {
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/7.%20Treatment/findByParamIdCardAndDateStart")
     @ParameterizedTest
     @CsvSource({"1, 1"})
-    public void testListTretmentsFind( Long idCard, Long idRehabilitationSolution){
+    public void testListTretmentsFindIdCardAndIdRehabilitationSolution( Long idCard, Long idRehabilitationSolution){
         try{
             RestAssured.baseURI = PATH;
             Response response = given().header(authorization, bearer)
@@ -106,6 +108,36 @@ public class RestTreatmentTest {
                                        .get("/treatments/find/treatment/{id-card}{id-rehabilitation-solution}" );
             response.then()
                     .statusCode( 200 );
+            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+        }catch( Exception ex ){
+            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+        }
+    }
+
+    @DisplayName("Параметры для тестирования")
+    public static Stream<Arguments> getAddTreatment() throws Exception{
+        return Stream.of( Arguments.of( new RequestTreatment( LocalDateTime.now().minusDays(10),
+                                                              LocalDateTime.now(),
+                                                       1L,
+                                                1L,
+                                     1L,
+                                                     1L )));
+    }
+
+    @Description("Добавить лечение для пациента(POST)")
+    @DisplayName("Добавить лечение для пациента(POST)")
+    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/7.%20Treatment/addTreatment")
+    @ParameterizedTest
+    @MethodSource("getAddTreatment")
+    public void testAddTreatment( RequestTreatment requestTreatment ){
+        try{
+            RestAssured.baseURI = PATH;
+            Response response = given().header( authorization, bearer )
+                                       .when()
+                                       .body( requestTreatment )
+                                       .contentType(ContentType.JSON)
+                                       .post("/treatments/treatment/add" );
+            response.then().statusCode( 201 );
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
         }catch( Exception ex ){
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );

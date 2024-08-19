@@ -23,6 +23,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
     @ExceptionHandler(Throwable.class)
     public ResponseEntity<BaseResponse> errBaseResponse( Throwable ex ){
         log.error( "Throwable >>> " + ex.getMessage());
+        ex.printStackTrace( System.err );
         return ResponseEntity.internalServerError().body( BaseResponse.error( HttpStatus.INTERNAL_SERVER_ERROR.value(), ex ));
     }
 
