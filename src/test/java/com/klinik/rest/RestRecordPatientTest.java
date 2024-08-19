@@ -131,11 +131,11 @@ public class RestRecordPatientTest {
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/5.%20Records%20Patients/findByParams")
     @ParameterizedTest
     @MethodSource("getFindParam")
-    public void testFindRecordPatient( Long idCard, LocalDateTime from, LocalDateTime to ) throws Exception {
+    public void testFindRecordPatient( Long id, LocalDateTime from, LocalDateTime to ) throws Exception {
         try{
             RestAssured.baseURI = PATH;
             Response response = given().header( authorization, bearer )
-                                       .pathParam("id", idCard)
+                                       .pathParam("id", id)
                                        .pathParam("from", from)
                                        .pathParam("to", to)
                                        .when()
