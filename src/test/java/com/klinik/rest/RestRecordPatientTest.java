@@ -135,12 +135,12 @@ public class RestRecordPatientTest {
         try{
             RestAssured.baseURI = PATH;
             Response response = given().header( authorization, bearer )
-                                       .pathParam("id", id)
-                                       .pathParam("from", from)
-                                       .pathParam("to", to)
+                                       .pathParam("id", "1")
+                                       .pathParam("from", from.toString())
+                                       .pathParam("to", to.toString())
                                        .when()
                                        .contentType( ContentType.JSON )
-                                       .get("/record-patients/find");
+                                       .get("/record-patients/find/{id}{from}{to}");
                      response.then()
                              .statusCode(200);
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
