@@ -7,6 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 import java.time.format.DateTimeFormatter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +24,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import java.time.LocalDateTime;
+import static org.hamcrest.Matchers.lessThan;
 
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование АПИ - TreatmentController")
@@ -82,8 +85,11 @@ public class RestTreatmentTest {
                                        .contentType(ContentType.JSON)
                                        .get("/treatments/find/treat/{id-card}", idCard );
             response.then()
+                    .time( lessThan(2000L ))
                     .statusCode( 200 );
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.timeIn(TimeUnit.SECONDS) + " s."));
+            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
         }
@@ -97,15 +103,22 @@ public class RestTreatmentTest {
     public void testListTretmentsFindIdCardAndIdRehabilitationSolution( Long idCard, Long idRehabilitationSolution){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header(authorization, bearer)
+            Response response = given().log()
+                                       .all()
+                                       .header(authorization, bearer)
                                        .queryParam("idCard", idCard)
                                        .queryParam("idRehabilitationSolution", idRehabilitationSolution)
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/treatments/find/treatment/{id-card}", idCard );
             response.then()
+                    .time( lessThan(2000L ))
+                    .log()
+                    .body()
                     .statusCode( 200 );
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.timeIn(TimeUnit.SECONDS) + " s."));
+            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
         }
@@ -129,13 +142,21 @@ public class RestTreatmentTest {
     public void testAddTreatment( RequestTreatment requestTreatment ){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
+            Response response = given().log()
+                                       .all()
+                                       .header( authorization, bearer )
                                        .when()
                                        .body( requestTreatment )
                                        .contentType(ContentType.JSON)
                                        .post("/treatments/treatment/add" );
-            response.then().statusCode( 201 );
+            response.then()
+                    .time( lessThan(2000L ))
+                    .log()
+                    .body()
+                    .statusCode( 201 );
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.timeIn(TimeUnit.SECONDS) + " s."));
+            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
         }
