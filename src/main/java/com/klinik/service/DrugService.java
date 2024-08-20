@@ -7,6 +7,8 @@ import com.klinik.entity.Drug;
 import com.klinik.entity.DrugTreatment;
 import com.klinik.repositories.DrugRepository;
 import com.klinik.repositories.DrugTreatmentRepository;
+import com.klinik.request.DrugRequest;
+
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 
@@ -19,17 +21,17 @@ public class DrugService {
     public List<Drug> findAll(){
         return drugRepository.findAll();
     }
-    public Drug saveDrug( Drug drug,  Long idDrugTreatment ) throws Exception{
-        Optional<DrugTreatment> drugTreatment = drugTreatmentRepository.findById( idDrugTreatment );
-        if ( drugTreatment.isEmpty() ) throw new IllegalArgumentException( "Медикаментозное лечение с таким ИД не существует");
-        checkSaveDrug( drug );
-        drug.setDrugTreatment( drugTreatment.get() );
-        return drugRepository.save( drug );
+    public Drug saveDrug( DrugRequest drugRequest ) throws Exception{
+        Optional<DrugTreatment> drugTreatment = drugTreatmentRepository.findById( drugRequest.getIdDrugTreatment());
+        checkSaveDrug( drugRequest, drugTreatment );
+        return drugRepository.save( new Drug( -1L,
+                                              drugRequest.getName(),
+                                              drugTreatment.orElseThrow() ));
     }
 
-    private void checkSaveDrug( Drug drug ){
-        if ( drugRepository.findById( drug.getIdDrug()).isPresent() ) throw new IllegalArgumentException( "Препарат с такми ИД уже существует");
-        if ( drugRepository.findByName( drug.getName() ).isPresent() ) throw new IllegalArgumentException( "Препарат с такми наименованием уже существует");
+    private void checkSaveDrug( DrugRequest drugRequest, Optional<DrugTreatment> drugTreatment ){
+        if ( drugTreatment.isEmpty() ) throw new IllegalArgumentException( "Медикаментозное лечение с таким ИД не существует");
+        if ( drugRepository.findByName( drugRequest.getName() ).isPresent() ) throw new IllegalArgumentException( "Препарат с такми наименованием уже существует");
     }
 
     public List<Drug> findByIdDrugTreatment( Long id  ) throws Exception {

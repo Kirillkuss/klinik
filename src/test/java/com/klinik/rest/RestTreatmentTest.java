@@ -7,8 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 import java.time.format.DateTimeFormatter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -88,7 +86,6 @@ public class RestTreatmentTest {
                     .time( lessThan(2000L ))
                     .statusCode( 200 );
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.timeIn(TimeUnit.SECONDS) + " s."));
             Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
@@ -117,7 +114,6 @@ public class RestTreatmentTest {
                     .body()
                     .statusCode( 200 );
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.timeIn(TimeUnit.SECONDS) + " s."));
             Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
@@ -155,7 +151,6 @@ public class RestTreatmentTest {
                     .body()
                     .statusCode( 201 );
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.timeIn(TimeUnit.SECONDS) + " s."));
             Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
