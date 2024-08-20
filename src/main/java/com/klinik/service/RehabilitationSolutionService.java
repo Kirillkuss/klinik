@@ -21,6 +21,7 @@ public class RehabilitationSolutionService {
                                                .orElseThrow(() ->new NoSuchElementException("Ребилитационное лечение c таким наименованием не существует"));
     }
     public RehabilitationSolution saveRehabilitationSolution(RehabilitationSolution solution) throws Exception{
+        solution.setIdRehabilitationSolution( -1L );
         checkSaveRehabilitationSolution( solution );
         return rehabilitationSolutionRepository.save( solution );
     }
