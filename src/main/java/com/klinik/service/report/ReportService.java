@@ -44,6 +44,8 @@ public class ReportService {
      * @throws MyException
      */
     public List<ResponseReport> getStatReport(LocalDateTime dateFrom, LocalDateTime dateTo) throws Exception {
+        System.out.println( "dateFrom >>> " + dateFrom);
+        System.out.println( "dateTo >>> " + dateTo);
         List<ResponseReport> report = new ArrayList<>();
             entityManager.unwrap(Session.class).doWork((Connection conn) -> {
                 try (CallableStatement cs = conn.prepareCall("{ call report_stat( ?,?,? ) }")) {
@@ -72,6 +74,7 @@ public class ReportService {
      * @throws Exception
      */
     public List<ReportDrug> reportStatDrug( ReportDrugTreatmentRequest reportDrugTreatmentRequest ) throws Exception {
+        System.out.println( "reportDrugTreatmentRequest >>> " + reportDrugTreatmentRequest);
         List<ReportDrug> response = new ArrayList<>();
             entityManager.unwrap(Session.class).doWork((Connection conn) -> {
                 try (CallableStatement cs = conn.prepareCall("{ call report_stat_drug( ?,?,? ) }")) {
@@ -132,6 +135,7 @@ public class ReportService {
      * @throws Exception
      */
     public RecordPatientReport reportByPatietnWithRecordPatient( ReportPatientRequest reportPatientRequest ) throws Exception {
+        System.out.println( "reportPatientRequest >>> " + reportPatientRequest);
         List<RecordPatient> list = recordPatientRepository.findByParam( reportPatientRequest.getIdPatient(),
                                                                         reportPatientRequest.getStart() ,
                                                                         reportPatientRequest.getEnd());

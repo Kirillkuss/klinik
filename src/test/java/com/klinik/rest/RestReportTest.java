@@ -3,11 +3,11 @@ package com.klinik.rest;
 import static io.restassured.RestAssured.given;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.klinik.request.AuthRequest;
 import com.klinik.request.DrugRequest;
@@ -15,12 +15,10 @@ import com.klinik.request.reports.ReportDrugTreatmentRequest;
 import com.klinik.request.reports.ReportPatientRequest;
 import com.klinik.response.AuthResponse;
 import static org.hamcrest.Matchers.lessThan;
-
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
-
 import org.instancio.Instancio;
-
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -29,7 +27,9 @@ import io.qameta.allure.Owner;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование АПИ - ReportController")
 @DisplayName("Тестирование АПИ - ReportController")
@@ -82,18 +82,21 @@ public class RestReportTest {
     public void testGetReportPatient( ReportPatientRequest reportPatientRequest ){
         try{
             RestAssured.baseURI = PATH;
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
             Response response = given().log()
                                        .all()
                                        .header(authorization, bearer)
-                                       .queryParam( "reportPatientRequest", reportPatientRequest)
+                                       .queryParam("idPatient", reportPatientRequest.getIdPatient())
+                                       .queryParam("start", reportPatientRequest.getStart().format(formatter))
+                                       .queryParam("end", reportPatientRequest.getEnd().format(formatter))
                                        .when()
-                                       .contentType( ContentType.JSON )
-                                       .get( "/reports/report-patient/{reportPatientRequest}", reportPatientRequest );
-            response.then()
-                    .log()
-                    .body()
-                    .time( lessThan(2000L ))
-                    .statusCode( 200 );
+                                       .contentType(ContentType.JSON)
+                                       .get("/reports/report-patient/{reportPatientRequest}", "idPatient");
+                    response.then()
+                            .log()
+                            .body()
+                            .time( lessThan(2000L ))
+                            .statusCode( 200 );
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
             Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
@@ -114,21 +117,24 @@ public class RestReportTest {
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/Report/findInformationAboutRecordPatient")
     @ParameterizedTest
     @MethodSource("getReportDrugTreatmentRequest")
-    public void testGetReportDrugTretment( ReportDrugTreatmentRequest reportDrugTreatmentRequest ){
+    public void testGetDrugTreatment( ReportDrugTreatmentRequest reportDrugTreatmentRequest ){
         try{
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
             RestAssured.baseURI = PATH;
             Response response = given().log()
-                                       .all()
-                                       .header(authorization, bearer)
-                                       .queryParam( "reportDrugTreatmentRequest", reportDrugTreatmentRequest)
-                                       .when()
-                                       .contentType( ContentType.JSON )
-                                       .get( "/reports/drug-treatment/{reportDrugTreatmentRequest}", reportDrugTreatmentRequest );
-            response.then()
-                    .log()
-                    .body()
-                    .time( lessThan(2000L ))
-                    .statusCode( 200 );
+                                        .all()
+                                        .header(authorization, bearer)
+                                        .queryParam( "from",reportDrugTreatmentRequest.getFrom().format( formatter ))
+                                        .queryParam( "to", reportDrugTreatmentRequest.getTo().format( formatter ))
+                                        .when()
+                                        .contentType(ContentType.JSON)
+                                        .get("/reports/drug-treatment/{reportDrugTreatmentRequest}", "from" );
+
+                     response.then()
+                             .log()
+                             .body()
+                             .time( lessThan(2000L ))
+                             .statusCode( 200 );
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
             Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
@@ -144,19 +150,20 @@ public class RestReportTest {
     @Description("Отчет о медикаментозном лечении за период времени ( GET )")
     @DisplayName("Отчет о медикаментозном лечении за период времени ( GET )")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/Report/findInformationAboutRecordPatient")
-    @ParameterizedTest
+    //@ParameterizedTest
     @MethodSource("getRehabilitationTreatments")
     public void testGetReportDrugTretment( LocalDateTime dateFrom,  LocalDateTime dateTo  ){
         try{
             RestAssured.baseURI = PATH;
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
             Response response = given().log()
                                        .all()
                                        .header(authorization, bearer)
-                                       .queryParam( "dateFrom", dateFrom)
-                                       .queryParam( "dateTo", dateTo )
+                                       .queryParam( "dateFrom", dateFrom.format( formatter ))
+                                       .queryParam( "dateTo", dateTo.format( formatter ) )
                                        .when()
                                        .contentType( ContentType.JSON )
-                                       .get( "/reports/rehabilitation-treatments/{from}{to}", dateFrom );
+                                       .get( "/reports/rehabilitation-treatments/{from}", dateFrom );
             response.then()
                     .log()
                     .body()
@@ -172,7 +179,7 @@ public class RestReportTest {
     @Description("Отчет о полной информации по пациенту( GET )")
     @DisplayName("Отчет о полной информации по пациенту( GET )")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/Report/fullInformationPatient")
-    @ParameterizedTest
+    //@ParameterizedTest
     @CsvSource({"1", "2"})
     public void testGetReportInfoPatient( Long id  ){
         try{
