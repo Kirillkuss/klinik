@@ -28,6 +28,7 @@ public class UserController implements IUser {
 
     @Override
     public ResponseEntity<UserResponse> addUser( UserRequest userRequest) {
+        System.out.println(userRequest);
         return ResponseEntity.status(HttpStatus.OK)
                              .body( userService.addUser( userRequest ));
     }

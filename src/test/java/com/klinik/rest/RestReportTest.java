@@ -3,14 +3,12 @@ package com.klinik.rest;
 import static io.restassured.RestAssured.given;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.klinik.request.AuthRequest;
-import com.klinik.request.DrugRequest;
 import com.klinik.request.reports.ReportDrugTreatmentRequest;
 import com.klinik.request.reports.ReportPatientRequest;
 import com.klinik.response.AuthResponse;
@@ -18,7 +16,6 @@ import static org.hamcrest.Matchers.lessThan;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
-import org.instancio.Instancio;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -27,9 +24,7 @@ import io.qameta.allure.Owner;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование АПИ - ReportController")
 @DisplayName("Тестирование АПИ - ReportController")
@@ -150,7 +145,7 @@ public class RestReportTest {
     @Description("Отчет о медикаментозном лечении за период времени ( GET )")
     @DisplayName("Отчет о медикаментозном лечении за период времени ( GET )")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/Report/findInformationAboutRecordPatient")
-    //@ParameterizedTest
+    @ParameterizedTest
     @MethodSource("getRehabilitationTreatments")
     public void testGetReportDrugTretment( LocalDateTime dateFrom,  LocalDateTime dateTo  ){
         try{
@@ -179,7 +174,7 @@ public class RestReportTest {
     @Description("Отчет о полной информации по пациенту( GET )")
     @DisplayName("Отчет о полной информации по пациенту( GET )")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/Report/fullInformationPatient")
-    //@ParameterizedTest
+    @ParameterizedTest
     @CsvSource({"1", "2"})
     public void testGetReportInfoPatient( Long id  ){
         try{

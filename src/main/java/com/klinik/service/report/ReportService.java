@@ -6,12 +6,10 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import com.klinik.entity.RecordPatient;
 import com.klinik.excep.MyException;
-import com.klinik.repositories.CardPatientRepository;
 import com.klinik.repositories.RecordPatientRepository;
 import com.klinik.request.reports.ReportDrugTreatmentRequest;
 import com.klinik.request.reports.ReportPatientRequest;
@@ -20,7 +18,6 @@ import com.klinik.response.report.CardPatinetReport;
 import com.klinik.response.report.RecordPatientReport;
 import com.klinik.response.report.ResponseReport;
 import com.klinik.service.CardPatientService;
-
 import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import java.sql.Types;
@@ -44,8 +41,6 @@ public class ReportService {
      * @throws MyException
      */
     public List<ResponseReport> getStatReport(LocalDateTime dateFrom, LocalDateTime dateTo) throws Exception {
-        System.out.println( "dateFrom >>> " + dateFrom);
-        System.out.println( "dateTo >>> " + dateTo);
         List<ResponseReport> report = new ArrayList<>();
             entityManager.unwrap(Session.class).doWork((Connection conn) -> {
                 try (CallableStatement cs = conn.prepareCall("{ call report_stat( ?,?,? ) }")) {
@@ -74,7 +69,6 @@ public class ReportService {
      * @throws Exception
      */
     public List<ReportDrug> reportStatDrug( ReportDrugTreatmentRequest reportDrugTreatmentRequest ) throws Exception {
-        System.out.println( "reportDrugTreatmentRequest >>> " + reportDrugTreatmentRequest);
         List<ReportDrug> response = new ArrayList<>();
             entityManager.unwrap(Session.class).doWork((Connection conn) -> {
                 try (CallableStatement cs = conn.prepareCall("{ call report_stat_drug( ?,?,? ) }")) {
@@ -135,7 +129,6 @@ public class ReportService {
      * @throws Exception
      */
     public RecordPatientReport reportByPatietnWithRecordPatient( ReportPatientRequest reportPatientRequest ) throws Exception {
-        System.out.println( "reportPatientRequest >>> " + reportPatientRequest);
         List<RecordPatient> list = recordPatientRepository.findByParam( reportPatientRequest.getIdPatient(),
                                                                         reportPatientRequest.getStart() ,
                                                                         reportPatientRequest.getEnd());
