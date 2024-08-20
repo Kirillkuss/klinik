@@ -3,16 +3,13 @@ package com.klinik.rest;
 import static io.restassured.RestAssured.given;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-
 import java.util.stream.Stream;
 import java.time.format.DateTimeFormatter;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.klinik.entity.Treatment;
 import com.klinik.request.AuthRequest;
 import com.klinik.request.RequestTreatment;
 import com.klinik.response.AuthResponse;
@@ -101,11 +98,11 @@ public class RestTreatmentTest {
         try{
             RestAssured.baseURI = PATH;
             Response response = given().header(authorization, bearer)
-                                       .queryParam("idCard ", idCard)
-                                       .queryParam("idRehabilitationSolution ", idRehabilitationSolution)
+                                       .queryParam("idCard", idCard)
+                                       .queryParam("idRehabilitationSolution", idRehabilitationSolution)
                                        .when()
                                        .contentType(ContentType.JSON)
-                                       .get("/treatments/find/treatment/{id-card}{id-rehabilitation-solution}" );
+                                       .get("/treatments/find/treatment/{id-card}", idCard );
             response.then()
                     .statusCode( 200 );
             Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
@@ -118,13 +115,13 @@ public class RestTreatmentTest {
     public static Stream<Arguments> getAddTreatment() throws Exception{
         return Stream.of( Arguments.of( new RequestTreatment( LocalDateTime.now().minusDays(10),
                                                               LocalDateTime.now(),
-                                                       1L,
-                                                1L,
-                                     1L,
-                                                     1L )));
+                                                              1L,
+                                                              1L,
+                                                              1L,
+                                                              1L )));
     }
 
-    @Description("Добавить лечение для пациента(POST)")
+    @Description("Добавить лечение для пациента(POST)")  
     @DisplayName("Добавить лечение для пациента(POST)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/7.%20Treatment/addTreatment")
     @ParameterizedTest
