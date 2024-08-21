@@ -18,14 +18,14 @@ import lombok.ToString;
 @ToString
 public class ReportDrugTreatmentRequest {
 
-    @Schema( name        = "fromOne",
+    @Schema( name        = "from",
              description = "дата и время с какого",
              example     = "2021-01-24T14:02:35.584",
              required    = true )
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime from;
 
-    @Schema( name        = "toOne",
+    @Schema( name        = "to",
              description = "дата и время с какого",
              example     = "2021-01-24T14:02:35.584",
              required    = true )

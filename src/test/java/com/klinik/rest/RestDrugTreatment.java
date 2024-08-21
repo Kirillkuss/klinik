@@ -11,11 +11,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.klinik.entity.DrugTreatment;
-import com.klinik.request.AuthRequest;
 import com.klinik.request.DrugRequest;
-import com.klinik.response.AuthResponse;
 import static org.hamcrest.Matchers.lessThan;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -40,25 +37,7 @@ public class RestDrugTreatment {
     @BeforeAll
     @DisplayName("Получение токена") 
     public static void setUpClass() {
-        AuthRequest authRequest = new AuthRequest();
-        authRequest.setLogin( "admin");
-        authRequest.setPassword("admin");
-        try{
-            RestAssured.baseURI = PATH;
-            Response response = given().contentType( TYPE )
-                                       .body( authRequest )
-                                       .when()
-                                       .contentType( ContentType.JSON )
-                                       .post("/auth/login");                         
-            response.then().statusCode(200);
-            ObjectMapper objectMapper = new ObjectMapper();
-            AuthResponse authResponse = objectMapper.readValue(response.asString(), AuthResponse.class);
-            token = authResponse.getToken();
-            bearer = "Bearer " + token;
-            Allure.addAttachment("token:", TYPE, token );
-        }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
-        }
+        bearer = RestToken.getToken();
     }
 
     @Description("Список всех медикаментозных лечений ( GET )")

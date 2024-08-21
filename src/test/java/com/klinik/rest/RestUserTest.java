@@ -1,8 +1,6 @@
 package com.klinik.rest;
 
 import static io.restassured.RestAssured.given;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
 import org.instancio.Instancio;
 import org.instancio.Select;
@@ -13,12 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.klinik.entity.Document;
-import com.klinik.request.AuthRequest;
 import com.klinik.request.UserRequest;
-import com.klinik.request.reports.ReportPatientRequest;
-import com.klinik.response.AuthResponse;
 import static org.hamcrest.Matchers.lessThan;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -43,27 +36,8 @@ public class RestUserTest {
     @BeforeAll
     @DisplayName("Получение токена") 
     public static void setUpClass() {
-        AuthRequest authRequest = new AuthRequest();
-        authRequest.setLogin( "admin");
-        authRequest.setPassword("admin");
-        try{
-            RestAssured.baseURI = PATH;
-            Response response = given().contentType( TYPE )
-                                       .body( authRequest )
-                                       .when()
-                                       .contentType( ContentType.JSON )
-                                       .post("/auth/login");                         
-            response.then().statusCode(200);
-            ObjectMapper objectMapper = new ObjectMapper();
-            AuthResponse authResponse = objectMapper.readValue(response.asString(), AuthResponse.class);
-            token = authResponse.getToken();
-            bearer = "Bearer " + token;
-            Allure.addAttachment("token:", TYPE, token );
-        }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
-        }
+        bearer = RestToken.getToken();
     }
-
     @Description("List Users  ( GET )")
     @DisplayName("List Users  ( GET )")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/USERS/getUsers")

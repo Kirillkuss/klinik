@@ -1,7 +1,6 @@
 package com.klinik.controller;
 
 import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +27,6 @@ public class UserController implements IUser {
 
     @Override
     public ResponseEntity<UserResponse> addUser( UserRequest userRequest) {
-        System.out.println(userRequest);
         return ResponseEntity.status(HttpStatus.OK)
                              .body( userService.addUser( userRequest ));
     }

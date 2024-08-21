@@ -33,31 +33,12 @@ public class RestReportTest {
     private static final String PATH = "http://localhost:8082";
     private static final String TYPE = "application/json";
     private static final String authorization = "Authorization";
-    private static String token;
     private static String bearer;
 
     @BeforeAll
     @DisplayName("Получение токена") 
     public static void setUpClass() {
-        AuthRequest authRequest = new AuthRequest();
-        authRequest.setLogin( "admin");
-        authRequest.setPassword("admin");
-        try{
-            RestAssured.baseURI = PATH;
-            Response response = given().contentType( TYPE )
-                                       .body( authRequest )
-                                       .when()
-                                       .contentType( ContentType.JSON )
-                                       .post("/auth/login");                         
-            response.then().statusCode(200);
-            ObjectMapper objectMapper = new ObjectMapper();
-            AuthResponse authResponse = objectMapper.readValue(response.asString(), AuthResponse.class);
-            token = authResponse.getToken();
-            bearer = "Bearer " + token;
-            Allure.addAttachment("token:", TYPE, token );
-        }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
-        }
+        bearer = RestToken.getToken();
     }
 
     @DisplayName("Параметры для тестирования")
