@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import com.klinik.entity.Role;
 import com.klinik.request.UserRequest;
 import static org.hamcrest.Matchers.lessThan;
 import io.qameta.allure.Allure;
@@ -53,13 +55,7 @@ public class RestUserTest {
                                             .generate( field(UserRequest::getLogin),gen -> gen.text().pattern("#a#a#a#a#a#a#a#a"))
                                             .generate( field(UserRequest::getPassword),gen -> gen.text().pattern("#a#a#a#a#a#a#a#a#a#a#a#a" ))
                                             .generate( field(UserRequest::getEmail),gen -> gen.text().pattern("#a#a#a#a#a#a@email.com" ))
-                                            .ignore(Select.field( UserRequest::getRole )).create();
-        /**UserRequest userRequest  = Instancio.of(UserRequest.class)
-                                            .generate(field(UserRequest::getLogin), gen -> gen.text().pattern("[a-z]{8}")) 
-                                            .generate(field(UserRequest::getPassword), gen -> gen.text().pattern("(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{12,}")) 
-                                            .generate(field(UserRequest::getEmail), gen -> gen.text().pattern("[a-zA-Z0-9._%+-]{1,15}@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}")) 
-                                            .ignore(Select.field( UserRequest::getRole )).create();*/
-        userRequest.setRole("USER");
+                                            .generate( field(UserRequest::getRole ),gen -> gen.oneOf( "USER", "ADMIN")).create();
         return Stream.of( Arguments.of( userRequest ));
     }
 
@@ -84,7 +80,7 @@ public class RestUserTest {
                              .time( lessThan(2000L ))
                              .statusCode( 200 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -109,7 +105,7 @@ public class RestUserTest {
                              .time( lessThan(2000L ))
                              .statusCode( 200 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -134,7 +130,7 @@ public class RestUserTest {
                              .time( lessThan(2000L ))
                              .statusCode( 200 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -159,7 +155,7 @@ public class RestUserTest {
                              .time( lessThan(2000L ))
                              .statusCode( 200 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -184,7 +180,7 @@ public class RestUserTest {
                              .time( lessThan(2000L ))
                              .statusCode( 200 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }

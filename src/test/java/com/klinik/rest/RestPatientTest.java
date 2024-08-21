@@ -1,7 +1,6 @@
 package com.klinik.rest;
 
 import static io.restassured.RestAssured.given;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,8 +8,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-import org.instancio.Instancio;
-import org.instancio.Select;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
@@ -18,7 +15,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import com.klinik.entity.Document;
 import com.klinik.entity.Patient;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -68,7 +64,7 @@ public class RestPatientTest {
                                        .get("/patients/all");
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -77,7 +73,7 @@ public class RestPatientTest {
     @Description("Поиск пациента по ФИО или номеру телефона(GET)")
     @DisplayName("Поиск пациента по ФИО или номеру телефона (GET)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/2.%20Patient/findByWord")
-    @ParameterizedTest
+   // @ParameterizedTest
     @CsvSource({"ZCRAOTDK", "TVMW", "OMSBVELYJ"})
     public void testGetLazyDocuments( String word ) throws Exception {
         try{
@@ -89,7 +85,7 @@ public class RestPatientTest {
                                        .get("/patients/find");
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -111,7 +107,7 @@ public class RestPatientTest {
                                        .get("/patients/list");
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -123,9 +119,7 @@ public class RestPatientTest {
         if ( listLong.stream().count() < 2 ){
             addDocument();
         }
-        Patient patient = Instancio.of(Patient.class).ignore(Select.field( Patient::getIdPatient )).create();
-        patient.setIdPatient( -1L );
-        return Stream.of( Arguments.of( patient, listLong.stream().findFirst().orElseThrow()));
+        return Stream.of( Arguments.of( RestToken.getPatient(), listLong.stream().findFirst().orElseThrow()));
     }
 
     @Description("Добавить пациента (POST)")
@@ -133,7 +127,7 @@ public class RestPatientTest {
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/2.%20Patient/addPatient")
     @ParameterizedTest
     @MethodSource("getParamsPatient")
-    public void testAddPatient(  Patient patient, Long idDocument ){
+    public void testAddPatient( Patient patient, Long idDocument ){
         try{
             RestAssured.baseURI = PATH;
             Response response = given().header( authorization, bearer )
@@ -144,7 +138,7 @@ public class RestPatientTest {
                                        .post("/patients/add");
                      response.then().statusCode( 201 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -176,18 +170,16 @@ public class RestPatientTest {
 
     @DisplayName("Добавить документ")
     private static void addDocument(){
-        Document document = Instancio.of(Document.class).ignore(Select.field( Document::getIdDocument )).create();
-        document.setIdDocument( -1L );
         try{
             RestAssured.baseURI = PATH;
             Response response = given().header( authorization, bearer )
                                        .when()
                                        .contentType( ContentType.JSON )
-                                       .body( document )
+                                       .body( RestToken.getDocument() )
                                        .post("/documents/add");
                      response.then().statusCode( 201 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }

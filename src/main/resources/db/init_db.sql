@@ -13,7 +13,7 @@ CREATE TABLE Patient(
 	name VARCHAR ( 30 ) NOT NULL,
 	full_name VARCHAR ( 30 ) NOT NULL,
 	gender VARCHAR ( 5 ) NOT NULL,
-	phone  VARCHAR ( 12 ) NOT NULL UNIQUE,
+	phone  VARCHAR ( 13 ) NOT NULL UNIQUE,
 	address VARCHAR ( 100 ) NOT NULL ,
 	document_id int unique references public.Document ( id_document )
 );

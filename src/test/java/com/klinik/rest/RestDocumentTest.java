@@ -9,10 +9,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.klinik.entity.Document;
-import com.klinik.request.AuthRequest;
-import com.klinik.response.AuthResponse;
+import com.klinik.entity.Patient;
+import static org.instancio.Select.field;
 import org.instancio.Instancio;
 import org.instancio.Select;
 import io.qameta.allure.Allure;
@@ -51,7 +50,7 @@ public class RestDocumentTest {
     }
 
     @Description("Получение всех документов (GET)")
-    @DisplayName("олучение всех документов  (GET)")
+    @DisplayName("Получение всех документов (GET)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/3.%20Documents/getAllDocuments")
     @RepeatedTest( 1 )
     @TmsLink("TEST-3545")
@@ -64,7 +63,7 @@ public class RestDocumentTest {
                                        .get("/documents/list");
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -86,7 +85,7 @@ public class RestDocumentTest {
                                        .get("/documents/list");
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -96,7 +95,7 @@ public class RestDocumentTest {
     @DisplayName("Получение документов по слову (GET)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/3.%20Documents/getLazyDocumentt")
     @ParameterizedTest
-    @CsvSource({"UWTBOOVPA", "BIPMHMWDEJ"})
+    @CsvSource({"735586550", "839-372-827-73"})
     public void testGetFindWord( String word ) throws Exception {
         try{
             RestAssured.baseURI = PATH;
@@ -107,7 +106,7 @@ public class RestDocumentTest {
                                        .get("/documents/find");
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -115,9 +114,7 @@ public class RestDocumentTest {
 
     @DisplayName("Параметры для тестирования")
     public static Stream<Arguments> getParams() throws Exception{
-        Document document = Instancio.of(Document.class).ignore(Select.field( Document::getIdDocument )).create();
-        document.setIdDocument( -1L );
-        return Stream.of( Arguments.of( document));
+        return Stream.of( Arguments.of( RestToken.getDocument() ));
     }
 
     @Description("Добавить документ")
@@ -135,7 +132,7 @@ public class RestDocumentTest {
                                        .post("/documents/add");
                      response.then().statusCode( 201 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }

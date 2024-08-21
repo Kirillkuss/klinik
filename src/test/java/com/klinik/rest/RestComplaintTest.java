@@ -110,7 +110,7 @@ public class RestComplaintTest {
                                        .post("/complaints/complaint");
                      response.then().statusCode( 201 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -138,7 +138,7 @@ public class RestComplaintTest {
                                        .post("/complaints/typecomplain");
                      response.then().statusCode( 201 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }

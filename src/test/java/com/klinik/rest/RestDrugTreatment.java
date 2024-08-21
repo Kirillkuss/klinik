@@ -67,7 +67,7 @@ public class RestDrugTreatment {
                              .time( lessThan(2000L ))
                              .statusCode( 200 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -94,7 +94,7 @@ public class RestDrugTreatment {
                              .time( lessThan(2000L ))
                              .statusCode( 200 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -128,7 +128,7 @@ public class RestDrugTreatment {
                              .time( lessThan(2000L ))
                              .statusCode( 201 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -162,7 +162,7 @@ public class RestDrugTreatment {
                              .time( lessThan(2000L ))
                              .statusCode( 200 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }

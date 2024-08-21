@@ -5,15 +5,11 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.klinik.entity.Doctor;
-import com.klinik.request.AuthRequest;
-import com.klinik.response.AuthResponse;
 import groovy.util.logging.Slf4j;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -64,7 +60,7 @@ public class RestDoctorTest {
                                        .get("/doctors/counts");
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -85,15 +81,15 @@ public class RestDoctorTest {
                                        .post("/doctors/lazy");
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
     @DisplayName("Параметры для тестирования")
-    public static Stream<Arguments> getParams() throws Exception{
-        return Stream.of( Arguments.of( new Doctor( -1L, "GERP", "DERT", "ERYT") ) );
+    public static Stream<Arguments> getParams() throws Exception{                 
+        return Stream.of( Arguments.of( RestToken.getDoctor() ));
     }
  
     @Description("Добавить врача")
@@ -110,19 +106,18 @@ public class RestDoctorTest {
                                        .post("/doctors/add");
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
-
 
     @Description("Получение врачей по ФИО")
     @DisplayName("Получение врачей по ФИО (GET)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/findByFIO")
     @TmsLink("TEST-3545")
     @ParameterizedTest
-    @CsvSource({"SECOND, 1, 14", "Mouse, 2, 5", "TEST, 8, 10"})
+    @CsvSource({"SECOND, 1, 14", "Mouse, 1, 5", "TEST, 1, 10"})
     public void testGetByFIO(String word, int page, int size ) {
         try{
             RestAssured.baseURI = PATH;
@@ -132,9 +127,8 @@ public class RestDoctorTest {
                                        .queryParam("size", size)
                                        .when()
                                        .get("/doctors/fio" );
-                     response.then().statusCode(200);
-            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then().statusCode(200);            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
