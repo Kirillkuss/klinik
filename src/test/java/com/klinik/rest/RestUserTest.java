@@ -27,40 +27,24 @@ import io.restassured.response.Response;
 @DisplayName("Тестирование АПИ - ReportController")
 public class RestUserTest {
 
-    private static final String PATH = "http://localhost:8082";
-    private static final String TYPE = "application/json";
-    private static final String authorization = "Authorization";
-    private static String token;
+    private static String PATH;
+    private static String TYPE;
+    private static String authorization;
+    private static String rezult;
+    private static String error;
     private static String bearer;
-
+    public static  String leadTime;
+    
     @BeforeAll
-    @DisplayName("Получение токена") 
+    @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-        bearer = RestToken.getToken();
-    }
-    @Description("List Users  ( GET )")
-    @DisplayName("List Users  ( GET )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/USERS/getUsers")
-    @Test
-    public void testGetListUser(){
-        try{
-            RestAssured.baseURI = PATH;
-            Response response = given().log()
-                                       .all()
-                                       .header(authorization, bearer)
-                                       .when()
-                                       .contentType(ContentType.JSON)
-                                       .get("/users");
-                    response.then()
-                            .log()
-                            .body()
-                            .time( lessThan(2000L ))
-                            .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
-        }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
-        }
+        bearer        = RestToken.getToken();
+        PATH          = RestToken.PATH;
+        TYPE          = RestToken.TYPE;
+        authorization = RestToken.authorization;
+        rezult        = RestToken.rezult;
+        error         = RestToken.error;
+        leadTime      = RestToken.leadTime;
     }
 
     @DisplayName("Параметры для тестирования")
@@ -94,15 +78,15 @@ public class RestUserTest {
                                        .contentType(ContentType.JSON)
                                        .body( userRequest )
                                        .post("/users");
-                    response.then()
-                            .log()
-                            .body()
-                            .time( lessThan(2000L ))
-                            .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .log()
+                             .body()
+                             .time( lessThan(2000L ))
+                             .statusCode( 200 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -119,15 +103,15 @@ public class RestUserTest {
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/users/keystore");
-                    response.then()
-                            .log()
-                            .body()
-                            .time( lessThan(2000L ))
-                            .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .log()
+                             .body()
+                             .time( lessThan(2000L ))
+                             .statusCode( 200 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -144,15 +128,15 @@ public class RestUserTest {
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/users/keys");
-                    response.then()
-                            .log()
-                            .body()
-                            .time( lessThan(2000L ))
-                            .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .log()
+                             .body()
+                             .time( lessThan(2000L ))
+                             .statusCode( 200 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -169,15 +153,15 @@ public class RestUserTest {
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/users/encrypt");
-                    response.then()
-                            .log()
-                            .body()
-                            .time( lessThan(2000L ))
-                            .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .log()
+                             .body()
+                             .time( lessThan(2000L ))
+                             .statusCode( 200 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -194,15 +178,15 @@ public class RestUserTest {
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/users/database/keys");
-                    response.then()
-                            .log()
-                            .body()
-                            .time( lessThan(2000L ))
-                            .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .log()
+                             .body()
+                             .time( lessThan(2000L ))
+                             .statusCode( 200 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 

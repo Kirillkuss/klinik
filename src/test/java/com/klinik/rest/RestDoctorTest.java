@@ -31,15 +31,24 @@ import io.restassured.response.Response;
 @DisplayName("Тестирование АПИ - DoctorControllerr")
 public class RestDoctorTest {
 
-    private static final String PATH = "http://localhost:8082";
-    private static final String TYPE = "application/json";
-    private final String authorization = "Authorization";
+    private static String PATH;
+    private static String TYPE;
+    private static String authorization;
+    private static String rezult;
+    private static String error;
     private static String bearer;
-
+    public static  String leadTime;
+    
     @BeforeAll
-    @DisplayName("Получение токена") 
+    @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-        bearer = RestToken.getToken();
+        bearer        = RestToken.getToken();
+        PATH          = RestToken.PATH;
+        TYPE          = RestToken.TYPE;
+        authorization = RestToken.authorization;
+        rezult        = RestToken.rezult;
+        error         = RestToken.error;
+        leadTime      = RestToken.leadTime;
     }
     
     @Description("Получение количества врачей (GET)")
@@ -53,10 +62,11 @@ public class RestDoctorTest {
             Response response = given().header( authorization, bearer )
                                        .when()
                                        .get("/doctors/counts");
-            response.then().statusCode(200);
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+                     response.then().statusCode(200);
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -73,10 +83,11 @@ public class RestDoctorTest {
                                        .queryParam("size", size)
                                        .when()
                                        .post("/doctors/lazy");
-            response.then().statusCode(200);
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+                     response.then().statusCode(200);
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -97,11 +108,11 @@ public class RestDoctorTest {
                                        .contentType(ContentType.JSON)
                                        .body( doctor )
                                        .post("/doctors/add");
-            response.then()
-                    .statusCode(200);
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+                     response.then().statusCode(200);
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -121,10 +132,11 @@ public class RestDoctorTest {
                                        .queryParam("size", size)
                                        .when()
                                        .get("/doctors/fio" );
-            response.then().statusCode(200);
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+                     response.then().statusCode(200);
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     } 
 } 

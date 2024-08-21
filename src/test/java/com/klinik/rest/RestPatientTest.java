@@ -35,17 +35,25 @@ import io.restassured.response.Response;
 @DisplayName("Тестирование АПИ - PatientController")
 public class RestPatientTest {
 
-    private static final String PATH = "http://localhost:8082";
-    private static final String TYPE = "application/json";
-    private static final String authorization = "Authorization";
+    private static String PATH;
+    private static String TYPE;
+    private static String authorization;
+    private static String rezult;
+    private static String error;
     private static String bearer;
-
-    @BeforeAll
-    @DisplayName("Получение токена") 
-    public static void setUpClass() {
-        bearer = RestToken.getToken();
-    }
+    public static  String leadTime;
     
+    @BeforeAll
+    @DisplayName("Получение входных параметров для выполения запросов") 
+    public static void setUpClass() {
+        bearer        = RestToken.getToken();
+        PATH          = RestToken.PATH;
+        TYPE          = RestToken.TYPE;
+        authorization = RestToken.authorization;
+        rezult        = RestToken.rezult;
+        error         = RestToken.error;
+        leadTime      = RestToken.leadTime;
+    }
     @Description("Получение всех пациентов (GET)")
     @DisplayName("Получение всех пациентов  (GET)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/2.%20Patient/getAllPatients")
@@ -58,10 +66,11 @@ public class RestPatientTest {
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .get("/patients/all");
-            response.then().statusCode(200);
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+                     response.then().statusCode(200);
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -78,10 +87,11 @@ public class RestPatientTest {
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .get("/patients/find");
-            response.then().statusCode(200);
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+                     response.then().statusCode(200);
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -99,10 +109,11 @@ public class RestPatientTest {
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .get("/patients/list");
-            response.then().statusCode(200);
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+                     response.then().statusCode(200);
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -131,11 +142,11 @@ public class RestPatientTest {
                                        .contentType( ContentType.JSON )
                                        .body( patient )
                                        .post("/patients/add");
-            response.then()
-                    .statusCode( 201 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+                     response.then().statusCode( 201 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
 
     }
@@ -174,11 +185,11 @@ public class RestPatientTest {
                                        .contentType( ContentType.JSON )
                                        .body( document )
                                        .post("/documents/add");
-            response.then()
-                    .statusCode( 201 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
+                     response.then().statusCode( 201 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 

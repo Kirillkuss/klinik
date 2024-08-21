@@ -7,11 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.klinik.request.AuthRequest;
 import com.klinik.request.reports.ReportDrugTreatmentRequest;
 import com.klinik.request.reports.ReportPatientRequest;
-import com.klinik.response.AuthResponse;
 import static org.hamcrest.Matchers.lessThan;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,16 +26,25 @@ import io.restassured.response.Response;
 @Epic(value = "Тестирование АПИ - ReportController")
 @DisplayName("Тестирование АПИ - ReportController")
 public class RestReportTest {
-
-    private static final String PATH = "http://localhost:8082";
-    private static final String TYPE = "application/json";
-    private static final String authorization = "Authorization";
+    
+    private static String PATH;
+    private static String TYPE;
+    private static String authorization;
+    private static String rezult;
+    private static String error;
     private static String bearer;
-
+    public static  String leadTime;
+    
     @BeforeAll
-    @DisplayName("Получение токена") 
+    @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-        bearer = RestToken.getToken();
+        bearer        = RestToken.getToken();
+        PATH          = RestToken.PATH;
+        TYPE          = RestToken.TYPE;
+        authorization = RestToken.authorization;
+        rezult        = RestToken.rezult;
+        error         = RestToken.error;
+        leadTime      = RestToken.leadTime;
     }
 
     @DisplayName("Параметры для тестирования")
@@ -68,15 +74,15 @@ public class RestReportTest {
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/reports/report-patient/{reportPatientRequest}", "idPatient");
-                    response.then()
-                            .log()
-                            .body()
-                            .time( lessThan(2000L ))
-                            .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .log()
+                             .body()
+                             .time( lessThan(2000L ))
+                             .statusCode( 200 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -111,10 +117,10 @@ public class RestReportTest {
                              .body()
                              .time( lessThan(2000L ))
                              .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -140,15 +146,15 @@ public class RestReportTest {
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .get( "/reports/rehabilitation-treatments/{from}", dateFrom );
-            response.then()
-                    .log()
-                    .body()
-                    .time( lessThan(2000L ))
-                    .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .log()
+                             .body()
+                             .time( lessThan(2000L ))
+                             .statusCode( 200 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -167,15 +173,15 @@ public class RestReportTest {
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .get( "/reports/info-patient/{id-card}", id );
-            response.then()
-                    .log()
-                    .body()
-                    .time( lessThan(2000L ))
-                    .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .log()
+                             .body()
+                             .time( lessThan(2000L ))
+                             .statusCode( 200 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
     

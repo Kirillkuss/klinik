@@ -28,16 +28,24 @@ import io.restassured.response.Response;
 @DisplayName("Тестирование АПИ - DrugTreatmentController")
 public class RestDrugTreatment {
 
-    private static final String PATH = "http://localhost:8082";
-    private static final String TYPE = "application/json";
-    private static final String authorization = "Authorization";
-    private static String token;
+    private static String PATH;
+    private static String TYPE;
+    private static String authorization;
+    private static String rezult;
+    private static String error;
     private static String bearer;
-
+    public static  String leadTime;
+    
     @BeforeAll
-    @DisplayName("Получение токена") 
+    @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-        bearer = RestToken.getToken();
+        bearer        = RestToken.getToken();
+        PATH          = RestToken.PATH;
+        TYPE          = RestToken.TYPE;
+        authorization = RestToken.authorization;
+        rezult        = RestToken.rezult;
+        error         = RestToken.error;
+        leadTime      = RestToken.leadTime;
     }
 
     @Description("Список всех медикаментозных лечений ( GET )")
@@ -53,15 +61,15 @@ public class RestDrugTreatment {
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/drug-treatments/list");
-            response.then()
-                    .log()
-                    .body()
-                    .time( lessThan(2000L ))
-                    .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .log()
+                             .body()
+                             .time( lessThan(2000L ))
+                             .statusCode( 200 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -80,15 +88,15 @@ public class RestDrugTreatment {
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .get( "/drug-treatments/drug-treatment/{id}", id );
-            response.then()
-                    .log()
-                    .body()
-                    .time( lessThan(2000L ))
-                    .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .log()
+                             .body()
+                             .time( lessThan(2000L ))
+                             .statusCode( 200 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -114,15 +122,15 @@ public class RestDrugTreatment {
                                        .contentType( ContentType.JSON )
                                        .body( drugTreatment )
                                        .post( "/drug-treatments/add/drug-treatment");
-            response.then()
-                    .log()
-                    .body()
-                    .time( lessThan(2000L ))
-                    .statusCode( 201 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .log()
+                             .body()
+                             .time( lessThan(2000L ))
+                             .statusCode( 201 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -148,16 +156,16 @@ public class RestDrugTreatment {
                                        .contentType( ContentType.JSON )
                                        .body( drugRequest )
                                        .post( "/drug-treatments/add/drug");
-            response.then()
-                    .log()
-                    .body()
-                    .time( lessThan(2000L ))
-                    .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .log()
+                             .body()
+                             .time( lessThan(2000L ))
+                             .statusCode( 200 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
-    }
+    }    
     
 }

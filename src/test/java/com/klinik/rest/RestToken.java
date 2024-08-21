@@ -11,10 +11,15 @@ import io.restassured.response.Response;
 
 public class RestToken {
 
-    private static final String PATH = "http://localhost:8082";
-    private static final String TYPE = "application/json";
+    public static final String PATH = "http://localhost:8082";
+    public static final String TYPE = "application/json";
+    public static final String authorization = "Authorization";
+    public static final String rezult = "Результат: ";
+    public static final String error  = "Ошибка: ";
+    public static final String leadTime = "Время выполнения: ";
     private static String token;
     private static String bearer;
+
     
     @DisplayName("Получение токена") 
     public static String getToken() {

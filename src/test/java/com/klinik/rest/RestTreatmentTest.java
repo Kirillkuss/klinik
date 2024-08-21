@@ -26,15 +26,24 @@ import static org.hamcrest.Matchers.lessThan;
 @DisplayName("Тестирование АПИ - TreatmentController")
 public class RestTreatmentTest {
 
-    private static final String PATH = "http://localhost:8082";
-    private static final String TYPE = "application/json";
-    private static final String authorization = "Authorization";
+    private static String PATH;
+    private static String TYPE;
+    private static String authorization;
+    private static String rezult;
+    private static String error;
     private static String bearer;
-
+    public static  String leadTime;
+    
     @BeforeAll
-    @DisplayName("Получение токена") 
+    @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-        bearer = RestToken.getToken();
+        bearer        = RestToken.getToken();
+        PATH          = RestToken.PATH;
+        TYPE          = RestToken.TYPE;
+        authorization = RestToken.authorization;
+        rezult        = RestToken.rezult;
+        error         = RestToken.error;
+        leadTime      = RestToken.leadTime;
     }
 
     @DisplayName("Параметры для тестирования")
@@ -60,13 +69,13 @@ public class RestTreatmentTest {
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/treatments/find/treat/{id-card}", idCard );
-            response.then()
-                    .time( lessThan(2000L ))
-                    .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .time( lessThan(2000L ))
+                             .statusCode( 200 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -86,15 +95,15 @@ public class RestTreatmentTest {
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/treatments/find/treatment/{id-card}", idCard );
-            response.then()
-                    .time( lessThan(2000L ))
-                    .log()
-                    .body()
-                    .statusCode( 200 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .time( lessThan(2000L ))
+                             .log()
+                             .body()
+                             .statusCode( 200 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
@@ -123,15 +132,15 @@ public class RestTreatmentTest {
                                        .body( requestTreatment )
                                        .contentType(ContentType.JSON)
                                        .post("/treatments/treatment/add" );
-            response.then()
-                    .time( lessThan(2000L ))
-                    .log()
-                    .body()
-                    .statusCode( 201 );
-            Allure.addAttachment("Результат:", TYPE, response.andReturn().asString() );
-            Allure.addAttachment("Время выполнения:",  TYPE, String.valueOf( response.time() + " ms."));
+                     response.then()
+                             .time( lessThan(2000L ))
+                             .log()
+                             .body()
+                            .statusCode( 201 );
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime,  TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
-            Allure.addAttachment("Ошибка:", TYPE, ex.getMessage() );
+            Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
 
