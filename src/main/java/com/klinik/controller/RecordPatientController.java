@@ -2,6 +2,7 @@ package com.klinik.controller;
 
 import com.klinik.entity.RecordPatient;
 import com.klinik.excep.MyException;
+import com.klinik.request.RequestRecordPatient;
 import com.klinik.rest.IRecordPatinet;
 import com.klinik.service.RecordPatientService;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,9 @@ public class RecordPatientController implements IRecordPatinet {
         return new ResponseEntity<>( recordPatientService.findAll(), HttpStatus.OK );
     }
 
-    public ResponseEntity addRecordPatient( RecordPatient recordPatient, Long idDoctor, Long idCardPatient ) throws Exception, MyException{
-        return new ResponseEntity<>( recordPatientService.saveRecordPatient( recordPatient,  idDoctor, idCardPatient ), HttpStatus.CREATED );                
+    public ResponseEntity addRecordPatient( RequestRecordPatient requestRecordPatient ) throws Exception, MyException{
+        
+        return new ResponseEntity<>( recordPatientService.saveRecordPatient( requestRecordPatient ), HttpStatus.CREATED );                
     }
     
     public ResponseEntity<List<RecordPatient>> findByParams( Long id, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception, MyException{

@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,6 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-@AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
 public class TypeComplaint implements Serializable {
 
@@ -43,7 +41,7 @@ public class TypeComplaint implements Serializable {
 
     @Column( name = "name")
     @Schema( name        = "name",
-             description = "Наименование поджалобы",
+             description = "Наименование под жалобы",
              example     = "Парапарезы",
              required    = true )
     private String name;
@@ -53,9 +51,4 @@ public class TypeComplaint implements Serializable {
    @JoinColumn(name = "complaint_id", referencedColumnName = "id_complaint")
    @JsonInclude(Include.NON_NULL)
    private Complaint complaint;
-
-   public TypeComplaint( Long idTypeComplaint, String name ){
-        this.idTypeComplaint = idTypeComplaint;
-        this.name = name;
-   }
 }

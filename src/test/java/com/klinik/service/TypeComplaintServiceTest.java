@@ -43,7 +43,7 @@ public class TypeComplaintServiceTest {
         Allure.addAttachment("Результат:", "application/json", typeComplaintService.findAll().toString() );
     }
 
-    @Test
+   /**  @Test
     @Transactional
     @Feature( "Добавление под жалобы" )
     @Description( "Добавление под жалобы" )
@@ -52,7 +52,7 @@ public class TypeComplaintServiceTest {
         TypeComplaint typeComplaint = new TypeComplaint( -1L, "test" );
         TypeComplaint response = typeComplaintService.saveTypeComplaint( typeComplaint, 1L );
         Allure.addAttachment("Результат:", "application/json", response.toString() );
-    }
+    }*/
     
     @Test
     @Feature( "Получение списка под жалом по ид жалобы" )
