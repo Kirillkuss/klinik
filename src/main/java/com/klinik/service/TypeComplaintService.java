@@ -7,9 +7,13 @@ import com.klinik.entity.TypeComplaint;
 import com.klinik.entity.Complaint;
 import com.klinik.repositories.ComplaintRepository;
 import com.klinik.repositories.TypeComplaintRepository;
+import com.klinik.request.RequestTypeComplaint;
+
 import lombok.RequiredArgsConstructor;
 import java.util.NoSuchElementException;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TypeComplaintService {
@@ -21,10 +25,13 @@ public class TypeComplaintService {
         return typeComplaintRepository.findAll();
     }
 
-    public TypeComplaint saveTypeComplaint( TypeComplaint typeComplaint, Long idComplaint ) throws Exception{
-        Optional<Complaint> complaint = complaintRepository.findById( idComplaint);
+    public TypeComplaint saveTypeComplaint( RequestTypeComplaint requestTypeComplaint ) throws Exception{
+        Optional<Complaint> complaint = complaintRepository.findById( requestTypeComplaint.getIdComplaint());
+        TypeComplaint typeComplaint = new TypeComplaint();
+        typeComplaint.setIdTypeComplaint( -1L );
+        typeComplaint.setName( requestTypeComplaint.getName() );
         checkSaveTypeComplaint( complaint, typeComplaint );
-        typeComplaint.setComplaint( complaint.get() );
+        typeComplaint.setComplaint( complaint.orElseThrow() );
         return typeComplaintRepository.save( typeComplaint );
     }
 

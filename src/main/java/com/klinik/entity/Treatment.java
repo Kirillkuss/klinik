@@ -2,10 +2,14 @@ package com.klinik.entity;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -25,7 +29,9 @@ import javax.persistence.Table;
 @Table( name = "Treatment")
 @Setter
 @Getter
-@RequiredArgsConstructor
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class Treatment implements Serializable {
 
@@ -36,7 +42,7 @@ public class Treatment implements Serializable {
              description = "ИД лечения",
              example     = "100",
              required    = true )
-    private Long id_treatment;
+    private Long idTreatment;
 
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -45,7 +51,7 @@ public class Treatment implements Serializable {
              description = "Дата начала лечения",
              example     = "2023-01-22 18:00:00.745",
              required    = true )
-    private LocalDateTime time_start_treatment;
+    private LocalDateTime timeStartTreatment;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column( name = "end_time_treatment")
@@ -53,7 +59,7 @@ public class Treatment implements Serializable {
              description = "Дата окончания лечения",
              example     = "2023-07-22 18:00:00.745",
              required    = true )
-    private LocalDateTime end_time_treatment;
+    private LocalDateTime endTimeTreatment;
 
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
@@ -63,7 +69,7 @@ public class Treatment implements Serializable {
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "rehabilitation_solution_id", referencedColumnName = "id_rehabilitation_solution")
-    private RehabilitationSolution rehabilitation_solution;
+    private RehabilitationSolution rehabilitationSolution;
 
     @Hidden
     @Column( name = "card_patient_id")
@@ -71,7 +77,7 @@ public class Treatment implements Serializable {
              description = "ИД карты пациента",
              example     = "1",
              required    = true )
-    private Long card_patient_id;
+    private Long cardPatientId;
 
     @Hidden
     @OneToOne(cascade = CascadeType.ALL)

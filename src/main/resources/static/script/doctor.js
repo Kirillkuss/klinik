@@ -87,7 +87,7 @@ function AddDoctor() {
                     $('table').append($(tr.join('')));
                     var modal = document.getElementById('testFormDoctor');
                     modal.style.display = 'none';
-                   //    location.reload();
+                    location.reload();
                 }, error: function ( error ){
                     $('#errorToast').text( error.responseText ).show();
                     $('#liveToastBtn').click();

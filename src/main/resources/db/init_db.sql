@@ -13,7 +13,7 @@ CREATE TABLE Patient(
 	name VARCHAR ( 30 ) NOT NULL,
 	full_name VARCHAR ( 30 ) NOT NULL,
 	gender VARCHAR ( 5 ) NOT NULL,
-	phone  VARCHAR ( 12 ) NOT NULL UNIQUE,
+	phone VARCHAR ( 13 ) NOT NULL UNIQUE,
 	address VARCHAR ( 100 ) NOT NULL ,
 	document_id int unique references public.Document ( id_document )
 );
@@ -36,14 +36,13 @@ CREATE TABLE Rehabilitation_solution(
 	survey_plan VARCHAR ( 255 ) NOT NULL
 );
 
-
 CREATE TABLE Card_patient(
 	id_card_patient serial PRIMARY KEY,
 	diagnosis VARCHAR ( 50 ) NOT NULL,
 	allergy   bool NOT NULL,
 	note VARCHAR ( 255 ),
 	сonclusion VARCHAR ( 255 ),
-	pacient_id int unique references public.Patient ( id_patient )
+	patient_id int unique references public.Patient ( id_patient )
 );
 
 CREATE TABLE Drug_treatment(
