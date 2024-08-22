@@ -2,6 +2,7 @@ HELP.md
 logs/
 target/
 data/
+allure-results/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

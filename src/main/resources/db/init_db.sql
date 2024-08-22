@@ -13,7 +13,7 @@ CREATE TABLE Patient(
 	name VARCHAR ( 30 ) NOT NULL,
 	full_name VARCHAR ( 30 ) NOT NULL,
 	gender VARCHAR ( 5 ) NOT NULL,
-	phone  VARCHAR ( 12 ) NOT NULL UNIQUE,
+	phone  VARCHAR ( 13 ) NOT NULL UNIQUE,
 	address VARCHAR ( 100 ) NOT NULL ,
 	document_id int unique references public.Document ( id_document )
 );
@@ -43,7 +43,7 @@ CREATE TABLE Card_patient(
 	allergy   bool NOT NULL,
 	note VARCHAR ( 255 ),
 	сonclusion VARCHAR ( 255 ),
-	pacient_id int unique references public.Patient ( id_patient )
+	patient_id int unique references public.Patient ( id_patient )
 );
 
 CREATE TABLE Drug_treatment(
@@ -97,3 +97,33 @@ CREATE TABLE Card_patient_Complaint(
 	FOREIGN KEY (card_patient_id) REFERENCES Card_patient(id_card_patient),
 	FOREIGN KEY (type_complaint_id) REFERENCES Type_complaint(id_type_complaint)
 );
+
+CREATE TABLE kl_user(
+	id serial PRIMARY KEY,
+	login VARCHAR( 50 ) NOT NULL,
+	password VARCHAR( 250 ) NOT NULL,
+	role VARCHAR( 5 ) NOT NULL,
+	email VARCHAR( 50 ),
+	salt VARCHAR( 250 ) NOT NULL,
+	status BOOLEAN DEFAULT FALSE 
+);
+
+CREATE TABLE Key_Entity(
+	id_key serial PRIMARY KEY,
+	key_alice VARCHAR ( 255 ) NOT NULL,
+	date_create timestamp(6) NOT NULL,
+	key_public TEXT NOT NULL, 
+	key_private TEXT  NOT NULL
+);
+
+CREATE TABLE User_Blocking(
+	id_block serial PRIMARY KEY,
+	date_block timestamp(6) NOT NULL,
+	date_plan_unblock timestamp(6),
+	date_unblock timestamp(6),
+	user_id int8 NOT NULL,
+	status_block int,
+	status BOOLEAN,
+	FOREIGN KEY (user_id) REFERENCES public.kl_user(id)
+)
+

@@ -2,6 +2,7 @@ package com.klinik.controller;
 
 import com.klinik.entity.Drug;
 import com.klinik.entity.DrugTreatment;
+import com.klinik.request.DrugRequest;
 import com.klinik.rest.IDrugTreatment;
 import com.klinik.service.DrugService;
 import com.klinik.service.DrugTreatmentService;
@@ -26,7 +27,7 @@ public class DrugTreatmentController implements IDrugTreatment{
     public ResponseEntity addDrugTreatment( DrugTreatment drugTreatment ) throws Exception{
         return new ResponseEntity<>( serviceDrugTreatment.addDrugTreatment( drugTreatment ), HttpStatus.CREATED );
     }
-    public ResponseEntity saveDrug( Drug drug, Long idDrugTreatment ) throws Exception{
-        return new ResponseEntity<>( drugService.saveDrug( drug, idDrugTreatment ), HttpStatus.OK);
+    public ResponseEntity saveDrug( DrugRequest drugRequest ) throws Exception{
+        return new ResponseEntity<>( drugService.saveDrug( drugRequest ), HttpStatus.OK);
     }
 }

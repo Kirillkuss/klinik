@@ -1,7 +1,6 @@
 package com.klinik.service;
 
 import com.klinik.entity.Doctor;
-import com.klinik.excep.MyException;
 import com.klinik.repositories.DoctorRerository;
 import javax.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @Slf4j
@@ -71,12 +71,12 @@ public class DoctorService {
                                                 .skip(( page - 1 ) * size )
                                                 .limit( size )
                                                 .toList();
-        if( response.isEmpty() ) throw new MyException( 404, "По данному запросу ничего не найдено");
+        if( response.isEmpty() ) throw new NoSuchElementException( "По данному запросу ничего не найдено");
         return response;
     }
 
     public Doctor saveDoctor( Doctor doctor ) throws Exception{
-        if ( doctorRerository.findById( doctor.getIdDoctor() ).isPresent()) throw new MyException( 409, "Пользователь с таким ИД уще существует");
+        if ( doctorRerository.findById( doctor.getIdDoctor() ).isPresent()) throw new IllegalArgumentException( "Пользователь с таким ИД уще существует");
         Doctor response = doctorRerository.save( doctor );
         log.info( " saveDoctor >> " + response );
         return response;
