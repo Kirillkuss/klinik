@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RequestMapping( value = "rehabilitation-treatments")
@@ -25,7 +24,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
         @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
         @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
-@SecurityRequirement(name = "Bearer Authentication")
 public interface IRehabilitationSolution {
     @GetMapping(value = "/all")
     @Operation( description = "Список всех реабилитационных лечений", summary = "Список всех Реабилитационных лечений")
