@@ -2,11 +2,13 @@ package com.klinik.service;
 
 import java.util.List;
 import com.klinik.entity.Complaint;
-import com.klinik.excep.MyException;
 import com.klinik.repositories.ComplaintRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ComplaintService {
@@ -17,8 +19,9 @@ public class ComplaintService {
         return complaintRepository.findAll();
     }
     public Complaint saveСomplaint( Complaint сomplaint ) throws Exception{
-        if( complaintRepository.findById( сomplaint.getIdComplaint() ).isEmpty() == false) throw new MyException( 409, "Справочник жалоба с таким ИД уже существует");
-        if( complaintRepository.findByName( сomplaint.getFunctionalImpairment() ).isEmpty() == false ) throw new MyException( 409, "Справочник жалоба с таким наименованием уже существует");
+        log.info("сomplaint >> " + сomplaint);
+        if( complaintRepository.findById( сomplaint.getIdComplaint() ).isEmpty() == false) throw new IllegalArgumentException( "Справочник жалоба с таким ИД уже существует");
+        if( complaintRepository.findByName( сomplaint.getFunctionalImpairment() ).isEmpty() == false ) throw new IllegalArgumentException( "Справочник жалоба с таким наименованием уже существует");
         return complaintRepository.save( сomplaint );
     }
 

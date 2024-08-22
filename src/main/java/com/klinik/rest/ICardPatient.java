@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.klinik.entity.CardPatient;
 import com.klinik.excep.MyException;
+import com.klinik.request.CoplaintRequest;
 import com.klinik.response.BaseResponseError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RequestMapping( value = "card-patinets")
@@ -24,6 +26,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
         @ApiResponse( responseCode = "400", description = "Плохой запрос ", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
         @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation =  BaseResponseError.class ))) })
     })
+@SecurityRequirement(name = "Bearer Authentication")
 public interface ICardPatient {
     @GetMapping(value = "/document")
     @Operation( description = "Поиск карты пациента по документу пациента (СНИЛС, номер документа, ПОЛИС)", summary = "Поиск карты пациента по документу пациента")
@@ -37,10 +40,9 @@ public interface ICardPatient {
     @PostMapping (value = "/add")
     @Operation( description = "Добавить карту пациента", summary = "Добавить карту пациента")
     public ResponseEntity<CardPatient> saveCardPatient( @RequestBody CardPatient card, @Parameter( description = "ИД пациента:", example = "1") Long idpatient) throws Exception, MyException;
-    @PostMapping (value = "/complaint/{id-card}{id-complaint}")
+    @PostMapping (value = "/complaint")
     @Operation( description = "Добавление жалобы пациенту", summary = "Добавление жалобы пациенту")
-    public ResponseEntity saveComplaintToCardPatient( @Parameter( description = "ИД карты пациента:", example = "1") Long idcard,
-                                                      @Parameter( description = "ИД Под жалобы:" , example =  "1") Long idcomplaint ) throws Exception, MyException;
+    public ResponseEntity saveComplaintToCardPatient(  @RequestBody CoplaintRequest coplaintRequest) throws Exception, MyException;
 
     
 }
