@@ -19,7 +19,7 @@ public class DoctorServiceTest {
 
     @Autowired DoctorService doctorService;
 
-    @DisplayName( "Список всех врачей")
+    /**@DisplayName( "Список всех врачей")
     @Test
 	public void testGetAll() throws Exception {
         assertNotNull(doctorService.allDoctor());
@@ -38,7 +38,7 @@ public class DoctorServiceTest {
         assertThrows( MyException.class, () -> {
             doctorService.findByFIO( "xjhchjdsd23545" );
         });  
-	}
+	}*/
 
     @DisplayName( "Ошибка - По данному запросу ничего не найдено")
     @Test

@@ -22,8 +22,8 @@ import javax.persistence.Table;
 @Setter
 @Getter
 @RequiredArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode
+@AllArgsConstructor
 @ToString
 public class Doctor  implements Serializable {
 

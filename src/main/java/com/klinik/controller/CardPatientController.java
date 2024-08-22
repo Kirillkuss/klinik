@@ -2,6 +2,7 @@ package com.klinik.controller;
 
 import com.klinik.entity.CardPatient;
 import com.klinik.excep.MyException;
+import com.klinik.request.CoplaintRequest;
 import com.klinik.rest.ICardPatient;
 import com.klinik.service.CardPatientService;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,8 @@ public class CardPatientController implements ICardPatient{
     public ResponseEntity<CardPatient> saveCardPatient( CardPatient cardPatient, Long idPatient) throws Exception, MyException{
         return new ResponseEntity<>( cardPatientService.saveCardPatient( cardPatient, idPatient ), HttpStatus.OK);
     }
-    public ResponseEntity saveComplaintToCardPatient( Long idCard, Long idComplaint ) throws Exception, MyException{
-        cardPatientService.addCardPatientComplaint( idCard, idComplaint );
+    public ResponseEntity saveComplaintToCardPatient(  CoplaintRequest coplaintRequest ) throws Exception, MyException{
+        cardPatientService.addCardPatientComplaint( coplaintRequest.getIdCard(), coplaintRequest.getIdComplaint() );
         return new ResponseEntity<>( HttpStatus.CREATED );
     }
 }

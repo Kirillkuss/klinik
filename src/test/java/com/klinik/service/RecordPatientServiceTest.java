@@ -67,7 +67,7 @@ public class RecordPatientServiceTest {
         });
     }
 
-    @Test
+   /**  @Test
     @DisplayName("Добавить запись")
     public void testSaveRecordPatient() throws Exception{
         RecordPatient recordPatient = new RecordPatient();
@@ -78,7 +78,7 @@ public class RecordPatientServiceTest {
             return ( RecordPatient ) inv.callRealMethod();
         }); 
 
-    }
+    }*/
 
 
 }

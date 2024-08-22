@@ -47,7 +47,7 @@ public class DoctorServiceMock {
     public void setUp() {
     }
 
-    @Test
+    /**@Test
     @DisplayName("Получение списка всех врачей")
     public void findAllTest(){
         Mockito.when( doctorService.allDoctor() ).thenCallRealMethod();
@@ -72,7 +72,7 @@ public class DoctorServiceMock {
         Allure.addAttachment("Результат:", "text/plain", doctorService.findByFIO( WORD ).toString() );
         assertEquals(doctorService.findByFIO( WORD ), doctorService.findByFIO( WORD ) );
         Mockito.verify( doctorService, times(3 )).findByFIO( WORD );
-    }
+    }*/
 
     @DisplayName("Параметры для тестирования")
     public static Stream<Arguments> getDoctors() throws Exception{

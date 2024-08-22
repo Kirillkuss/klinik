@@ -1,5 +1,6 @@
 package com.klinik.rest;
 
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,19 +20,27 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping( value = "doctors")
 @Tag(name = "1. Doctors", description = "Доктора:")
 @ApiResponses(value = {
-    @ApiResponse( responseCode = "200", description = "Успешно", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Doctor.class))) }),
-    @ApiResponse( responseCode = "400", description = "Плохой запрос",    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
-    @ApiResponse( responseCode = "500", description = "Ошибка сервера",   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
+    @ApiResponse( responseCode = "200", description = "Успешно",        content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Doctor.class))) }),
+    @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
+    @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
 public interface IDoctor {
-    @GetMapping(value = "/all")
-    @Operation( description = "Список всех докторов", summary = "Список всех докторов")
-    public ResponseEntity  getAllDoc() throws Exception;
-    @GetMapping(value = "/fio/{word}")
+
+    @GetMapping(value = "/fio/{word}{page}{size}")
     @Operation( description = "Поиск врача по ФИО", summary = "Поиск врача по ФИО")
-    public ResponseEntity findByFIO(@Parameter( description = "ФИО врача") String word ) throws Exception;
+    public ResponseEntity<List<Doctor>> findByFIO( @Parameter( description = "ФИО врача") String word,
+                                                   @Parameter( description = "страница") int page,
+                                                   @Parameter( description = "размер") int size  ) throws Exception;
+
     @PostMapping( value = "/add")
     @Operation( description = "Добавить доктора", summary = "Добавить доктора")
-    public ResponseEntity addDoctor(@RequestBody Doctor doc ) throws Exception;
+    public ResponseEntity<Doctor> addDoctor(@RequestBody Doctor doc ) throws Exception;
+
+    @PostMapping("/lazy")
+    @Operation( description ="", summary = "")
+    public ResponseEntity<List<Doctor>> getLazyDoctors( int page, int size );
+
+    @GetMapping("/counts")
+    public ResponseEntity<Long> getCountDoctors();
     
 }
