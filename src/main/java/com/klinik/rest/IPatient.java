@@ -32,7 +32,7 @@ public interface IPatient {
     @Operation( description = "Список всех пациентов", summary = "Список всех пациентов")
     public ResponseEntity<List<Patient>> getAllPatients() throws Exception, MyException;
     
-    @PostMapping( value = "/add/{pat}{id-document}")
+    @PostMapping( value = "/add")
     @Operation( description = "Добавить пациента", summary = "Добавить пациента")
     public ResponseEntity<Patient> addPatient( @RequestBody Patient patient,  @Parameter( description = "Ид документа" , example = "1") Long idDocument) throws Exception, MyException;
     

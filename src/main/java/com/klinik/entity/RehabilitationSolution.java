@@ -1,5 +1,6 @@
 package com.klinik.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,11 +25,12 @@ import javax.persistence.Table;
 public class RehabilitationSolution  implements Serializable {
 
     @Id
+    @Hidden
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_rehabilitation_solution")
     @Schema( name        = "idRehabilitationSolution",
              description = "ИД реабилитационного лечения",
-             example     = "100",
+             example     = "-1",
              required    = true )
     private Long idRehabilitationSolution;
 
