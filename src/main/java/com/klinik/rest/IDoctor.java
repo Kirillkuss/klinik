@@ -22,9 +22,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping( value = "doctors")
 @Tag(name = "1. Doctors", description = "Доктора:")
 @ApiResponses(value = {
-    @ApiResponse( responseCode = "200", description = "Успешно", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Doctor.class))) }),
-    @ApiResponse( responseCode = "400", description = "Плохой запрос",    content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
-    @ApiResponse( responseCode = "500", description = "Ошибка сервера",   content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
+    @ApiResponse( responseCode = "200", description = "Успешно",        content = { @Content( array = @ArraySchema(schema = @Schema( implementation = Doctor.class))) }),
+    @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
+    @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
 @SecurityRequirement(name = "Bearer Authentication")
 public interface IDoctor {

@@ -2,13 +2,14 @@ package com.klinik.rest;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.klinik.entity.Treatment;
+import com.klinik.request.RequestTreatment;
 import com.klinik.response.BaseResponseError;
 import com.klinik.response.ResponseTreatment;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,6 +21,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.models.parameters.PathParameter;
 
 @RequestMapping( value = "treatments")
 @Tag(name = "7. Treatment", description = "Лечение пациентов:")
@@ -33,13 +35,9 @@ public interface ITreatment {
     //@GetMapping(value = "/all")
     @Operation( description = "Получение списка всех лечений", summary = "Получение списка всех лечений")
     public ResponseEntity<List<Treatment>> getAllTreatment() throws Exception;
-    @PostMapping( value = "/treatment/add/{request}{id-rug}{id-card}{id-rehabilitation-solution}{id-doctor}")
+    @PostMapping( value = "/treatment/add")
     @Operation( description = "Добавить лечение для пациента", summary = "Добавить лечение для пациента")
-    public ResponseEntity<Treatment> addTreatment(  Treatment treatment,
-                                                    @Parameter( description = "ИД медикаментозного лечения (Препарата):", example = "1") Long idDrug,
-                                                    @Parameter( description = "Ид карты пациента:",                       example = "1") Long idCard,
-                                                    @Parameter( description = "Ид реабилитационного лечения:",            example = "1") Long idRehabilitationSolution,
-                                                    @Parameter( description = "Ид доктор:",                               example = "1") Long idDoctor ) throws Exception;
+    public ResponseEntity<Treatment> addTreatment(  @RequestBody RequestTreatment requestTreatment ) throws Exception;
     @GetMapping(value = "/find/treat/{id-card}{from}{to}")
     @Operation( description = "Получение списка лечений по параметрам", summary = "Получение списка лечений по параметрам")
     public ResponseEntity<List<Treatment>> findByParamIdCardAndDateStart( @Parameter( description = "Ид карты",                example = "1") Long idCard,

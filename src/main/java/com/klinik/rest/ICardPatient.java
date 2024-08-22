@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.klinik.entity.CardPatient;
 import com.klinik.excep.MyException;
+import com.klinik.request.CoplaintRequest;
 import com.klinik.response.BaseResponseError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -39,10 +40,9 @@ public interface ICardPatient {
     @PostMapping (value = "/add")
     @Operation( description = "Добавить карту пациента", summary = "Добавить карту пациента")
     public ResponseEntity<CardPatient> saveCardPatient( @RequestBody CardPatient card, @Parameter( description = "ИД пациента:", example = "1") Long idpatient) throws Exception, MyException;
-    @PostMapping (value = "/complaint/{id-card}{id-complaint}")
+    @PostMapping (value = "/complaint")
     @Operation( description = "Добавление жалобы пациенту", summary = "Добавление жалобы пациенту")
-    public ResponseEntity saveComplaintToCardPatient( @Parameter( description = "ИД карты пациента:", example = "1") Long idcard,
-                                                      @Parameter( description = "ИД Под жалобы:" , example =  "1") Long idcomplaint ) throws Exception, MyException;
+    public ResponseEntity saveComplaintToCardPatient(  @RequestBody CoplaintRequest coplaintRequest) throws Exception, MyException;
 
     
 }

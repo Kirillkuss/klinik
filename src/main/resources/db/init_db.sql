@@ -43,7 +43,7 @@ CREATE TABLE Card_patient(
 	allergy   bool NOT NULL,
 	note VARCHAR ( 255 ),
 	сonclusion VARCHAR ( 255 ),
-	pacient_id int unique references public.Patient ( id_patient )
+	patient_id int unique references public.Patient ( id_patient )
 );
 
 CREATE TABLE Drug_treatment(
