@@ -38,11 +38,11 @@ public interface IPatient {
     @Operation( description = "Добавить пациента", summary = "Добавить пациента")
     public ResponseEntity<Patient> addPatient( @RequestBody Patient patient,  @Parameter( description = "Ид документа" , example = "1") Long idDocument) throws Exception, MyException;
     
-    @RequestMapping( method = RequestMethod.GET, value = "/find")
+    @RequestMapping( method = RequestMethod.GET, value = "/find/{word}")
     @Operation( description = "Поиск пациента по ФИО или номеру телефона", summary = "Поиск пациента по ФИО или номеру телефона")
     public ResponseEntity<List<Patient>> findByWord( @Parameter( description = "Параметр поиска")  String word ) throws Exception, MyException;
 
-    @GetMapping(value = "/list")
+    @GetMapping(value = "/list/{page}{size}")
     @Operation( description = "ленивая загрузка пациентов", summary = "ленивая загрузка пациентов")
     public ResponseEntity<List<Patient>> getLazyLoad( int page, int size) ;
 }

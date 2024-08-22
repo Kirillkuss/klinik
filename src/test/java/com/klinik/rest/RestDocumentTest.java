@@ -95,7 +95,7 @@ public class RestDocumentTest {
     @DisplayName("Получение документов по слову (GET)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/3.%20Documents/getLazyDocumentt")
     @ParameterizedTest
-    @CsvSource({"735586550", "839-372-827-73"})
+    @CsvSource({"757124751", "914-398-570-25"})
     public void testGetFindWord( String word ) throws Exception {
         try{
             RestAssured.baseURI = PATH;
@@ -103,7 +103,7 @@ public class RestDocumentTest {
                                        .queryParam("word", word )
                                        .when()
                                        .contentType( ContentType.JSON )
-                                       .get("/documents/find");
+                                       .get("/documents/find/{word}", word);
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
             Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));

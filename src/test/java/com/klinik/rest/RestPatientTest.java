@@ -73,8 +73,8 @@ public class RestPatientTest {
     @Description("Поиск пациента по ФИО или номеру телефона(GET)")
     @DisplayName("Поиск пациента по ФИО или номеру телефона (GET)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/2.%20Patient/findByWord")
-   // @ParameterizedTest
-    @CsvSource({"ZCRAOTDK", "TVMW", "OMSBVELYJ"})
+    @ParameterizedTest
+    @CsvSource({"Анатольевич", "Алексей", "+375257200778"})
     public void testGetLazyDocuments( String word ) throws Exception {
         try{
             RestAssured.baseURI = PATH;
@@ -82,7 +82,7 @@ public class RestPatientTest {
                                        .queryParam("word", word)
                                        .when()
                                        .contentType( ContentType.JSON )
-                                       .get("/patients/find");
+                                       .get("/patients/find/{word}", word);
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
             Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
@@ -104,7 +104,7 @@ public class RestPatientTest {
                                        .queryParam("size", size)
                                        .when()
                                        .contentType( ContentType.JSON )
-                                       .get("/patients/list");
+                                       .get("/patients/list/{page}",page);
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
             Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));

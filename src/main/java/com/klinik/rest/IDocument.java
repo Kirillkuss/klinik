@@ -39,7 +39,7 @@ public interface IDocument {
     public ResponseEntity<Document> addDocument(@RequestBody Document document ) throws Exception, MyException;
 
     @Operation( description = "Найти документ", summary = "Найти документ")
-    @RequestMapping( method = RequestMethod.GET , value = "/find")
+    @RequestMapping( method = RequestMethod.GET , value = "/find/{word}")
     public ResponseEntity<List<Document>> findByWord( @Parameter( description = "Параметр поиска") String word ) ;
 
     @GetMapping(value = "/list/{page}{size}")

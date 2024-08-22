@@ -126,8 +126,9 @@ public class RestDoctorTest {
                                        .queryParam("page", page)
                                        .queryParam("size", size)
                                        .when()
-                                       .get("/doctors/fio" );
-                     response.then().statusCode(200);            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+                                       .get("/doctors/fio/{word}", word);
+                     response.then().statusCode(200);           
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
             Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
