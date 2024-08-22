@@ -2,6 +2,7 @@ package com.klinik.controller;
 
 import com.klinik.entity.Treatment;
 import com.klinik.excep.MyException;
+import com.klinik.request.RequestTreatment;
 import com.klinik.rest.ITreatment;
 import com.klinik.service.CardPatientService;
 import com.klinik.service.DoctorService;
@@ -23,9 +24,8 @@ public class TreatmentController implements ITreatment{
     public ResponseEntity<List<Treatment>> getAllTreatment() throws Exception{
         return new ResponseEntity<>(treatmentService.findAll(), HttpStatus.OK );
     }
-    public ResponseEntity<Treatment> addTreatment( Treatment treatment, Long idDrug, Long idCardPatient,
-                                                   Long idRehabilitationSolution, Long idDoctor ) throws Exception{
-        return new ResponseEntity<>( treatmentService.addTreatment( treatment, idDrug, idCardPatient, idRehabilitationSolution, idDoctor ), HttpStatus.CREATED );              
+    public ResponseEntity<Treatment> addTreatment( RequestTreatment requestTreatment ) throws Exception{
+        return new ResponseEntity<>( treatmentService.addTreatment( requestTreatment ), HttpStatus.CREATED );              
     }
     public ResponseEntity<List<Treatment>> findByParamIdCardAndDateStart( Long id, LocalDateTime dateFrom, LocalDateTime dateTo) throws Exception{
         return new ResponseEntity<>( treatmentService.findByParamIdCardAndDateStart(id, dateFrom, dateTo), HttpStatus.OK );

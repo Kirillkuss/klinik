@@ -1,10 +1,10 @@
 package com.klinik.service;
 
 import com.klinik.entity.RecordPatient;
-import com.klinik.excep.MyException;
 import com.klinik.repositories.CardPatientRepository;
 import com.klinik.repositories.DoctorRerository;
 import com.klinik.repositories.RecordPatientRepository;
+import com.klinik.request.RequestRecordPatient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -22,10 +22,15 @@ public class RecordPatientService {
     public List<RecordPatient> findAll() {
         return recordPatientRepository.findAll();
     }
-    public RecordPatient saveRecordPatient( RecordPatient recordPatient, Long idDoctor, Long idCardPatient ) throws Exception{
-        if ( recordPatientRepository.findById( recordPatient.getIdRecord()).isPresent()) throw new MyException( 409, "Запись к врачу с таким ИД уже существует, установите другой ИД записи к врачу");
-        recordPatient.setDoctor( doctorRerository.findById( idDoctor ).orElseThrow(() -> new NoSuchElementException( "Указан неверный идентификатор доктора") ) );
-        recordPatient.setCardPatientId( cardPatientRepository.findById( idCardPatient ).map( s -> s.getIdCardPatient()).orElseThrow(() -> new NoSuchElementException( "Указан неверный идентификатор карты пациента") ));
+    
+    public RecordPatient saveRecordPatient( RequestRecordPatient requestRecordPatient  ) throws Exception{
+        RecordPatient recordPatient = new RecordPatient();
+        if ( requestRecordPatient.getDateAppointment().isBefore( requestRecordPatient.getDateRecord()) ) throw new IllegalArgumentException( "Дата приема не может быть раньше даты записи");
+        recordPatient.setDateRecord( requestRecordPatient.getDateRecord() );
+        recordPatient.setDateAppointment(requestRecordPatient.getDateAppointment());
+        recordPatient.setNumberRoom(requestRecordPatient.getNumberRoom());
+        recordPatient.setDoctor( doctorRerository.findById( requestRecordPatient.getIdDoctor() ).orElseThrow(() -> new NoSuchElementException( "Указан неверный идентификатор доктора") ) );
+        recordPatient.setCardPatientId( cardPatientRepository.findById( requestRecordPatient.getIdCardPatient() ).map( s -> s.getIdCardPatient()).orElseThrow(() -> new NoSuchElementException( "Указан неверный идентификатор карты пациента") ));
         return recordPatientRepository.save( recordPatient );
     }
     public List<RecordPatient> findByParam( Long id, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception{

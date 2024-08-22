@@ -44,8 +44,8 @@ function lazyDoctors( page, size) {
     $('table tbody').on('mousedown', 'tr', function(e) {
         $(this).addClass('highlight').siblings().removeClass('highlight');
     });
-     //$.post('https://localhost:8082/web/doctors/lazy?page='+page+'&size='+size, function(json) {
-        $.get('https://localhost:8082/web/doctors/?page='+page+'&size='+size, function(json) {
+     $.post('https://localhost:8082/web/doctors/lazy?page='+page+'&size='+size, function(json) {
+        //$.get('https://localhost:8082/web/doctors/?page='+page+'&size='+size, function(json) {
         var tr=[];
         for (var i = 0; i < json.length; i++) {
             tr.push('<tr>');
@@ -87,7 +87,7 @@ function AddDoctor() {
                     $('table').append($(tr.join('')));
                     var modal = document.getElementById('testFormDoctor');
                     modal.style.display = 'none';
-                   //    location.reload();
+                    location.reload();
                 }, error: function ( error ){
                     $('#errorToast').text( error.responseText ).show();
                     $('#liveToastBtn').click();
