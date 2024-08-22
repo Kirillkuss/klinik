@@ -33,7 +33,7 @@ public interface IDocument {
     public ResponseEntity<List<Document>> getAllDocuments() throws Exception, MyException;
 
     @Operation( description = "Добавить документ", summary = "Добавить документ")
-    @RequestMapping( method = RequestMethod.POST , value = "/add/{docum}")
+    @RequestMapping( method = RequestMethod.POST , value = "/add")
     public ResponseEntity<Document> addDocument(@RequestBody Document document ) throws Exception, MyException;
 
     @Operation( description = "Найти документ", summary = "Найти документ")

@@ -3,6 +3,7 @@ package com.klinik.rest;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.klinik.entity.RehabilitationSolution;
@@ -31,7 +32,7 @@ public interface IRehabilitationSolution {
     @Operation( description = "Поиск по названию лечения", summary = "Поиск по названию лечения")
     public ResponseEntity<RehabilitationSolution> findByName( @Parameter( description = "Наименование лечения") String name ) throws Exception;
     @Operation( description = "Добавить способ лечения", summary = "Добавить способ лечения")
-    @RequestMapping( method = RequestMethod.POST, value = "/add/{solution}")
-    public ResponseEntity<RehabilitationSolution> save( RehabilitationSolution solution ) throws Exception;
+    @RequestMapping( method = RequestMethod.POST, value = "/add")
+    public ResponseEntity<RehabilitationSolution> save( @RequestBody RehabilitationSolution solution ) throws Exception;
     
 }
