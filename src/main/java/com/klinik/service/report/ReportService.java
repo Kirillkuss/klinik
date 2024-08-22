@@ -1,37 +1,34 @@
 package com.klinik.service.report;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.logging.Level;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import com.klinik.entity.RecordPatient;
 import com.klinik.excep.MyException;
-import com.klinik.repositories.CardPatientRepository;
 import com.klinik.repositories.RecordPatientRepository;
+import com.klinik.request.reports.ReportDrugTreatmentRequest;
+import com.klinik.request.reports.ReportPatientRequest;
 import com.klinik.response.ReportDrug;
 import com.klinik.response.report.CardPatinetReport;
 import com.klinik.response.report.RecordPatientReport;
 import com.klinik.response.report.ResponseReport;
+import com.klinik.service.CardPatientService;
+import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import java.sql.Types;
+import java.sql.CallableStatement;
 
 @Service
 @RequiredArgsConstructor
 public class ReportService {
 
-    @PersistenceContext
-    private EntityManager em;
-
-    private final CardPatientRepository cardPatientRepository;
+    private final EntityManager entityManager;
+    private final CardPatientService cardPatientService;
     private final RecordPatientRepository recordPatientRepository;
 
     /**
@@ -45,62 +42,52 @@ public class ReportService {
      */
     public List<ResponseReport> getStatReport(LocalDateTime dateFrom, LocalDateTime dateTo) throws Exception {
         List<ResponseReport> report = new ArrayList<>();
-        try {
-            String sql = "SELECT t.name as name_solution, COUNT( u.rehabilitation_solution_id ) as count_solution, COUNT(DISTINCT u.card_patient_id) as count_patient FROM Treatment u"
-                    + " left join Rehabilitation_solution t on t.id_rehabilitation_solution = u.rehabilitation_solution_id"
-                    + " where  u.time_start_treatment BETWEEN ? and ?  group by t.name";
-            Session session;
-            session = em.unwrap(Session.class);
-            session.doWork((Connection conn) -> {
-                try (PreparedStatement st = conn.prepareStatement(sql)) {
-                    st.setTimestamp(1, Timestamp.valueOf(dateFrom));
-                    st.setTimestamp(2, Timestamp.valueOf(dateTo));
-                    try (ResultSet set = st.executeQuery()) {
+            entityManager.unwrap(Session.class).doWork((Connection conn) -> {
+                try (CallableStatement cs = conn.prepareCall("{ call report_stat( ?,?,? ) }")) {
+                    conn.setAutoCommit(false);
+                    cs.setTimestamp(1, Timestamp.valueOf( dateFrom ));
+                    cs.setTimestamp(2, Timestamp.valueOf( dateTo ));
+                    cs.registerOutParameter(3, Types.OTHER);
+                    cs.execute();
+                    try (ResultSet set =(ResultSet) cs.getObject( 3 )) {
                         while (set.next()) {
                             ResponseReport responseReport = new ResponseReport();
-                            responseReport.setName_rehabilitation_treatment(set.getString(1));
-                            responseReport.setCount_treatment(set.getLong(2));
-                            responseReport.setCount_patient(set.getLong(3));
+                            responseReport.setNameRehabilitationTreatment(set.getString("name_solution"));
+                            responseReport.setCountTreatment(set.getLong("count_solution"));
+                            responseReport.setCountPatient(set.getLong("count_patient"));
                             report.add(responseReport);
                         }
                     }
-                } catch (SQLException ex) {
-                    java.util.logging.Logger.getLogger(ReportService.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
-        } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(ReportService.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return report;
     }
-
-    public List<ReportDrug> reportStatDrug(LocalDateTime dateFrom, LocalDateTime dateTo) throws Exception {
+    /**
+     * Отчет по медикаментозному лечению за промежуток времени
+     * @param reportDrugTreatmentRequest - входной параметр
+     * @return List ReportDrug
+     * @throws Exception
+     */
+    public List<ReportDrug> reportStatDrug( ReportDrugTreatmentRequest reportDrugTreatmentRequest ) throws Exception {
         List<ReportDrug> response = new ArrayList<>();
-        try {
-            String request = "SELECT dt.name , COUNT( u.drug_id ) as count_drug_treatment, COUNT(DISTINCT u.card_patient_id) as count_patient FROM Treatment u "
-                    + " left join Drug d on d.id_drug = u.drug_id "
-                    + " left join Drug_treatment dt on dt.id_drug_treatment = d.drug_treatment_id"
-                    + " where u.time_start_treatment BETWEEN ? and ? group by dt.name ";
-            Session session = em.unwrap(Session.class);
-            session.doWork((Connection conn) -> {
-                try (PreparedStatement ps = conn.prepareStatement(request)) {
-                    ps.setTimestamp(1, Timestamp.valueOf(dateFrom));
-                    ps.setTimestamp(2, Timestamp.valueOf(dateTo));
-                    try (ResultSet rs = ps.executeQuery()) {
+            entityManager.unwrap(Session.class).doWork((Connection conn) -> {
+                try (CallableStatement cs = conn.prepareCall("{ call report_stat_drug( ?,?,? ) }")) {
+                    conn.setAutoCommit(false);
+                    cs.setTimestamp(1, Timestamp.valueOf( reportDrugTreatmentRequest.getFrom() ));
+                    cs.setTimestamp(2, Timestamp.valueOf( reportDrugTreatmentRequest.getTo() ));
+                    cs.registerOutParameter(3, Types.OTHER);
+                    cs.execute();
+                    try (ResultSet rs = (ResultSet) cs.getObject( 3 )) {
                         while (rs.next()) {
                             ReportDrug drug = new ReportDrug();
-                            drug.setNameDrugTreatment(rs.getString(1));
-                            drug.setCountDrugTreatment(rs.getLong(2));
-                            drug.setCountPatient(rs.getLong(3));
+                            drug.setNameDrugTreatment(rs.getString("name"));
+                            drug.setCountDrugTreatment(rs.getLong("count_drug_treatment"));
+                            drug.setCountPatient(rs.getLong("count_patient"));
                             response.add(drug);
                         }
                     }
                 }
             });
-        } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(ReportService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
         return response;
     }
 
@@ -111,59 +98,45 @@ public class ReportService {
      * @return ResponsePatientReport
      * @throws Exception
      */
-    public CardPatinetReport reportInformationAboutPatient(Long idCardPatient) throws Exception, MyException {
+    public CardPatinetReport reportInformationAboutPatient(Long idCardPatient) throws Exception {
         CardPatinetReport response = new CardPatinetReport();
-        response.setCard(cardPatientRepository.findById(idCardPatient)
-                .orElseThrow(() -> new NoSuchElementException("Карты пациента с таким ИД не существует")));
-        try {
-            String sql2 = "SELECT t.name as name_solution, COUNT( u.rehabilitation_solution_id ) as count_solution FROM Treatment u"
-                    + " left join Rehabilitation_solution t on t.id_rehabilitation_solution = u.rehabilitation_solution_id"
-                    + " left join Card_patient c on  c.id_card_patient =u.card_patient_id"
-                    + " where  c.id_card_patient  = ?  group by t.name";
-            Session session;
-            session = em.unwrap(Session.class);
-            session.doWork((Connection conn) -> {
-                try {
-                    List<ResponseReport> treatment = new ArrayList<>();
-                    try (PreparedStatement st2 = conn.prepareStatement(sql2)) {
-                        st2.setLong(1, idCardPatient);
-                        try (ResultSet rs2 = st2.executeQuery()) {
-                            while (rs2.next()) {
-                                ResponseReport responseReport = new ResponseReport();
-                                responseReport.setCount_treatment(rs2.getLong(2));
-                                responseReport.setName_rehabilitation_treatment(rs2.getString(1));
-                                treatment.add(responseReport);
-                                response.setTreatment(treatment);
-                            }
+        response.setCard(cardPatientService.findByIdCard( idCardPatient ));
+        entityManager.unwrap(Session.class).doWork((Connection conn) -> {
+            try(CallableStatement cs = conn.prepareCall("{ call record_patient( ?,? )}")){
+                conn.setAutoCommit(false);
+                cs.setLong(1, idCardPatient);
+                cs.registerOutParameter(2, Types.OTHER);
+                cs.execute();
+                List<ResponseReport> treatment = new ArrayList<>();
+                try (ResultSet rs = (ResultSet)cs.getObject( 2 )) {
+                    while (rs.next()) {
+                        ResponseReport responseReport = new ResponseReport();
+                        responseReport.setCountTreatment(rs.getLong("count_solution" ));
+                        responseReport.setNameRehabilitationTreatment(rs.getString("name_solution" ));
+                        treatment.add( responseReport );
+                        response.setTreatment( treatment );
                         }
                     }
-
-                } catch (SQLException ex) {
-                    java.util.logging.Logger.getLogger(ReportService.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            });
-        } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(ReportService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        });
         return response;
     }
-
+ 
     /**
      * Отчет по записям пациента за период времени
-     * 
-     * @param IdPatient - Ид пацинента 
-     * @param dateFrom  - Время записи с 
-     * @param dateTo    - Время записи по 
+     * @param reportPatientRequest - входной параметр
      * @return RecordPatientReport
      * @throws Exception
      */
-    public RecordPatientReport reportByPatietnWithRecordPatient( Long IdPatient, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception {
-        RecordPatientReport report = new RecordPatientReport();
-        List<RecordPatient> list = recordPatientRepository.findByParam(IdPatient, dateFrom, dateTo);
-        report.setCard(cardPatientRepository.findByPatientId(IdPatient).orElseThrow(() -> new NoSuchElementException( "Пациента с таким ИД не существует" )));
-        report.setCountRecordForTime(list.stream().count());
-        report.setListRecordPatient(list);
-        return report;
+    public RecordPatientReport reportByPatietnWithRecordPatient( ReportPatientRequest reportPatientRequest ) throws Exception {
+        List<RecordPatient> list = recordPatientRepository.findByParam( reportPatientRequest.getIdPatient(),
+                                                                        reportPatientRequest.getStart() ,
+                                                                        reportPatientRequest.getEnd());
+        return new RecordPatientReport( cardPatientService.findByPatientId( reportPatientRequest.getIdPatient()),
+                                        list.stream().count(),
+                                        list );
     }
+
+    
 
 }

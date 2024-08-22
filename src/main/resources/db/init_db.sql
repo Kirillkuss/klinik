@@ -12,8 +12,8 @@ CREATE TABLE Patient(
 	surname VARCHAR ( 30 ) NOT NULL,
 	name VARCHAR ( 30 ) NOT NULL,
 	full_name VARCHAR ( 30 ) NOT NULL,
-	gender smallint NOT NULL,
-	phone  VARCHAR ( 12 ) NOT NULL UNIQUE,
+	gender VARCHAR ( 5 ) NOT NULL,
+	phone VARCHAR ( 13 ) NOT NULL UNIQUE,
 	address VARCHAR ( 100 ) NOT NULL ,
 	document_id int unique references public.Document ( id_document )
 );
@@ -36,26 +36,25 @@ CREATE TABLE Rehabilitation_solution(
 	survey_plan VARCHAR ( 255 ) NOT NULL
 );
 
-
 CREATE TABLE Card_patient(
 	id_card_patient serial PRIMARY KEY,
 	diagnosis VARCHAR ( 50 ) NOT NULL,
 	allergy   bool NOT NULL,
 	note VARCHAR ( 255 ),
 	сonclusion VARCHAR ( 255 ),
-	patient_id int unique NOT NULL references public.Patient ( id_patient )
+	patient_id int unique references public.Patient ( id_patient )
 );
 
 CREATE TABLE Drug_treatment(
-    id_drug_treatment serial PRIMARY KEY,
+    id_drug serial PRIMARY KEY,
     name VARCHAR ( 255 ) NOT NULL
 );
 
 CREATE TABLE Drug(
-	id_drug serial PRIMARY KEY,
+	id_dr serial PRIMARY KEY,
 	name VARCHAR ( 255 ) NOT NULL UNIQUE,
-	drug_treatment_id int8 NOT NULL,
-	FOREIGN KEY (drug_treatment_id) REFERENCES public.Drug_treatment(id_drug_treatment)
+	drug_id int8 NOT NULL,
+	FOREIGN KEY (drug_id) REFERENCES public.Drug_treatment(id_drug)
 );
 
 CREATE TABLE Treatment (
@@ -69,7 +68,7 @@ CREATE TABLE Treatment (
 	FOREIGN KEY (rehabilitation_solution_id) REFERENCES public.Rehabilitation_solution(id_rehabilitation_solution),
 	FOREIGN KEY (doctor_id) REFERENCES public.Doctor(id_doctor),
     FOREIGN KEY (card_patient_id) REFERENCES public.Card_patient(id_card_patient),
-    FOREIGN KEY (drug_id) REFERENCES public.Drug(id_drug)
+    FOREIGN KEY (drug_id) REFERENCES public.Drug(id_dr)
 );
 
 CREATE TABLE Record_patient(
@@ -97,3 +96,33 @@ CREATE TABLE Card_patient_Complaint(
 	FOREIGN KEY (card_patient_id) REFERENCES Card_patient(id_card_patient),
 	FOREIGN KEY (type_complaint_id) REFERENCES Type_complaint(id_type_complaint)
 );
+
+CREATE TABLE kl_user(
+	id serial PRIMARY KEY,
+	login VARCHAR( 50 ) NOT NULL,
+	password VARCHAR( 250 ) NOT NULL,
+	role VARCHAR( 5 ) NOT NULL,
+	email VARCHAR( 50 ),
+	salt VARCHAR( 250 ) NOT NULL,
+	status BOOLEAN DEFAULT FALSE 
+);
+
+CREATE TABLE Key_Entity(
+	id_key serial PRIMARY KEY,
+	key_alice VARCHAR ( 255 ) NOT NULL,
+	date_create timestamp(6) NOT NULL,
+	key_public TEXT NOT NULL, 
+	key_private TEXT  NOT NULL
+);
+
+CREATE TABLE User_Blocking(
+	id_block serial PRIMARY KEY,
+	date_block timestamp(6) NOT NULL,
+	date_plan_unblock timestamp(6),
+	date_unblock timestamp(6),
+	user_id int8 NOT NULL,
+	status_block int,
+	status BOOLEAN,
+	FOREIGN KEY (user_id) REFERENCES public.kl_user(id)
+)
+

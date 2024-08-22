@@ -1,11 +1,17 @@
 # Klinika
- 
-* Spring MVC
-* Spring Data
-* Postgres
-* Lombok
-* Docker
-* K8s
-* Mockito
-* RSocket
-* https and http/2
+Pet prod
+
+1. Spring Boot
+2. mvc ( swagger )
+3. ui
+4. Auth
+
+Add keystore
+
+//klinika
+keytool -genkeypair -alias klinika -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore klinika.p12 -validity 365
+keytool -genkeypair -alias klinika -keyalg RSA -keysize 2048 -keystore klinika.jks -validity 365
+keytool -importkeystore -srckeystore klinika.jks -destkeystore klinika.jks -deststoretype pkcs12
+
+//add keys 
+keytool -genkeypair -alias klinikaKey -keyalg RSA -keysize 2048 -validity 365 -keystore klinika.jks -storepass klinika

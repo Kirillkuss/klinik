@@ -12,9 +12,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -22,14 +23,15 @@ import lombok.ToString;
 @Table( name = "drug")
 @Setter
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class Drug implements Serializable{
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
-    @Column( name = "id_drug")
+    @Column( name = "id_dr")
     @Schema( name        = "idDrug",
              description = "ИД лекарства",
              example     = "100",
@@ -45,7 +47,7 @@ public class Drug implements Serializable{
 
     @Hidden
     @OneToOne( cascade = CascadeType.ALL )
-    @JoinColumn( name = "drug_treatment_id", referencedColumnName = "id_drug_treatment" )
+    @JoinColumn( name = "drug_id", referencedColumnName = "id_drug" )
     private DrugTreatment drugTreatment ;
     
 }

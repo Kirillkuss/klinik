@@ -1,6 +1,8 @@
 package com.klinik.excep;
 
 import java.util.NoSuchElementException;
+
+import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -53,6 +55,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
         log.error( "NoSuchElementException >>> " +  ex.getMessage() );
         return ResponseEntity.status( HttpStatus.NOT_FOUND )
                              .body( new BaseResponse<>( 404, ex.getMessage() ));
+    }
+
+    @ExceptionHandler( IllegalArgumentException.class )
+    public ResponseEntity<BaseResponse> errBaseResponse( IllegalArgumentException ex ){
+        log.error( "IllegalArgumentException >>> " +  ex.getMessage() );
+        return ResponseEntity.status( HttpStatus.BAD_REQUEST )
+                             .body( new BaseResponse<>( 400, ex.getMessage() ));
+    }
+
+    @ExceptionHandler(ConversionFailedException.class)
+    public ResponseEntity<String> handleConflict(RuntimeException ex) {
+        return new ResponseEntity<>( "ERROR", HttpStatus.OK );
     }
     
 }

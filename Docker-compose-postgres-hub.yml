@@ -1,0 +1,37 @@
+version: '3.4'
+
+volumes:
+  pg_project:
+
+services:
+  Klinik:
+    image: kirillkus/authklinik
+    ports:
+      - "8082:8082"
+    container_name: authklinik
+    depends_on:
+      - pg_db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5434/Klinika
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+      - JWT_PRIVATE_KEY=classpath:keys/private.pem
+      - JWT_PUBLIC_KEY=classpath:keys/public.pem
+      - ENCRYPTION_KEY=classpath:keys/encryption.key
+    volumes:
+      - ./src/main/resources/keys:/app/keys
+      - ./src/main/resources/keystore:/app/keystore
+
+  pg_db:
+    image: postgres
+    container_name: postgres_db
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=Klinika
+    volumes:
+      - ./src/main/resources/db/init_db.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./src/main/resources/db/function.sql:/docker-entrypoint-initdb.d/function.sql
+    ports:
+      - ${POSTGRES_PORT:-5434}:5432
