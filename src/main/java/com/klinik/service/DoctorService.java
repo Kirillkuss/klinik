@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Slf4j
@@ -97,7 +98,7 @@ public class DoctorService {
     public Doctor findByIdDoctor( Long idDoctor ){
         Doctor doctor = new Doctor();
          if ( doctorRepositoryRedis.findById( idDoctor.toString() ).isEmpty() ){
-            doctor = doctorRerository.findById( idDoctor ).orElse( null );
+            doctor = doctorRerository.findById( idDoctor ).orElseThrow(() -> new NoSuchElementException("Not found Doctor!"));
             doctorRepositoryRedis.save( new com.klinik.redis.model.Doctor( doctor.getIdDoctor().toString(), doctor, LocalDateTime.now() ));
             log.info( "Save redisDoctor ");
         }else{

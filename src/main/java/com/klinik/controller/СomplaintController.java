@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import com.klinik.entity.TypeComplaint;
-import com.klinik.excep.MyException;
+import com.klinik.request.RequestTypeComplaint;
 import com.klinik.rest.IComplaint;
 import com.klinik.service.ComplaintService;
 import com.klinik.service.TypeComplaintService;
@@ -24,11 +24,11 @@ public class СomplaintController implements IComplaint {
     public ResponseEntity<Complaint> saveСomplaint( Complaint сomplaint ) throws Exception{
         return new ResponseEntity<>(complaintService.saveСomplaint( сomplaint ), HttpStatus.CREATED );
     }
-    public ResponseEntity<TypeComplaint> saveTypeComplaint( TypeComplaint request, Long idComplaint ) throws Exception{
-        return new ResponseEntity<>( typeComplaintService.saveTypeComplaint( request, idComplaint ), HttpStatus.CREATED );
+    public ResponseEntity<TypeComplaint> saveTypeComplaint( RequestTypeComplaint requestTypeComplaint ) throws Exception{
+        return new ResponseEntity<>( typeComplaintService.saveTypeComplaint( requestTypeComplaint ), HttpStatus.CREATED );
     }
-    public ResponseEntity<List<TypeComplaint>> listComplaintWithTypeComplaints( Long Id ) throws Exception{
-        return new ResponseEntity<>( typeComplaintService.findByIdComplaint( Id ), HttpStatus.OK );
+    public ResponseEntity<List<TypeComplaint>> listComplaintWithTypeComplaints( Long id ) throws Exception{
+        return new ResponseEntity<>( typeComplaintService.findByIdComplaint( id ), HttpStatus.OK );
     }
  
 }

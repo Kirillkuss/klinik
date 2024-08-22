@@ -22,10 +22,10 @@ import jakarta.persistence.Table;
 @Setter
 @Getter
 @RequiredArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode
+@AllArgsConstructor
 @ToString
-public class Doctor implements Serializable {
+public class Doctor  implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)

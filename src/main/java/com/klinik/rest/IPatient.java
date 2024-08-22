@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RequestMapping( value = "patients")
@@ -26,13 +27,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
         @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
         @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
     })
+@SecurityRequirement(name = "Bearer Authentication")
 public interface IPatient {
     
     @GetMapping(value = "/all")
     @Operation( description = "Список всех пациентов", summary = "Список всех пациентов")
     public ResponseEntity<List<Patient>> getAllPatients() throws Exception, MyException;
     
-    @PostMapping( value = "/add/{pat}{id-document}")
+    @PostMapping( value = "/add")
     @Operation( description = "Добавить пациента", summary = "Добавить пациента")
     public ResponseEntity<Patient> addPatient( @RequestBody Patient patient,  @Parameter( description = "Ид документа" , example = "1") Long idDocument) throws Exception, MyException;
     

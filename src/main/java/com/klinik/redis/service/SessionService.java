@@ -2,6 +2,8 @@ package com.klinik.redis.service;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.stream.StreamSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.klinik.redis.model.Session;
@@ -15,8 +17,9 @@ public class SessionService {
 
     
     public Iterator<Session> getAllSession(){
-        Iterator<Session> students = studentRepository.findAll().iterator();
-        return students;
+      return StreamSupport.stream( studentRepository.findAll().spliterator(), false)
+                            .filter( f ->  f != null )
+                            .iterator();
     }
 
     public Session getSessiontById( String id ){
