@@ -27,9 +27,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
     })
 public interface IDoctor {
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/find/{page}{size}")
     @Operation( description = "Список всех докторов", summary = "Список всех докторов")
-    public ResponseEntity<List<Doctor>>  getAllDoc( int page, int size ) throws Exception;
+    public ResponseEntity<List<Doctor>>  getAllDoc( @Parameter( description = "страница") int page,
+                                                    @Parameter( description = "размер") int size ) throws Exception;
 
     @GetMapping(value = "/fio/{word}{page}{size}")
     @Operation( description = "Поиск врача по ФИО", summary = "Поиск врача по ФИО")

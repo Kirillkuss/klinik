@@ -2,7 +2,6 @@ package com.klinik.service;
 
 import com.klinik.entity.CardPatient;
 import com.klinik.entity.Patient;
-import com.klinik.excep.MyException;
 import com.klinik.repositories.CardPatientRepository;
 import com.klinik.repositories.PatientRepository;
 import com.klinik.repositories.TypeComplaintRepository;
@@ -23,13 +22,14 @@ public class CardPatientService {
     private final CardPatientRepository   cardPatientRepository;
     private final PatientRepository       patientRepository;
     public CardPatient saveCardPatient( CardPatient cardСatient,  Long idPatient ) throws Exception{
-        if( cardPatientRepository.findByPatientId( idPatient ).isPresent()) throw new MyException( 409, "Карта пациента с таким ИД пациента уже существует");
-        if( cardPatientRepository.findById( cardСatient.getIdCardPatient() ).isPresent() ) throw new MyException ( 409, "Карта с таким ИД уже существует");
+        if( cardPatientRepository.findByPatientId( idPatient ).isPresent()) throw new IllegalArgumentException( "Карта пациента с таким ИД пациента уже существует");
+        if( cardPatientRepository.findById( cardСatient.getIdCardPatient() ).isPresent() ) throw new IllegalArgumentException( "Карта с таким ИД уже существует");
         Optional<Patient> patient = patientRepository.findById( idPatient );
-        if( patient.isEmpty() ) throw new MyException ( 400, "Пациента с таким ИД не существует");
+        if( patient.isEmpty() ) throw new IllegalArgumentException ( "Пациента с таким ИД не существует");
         cardСatient.setPatient( patient.get());
         return cardPatientRepository.save( cardСatient );
     }
+
     public CardPatient findByPatientId( Long id ){ 
         return cardPatientRepository.findByPatientId( id )
                                     .orElseThrow( () -> new NoSuchElementException( "Карты с таким ИД пациента не существует" ));
@@ -39,14 +39,18 @@ public class CardPatientService {
                                     .orElseThrow( () -> new NoSuchElementException( "Карты с таким ИД карты не существует" ));
     }
     @Transactional
-    public void addCardPatientComplaint( Long IdCard, Long IdComplaint ) throws Exception{
-        if ( cardPatientRepository.findById( IdCard ).isEmpty()) throw new MyException ( 400, "Карта с таким ИД не существует");
-        if ( typeComplaintRepository.findById( IdComplaint ).isEmpty() ) throw new MyException ( 400, "Под жалобы с таким ИД не существует");
-        if ( cardPatientRepository.findByIdCardAndIdComplaint(IdCard, IdComplaint).isPresent() ) throw new MyException ( 409, "Под жалоба с таким ИД уже добавлена в карту пацинета");
+    public void addCardPatientComplaint( Long idCard, Long idComplaint ) throws Exception{
+        checkaddCardPatientComplaint( idCard, idComplaint);
         em.createNativeQuery( "INSERT INTO Card_patient_Complaint(card_patient_id, type_complaint_id) VALUES (?,?)")
-                .setParameter(1, IdCard)
-                .setParameter( 2, IdComplaint)
+                .setParameter(1, idCard)
+                .setParameter( 2, idComplaint)
                 .executeUpdate();
+    }
+
+    private void checkaddCardPatientComplaint( Long idCard, Long idComplaint ){
+        if ( cardPatientRepository.findById( idCard ).isEmpty()) throw new IllegalArgumentException (  "Карта с таким ИД не существует");
+        if ( typeComplaintRepository.findById( idComplaint ).isEmpty() ) throw new IllegalArgumentException ( "Под жалобы с таким ИД не существует");
+        if ( cardPatientRepository.findByIdCardAndIdComplaint( idCard, idComplaint ).isPresent() ) throw new IllegalArgumentException ( "Под жалоба с таким ИД уже добавлена в карту пацинета");
     }
     /**
      * Поиск карты пациента по документу пациента ( полис/снилс/номер )
