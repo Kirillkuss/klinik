@@ -19,9 +19,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.models.parameters.PathParameter;
 
 @RequestMapping( value = "treatments")
 @Tag(name = "7. Treatment", description = "Лечение пациентов:")
@@ -30,7 +28,6 @@ import io.swagger.v3.oas.models.parameters.PathParameter;
         @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
         @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
-@SecurityRequirement(name = "Bearer Authentication")
 public interface ITreatment {
     //@GetMapping(value = "/all")
     @Operation( description = "Получение списка всех лечений", summary = "Получение списка всех лечений")
