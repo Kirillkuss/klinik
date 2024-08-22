@@ -67,7 +67,7 @@ function AddPatient() {
             $.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                url: "https://localhost:8082/web/patients/add/{pat}{id-document}?id=" + idDocument,
+                url: "https://localhost:8082/web/patients/add?id=" + idDocument,
                 data: JSON.stringify ({idPatient: idPatient,
                                       surname: surname,
                                       name: name,
