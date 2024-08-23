@@ -1,16 +1,13 @@
 package com.klinik.rest;
 
 import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.klinik.entity.User;
 import com.klinik.request.UserRequest;
 import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
 import com.klinik.response.UserResponse;
-
 import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
