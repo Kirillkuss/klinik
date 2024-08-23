@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +12,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import com.klinik.entity.Complaint;
 import com.klinik.entity.TypeComplaint;
@@ -21,10 +19,14 @@ import com.klinik.repositories.ComplaintRepository;
 import com.klinik.repositories.TypeComplaintRepository;
 import com.klinik.request.RequestTypeComplaint;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Owner;
 import java.util.Optional;
 import java.util.List;
 
-@DisplayName("Тестирование сервиса TypeComplaintService")
+@Owner(value = "Barysevich K. A.")
+@Epic(value = "Тестирование сервиса TypeComplaintService")
+@DisplayName( value = "Тестирование сервиса TypeComplaintService")
 public class TypeComplaintServiceTest {
 
     private final String NAME   = "TypeComplaintFirst";
@@ -35,7 +37,7 @@ public class TypeComplaintServiceTest {
     @Mock        private TypeComplaintRepository typeComplaintRepository;
     @InjectMocks private TypeComplaintService    typeComplaintService;
 
-    private Complaint               complaint;
+    private Complaint            complaint;
     private TypeComplaint        typeComplaint;
     private RequestTypeComplaint requestTypeComplaint;
      
@@ -45,7 +47,7 @@ public class TypeComplaintServiceTest {
         complaint            = new Complaint(1L, "Симптомы поражения пирамидного тракта");
         typeComplaint        = new TypeComplaint(1L, NAME, null);
         requestTypeComplaint = new RequestTypeComplaint( NAME, 1L );
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.openMocks(this);;
     }
 
     @Test
@@ -103,5 +105,4 @@ public class TypeComplaintServiceTest {
         assertNotNull(result);
         assertEquals(1, result.size());
     }
-    
 }

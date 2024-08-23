@@ -15,7 +15,7 @@ import java.util.NoSuchElementException;
 @Service
 public class DoctorService {
 
-    @Autowired public  DoctorRerository doctorRerository;
+    @Autowired public DoctorRerository doctorRerository;
     @Autowired public EntityManager    entityManager;
 
     @SuppressWarnings("unchecked")

@@ -54,14 +54,14 @@ public class DoctorServiceMock {
     @Test
     @DisplayName("Получение списка всех врачей (allDoctor)")
     public void findAllTest(){
-        Mockito.when( doctorService.allDoctor(1, 15) ).thenCallRealMethod();
-        Mockito.when( doctorService.allDoctor(1, 15)  ).thenReturn( new ArrayList<>());
-        Mockito.when( doctorService.allDoctor(1, 15)  ).then(( InvocationOnMock inv ) ->{
+        Mockito.when( doctorService.allDoctor(1, 15 )).thenCallRealMethod();
+        Mockito.when( doctorService.allDoctor(1, 15 )).thenReturn( new ArrayList<>());
+        Mockito.when( doctorService.allDoctor(1, 15 )).then(( InvocationOnMock inv ) ->{
            return ( List<Doctor> ) inv.callRealMethod(); 
         });
         Allure.addAttachment(RESULT, TYPE, doctorService.allDoctor(1, 15) .toString() );
-        assertEquals(doctorService.allDoctor(1, 15) , doctorService.allDoctor(1, 15)  );
-        Mockito.verify( doctorService, times(3 )).allDoctor(1, 15) ;
+        assertEquals(doctorService.allDoctor(1, 15) , doctorService.allDoctor(1, 15 ));
+        Mockito.verify( doctorService, times(3 )).allDoctor(1, 15 );
     }
 
     @SuppressWarnings("unchecked")

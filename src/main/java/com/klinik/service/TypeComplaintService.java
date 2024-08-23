@@ -8,7 +8,6 @@ import com.klinik.entity.Complaint;
 import com.klinik.repositories.ComplaintRepository;
 import com.klinik.repositories.TypeComplaintRepository;
 import com.klinik.request.RequestTypeComplaint;
-
 import lombok.RequiredArgsConstructor;
 import java.util.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
