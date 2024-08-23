@@ -38,7 +38,6 @@ public class TypeComplaintService {
     private void checkSaveTypeComplaint( Optional<Complaint> complaint,  TypeComplaint typeComplaint ){
         if( complaint.isEmpty() ) throw new IllegalArgumentException( "Неверный параметр, жалоба с таким ИД не существует");
         if( typeComplaintRepository.findName( typeComplaint.getName()).isPresent() ) throw new IllegalArgumentException( "Под жалоба с таким наименованием уже существует");
-        if( typeComplaintRepository.findById( typeComplaint.getIdTypeComplaint()).isPresent() ) throw new IllegalArgumentException( "Под жалоба с таким ИД уже существует");
     }
 
      public List<TypeComplaint> findByIdComplaint( Long id ) throws Exception{
