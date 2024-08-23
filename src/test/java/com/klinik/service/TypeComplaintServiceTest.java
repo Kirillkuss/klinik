@@ -9,6 +9,8 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -60,6 +62,7 @@ public class TypeComplaintServiceTest {
     @Test
     @DisplayName("Сохранение под жалобы")
     public void testSaveTypeComplaintSuccess() throws Exception {
+        Allure.parameter( "requestTypeComplaint" , requestTypeComplaint );
         when( complaintRepository.findById(1L )).thenReturn( Optional.of( complaint ));
         when( typeComplaintRepository.findName( NAME )).thenReturn( Optional.empty() );
         when( typeComplaintRepository.findById( -1L )).thenReturn( Optional.empty() );
@@ -75,6 +78,7 @@ public class TypeComplaintServiceTest {
     @DisplayName("Сохранение под жалобы - проверка на ошибка")
     public void testSaveTypeComplaintWithInvalidComplaintId() {
         String ERROR = "Ожидаемая ошибка :";
+        Allure.parameter( "requestTypeComplaint" , requestTypeComplaint );
         //first Error
         when(complaintRepository.findById(1L)).thenReturn( Optional.empty() );
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> typeComplaintService.saveTypeComplaint( requestTypeComplaint ));
@@ -87,14 +91,13 @@ public class TypeComplaintServiceTest {
         Allure.addAttachment( ERROR, TYPE,exceptionTwo.getMessage() );
         assertEquals("Под жалоба с таким наименованием уже существует", exceptionTwo.getMessage());
     }
-
-
-    @Test
+    
+    @ParameterizedTest
+    @CsvSource({"1"})
     @DisplayName("Поиск жалобы по ИД")
-    public void testFindByIdComplaintSuccess() throws Exception {
-        Long complaintId = 1L;
-        when(complaintRepository.findById(complaintId)).thenReturn(Optional.of(new Complaint()));
-        when(typeComplaintRepository.findByIdComplaint(complaintId)).thenReturn(List.of(new TypeComplaint()));
+    public void testFindByIdComplaintSuccess( Long complaintId ) throws Exception {
+        when( complaintRepository.findById( complaintId )).thenReturn(Optional.of( complaint ));
+        when( typeComplaintRepository.findByIdComplaint( complaintId )).thenReturn(List.of( typeComplaint ));
         List<TypeComplaint> result = typeComplaintService.findByIdComplaint(complaintId);
         Allure.addAttachment(RESULT, TYPE, result.toString() );
         assertNotNull(result);
