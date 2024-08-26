@@ -20,9 +20,13 @@ public class ComplaintService {
     }
     public Complaint saveСomplaint( Complaint сomplaint ) throws Exception{
         log.info("сomplaint >> " + сomplaint);
-        if( complaintRepository.findById( сomplaint.getIdComplaint() ).isEmpty() == false) throw new IllegalArgumentException( "Справочник жалоба с таким ИД уже существует");
-        if( complaintRepository.findByName( сomplaint.getFunctionalImpairment() ).isEmpty() == false ) throw new IllegalArgumentException( "Справочник жалоба с таким наименованием уже существует");
+        checkSaveComlaint(сomplaint);
         return complaintRepository.save( сomplaint );
+    }
+
+    private void checkSaveComlaint( Complaint сomplaint ){
+        if( complaintRepository.findById( сomplaint.getIdComplaint() ).isPresent()) throw new IllegalArgumentException( "Справочник жалоба с таким ИД уже существует");
+        if( complaintRepository.findByName( сomplaint.getFunctionalImpairment() ).isPresent() ) throw new IllegalArgumentException( "Справочник жалоба с таким наименованием уже существует");
     }
 
 }

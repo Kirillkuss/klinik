@@ -60,7 +60,7 @@ public class DoctorServiceMock {
            return ( List<Doctor> ) inv.callRealMethod(); 
         });
         Allure.addAttachment(RESULT, TYPE, doctorService.allDoctor(1, 15) .toString() );
-        assertEquals(doctorService.allDoctor(1, 15) , doctorService.allDoctor(1, 15 ));
+        assertEquals(doctorService.allDoctor(1, 15 ) , doctorService.allDoctor(1, 15 ));
         Mockito.verify( doctorService, times(3 )).allDoctor(1, 15 );
     }
 
@@ -69,14 +69,14 @@ public class DoctorServiceMock {
     @CsvSource({"1,3", "4,5", "2, 8"})
     @DisplayName("Получение списка всех врачей (getLazyDoctor)")
     public void testgetLazyDoctor(int page, int size ){
-        Mockito.when( doctorService.getLazyDoctor(page, size) ).thenCallRealMethod();
-        Mockito.when( doctorService.getLazyDoctor(page, size)  ).thenReturn( new ArrayList<>());
-        Mockito.when( doctorService.getLazyDoctor(page, size)  ).then(( InvocationOnMock inv ) ->{
+        Mockito.when( doctorService.getLazyDoctor( page, size )).thenCallRealMethod();
+        Mockito.when( doctorService.getLazyDoctor( page, size )).thenReturn( new ArrayList<>());
+        Mockito.when( doctorService.getLazyDoctor( page, size )).then(( InvocationOnMock inv ) ->{
            return ( List<Doctor> ) inv.callRealMethod(); 
         });
-        Allure.addAttachment(RESULT, TYPE, doctorService.getLazyDoctor(page, size) .toString() );
-        assertEquals(doctorService.getLazyDoctor(page, size) , doctorService.getLazyDoctor(page, size)  );
-        Mockito.verify( doctorService, times(3 )).getLazyDoctor(page, size) ;
+        Allure.addAttachment(RESULT, TYPE, doctorService.getLazyDoctor( page, size ) .toString());
+        assertEquals(doctorService.getLazyDoctor( page, size ), doctorService.getLazyDoctor( page, size ));
+        Mockito.verify( doctorService, times(3 )).getLazyDoctor( page, size );
     }
 
     @SuppressWarnings("unchecked")
@@ -84,12 +84,12 @@ public class DoctorServiceMock {
     @CsvSource({"Петров, 1, 2", "Сергей, 1,7", "Михайлович, 1, 6"})
     @DisplayName("Поиск доктора по фио")
     public void findByWordTest( String WORD, int PAGE, int SIZE ) throws Exception{
-        Mockito.when( doctorService.findByFIO( WORD, PAGE, SIZE)).thenCallRealMethod();
+        Mockito.when( doctorService.findByFIO( WORD, PAGE, SIZE )).thenCallRealMethod();
         Mockito.when( doctorService.findByFIO( WORD, PAGE, SIZE )).thenReturn( new ArrayList<>());
         Mockito.when( doctorService.findByFIO( WORD, PAGE, SIZE )).then(( InvocationOnMock inv ) ->{
            return ( List<Doctor> ) inv.callRealMethod(); 
         });
-        Allure.addAttachment(RESULT, TYPE, doctorService.findByFIO( WORD, PAGE, SIZE ).toString() );
+        Allure.addAttachment(RESULT, TYPE, doctorService.findByFIO( WORD, PAGE, SIZE ).toString());
         assertEquals(doctorService.findByFIO( WORD, PAGE, SIZE ), doctorService.findByFIO( WORD, PAGE, SIZE ));
         Mockito.verify( doctorService, times(3 )).findByFIO( WORD, PAGE, SIZE );
     }

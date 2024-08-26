@@ -37,8 +37,8 @@ public class PatientService {
     }
     
     private void checkPatient( Patient patient, Long id ){
-        if( patientRepository.findByPhone( patient.getPhone() ) != null )  throw new IllegalArgumentException( "Пользователь с таким номером телефона уже существует, укажите другой");
-        if( patientRepository.findPatientByIdDocument( id ) != null )      throw new IllegalArgumentException( "Неверное значение ИД документа, попробуйте другой");
+        if( patientRepository.findByPhone( patient.getPhone() ).isPresent()) throw new IllegalArgumentException( "Пользователь с таким номером телефона уже существует, укажите другой");
+        if( patientRepository.findPatientByIdDocument( id ).isPresent())     throw new IllegalArgumentException( "Неверное значение ИД документа, попробуйте другой");
         if( patientRepository.findById( patient.getIdPatient()).isPresent()) throw new IllegalArgumentException( "Пользователь с таким ИД уже существует");
     }
 
