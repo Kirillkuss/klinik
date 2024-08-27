@@ -11,7 +11,6 @@ import com.klinik.repositories.DrugRepository;
 import com.klinik.repositories.RehabilitationSolutionRepository;
 import com.klinik.repositories.TreatmentRepository;
 import com.klinik.request.RequestTreatment;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -43,27 +42,25 @@ public class TreatmentService {
      * @throws Exception
      */
     public Treatment addTreatment( RequestTreatment requestTreatment ) throws Exception{
-        Optional<Drug> drug = drugRepository.findById( requestTreatment.getIdDrug());
-        Optional<Doctor> doctor = doctorRerository.findById( requestTreatment.getIdDoctor() );
+        Optional<Drug> drug                                     = drugRepository.findById( requestTreatment.getIdDrug());
+        Optional<Doctor> doctor                                 = doctorRerository.findById( requestTreatment.getIdDoctor() );
         Optional<RehabilitationSolution> rehabilitationSolution = rehabilitationSolutionRepository.findById( requestTreatment.getIdRehabilitationSolution() );
-        Optional<CardPatient> cardPatient = cardPatientRepository.findById( requestTreatment.getIdCardPatient() );
-        Treatment treatment = new Treatment();
-        treatment.setIdTreatment( -1L );
-        treatment.setTimeStartTreatment( requestTreatment.getTimeStartTreatment() );
-        treatment.setEndTimeTreatment( requestTreatment.getEndTimeTreatment() );
+        Optional<CardPatient> cardPatient                       = cardPatientRepository.findById( requestTreatment.getIdCardPatient() );
         checkAddTreatment(drug, rehabilitationSolution, cardPatient, doctor);
-        treatment.setCardPatientId( cardPatient.get().getIdCardPatient() );
-        treatment.setRehabilitationSolution( rehabilitationSolution.orElseThrow() );
-        treatment.setDoctor( doctor.orElseThrow() );
-        treatment.setDrug( drug.orElseThrow() );
-        return treatmentRepository.save( treatment );
+        return treatmentRepository.save( new Treatment( -1L, 
+                                                        requestTreatment.getTimeStartTreatment(),
+                                                        requestTreatment.getEndTimeTreatment(),
+                                                        drug.orElseThrow(),
+                                                        rehabilitationSolution.orElseThrow(),
+                                                        cardPatient.orElseThrow().getIdCardPatient(),
+                                                        doctor.orElseThrow() ));
     }
 
     private void checkAddTreatment(Optional<Drug> drug, Optional<RehabilitationSolution> rehabilitationSolution, Optional<CardPatient> cardPatient, Optional<Doctor> doctor ){
-        if( drug.isEmpty() ) throw new IllegalArgumentException( "Указано неверное значение медикаментозного лечения, укажите другой");
+        if( drug.isEmpty() )                  throw new IllegalArgumentException("Указано неверное значение медикаментозного лечения, укажите другой");
         if( rehabilitationSolution.isEmpty()) throw new IllegalArgumentException("Указано неверное значение реабилитационного лечения, укажите другой");
-        if( cardPatient.isEmpty() ) throw new IllegalArgumentException( "Указано неверное значение карты пациента, укажите другой");
-        if( doctor.isEmpty() ) throw new IllegalArgumentException( "Указано неверное значение ид доктора, укажите другой");
+        if( cardPatient.isEmpty() )           throw new IllegalArgumentException( "Указано неверное значение карты пациента, укажите другой");
+        if( doctor.isEmpty() )                throw new IllegalArgumentException( "Указано неверное значение ид доктора, укажите другой");
     }
     /**
      * Получение списка лечений пациентов по параметрам

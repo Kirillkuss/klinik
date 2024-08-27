@@ -1,13 +1,8 @@
 package com.klinik.controller;
 
 import com.klinik.entity.Treatment;
-import com.klinik.excep.MyException;
 import com.klinik.request.RequestTreatment;
 import com.klinik.rest.ITreatment;
-import com.klinik.service.CardPatientService;
-import com.klinik.service.DoctorService;
-import com.klinik.service.DrugService;
-import com.klinik.service.RehabilitationSolutionService;
 import com.klinik.service.TreatmentService;
 import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
