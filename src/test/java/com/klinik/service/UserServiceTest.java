@@ -32,8 +32,8 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Owner;
 
 @Owner(value = "Barysevich K. A.")
-@Epic(value = "Тестирование сервиса PatientService")
-@DisplayName( value = "Тестирование сервиса PatientService")
+@Epic(value = "Тестирование сервиса UserService")
+@DisplayName( value = "Тестирование сервиса UserService")
 @SpringBootTest
 public class UserServiceTest {
 
