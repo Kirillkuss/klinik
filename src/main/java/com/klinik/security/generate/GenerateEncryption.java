@@ -26,6 +26,7 @@ public class GenerateEncryption {
         return new String(Hex.encode(salt));
     }
 
+
     public void updateEncryptionKey(){
         SecureRandom secureRandom = new SecureRandom();
         byte[] keyBytes = new byte[32]; 
