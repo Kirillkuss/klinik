@@ -138,7 +138,7 @@
                 <version>3.0.0-M8</version>
                 <configuration>
                     <includes>
-                        <include>/security/generate/**.java</include>
+                        <include>**/**.java</include>
                     </includes>
                     <argLine>
                         -Dfile.encoding=UTF-8

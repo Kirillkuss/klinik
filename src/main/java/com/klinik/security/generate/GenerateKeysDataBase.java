@@ -104,10 +104,10 @@ public class GenerateKeysDataBase {
     }
 
     public KeyEntity getKey(String keyAlias) {
-        KeyEntity keyEntity = keyEntityRepository.findByKeyAlias(keyAlias).orElseThrow();
+        KeyEntity keyEntity = keyEntityRepository.findByKeyAlias( keyAlias ).orElseThrow();
         if (keyEntity != null) {
-            keyEntity.setPublicKey( textEncryptor.decrypt(keyEntity.getPublicKey()));
-            keyEntity.setPrivateKey(textEncryptor.decrypt(keyEntity.getPrivateKey()));
+            keyEntity.setPublicKey( textEncryptor.decrypt( keyEntity.getPublicKey() ));
+            keyEntity.setPrivateKey( textEncryptor.decrypt( keyEntity.getPrivateKey() ));
         }
         return keyEntity;
     }
