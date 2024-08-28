@@ -1,10 +1,7 @@
 package com.klinik.rest;
 
 import static io.restassured.RestAssured.given;
-import static org.instancio.Select.field;
 import java.util.stream.Stream;
-import org.instancio.Instancio;
-import org.instancio.Select;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,9 +9,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import com.klinik.entity.CardPatient;
-import com.klinik.entity.Document;
-import com.klinik.entity.Gender;
-import com.klinik.entity.Patient;
 import com.klinik.request.CoplaintRequest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -24,11 +18,6 @@ import io.qameta.allure.Owner;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 //@Disabled
 @Owner(value = "Barysevich K. A.")
@@ -56,10 +45,20 @@ public class RestCardPatientTest {
         leadTime      = RestToken.leadTime;
     }
 
+    private static String queryDocument = "SELECT d.id_document \n" + 
+                                          "FROM Document d \n" + 
+                                          "LEFT JOIN Patient p ON d.id_document = p.document_id \n" + 
+                                          "WHERE p.document_id IS NULL;";
+
+    private static String queryPatient = "select p.id_patient \n" +
+                                         "from patient p  \n" +
+                                         "left join card_patient cp on p.id_patient = cp.patient_id  \n" +
+                                         "WHERE cp.patient_id IS NULL;";
+
     @DisplayName("Параметры для тестирования")
     public static Stream<Arguments> getParamsCard() throws Exception{
-        List<Long> listLong = getIdPatients();
-        if ( listLong.stream().count() < 2 ){
+        List<Long> listPatient = RestToken.getStremValue( queryPatient, "id_patient");
+        if ( listPatient.stream().count() < 2 ){
             addPatient();
         }
         CardPatient cardPatient = new CardPatient();
@@ -68,7 +67,7 @@ public class RestCardPatientTest {
         cardPatient.setDiagnosis( "Рассеянный склероз");
         cardPatient.setNote("Есть аллергия на цитрамон");
         cardPatient.setСonclusion( "Болен");
-        return Stream.of( Arguments.of( cardPatient, listLong.stream().findFirst().orElseThrow() ));
+        return Stream.of( Arguments.of( cardPatient, listPatient.stream().findFirst().orElseThrow() ));
     }
 
     @Description("Добавить карту пациента (POST)")
@@ -179,32 +178,8 @@ public class RestCardPatientTest {
         }
     }
 
-    @DisplayName("Получение доступных ИД документов")
-    private static List<Long> getIdPatients(){
-        List<Long> listLong = new ArrayList<>();
-        String url = "jdbc:postgresql://localhost:5432/Klinika";
-        String user = "postgres";
-        String password = "admin";
-        String query = "select p.id_patient \n" +
-                       "from patient p  \n" +
-                       "left join card_patient cp on p.id_patient = cp.patient_id  \n" +
-                       "WHERE cp.patient_id IS NULL;";
-        try (Connection conn = DriverManager.getConnection(url, user, password);
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                Long id = rs.getLong("id_patient");
-                listLong.add(id);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return listLong;
-    }
-
-
     private static void addPatient(){
-        List<Long> listDocumentId = getIdDocuments();
+        List<Long> listDocumentId = RestToken.getStremValue( queryDocument, "id_document");
         if ( listDocumentId.stream().count() < 2 ){
             addDocument();
         }
@@ -220,29 +195,6 @@ public class RestCardPatientTest {
         }catch( Exception ex ){
         }
 
-    }
-
-    @DisplayName("Получение доступных ИД документов")
-    private static List<Long> getIdDocuments(){
-        List<Long> listLong = new ArrayList<>();
-        String url = "jdbc:postgresql://localhost:5432/Klinika";
-        String user = "postgres";
-        String password = "admin";
-        String query = "SELECT d.id_document \n" + 
-                        "FROM Document d \n" + 
-                        "LEFT JOIN Patient p ON d.id_document = p.document_id \n" + 
-                        "WHERE p.document_id IS NULL;";
-        try (Connection conn = DriverManager.getConnection(url, user, password);
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                Long id = rs.getLong("id_document");
-                listLong.add(id);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return listLong;
     }
 
     @DisplayName("Добавить документ")
@@ -261,5 +213,4 @@ public class RestCardPatientTest {
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
- 
 }

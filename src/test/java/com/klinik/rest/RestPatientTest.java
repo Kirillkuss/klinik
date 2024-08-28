@@ -50,6 +50,11 @@ public class RestPatientTest {
         error         = RestToken.error;
         leadTime      = RestToken.leadTime;
     }
+    private static String query = "SELECT d.id_document \n" + 
+                                  "FROM Document d \n" + 
+                                  "LEFT JOIN Patient p ON d.id_document = p.document_id \n" + 
+                                  "WHERE p.document_id IS NULL;";
+
     @Description("Получение всех пациентов (GET)")
     @DisplayName("Получение всех пациентов  (GET)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/2.%20Patient/getAllPatients")
@@ -115,7 +120,7 @@ public class RestPatientTest {
 
     @DisplayName("Параметры для тестирования")
     public static Stream<Arguments> getParamsPatient() throws Exception{
-        List<Long> listLong = getIdDocuments();
+        List<Long> listLong = RestToken.getStremValue( query, "id_document");
         if ( listLong.stream().count() < 2 ){
             addDocument();
         }
@@ -145,29 +150,6 @@ public class RestPatientTest {
 
     }
 
-    @DisplayName("Получение доступных ИД документов")
-    private static List<Long> getIdDocuments(){
-        List<Long> listLong = new ArrayList<>();
-        String url = "jdbc:postgresql://localhost:5432/Klinika";
-        String user = "postgres";
-        String password = "admin";
-        String query = "SELECT d.id_document \n" + 
-                        "FROM Document d \n" + 
-                        "LEFT JOIN Patient p ON d.id_document = p.document_id \n" + 
-                        "WHERE p.document_id IS NULL;";
-        try (Connection conn = DriverManager.getConnection(url, user, password);
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                Long id = rs.getLong("id_document");
-                listLong.add(id);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return listLong;
-    }
-
     @DisplayName("Добавить документ")
     private static void addDocument(){
         try{
@@ -184,9 +166,5 @@ public class RestPatientTest {
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
     }
-
-
-
-
 
 }

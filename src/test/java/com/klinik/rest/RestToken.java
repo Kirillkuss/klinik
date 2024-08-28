@@ -2,7 +2,12 @@ package com.klinik.rest;
 
 import static io.restassured.RestAssured.given;
 import static org.instancio.Select.field;
-import java.util.stream.Stream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import org.instancio.Instancio;
 import org.instancio.Select;
 import org.junit.jupiter.api.DisplayName;
@@ -95,5 +100,23 @@ public class RestToken {
                                   .create();
                doctor.setIdDoctor( -1L );
         return doctor;                            
+    }
+
+    public static List<Long> getStremValue( String query, String colum ){
+        List<Long> listLong = new ArrayList<>();
+        String url = "jdbc:postgresql://localhost:5432/Klinika";
+        String user = "postgres";
+        String password = "admin";
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Long id = rs.getLong(colum);
+                listLong.add(id);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listLong;
     }
 }

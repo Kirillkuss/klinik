@@ -3,7 +3,6 @@ package com.klinik.rest;
 import static io.restassured.RestAssured.given;
 import java.util.stream.Stream;
 import org.instancio.Instancio;
-import org.instancio.Select;
 import static org.instancio.Select.field;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -11,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import com.klinik.entity.Role;
 import com.klinik.request.UserRequest;
 import static org.hamcrest.Matchers.lessThan;
 import io.qameta.allure.Allure;
