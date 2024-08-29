@@ -1,11 +1,8 @@
-package com.klinik.rest;
+package com.klinik.rest.auth;
 
-import com.klinik.entity.User;
 import com.klinik.request.AuthRequest;
 import com.klinik.response.AuthResponse;
-import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
-
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -5,7 +5,7 @@ import com.klinik.entity.User;
 import com.klinik.repositories.UserRepository;
 import com.klinik.request.AuthRequest;
 import com.klinik.response.AuthResponse;
-import com.klinik.rest.IAuthentication;
+import com.klinik.rest.auth.IAuthentication;
 import com.klinik.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
