@@ -1,5 +1,15 @@
 # Klinika
-Pet prod
+Pet prod Klinika
+
+* Spring Boot MVC
+* Postgres
+* RESTful
+* Spring Boot Security ( JWT )
+* TEST ( Jenkins (CI/CD)):
+ - Mockito
+ - RestAssured
+ - TestContainer
+ - SpringBootTest
 
 Add keystore
 
@@ -24,4 +34,12 @@ cmd commands :
 
 2.1  pg_restore -U postgres -W -d Klinika klinika.backup            // return all tables 
 2.2  pg_restore -U postgres -W -d Klinika backup_doctor.backup      // return only one table
+
+3. add backup in docker 
+
+3.1 docker cp klinika.backup postgres_db:/klinika.backup                            // copy backup
+3.2 docker exec -it postgres_db pg_restore -U postgres -d Klinika /klinika.backup  // copy backup
+   
+3.3 docker exec -t postgres_db pg_dump -U postgres -F c -b -v -f klinika.backup Klinika  // excute backup
+3.4 docker exec -t postgres_db pg_restore -U postgres -W -d Klinika klinika.backup       // excute backup
 

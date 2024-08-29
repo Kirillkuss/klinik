@@ -1,4 +1,4 @@
-#compose app (local) with postgres and add tables and functions
+#compose app (repository) with postgres and excute backup to get data
 version: '3.4'
 
 volumes:
@@ -6,11 +6,9 @@ volumes:
 
 services:
   Klinik:
-    image: klinika
+    image: kirillkus/authklinik:latest
     ports:
       - "8082:8082"
-    build:
-      context: .
     container_name: klinika
     depends_on:
       - pg_db
@@ -25,7 +23,6 @@ services:
     volumes:
       - ./src/main/resources/keys:/app/keys
       - ./src/main/resources/keystore:/app/keystore
-
   pg_db:
     image: postgres
     container_name: postgres_db
@@ -34,8 +31,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=Klinika
     volumes:
-      # init db and fuctions
-      - ./src/main/resources/db/init_db.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./src/main/resources/db/function.sql:/docker-entrypoint-initdb.d/function.sql
+      # excute backup to get data
+      - ./src/main/resources/db/backup/klinika.backup:/klinika.backup
+      - ./src/main/resources/db/backup/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
     ports:
       - ${POSTGRES_PORT:-5434}:5432
