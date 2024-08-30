@@ -8,6 +8,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 /**
@@ -17,12 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class GenerateKeys {
 
-    
-    /**
-     * For docker-compose
-     */
-    //private final String path = "/app/keys";
-    private final String path = "src/main/resources/keys";
+    @Value("${generate.keys.path}")
+    private String path;
     private final String split = "(?<=\\G.{64})";
 
     public void generatePemKeys() throws Exception {

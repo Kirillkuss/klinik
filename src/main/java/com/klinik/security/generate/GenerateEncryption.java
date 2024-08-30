@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Base64;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +14,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class GenerateEncryption {
 
-    /**
-     * For docker-compose
-     */
-    //private static final String KEYSTORE_PATH = "/app/keys/encryption.key";
-    private static final String KEYSTORE_PATH = "src/main/resources/keys/encryption.key";
-
+    @Value("${encryption.path}")
+    private String encryptionPath;
 
     private String generateSalt() {
         byte[] salt = new byte[16];
@@ -31,10 +29,10 @@ public class GenerateEncryption {
         byte[] keyBytes = new byte[32]; 
         secureRandom.nextBytes(keyBytes);
         log.info("Generated Encryption Key");
-        try (FileWriter writer = new FileWriter( KEYSTORE_PATH )) {
+        try (FileWriter writer = new FileWriter( encryptionPath )) {
             writer.write( Base64.getEncoder().encodeToString( keyBytes ));
         } catch (IOException e) {
-            log.error( "Error writing encryption key to file: {}", KEYSTORE_PATH, e );
+            log.error( "Error writing encryption key to file: {}", encryptionPath, e );
         }
     }
      
