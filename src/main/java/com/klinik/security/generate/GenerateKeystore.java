@@ -38,9 +38,10 @@ public class GenerateKeystore {
      * for docker-compose
      */
     //private static final String KEYSTORE_PATH     = "/app/keystore";
-    private static final String KEYSTORE_PATH     = "src/main/resources/keystore";
-    private static final String KEYSTORE_FILE     = "klinika.jks";
-    private static final String KEYSTORE_PASSWORD = "klinika";
+    private final String KEYSTORE_PATH     = "src/main/resources/keystore";
+    private final String KEYSTORE_FILE     = "klinika.jks";
+    private final String KEYSTORE_PASSWORD = "klinika";
+
      /**
      * KeyStore
      * @return KeyStore
@@ -50,7 +51,7 @@ public class GenerateKeystore {
      * @throws CertificateException
      */
     private KeyStore getKeyStore() throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
-         return loadKeyStore( KEYSTORE_PATH, KEYSTORE_FILE, KEYSTORE_PASSWORD );
+        return loadKeyStore( KEYSTORE_PATH, KEYSTORE_FILE, KEYSTORE_PASSWORD );
     }
     /**
      * Загрузка KeyStore

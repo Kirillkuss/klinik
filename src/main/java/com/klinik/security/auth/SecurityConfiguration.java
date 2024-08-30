@@ -33,25 +33,13 @@ public class SecurityConfiguration {
 
     private final GenerateKeystore generateKeystore = new GenerateKeystore();
     private final GenerateKeysDataBase generateKeysDataBase;
-    /**
-     * for docker-compose
-     */
-    //@Value("${JWT_PUBLIC_KEY}")
-    /**
-     * Из фалов pem
-     */
+
     @Value("${jwt.public.key}")
     RSAPublicKey publicKeyPem;
-
-    /**
-     * for docker-compose
-     */
-    //@Value("${JWT_PRIVATE_KEY}")
+    
     @Value("${jwt.private.key}")
-    RSAPrivateKey privateKeyPem; 
-    /**
-     * из хранилища keystore
-     */
+    RSAPrivateKey privateKeyPem;
+    
     RSAPublicKey publicKey = generateKeystore.getPublicKey().orElseThrow();
     RSAPrivateKey privateKey = generateKeystore.getPrivateKey().orElseThrow();
 

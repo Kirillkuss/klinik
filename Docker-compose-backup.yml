@@ -6,9 +6,11 @@ volumes:
 
 services:
   Klinik:
-    image: kirillkus/authklinik:latest
+    image: klinika
     ports:
       - "8082:8082"
+    build:
+      context: .
     container_name: klinika
     depends_on:
       - pg_db
@@ -17,9 +19,11 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=admin
       - SPRING_JPA_HIBERNATE_DDL_AUTO=none
-      - JWT_PRIVATE_KEY=classpath:keys/private.pem
-      - JWT_PUBLIC_KEY=classpath:keys/public.pem
-      - ENCRYPTION_KEY=classpath:keys/encryption.key
+      - jwt.private.key=classpath:keys/private.pem
+      - jwt.public.key=classpath:keys/public.pem
+      - encryption.key=classpath:keys/encryption.key
+      - encryption.path=/app/keys/encryption.key
+      - generate.keys.path=/app/keys
     volumes:
       - ./src/main/resources/keys:/app/keys
       - ./src/main/resources/keystore:/app/keystore

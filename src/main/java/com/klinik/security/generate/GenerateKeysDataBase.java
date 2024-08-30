@@ -28,16 +28,10 @@ public class GenerateKeysDataBase {
     private final KeyEntityRepository keyEntityRepository;
     private final TextEncryptor textEncryptor;
     private final String alice = "admin";
-    /**
-     * for docker-compose
-     */
-    //@Value("${JWT_PUBLIC_KEY}")
+
     @Value("${jwt.public.key}")
     RSAPublicKey publicKey;
-    /**
-     * for docker-compose
-     */
-    //@Value("${JWT_PRIVATE_KEY}")
+
     @Value("${jwt.private.key}")
     RSAPrivateKey privateKey;
 
