@@ -4,6 +4,8 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.klinik.aspect.security.annotation.SecuredControl;
 import com.klinik.request.UserRequest;
 import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
@@ -17,7 +19,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag( name = "USERS", description = "CRUD USERS" )
+@Tag( name = "1. USERS", description = "CRUD USERS" )
 @RequestMapping( "users" )
 @ApiResponses(value = {
     @ApiResponse( responseCode = "200", description = "Success",            content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema( implementation = UserResponse.class ))) }),

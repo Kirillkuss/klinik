@@ -1,11 +1,12 @@
 package com.klinik.service;
 
-import com.klinik.aspect.annotation.ExecuteTimeLog;
+import com.klinik.aspect.logger.annotation.ExecuteTimeLog;
 import com.klinik.entity.Doctor;
 import com.klinik.repositories.DoctorRerository;
 import javax.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -42,6 +43,7 @@ public class DoctorService {
     }
 
     @SuppressWarnings("unchecked")
+    @Cacheable("getLazyDoctorCache") 
     @ExecuteTimeLog(operation = "getLazyDoctor")
     public List<Doctor> getLazyDoctor( int page, int size ){
         return entityManager.createNativeQuery( "select * from Doctor", Doctor.class)

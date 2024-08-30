@@ -1,6 +1,6 @@
 package com.klinik.service;
 
-import com.klinik.aspect.annotation.ExecuteTimeLog;
+import com.klinik.aspect.logger.annotation.ExecuteTimeLog;
 import com.klinik.entity.CardPatient;
 import com.klinik.entity.Patient;
 import com.klinik.repositories.CardPatientRepository;

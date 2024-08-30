@@ -1,6 +1,6 @@
 package com.klinik.service;
 
-import com.klinik.aspect.annotation.ExecuteTimeLog;
+import com.klinik.aspect.logger.annotation.ExecuteTimeLog;
 import com.klinik.entity.Document;
 import com.klinik.repositories.DocumentRepository;
 import javax.persistence.EntityManager;

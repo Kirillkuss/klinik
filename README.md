@@ -10,7 +10,8 @@ Pet prod Klinika
 7. RESTful
 8. Docker-compose
 9. Backup db
-10. AOP - log
+10. AOP - log, transaction, error, cache
+11. Сache
 
 Add keystore 
 

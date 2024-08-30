@@ -41,7 +41,7 @@ public class UserService {
         if ( userRepository.findByLogin( user.getLogin() ).isEmpty() ){
             userRepository.save(  user );
             log.info( "init main user");
-        } 
+        }
     }
 
     /**

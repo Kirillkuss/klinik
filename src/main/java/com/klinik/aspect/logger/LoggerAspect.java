@@ -1,4 +1,4 @@
-package com.klinik.aspect;
+package com.klinik.aspect.logger;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -12,18 +12,20 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
-import com.klinik.aspect.annotation.ExecuteTimeLog;
+
+import com.klinik.aspect.logger.annotation.ExecuteTimeLog;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Aspect
 @Component
-public class GlobalAspect {
+public class LoggerAspect {
     /**
      * Получение информации до выполнения метод о метода 
      * @param joinPoint
      */
-    @Before( value = "@annotation( com.klinik.aspect.annotation.OperationInfoBefore)")
+    @Before( value = "@annotation( com.klinik.aspect.logger.annotation.OperationInfoBefore)")
     public void getOperationInfo( JoinPoint joinPoint ){
         log.info("____________Before___________");
         MethodSignature methodSignature = ( MethodSignature ) joinPoint.getSignature();
@@ -61,7 +63,7 @@ public class GlobalAspect {
      * @return Object
      * @throws Throwable
      */
-    @Around( value = "@annotation( com.klinik.aspect.annotation.ExecuteTimeLog)")
+    @Around( value = "@annotation( com.klinik.aspect.logger.annotation.ExecuteTimeLog)")
     public Object logExecutionTime( ProceedingJoinPoint proceedingJoinPoint ) throws Throwable {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
@@ -77,7 +79,7 @@ public class GlobalAspect {
                 logMessage.append(", "); 
             }
         }
-        logMessage.append( ", Execution time: " +  + stopWatch.getTotalTimeMillis() + " ms");
+        logMessage.append( ", Execution time: " + stopWatch.getTotalTimeMillis() + " ms");
         log.info(logMessage.toString());
         return proceed;
     }
@@ -85,7 +87,7 @@ public class GlobalAspect {
      * Получение информации о методе после выполнения метода
      * @param joinPoint
      */
-    @After( value = "@annotation( com.klinik.aspect.annotation.OperationInfoAfter)")
+    @After( value = "@annotation( com.klinik.aspect.logger.annotation.OperationInfoAfter)")
     public void getOperationInfoAfter( JoinPoint joinPoint ){
         MethodSignature methodSignature = ( MethodSignature ) joinPoint.getSignature();
         log.info("____________After___________");

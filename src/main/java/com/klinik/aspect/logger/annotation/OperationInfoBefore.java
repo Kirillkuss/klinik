@@ -1,4 +1,4 @@
-package com.klinik.aspect.annotation;
+package com.klinik.aspect.logger.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

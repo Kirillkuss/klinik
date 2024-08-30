@@ -1,4 +1,4 @@
-package com.klinik.aspect.annotation;
+package com.klinik.aspect.logger.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExecuteTimeLog {
-    String operation();
+public @interface OperationInfoAfter {
+    
 }

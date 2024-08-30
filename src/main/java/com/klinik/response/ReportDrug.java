@@ -9,9 +9,9 @@ import lombok.ToString;
 @ToString
 public class ReportDrug {
     
-    String nameDrugTreatment;
-    Long countDrugTreatment;
-    Long countPatient;
+    private String nameDrugTreatment;
+    private Long countDrugTreatment;
+    private Long countPatient;
 
     public ReportDrug(){ 
     }
