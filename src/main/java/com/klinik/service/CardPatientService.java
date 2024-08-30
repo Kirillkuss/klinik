@@ -1,5 +1,6 @@
 package com.klinik.service;
 
+import com.klinik.aspect.annotation.ExecuteTimeLog;
 import com.klinik.entity.CardPatient;
 import com.klinik.entity.Patient;
 import com.klinik.repositories.CardPatientRepository;
@@ -21,6 +22,7 @@ public class CardPatientService {
     private final TypeComplaintRepository typeComplaintRepository;
     private final CardPatientRepository   cardPatientRepository;
     private final PatientRepository       patientRepository;
+    
     public CardPatient saveCardPatient( CardPatient cardСatient,  Long idPatient ) throws Exception{
         if( cardPatientRepository.findByPatientId( idPatient ).isPresent()) throw new IllegalArgumentException( "Карта пациента с таким ИД пациента уже существует");
         if( cardPatientRepository.findById( cardСatient.getIdCardPatient() ).isPresent() ) throw new IllegalArgumentException( "Карта с таким ИД уже существует");
@@ -29,11 +31,12 @@ public class CardPatientService {
         cardСatient.setPatient( patient.get());
         return cardPatientRepository.save( cardСatient );
     }
-
+    @ExecuteTimeLog(operation = "findByPatientId")
     public CardPatient findByPatientId( Long id ){ 
         return cardPatientRepository.findByPatientId( id )
                                     .orElseThrow( () -> new NoSuchElementException( "Карты с таким ИД пациента не существует" ));
     }
+    @ExecuteTimeLog(operation = "findByIdCard")
     public CardPatient findByIdCard( Long id ){
         return cardPatientRepository.findById( id )
                                     .orElseThrow( () -> new NoSuchElementException( "Карты с таким ИД карты не существует" ));
@@ -58,6 +61,7 @@ public class CardPatientService {
      * @return Card_patient
      * @throws Exception
      */
+    @ExecuteTimeLog(operation = "findByNPSCardPatient")
     public CardPatient findByNPS( String parametr ) throws Exception{
         return cardPatientRepository.findByNPS( parametr ).orElseThrow();
     }

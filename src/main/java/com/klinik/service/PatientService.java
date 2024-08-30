@@ -1,5 +1,6 @@
 package com.klinik.service;
 
+import com.klinik.aspect.annotation.ExecuteTimeLog;
 import com.klinik.entity.Document;
 import com.klinik.entity.Patient;
 import com.klinik.repositories.DocumentRepository;
@@ -22,6 +23,7 @@ public class PatientService {
     private final DocumentRepository documentRepository;
     private final EntityManager      entityManager;
 
+    @ExecuteTimeLog(operation = "getAllPatients")
     public List<Patient> getAllPatients(){
         log.info( "All Patients");
         return patientRepository.findAll();
@@ -37,11 +39,12 @@ public class PatientService {
     }
     
     private void checkPatient( Patient patient, Long id ){
-        if( patientRepository.findByPhone( patient.getPhone() ) != null )  throw new IllegalArgumentException( "Пользователь с таким номером телефона уже существует, укажите другой");
-        if( patientRepository.findPatientByIdDocument( id ) != null )      throw new IllegalArgumentException( "Неверное значение ИД документа, попробуйте другой");
-        if( patientRepository.findById( patient.getIdPatient()).isPresent()) throw new IllegalArgumentException( "Пользователь с таким ИД уже существует");
+        if( patientRepository.findByPhone( patient.getPhone() ).isPresent() ) throw new IllegalArgumentException( "Пользователь с таким номером телефона уже существует, укажите другой");
+        if( patientRepository.findPatientByIdDocument( id ).isPresent() )     throw new IllegalArgumentException( "Неверное значение ИД документа, попробуйте другой");
+        if( patientRepository.findById( patient.getIdPatient()).isPresent())  throw new IllegalArgumentException( "Пользователь с таким ИД уже существует");
     }
 
+    @ExecuteTimeLog(operation = "findByWord")
     public List<Patient> findByWord( String word ) throws Exception{
         List<Patient> response = patientRepository.findPatientByWord( word );
         if ( response.isEmpty() == true ) throw new NoSuchElementException( "По данному запросу ничего не найдено");
@@ -49,11 +52,12 @@ public class PatientService {
         return response;
     }
 
+
     @SuppressWarnings("unchecked")
+    @ExecuteTimeLog(operation = "getLazyPatients")
     public List<Patient> getLazyLoad( int page, int size){
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        log.info( "getLazyPatients - page >> " + page + " size >> " + size );
         List<Patient> response =  entityManager.createNativeQuery( "select * from Patient", Patient.class)
                                                .setFirstResult((page - 1) * size)
                                                .setMaxResults(size)

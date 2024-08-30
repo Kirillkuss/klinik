@@ -1,5 +1,6 @@
 package com.klinik.service;
 
+import com.klinik.aspect.annotation.ExecuteTimeLog;
 import com.klinik.entity.Doctor;
 import com.klinik.repositories.DoctorRerository;
 import javax.persistence.EntityManager;
@@ -41,8 +42,8 @@ public class DoctorService {
     }
 
     @SuppressWarnings("unchecked")
+    @ExecuteTimeLog(operation = "getLazyDoctor")
     public List<Doctor> getLazyDoctor( int page, int size ){
-        log.info( "getLazyDoctors - page >> " + page + " size >> " + size );
         return entityManager.createNativeQuery( "select * from Doctor", Doctor.class)
                             .setFirstResult((page - 1) * size)
                             .setMaxResults(size)
@@ -63,9 +64,9 @@ public class DoctorService {
         log.info( "Method execution time - getCountDoctors: " + (System.currentTimeMillis() - startTime) + " ms" ); 
         return response;
     }
-    
+
+    @ExecuteTimeLog(operation = "findByFIO")
     public List<Doctor> findByFIO( String word, int page, int size ) throws Exception{
-        log.info( "findByFIO >> " );
         List<Doctor> response = doctorRerository.findDoctorByFIO( word )
                                                 .stream()
                                                 .skip(( page - 1 ) * size )

@@ -1,5 +1,6 @@
 package com.klinik.service;
 
+import com.klinik.aspect.annotation.ExecuteTimeLog;
 import com.klinik.entity.Document;
 import com.klinik.repositories.DocumentRepository;
 import javax.persistence.EntityManager;
@@ -18,8 +19,8 @@ public class DocumentService {
     public final DocumentRepository documentRepository;
     private final EntityManager entityManager;
     
+    @ExecuteTimeLog(operation = "getAllDocuments")
     public List<Document> getAllDocuments(){
-        log.info( "getAllDocuments" );
         return documentRepository.findAll();
     }
     @Transactional
@@ -36,16 +37,18 @@ public class DocumentService {
         if ( documentRepository.findBySnils( document.getSnils()).isPresent() ) throw new IllegalArgumentException(  "Документ с таким СНИЛСом уже существует");
     }
 
+    @ExecuteTimeLog(operation = "findByWord")
     public List<Document> findByWord( String word ){
-        log.info( "findByWord" );
         List<Document> list = documentRepository.findByWord( word );
         if( list.isEmpty() ) throw new NoSuchElementException("По данному запросму ничего не найдено");
         return list;
     }
 
     @SuppressWarnings("unchecked")
+    @ExecuteTimeLog(operation = "getLazyDocuments")
+    //@OperationInfoBefore(operation = "getLazyDocuments")
+    //@OperationInfoAfter()
     public List<Document> getLazyDocuments(int page, int size){
-        log.info( "getLazyDocuments  - page >> " + page + " size >> " + size );
         return entityManager.createNativeQuery( "select * from Document", Document.class)
                             .setFirstResult((page - 1) * size)
                             .setMaxResults(size)
