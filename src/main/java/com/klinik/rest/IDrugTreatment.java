@@ -2,6 +2,8 @@ package com.klinik.rest;
 
 import java.util.List;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,9 +25,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping( value = "drug-treatments")
 @Tag(name = "8. Drug Treatment", description = "Справочник: Медикаментозное лечение и препараты")
 @ApiResponses(value = {
-        @ApiResponse( responseCode = "200", description = "Успешно",        content = { @Content( array = @ArraySchema(schema = @Schema( implementation = DrugTreatment.class ))) }),
-        @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
-        @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
+        @ApiResponse( responseCode = "200", description = "Успешно",        content = { @Content( mediaType = MediaType.APPLICATION_JSON, array = @ArraySchema(schema = @Schema( implementation = DrugTreatment.class ))) }),
+        @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( mediaType = MediaType.APPLICATION_JSON, array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) }),
+        @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( mediaType = MediaType.APPLICATION_JSON, array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class  ))) })
     })
 public interface IDrugTreatment {
     @GetMapping( "/list")

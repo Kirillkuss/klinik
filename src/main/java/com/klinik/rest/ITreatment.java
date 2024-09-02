@@ -2,6 +2,9 @@ package com.klinik.rest;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +28,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping( value = "treatments")
 @Tag(name = "7. Treatment", description = "Лечение пациентов:")
 @ApiResponses(value = {
-        @ApiResponse( responseCode = "200", description = "Успешно",        content = { @Content( array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
-        @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
-        @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
+        @ApiResponse( responseCode = "200", description = "Успешно",        content = { @Content( mediaType = MediaType.APPLICATION_JSON, array = @ArraySchema(schema = @Schema( implementation = ResponseTreatment.class))) }),
+        @ApiResponse( responseCode = "400", description = "Плохой запрос",  content = { @Content( mediaType = MediaType.APPLICATION_JSON, array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) }),
+        @ApiResponse( responseCode = "500", description = "Ошибка сервера", content = { @Content( mediaType = MediaType.APPLICATION_JSON, array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class))) })
     })
 @SecurityRequirement(name = "Bearer Authentication")
 public interface ITreatment {

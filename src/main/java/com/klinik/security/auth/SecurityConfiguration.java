@@ -45,6 +45,7 @@ public class SecurityConfiguration {
                             .csrf(csrf -> csrf.disable())
                             .build();
         
+        
         /**return http.authorizeRequests(requests -> requests
                         .antMatchers("/")
                         .hasAnyRole( Role.ADMIN.name(), Role.USER.name())
@@ -62,8 +63,6 @@ public class SecurityConfiguration {
                         .httpBasic(Customizer.withDefaults())
                         .build();*/
     }
-
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {

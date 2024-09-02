@@ -16,7 +16,6 @@ public class GenerateEncryption {
     @Value("${encryption.path}")
     private String encryptionPath;
 
-
     private String generateSalt() {
         byte[] salt = new byte[16];
         SecureRandom secureRandom = new SecureRandom();

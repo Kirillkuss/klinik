@@ -50,7 +50,7 @@ public class GenerateKeystore {
      * @throws CertificateException
      */
     private KeyStore getKeyStore() throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
-         return loadKeyStore( KEYSTORE_PATH, KEYSTORE_FILE, KEYSTORE_PASSWORD );
+        return loadKeyStore( KEYSTORE_PATH, KEYSTORE_FILE, KEYSTORE_PASSWORD );
     }
     /**
      * Загрузка KeyStore

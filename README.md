@@ -5,12 +5,12 @@ Pet prod Klinika
 2. Spring Boot MVC
 3. Swagger
 4. ui
-5. Spring Boot Security ( OAuth )
+5. Spring Boot Security
 6. Postgres
 7. RESTful
 8. Docker-compose
 9. Backup db
-10. AOP - log, transaction, error, cache
+10. AOP - log, transaction, error, cache, security
 11. Сache
 
 Add keystore 
