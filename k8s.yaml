@@ -50,4 +50,4 @@ spec:
             privileged: true
 ---
 
-kubectl expose deployment klinika --type=NodePort --port=8080
+kubectl expose deployment klinika --type=NodePort --port=8082

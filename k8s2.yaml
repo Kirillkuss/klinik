@@ -1,0 +1,100 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: klinika
+  labels:
+    k8s-app: klinika
+spec:
+  type: NodePort
+  selector:
+    app: klinika
+  ports:
+    - name:
+      appProtocol: http
+      protocol: TCP
+      port: 8082
+      targetPort: 8082
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keys-config
+data:
+  jwt.private.key: classpath:keys/private.pem
+  jwt.public.key: classpath:keys/public.pem
+  encryption.key: classpath:keys/encryption.key
+  encryption.path: /app/keys/encryption.key
+  generate.keys.path: /app/keys
+  private.pem: classpath:keys/private.pem
+  public.pem: classpath:keys/public.pem
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: klinika
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: klinika
+  template:
+    metadata:
+      labels:
+        app: klinika
+    spec:
+      containers:
+      - name: klinika
+        image: kirillkus/authklinik
+        ports:
+        - containerPort: 8082
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:postgresql://host.docker.internal:5432/Klinika
+        - name: SPRING_DATASOURCE_USERNAME
+          value: postgres
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: admin
+        - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+          value: none
+
+        - name: JWT_PRIVATE_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: keys-config
+              key: private.pem
+
+        - name: JWT_PUBLIC_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: keys-config
+              key: public.pem
+
+        - name: jwt.private.key
+          valueFrom:
+            configMapKeyRef:
+              name: keys-config
+              key: private.pem
+
+        - name: jwt.public.key
+          valueFrom:
+            configMapKeyRef:
+              name: keys-config
+              key: public.pem
+
+        - name: ENCRYPTION_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: keys-config
+              key: encryption.key
+
+        volumeMounts:
+        - name: keys-volume
+          mountPath: /app/keys
+      volumes:
+      - name: keys-volume
+        configMap:
+          name: keys-config
