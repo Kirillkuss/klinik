@@ -38,7 +38,8 @@ public class SecurityConfiguration {
     RSAPublicKey publicKeyPem;
 
     @Value("${jwt.private.key}")
-    RSAPrivateKey privateKeyPem; 
+    RSAPrivateKey privateKeyPem;
+     
     /**
      * из хранилища keystore
      */
