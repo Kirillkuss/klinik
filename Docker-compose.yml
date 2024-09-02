@@ -27,4 +27,4 @@ services:
       #- SERVER_SSL_KEY-STORE-ALIAS=  
     volumes:
       - ./src/main/resources/keys:/app/keys
-      - ./src/main/resources/keystore:/app/keystore
+      - ./src/main/resources/keystore:/src/main/resources/keystore
