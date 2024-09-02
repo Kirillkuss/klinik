@@ -34,10 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class GenerateKeystore {
-    /**
-     * for docker-compose
-     */
-    //private static final String KEYSTORE_PATH     = "/app/keystore";
+
     private static final String KEYSTORE_PATH     = "src/main/resources/keystore";
     private static final String KEYSTORE_FILE     = "klinika.jks";
     private static final String KEYSTORE_PASSWORD = "klinika";
