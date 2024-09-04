@@ -8,7 +8,9 @@ services:
     image: klinika
     ports:
       - "8082:8082"
-    container_name: kirillkuss/klinika
+    build:
+      context: .
+    container_name: klinika
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/Klinika
       - SPRING_DATASOURCE_USERNAME=postgres
@@ -19,6 +21,11 @@ services:
       - encryption.key=classpath:keys/encryption.key
       - encryption.path=/app/keys/encryption.key
       - generate.keys.path=/app/keys
+      # https
+      # KEYSTORE=classpath:keystore/klinika.jks 
+      # SERVER_SSL_KEY-STORE=classpath:keystore/klinika.jks  
+      # SERVER_SSL_KEY-STORE-PASSWORD=
+      # SERVER_SSL_KEY-STORE-ALIAS= 
     volumes:
       - ./src/main/resources/keys:/app/keys
-      - ./src/main/resources/keystore:/src/main/resources/keystore
+      - ./src/main/resources/keystore:/app/keystore

@@ -5,12 +5,12 @@ volumes:
 
 services:
   Klinik:
-    image: authklinik
+    image: klinika
     ports:
       - "8082:8082"
     build:
       context: .
-    container_name: authklinik
+    container_name: klinika
     depends_on:
       - pg_db
     environment:

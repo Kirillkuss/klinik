@@ -1,3 +1,6 @@
+var protocol = window.location.protocol
+var hostname = window.location.hostname;
+var port = window.location.port;
 /**
  * Ленивый поиск пациентов
  * @param {*} page - страница
@@ -8,7 +11,7 @@ function lazyPatients( page, size) {
     $('table tbody').on('mousedown', 'tr', function(e) {
         $(this).addClass('highlight').siblings().removeClass('highlight');
     });
-    $.getJSON('http://localhost:8082/web/patients/list/{page}{size}?page='+page+'&size='+size, function(json) {
+    $.getJSON( window.location.protocol + '//'+ hostname + ':' + port +'/web/patients/list/{page}{size}?page='+page+'&size='+size, function(json) {
         var tr=[];
         for (var i = 0; i < json.length; i++) {
             tr.push('<tr>');
@@ -33,7 +36,7 @@ function listPatient() {
     $('table tbody').on('mousedown', 'tr', function(e) {
         $(this).addClass('highlight').siblings().removeClass('highlight');
     });
-    $.getJSON('http://localhost:8082/web/patients/all', function(json) {
+    $.getJSON(window.location.protocol + '//'+ hostname + ':' + port + '/web/patients/all', function(json) {
         var tr=[];
         for (var i = 0; i < json.length; i++) {
             tr.push('<tr>');
@@ -67,7 +70,7 @@ function AddPatient() {
             $.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                url: "http://localhost:8082/web/patients/add?id=" + idDocument,
+                url: window.location.protocol + "//"+ hostname  +":" + port +":8082/web/patients/add?id=" + idDocument,
                 data: JSON.stringify ({idPatient: idPatient,
                                       surname: surname,
                                       name: name,
@@ -110,7 +113,7 @@ function findByWordPatient() {
             $.ajax({
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
-                url: "http://localhost:8082/web/patients/find/{word}",
+                url: window.location.protocol +"//"+ hostname +":" + port +"/web/patients/find/{word}",
                 data:{ word: word } ,
                 cache: false,
                 success: function( json ) {

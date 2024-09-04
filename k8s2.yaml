@@ -1,100 +1,196 @@
+#app with ssl
+# after you need add klinika.jks to pod
+# example D:\Project\dev\klinik\src\main\resources\keystore> kubectl cp klinika.jks klinika-5c66d8b6b6-pg5ms:/app/keystore
+# where name's pod - klinika-5c66d8b6b6-pg5ms
+# path from (cmd ) D:\Project\dev\klinik\src\main\resources\keystore>
+# path to /app/keystore
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: klinika-keys-pv-ssl
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /host_mnt/d/Project/dev/klinik/src/main/resources/keys
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: klinika-keystore-pv-ssl
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /host_mnt/d/Project/dev/klinik/src/main/resources/keystore
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: klinika-keys-pvc-ssl
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: klinika-keystore-pvc-ssl
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: klinika
+  name: sslklinika
   labels:
-    k8s-app: klinika
+    k8s-app: sslklinika
 spec:
   type: NodePort
   selector:
-    app: klinika
+    app: sslklinika
   ports:
-    - name:
-      appProtocol: http
+    - name: https
+      appProtocol: https
       protocol: TCP
       port: 8082
       targetPort: 8082
+      nodePort: 30082  
 
 ---
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: keys-config
+  name: klinika-config-ssl
 data:
-  jwt.private.key: classpath:keys/private.pem
-  jwt.public.key: classpath:keys/public.pem
-  encryption.key: classpath:keys/encryption.key
-  encryption.path: /app/keys/encryption.key
-  generate.keys.path: /app/keys
-  private.pem: classpath:keys/private.pem
-  public.pem: classpath:keys/public.pem
+  SPRING_DATASOURCE_URL: jdbc:postgresql://host.docker.internal:5432/Klinika
+  SPRING_DATASOURCE_USERNAME: postgres
+  SPRING_DATASOURCE_PASSWORD: admin
+  SPRING_JPA_HIBERNATE_DDL_AUTO: none
+  jwt.private.key: "classpath:keys/private.pem"
+  jwt.public.key: "classpath:keys/public.pem"
+  encryption.key: "classpath:keys/encryption.key"
+  encryption.path: "/app/keys/encryption.key"
+  generate.keys.path: "/app/keys"
+  KEYSTORE: classpath:keystore/klinika.jks 
+  SERVER_SSL_KEY-STORE: classpath:keystore/klinika.jks  
+  SERVER_SSL_KEY-STORE-PASSWORD: klinika
+  SERVER_SSL_KEY-STORE-ALIAS: klinikaKey 
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: klinika
+  name: sslklinika
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: klinika
+      app: sslklinika
   template:
     metadata:
       labels:
-        app: klinika
+        app: sslklinika
     spec:
       containers:
-      - name: klinika
-        image: kirillkus/authklinik
+      - name: sslklinika
+        image: kirillkus/sslklinika
         ports:
         - containerPort: 8082
         env:
+        - name: KEYSTORE
+          valueFrom:
+            configMapKeyRef:
+              name: klinika-config-ssl
+              key: KEYSTORE
+        - name: SERVER_SSL_KEY-STORE
+          valueFrom:
+            configMapKeyRef:
+              name: klinika-config-ssl
+              key: SERVER_SSL_KEY-STORE
+        - name: SERVER_SSL_KEY-STORE-PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: klinika-config-ssl
+              key: SERVER_SSL_KEY-STORE-PASSWORD        
+        - name: SERVER_SSL_KEY-STORE-ALIAS
+          valueFrom:
+            configMapKeyRef:
+              name: klinika-config-ssl
+              key: SERVER_SSL_KEY-STORE-ALIAS
         - name: SPRING_DATASOURCE_URL
-          value: jdbc:postgresql://host.docker.internal:5432/Klinika
+          valueFrom:
+            configMapKeyRef:
+              name: klinika-config-ssl
+              key: SPRING_DATASOURCE_URL
+
         - name: SPRING_DATASOURCE_USERNAME
-          value: postgres
+          valueFrom:
+            configMapKeyRef:
+              name: klinika-config-ssl
+              key: SPRING_DATASOURCE_USERNAME
+
         - name: SPRING_DATASOURCE_PASSWORD
-          value: admin
+          valueFrom:
+            configMapKeyRef:
+              name: klinika-config-ssl
+              key: SPRING_DATASOURCE_PASSWORD
+
         - name: SPRING_JPA_HIBERNATE_DDL_AUTO
-          value: none
-
-        - name: JWT_PRIVATE_KEY
           valueFrom:
             configMapKeyRef:
-              name: keys-config
-              key: private.pem
-
-        - name: JWT_PUBLIC_KEY
-          valueFrom:
-            configMapKeyRef:
-              name: keys-config
-              key: public.pem
+              name: klinika-config-ssl
+              key: SPRING_JPA_HIBERNATE_DDL_AUTO
 
         - name: jwt.private.key
           valueFrom:
             configMapKeyRef:
-              name: keys-config
-              key: private.pem
-
+              name: klinika-config-ssl
+              key: jwt.private.key
         - name: jwt.public.key
           valueFrom:
             configMapKeyRef:
-              name: keys-config
-              key: public.pem
-
-        - name: ENCRYPTION_KEY
+              name: klinika-config-ssl
+              key: jwt.public.key
+        - name: encryption.key
           valueFrom:
             configMapKeyRef:
-              name: keys-config
+              name: klinika-config-ssl
               key: encryption.key
-
+        - name: encryption.path
+          valueFrom:
+            configMapKeyRef:
+              name: klinika-config-ssl
+              key: encryption.path
+        - name: generate.keys.path
+          valueFrom:
+            configMapKeyRef:
+              name: klinika-config-ssl
+              key: generate.keys.path
         volumeMounts:
         - name: keys-volume
           mountPath: /app/keys
+        - name: keystore-volume
+          mountPath: /app/keystore  
       volumes:
       - name: keys-volume
-        configMap:
-          name: keys-config
+        persistentVolumeClaim:
+          claimName: klinika-keys-pvc-ssl
+      - name: keystore-volume
+        persistentVolumeClaim:
+          claimName: klinika-keystore-pvc-ssl

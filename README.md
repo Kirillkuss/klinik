@@ -12,6 +12,7 @@ Pet prod Klinika
 9. Backup db
 10. AOP - log, transaction, error, cache, security
 11. Сache
+12. K8s 
 
 Add keystore 
 
@@ -44,4 +45,22 @@ cmd commands :
    
 3.3 docker exec -t postgres_db pg_dump -U postgres -F c -b -v -f klinika.backup Klinika  // excute backup
 3.4 docker exec -t postgres_db pg_restore -U postgres -W -d Klinika klinika.backup       // excute backup
+
+4. Docker
+4.1. Create tag
+docker tag klinika kirillkus/klinika
+4.2 Push container
+docker push kirillkus/klinika
+
+5. Kubernetes ( K8s )
+5.1 K8s.yml - without ssl
+5.2 K8s.yml - with ssl
+
+command:
+minikube start  (start minikube)
+minikube dashboard ( ui Kubernetes )
+kubectl apply -f k8s.yaml ( executable file )
+kubectl apply -f k8s2.yaml ( executable file )
+kubectl logs klinika-765bb6f8f9-zl7cd  ( check log, where klinika-765bb6f8f9-zl7cd - name's pod)
+kubectl cp klinika.jks klinika-5c66d8b6b6-pg5ms:/app/keystore ( add klinika.jks to package /app/keystore in k8s)
 

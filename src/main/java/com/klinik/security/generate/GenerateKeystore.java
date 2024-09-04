@@ -37,10 +37,10 @@ public class GenerateKeystore {
     /**
      * for docker-compose
      */
-    //private static final String KEYSTORE_PATH     = "/app/keystore";
-    private static final String KEYSTORE_PATH     = "src/main/resources/keystore";
-    private static final String KEYSTORE_FILE     = "klinika.jks";
-    private static final String KEYSTORE_PASSWORD = "klinika";
+    //private final String KEYSTORE_PATH     = "/app/keystore";
+    private final String KEYSTORE_PATH     = "src/main/resources/keystore";
+    private final String KEYSTORE_FILE     = "klinika.jks";
+    private final String KEYSTORE_PASSWORD = "klinika";
      /**
      * KeyStore
      * @return KeyStore

@@ -19,5 +19,4 @@ public class AuthenticationController implements IAuthentication  {
         request.getSession().removeAttribute("error");
         return "redirect:/web/login"; 
     }
-
 }
