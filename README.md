@@ -1,7 +1,7 @@
 # Klinika
 Pet project Klinika
 
-## Технологии
+## Technologies
 
 1. **Spring Boot**
 2. **Spring Boot MVC**
@@ -15,30 +15,28 @@ Pet project Klinika
 10. **Cache**
 11. **Kubernetes (K8s)**
 
-## Добавление Keystore
+## Add Keystore
 
-# Создание keystore с использованием RSA
+# Creating a keystore using RSA
 
     keytool -genkeypair -alias klinika -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore klinika.p12 -validity 365
     keytool -genkeypair -alias klinika -keyalg RSA -keysize 2048 -keystore klinika.jks -validity 365
     keytool -importkeystore -srckeystore klinika.jks -destkeystore klinika.jks -deststoretype pkcs12
     keytool -genkeypair -alias klinikaKey -keyalg RSA -keysize 2048 -validity 365 -keystore klinika.jks -storepass klinika
 
-## Резервное Копирование Базы Данных
+## Database Backup
 
-### Команды CMD:
-
-## Создание резервной копии
+## Creating a Backup (CMD)
 
     pg_dump -U postgres -W -F c -b -v -f klinika.backup Klinika  // копирует все таблицы  
     pg_dump -U postgres -W -F c -t doctor -f backup_doctor.backup Klinika  // копирует только одну таблицу  
 
-## Восстановление резервной копии
+## Restoring a backup (CMD)
 
    pg_restore -U postgres -W -d Klinika klinika.backup  // возвращает все таблицы  
    pg_restore -U postgres -W -d Klinika backup_doctor.backup  // возвращает только одну таблицу  
 
-## Добавление резервной копии в Docker
+## Adding a backup to Docker (CMD)
 
     docker cp klinika.backup postgres_db:/klinika.backup  // копирование резервной копии  
     docker exec -it postgres_db pg_restore -U postgres -d Klinika /klinika.backup  // восстановление резервной копии  
@@ -51,7 +49,7 @@ Pet project Klinika
 
 ## Kubernetes (K8s)
     1. K8s.yml - without ssl
-    2. K8s.yml - with ssl
+    2. K8s2.yml - with ssl
 
 ## command:
     minikube start  (start minikube)
