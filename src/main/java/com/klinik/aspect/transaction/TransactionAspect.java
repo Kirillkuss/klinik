@@ -9,8 +9,8 @@ import lombok.extern.slf4j.Slf4j;
  * Пример логирования методов на который аннтотация @Transactional
  */
 @Slf4j
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class TransactionAspect {
     @Around(value = "@annotation(org.springframework.transaction.annotation.Transactional)")
     public Object logTransaction(ProceedingJoinPoint joinPoint) throws Throwable {
