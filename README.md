@@ -31,7 +31,7 @@ Pet project Klinika
     pg_dump -U postgres -W -F c -b -v -f klinika.backup Klinika  // копирует все таблицы  
     pg_dump -U postgres -W -F c -t doctor -f backup_doctor.backup Klinika  // копирует только одну таблицу  
 
-## Creating a Backup 2 (CMD)
+## Restoring a backup (CMD)
 
     pg_restore -U postgres -W -d Klinika klinika.backup  // возвращает все таблицы  
     pg_restore -U postgres -W -d Klinika backup_doctor.backup  // возвращает только одну таблицу  
