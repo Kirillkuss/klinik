@@ -49,8 +49,8 @@ Pet project Klinika
     docker push kirillkus/klinika // Push container 
 
 ## Kubernetes (K8s)
-5.1 K8s.yml - without ssl
-5.2 K8s.yml - with ssl
+    1. **K8s.yml - without ssl**
+    2. **K8s.yml - with ssl**
 
 ## command:
     minikube start  (start minikube)
