@@ -18,6 +18,7 @@ Pet project Klinika
 ## Добавление Keystore
 
 # Создание keystore с использованием RSA
+
     keytool -genkeypair -alias klinika -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore klinika.p12 -validity 365
     keytool -genkeypair -alias klinika -keyalg RSA -keysize 2048 -keystore klinika.jks -validity 365
     keytool -importkeystore -srckeystore klinika.jks -destkeystore klinika.jks -deststoretype pkcs12
@@ -27,30 +28,30 @@ Pet project Klinika
 
 ### Команды CMD:
 
-1. **Создание резервной копии**
+## Создание резервной копии
 
-   pg_dump -U postgres -W -F c -b -v -f klinika.backup Klinika  // копирует все таблицы  
-   pg_dump -U postgres -W -F c -t doctor -f backup_doctor.backup Klinika  // копирует только одну таблицу  
+    pg_dump -U postgres -W -F c -b -v -f klinika.backup Klinika  // копирует все таблицы  
+    pg_dump -U postgres -W -F c -t doctor -f backup_doctor.backup Klinika  // копирует только одну таблицу  
 
-2. **Восстановление резервной копии**
+## Восстановление резервной копии
 
    pg_restore -U postgres -W -d Klinika klinika.backup  // возвращает все таблицы  
    pg_restore -U postgres -W -d Klinika backup_doctor.backup  // возвращает только одну таблицу  
 
-3. **Добавление резервной копии в Docker**
+## Добавление резервной копии в Docker
 
-     docker cp klinika.backup postgres_db:/klinika.backup  // копирование резервной копии  
-     docker exec -it postgres_db pg_restore -U postgres -d Klinika /klinika.backup  // восстановление резервной копии  
-     docker exec -t postgres_db pg_dump -U postgres -F c -b -v -f klinika.backup Klinika  // создание резервной копии  
-     docker exec -t postgres_db pg_restore -U postgres -W -d Klinika klinika.backup  // восстановление резервной копии  
+    docker cp klinika.backup postgres_db:/klinika.backup  // копирование резервной копии  
+    docker exec -it postgres_db pg_restore -U postgres -d Klinika /klinika.backup  // восстановление резервной копии  
+    docker exec -t postgres_db pg_dump -U postgres -F c -b -v -f klinika.backup Klinika  // создание резервной копии  
+    docker exec -t postgres_db pg_restore -U postgres -W -d Klinika klinika.backup  // восстановление резервной копии  
 
 ## Docker
     docker tag klinika kirillkus/klinika //  Create tag
     docker push kirillkus/klinika // Push container 
 
 ## Kubernetes (K8s)
-    1. **K8s.yml - without ssl**
-    2. **K8s.yml - with ssl**
+    1. K8s.yml - without ssl
+    2. K8s.yml - with ssl
 
 ## command:
     minikube start  (start minikube)
