@@ -46,4 +46,8 @@ public interface IPatient {
     @GetMapping(value = "/list/{page}{size}")
     @Operation( description = "ленивая загрузка пациентов", summary = "ленивая загрузка пациентов")
     public ResponseEntity<List<Patient>> getLazyLoad( int page, int size) ;
+
+    @GetMapping(value = "/count")
+    @Operation( description ="Количество пациентов", summary = "Количество пациентов")
+    public ResponseEntity<Long> getCountPatient( ) ;
 }

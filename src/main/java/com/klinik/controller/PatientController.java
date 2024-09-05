@@ -2,6 +2,7 @@ package com.klinik.controller;
 
 import com.klinik.entity.Patient;
 import com.klinik.excep.MyException;
+import com.klinik.repositories.PatientRepository;
 import com.klinik.rest.IPatient;
 import com.klinik.service.PatientService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class PatientController implements IPatient{
 
     private final PatientService  patientService;
+    private final PatientRepository patientRepository;
     
     public ResponseEntity<List<Patient>> getAllPatients() throws Exception, MyException{
         return new ResponseEntity<>(patientService.getAllPatients(), HttpStatus.OK );
@@ -28,6 +30,10 @@ public class PatientController implements IPatient{
     @Override
     public ResponseEntity<List<Patient>> getLazyLoad(int page, int size) {
         return new ResponseEntity<>( patientService.getLazyLoad( page, size ), HttpStatus.OK );
+    }
+    @Override
+    public ResponseEntity<Long> getCountPatient() {
+        return new ResponseEntity<>( patientRepository.count(), HttpStatus.OK );
     }
 
  }

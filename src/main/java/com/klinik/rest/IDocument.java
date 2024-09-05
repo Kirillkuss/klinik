@@ -46,4 +46,8 @@ public interface IDocument {
     @Operation( description = "Список документов", summary = "Список документов")
     public ResponseEntity<List<Document>> getLazyDocument( int page, int size);
     
+    
+    @GetMapping(value = "/count")
+    @Operation( description = "Количество документов", summary = "Количество документов")
+    public ResponseEntity<Long> getCountDocument();
 }

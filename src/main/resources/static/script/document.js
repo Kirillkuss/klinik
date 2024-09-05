@@ -136,10 +136,25 @@ function AddDocument() {
         });
     };
 
+    function getCountDocuments() {
+        return new Promise((resolve, reject) => {
+            $.getJSON(protocol + '//' + hostname + ':' + port + '/web/documents/count')
+                .done(function(json) {
+                    var count = json;
+                    resolve(count); 
+                })
+                .fail(function(error) {
+                    console.error("Ошибка при получении данных:", error);
+                    reject(error); 
+                });
+        });
+    }
+
     /**
      * Нумерация страниц
      */
-    function switchTable(){
+    async function switchTable() {
+        let totalDocuments = await getCountDocuments();
         i = 2;
         $(document.getElementById("Previous")).on( "click",function(){
             if( i < 2 ){
@@ -176,6 +191,12 @@ function AddDocument() {
         $(document.getElementById("third")).on( "click",function(){
             i = 3;
             $('tbody:even').empty();
+            lazyDocument(i, 15);
+        });
+                
+        $(document.getElementById("last")).on("click", function() {
+            $('tbody:even').empty();
+            i  = Math.ceil(totalDocuments / 15);
             lazyDocument(i, 15);
         });
     }

@@ -142,10 +142,24 @@ function findByWordPatient() {
         }
     });	
 };
+function getCountPatient() {
+    return new Promise((resolve, reject) => {
+        $.getJSON(protocol + '//' + hostname + ':' + port + '/web/patients/count')
+            .done(function(json) {
+                var count = json;
+                resolve(count); 
+            })
+            .fail(function(error) {
+                console.error("Ошибка при получении данных:", error);
+                reject(error); 
+            });
+    });
+}
 /**
  * Нумерация страниц
  */
-function switchTable(){
+async function switchTable(){
+    let totalPatients = await getCountPatient();
     i = 2;
     $(document.getElementById("PreviousPatient")).on( "click",function(){
         if( i < 2 ){
@@ -182,6 +196,12 @@ function switchTable(){
     $(document.getElementById("thirdPatient")).on( "click",function(){
         i = 3;
         $('tbody:even').empty();
+        lazyPatients(i, 15);
+    });
+
+    $(document.getElementById("lastPatient")).on("click", function() {
+        $('tbody:even').empty();
+        i  = Math.ceil(totalPatients / 15);
         lazyPatients(i, 15);
     });
 }
