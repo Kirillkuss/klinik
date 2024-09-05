@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import org.instancio.Instancio;
 import org.instancio.Select;
 import org.junit.jupiter.api.DisplayName;
@@ -64,19 +65,45 @@ public class RestToken {
         String number = Instancio.of(String.class).generate( Select.allStrings(), gen -> gen.text().pattern("#d#d#d#d#d#d#d")).create();
         return code+number;
     }
-    @DisplayName("Генерация пациента")
-    public static Patient getPatient(){
-        Patient patient = Instancio.of(Patient.class)
+
+    public static Patient getPatientMan(){
+        Patient man = Instancio.of(Patient.class)
                                     .generate(field(Patient::getSurname),  gen -> gen.oneOf("Петров", "Волков", "Попов", "Федоров"))
                                     .generate(field(Patient::getName),  gen -> gen.oneOf("Максим", "Алексей", "Андрей", "Сергей"))
                                     .generate(field(Patient::getFullName),  gen -> gen.oneOf("Александрович", "Михайлович", "Алексеевич", "Анатольевич"))
                                     .generate(field(Patient::getAddress),  gen -> gen.oneOf("Притыцкого 24", "Одинвово 11", "Михалова 154", "Молодежная 21"))
-                                    .generate(field(Patient::getGender),  gen -> gen.oneOf(Gender.MAN, Gender.WOMAN))
+                                    .generate(field(Patient::getGender),  gen -> gen.oneOf(Gender.MAN))
                                     .generate(field(Patient::getPhone),  gen -> gen.oneOf( generatePhoneNumber() ))
                                     .ignore(Select.field( Patient::getIdPatient ))
                                     .create();
-                 patient.setIdPatient( -1L );
-        return patient;
+                                    man.setIdPatient( -1L );
+        return man;
+    }
+
+    public static Patient getPatientWoman(){
+        Patient woman = Instancio.of(Patient.class)
+                                    .generate(field(Patient::getSurname),  gen ->gen.oneOf("Титова", "Федоровна", "Морозова", "Колокольцева"))
+                                    .generate(field(Patient::getName),  gen -> gen.oneOf("Татьяна", "Алеся", "Дарья", "Наталья"))
+                                    .generate(field(Patient::getFullName), gen ->  gen.oneOf("Александровна", "Михайловна", "Алексеевна", "Анатольевна"))
+                                    .generate(field(Patient::getAddress),  gen -> gen.oneOf("Притыцкого 24", "Одинвово 11", "Михалова 154", "Молодежная 21"))
+                                    .generate(field(Patient::getGender),  gen -> gen.oneOf(Gender.WOMAN))
+                                    .generate(field(Patient::getPhone),  gen -> gen.oneOf( generatePhoneNumber() ))
+                                    .ignore(Select.field( Patient::getIdPatient ))
+                                    .create();
+                                    woman.setIdPatient( -1L );
+        return woman;
+    }
+
+    
+    @DisplayName("Генерация пациента")
+    public static Patient getPatient(){
+        Random random = new Random();
+        int genderSelector = random.nextInt(2);
+        if (genderSelector == 0) {
+            return getPatientMan();
+        } else {
+            return getPatientWoman(); 
+        }
     }
     @DisplayName("Генерация документа")
     public static Document getDocument(){
