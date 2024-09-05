@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Random;
 import java.util.NoSuchElementException;
 
 
@@ -79,7 +80,7 @@ public class DoctorService {
     }
 
     public Doctor saveDoctor( Doctor doctor ) throws Exception{
-        if ( doctorRerository.findById( doctor.getIdDoctor() ).isPresent()) throw new IllegalArgumentException( "Пользователь с таким ИД уще существует");
+        doctor.setIdDoctor( new Random().nextLong() );
         Doctor response = doctorRerository.save( doctor );
         log.info( " saveDoctor >> " + response );
         return response;

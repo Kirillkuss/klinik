@@ -1,5 +1,6 @@
 package com.klinik.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,6 +25,7 @@ import javax.persistence.Table;
 public class Document  implements Serializable{
 
     @Id
+    @Hidden
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_document")
     @Schema( name        = "idDocument",

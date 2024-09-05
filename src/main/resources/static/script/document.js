@@ -23,8 +23,9 @@ function findByWordDocument() {
                 success: function( json ) {
                     var tr=[];
                     for (var i = 0; i < json.length; i++) {
+                        var rowNumber = 1 + i;
                         tr.push('<tr>');
-                        tr.push('<td>' + json[i].idDocument + '</td>');
+                        tr.push('<td>' + rowNumber + '</td>');
                         tr.push('<td>' + json[i].typeDocument + '</td>');
                         tr.push('<td>' + json[i].seria + '</td>');
                         tr.push('<td>' + json[i].numar + '</td>');
@@ -83,12 +84,12 @@ function AddDocument() {
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 url: "http://" + hostname + ':' + port + "/web/documents/add",
-                data: JSON.stringify({idDocument: idDocument, typeDocument: typeDocument, seria: seria, numar: numar, snils: snils, polis: polis}),
+                data: JSON.stringify({typeDocument: typeDocument, seria: seria, numar: numar, snils: snils, polis: polis}),
                 cache: false,
                 success: function( json ) {
                     var tr=[];
                     tr.push('<tr>');
-                    tr.push('<td>' + json.idDocument + '</td>');
+                    //tr.push('<td>' + json.idDocument + '</td>');
                     tr.push('<td>' + json.typeDocument + '</td>');
                     tr.push('<td>' + json.seria + '</td>');
                     tr.push('<td>' + json.numar + '</td>');
@@ -117,9 +118,12 @@ function AddDocument() {
         });
         $.getJSON(protocol + '//'+ hostname + ':' + port + '/web/documents/list/{page}{size}?page='+page+'&size='+size, function(json) {
             var tr=[];
+            $('tbody').empty();
+            var startIndex = (page - 1) * size + 1;
             for (var i = 0; i < json.length; i++) {
+                var rowNumber = startIndex + i;
                 tr.push('<tr>');
-                tr.push('<td>' + json[i].idDocument + '</td>');
+                tr.push('<td>' + rowNumber + '</td>');
                 tr.push('<td>' + json[i].typeDocument + '</td>');
                 tr.push('<td>' + json[i].seria + '</td>');
                 tr.push('<td>' + json[i].numar + '</td>');

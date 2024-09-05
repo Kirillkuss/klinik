@@ -13,9 +13,12 @@ function lazyPatients( page, size) {
     });
     $.getJSON( window.location.protocol + '//'+ hostname + ':' + port +'/web/patients/list/{page}{size}?page='+page+'&size='+size, function(json) {
         var tr=[];
+        $('tbody').empty();
+        var startIndex = (page - 1) * size + 1;
         for (var i = 0; i < json.length; i++) {
+            var rowNumber = startIndex + i;
             tr.push('<tr>');
-            tr.push('<td>' + json[i].idPatient + '</td>');
+            tr.push('<td>' + rowNumber + '</td>');
             tr.push('<td>' + json[i].surname + '</td>');
             tr.push('<td>' + json[i].name + '</td>');
             tr.push('<td>' + json[i].fullName + '</td>');
@@ -70,19 +73,18 @@ function AddPatient() {
             $.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                url: window.location.protocol + "//"+ hostname  +":" + port +":8082/web/patients/add?id=" + idDocument,
-                data: JSON.stringify ({idPatient: idPatient,
-                                      surname: surname,
-                                      name: name,
-                                      fullName: fullName,
-                                      gender: gender,
-                                      phone: phone,
-                                      address: address}), 
+                url: window.location.protocol + "//"+ hostname  +":" + port +"/web/patients/add?id=" + idDocument,
+                data: JSON.stringify ({surname: surname,
+                                       name: name,
+                                       fullName: fullName,
+                                       gender: gender,
+                                       phone: phone,
+                                       address: address}), 
                 cache: false,
                 success: function( json ) {
                     var tr=[];
                     tr.push('<tr>');
-                    tr.push('<td>' + json.idPatient + '</td>');
+                   // tr.push('<td>' + json.idPatient + '</td>');
                     tr.push('<td>' + json.surname + '</td>');
                     tr.push('<td>' + json.name + '</td>');
                     tr.push('<td>' + json.fullName + '</td>');
@@ -119,8 +121,9 @@ function findByWordPatient() {
                 success: function( json ) {
                     var tr=[];
                     for (var i = 0; i < json.length; i++) {
+                        var rowNumber = 1 + i;
                         tr.push('<tr>');
-                        tr.push('<td>' + json[i].idPatient + '</td>');
+                        tr.push('<td>' + rowNumber + '</td>');
                         tr.push('<td>' + json[i].surname + '</td>');
                         tr.push('<td>' + json[i].name + '</td>');
                         tr.push('<td>' + json[i].fullName + '</td>');

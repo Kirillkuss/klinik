@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.NoSuchElementException;
 import org.springframework.util.StopWatch;
 import java.util.List;
+import java.util.Random;
 import java.util.Optional;
 
 @Slf4j
@@ -30,6 +31,7 @@ public class PatientService {
     }
 
     public Patient addPatient( Patient patient, Long id ) throws Exception{
+        patient.setIdPatient( new Random().nextLong() );
         checkPatient( patient, id );
         Optional<Document> document = documentRepository.findById( id );
         if( document.isEmpty()) throw new IllegalArgumentException(  "Документ с таким ИД не существует");
@@ -41,7 +43,7 @@ public class PatientService {
     private void checkPatient( Patient patient, Long id ){
         if( patientRepository.findByPhone( patient.getPhone() ).isPresent() ) throw new IllegalArgumentException( "Пользователь с таким номером телефона уже существует, укажите другой");
         if( patientRepository.findPatientByIdDocument( id ).isPresent() )     throw new IllegalArgumentException( "Неверное значение ИД документа, попробуйте другой");
-        if( patientRepository.findById( patient.getIdPatient()).isPresent())  throw new IllegalArgumentException( "Пользователь с таким ИД уже существует");
+       // if( patientRepository.findById( patient.getIdPatient()).isPresent())  throw new IllegalArgumentException( "Пользователь с таким ИД уже существует");
     }
 
     @ExecuteTimeLog(operation = "findByWord")

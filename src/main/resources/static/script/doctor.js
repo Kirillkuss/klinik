@@ -17,11 +17,12 @@ function findByWordDoctor() {
                 url: protocol + "//"+ hostname + ":" + port + "/web/doctors/fio/{word}{page}{size}",
                 data:{ word: word, page: 1, size: 100 } ,
                 cache: false,
-                success: function( json ) {
+                success: function( json ) {     
                     var tr=[];
                     for (var i = 0; i < json.length; i++) {
+                        var rowNumber = 1 + i;
                         tr.push('<tr>');
-                        tr.push('<td>' + json[i].idDoctor + '</td>');
+                        tr.push('<td>' + rowNumber + '</td>');
                         tr.push('<td>' + json[i].surname + '</td>');
                         tr.push('<td>' + json[i].name + '</td>');
                         tr.push('<td>' + json[i].fullName + '</td>');
@@ -51,9 +52,12 @@ function lazyDoctors( page, size) {
      $.post( protocol + '//'+ hostname + ':' + port +'/web/doctors/lazy?page='+page+'&size='+size, function(json) {
        // $.get('http://localhost:8082/web/doctors/?page='+page+'&size='+size, function(json) {
         var tr=[];
+        $('tbody').empty();
+        var startIndex = (page - 1) * size + 1;
         for (var i = 0; i < json.length; i++) {
+            var rowNumber = startIndex + i;
             tr.push('<tr>');
-            tr.push('<td>' + json[i].idDoctor + '</td>');
+            tr.push('<td>' + rowNumber + '</td>');
             tr.push('<td>' + json[i].surname + '</td>');
             tr.push('<td>' + json[i].name + '</td>');
             tr.push('<td>' + json[i].fullName + '</td>');
@@ -67,76 +71,103 @@ function lazyDoctors( page, size) {
  * Добавить документ
  */
 function AddDoctor() {
-    $("#testFormDoctor").submit( function (event){
+    $("#testFormDoctor").submit(function (event) {
         event.preventDefault();
-        var idDoctor =  $('#idDoctor').val();
+        if (this.checkValidity() === false) {
+            return;
+        }
+
         var surname = $('#surname').val();
         var name = $('#name').val();
         var fullName = $('#fullName').val();
-            $.ajax({
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                url: protocol + "//"+ hostname + ':' + port + "/web/doctors/add",
-                data: JSON.stringify({idDoctor: idDoctor, surname: surname, name: name, fullName: fullName}),
-                cache: false,
-                success: function( json ) {
-                    var tr=[];
-                    tr.push('<tr>');
-                    tr.push('<td>' + json.idDoctor + '</td>');
-                    tr.push('<td>' + json.surname + '</td>');
-                    tr.push('<td>' + json.name + '</td>');
-                    tr.push('<td>' + json.fullName + '</td>');
-                    tr.push('</tr>');
-                    tr.push('</tr>');
-                    $('table').append($(tr.join('')));
-                    var modal = document.getElementById('testFormDoctor');
-                    modal.style.display = 'none';
-                    location.reload();
-                }, error: function ( error ){
-                    $('#errorToast').text( error.responseText ).show();
-                    $('#liveToastBtn').click();
-                }
-            });
+        
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: protocol + "//" + hostname + ':' + port + "/web/doctors/add",
+            data: JSON.stringify({ surname: surname, name: name, fullName: fullName }),
+            cache: false,
+            success: function (json) {
+                var tr = [];
+                tr.push('<tr>');
+                tr.push('<td>' + 1111 + '</td>');
+                tr.push('<td>' + json.surname + '</td>');
+                tr.push('<td>' + json.name + '</td>');
+                tr.push('<td>' + json.fullName + '</td>');
+                tr.push('</tr>');
+                $('table').append($(tr.join('')));
+                $('#exampleModal').modal('hide');
+                $('.modal-backdrop').remove(); 
+                lazyDoctors(1, 15);
+            },
+            
+            error: function (error) {
+                $('#errorToast').text(error.responseText).show();
+                $('#liveToastBtn').click();
+            }
+           
         });
-    };
+    });
+}
 
-    function switchTable(){
-        i = 2;
-        $(document.getElementById("PreviousDoctor")).on( "click",function(){
-            if( i < 2 ){
+        function getCountDoctor() {
+            return new Promise((resolve, reject) => {
+                $.getJSON(protocol + '//' + hostname + ':' + port + '/web/doctors/counts')
+                    .done(function(json) {
+                        var count = json;
+                        resolve(count); 
+                    })
+                    .fail(function(error) {
+                        console.error("Ошибка при получении данных:", error);
+                        reject(error); 
+                    });
+            });
+        }
+
+        async function switchTable() {
+            let totalDoctors = await getCountDoctor();
+            let i = 2; 
+            $(document.getElementById("PreviousDoctor")).on("click", function() {
+                if (i < 2) {
+                    i = 1;
+                } else {
+                    i--;
+                }
+                $('tbody:even').empty();
+                lazyDoctors(i, 15);
+            });
+        
+            $(document.getElementById("NextDoctor")).on("click", function() {
+                if (document.querySelectorAll('#tableDoctor tbody tr').length < 15) {
+                } else {
+                    i++;
+                }
+                $('tbody:even').empty();
+                lazyDoctors(i, 15);
+            });
+        
+            $(document.getElementById("firstDoctor")).on("click", function() {
                 i = 1;
-            }else{
-                i--;
-            }
-            $('tbody:even').empty();
-            lazyDoctors(i, 15);
-        });
-    
-        $(document.getElementById("NextDoctor")).on( "click",function(){
-            if( document.querySelectorAll('#tableDoctor tbody tr').length < 15 ){
-                i;
-            }else{
-                i++;
-            }
-            $('tbody:even').empty();
-            lazyDoctors(i, 15);
-        });
-    
-        $(document.getElementById("firstDoctor")).on( "click",function(){
-            i = 1;
-            $('tbody:even').empty();
-            lazyDoctors(i, 15);
-        });
-    
-        $(document.getElementById("secondDoctor")).on( "click",function(){
-            i = 2;
-            $('tbody:even').empty();
-            lazyDoctors(i, 15);
-        });
-    
-        $(document.getElementById("thirdDoctor")).on( "click",function(){
-            i = 3;
-            $('tbody:even').empty();
-            lazyDoctors (i, 15);
-        });
-    }
+                $('tbody:even').empty();
+                lazyDoctors(i, 15);
+            });
+        
+            $(document.getElementById("secondDoctor")).on("click", function() {
+                i = 2;
+                $('tbody:even').empty();
+                lazyDoctors(i, 15);
+            });
+        
+            $(document.getElementById("thirdDoctor")).on("click", function() {
+                i = 3;
+                $('tbody:even').empty();
+                lazyDoctors(i, 15);
+            });
+        
+            $(document.getElementById("lastDoctor")).on("click", function() {
+                $('tbody:even').empty();
+                i  = Math.ceil(totalDoctors / 15);
+                lazyDoctors(i, 15);
+            });
+        }
+        

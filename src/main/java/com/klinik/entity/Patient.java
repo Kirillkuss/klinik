@@ -31,6 +31,7 @@ import javax.persistence.Table;
 public class Patient implements Serializable {
 
     @Id
+    @Hidden
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column( name = "id_patient")
     @Schema( name        = "idPatient",

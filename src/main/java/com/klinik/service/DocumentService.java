@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Random;
 import java.util.NoSuchElementException;
 
 @Slf4j
@@ -25,6 +26,7 @@ public class DocumentService {
     }
     @Transactional
     public Document addDocument( Document document ) throws Exception{
+        document.setIdDocument( new Random().nextLong() );
         checkDocument( document );
         log.info( "addDocument" );
         return documentRepository.save( document );
