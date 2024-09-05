@@ -11,7 +11,7 @@ Pet project Klinika
 6. **RESTful API**
 7. **Docker-compose**
 8. **Backup DB**
-9. **TEST ( Jenkins (CI/CD))** (Mockito, RestAssured, TestContainer, SpringBootTest, )
+9. **TEST ( Jenkins (CI/CD))** (Mockito, RestAssured, TestContainer, SpringBootTest, Selenium )
 
 ## Add Keystore
 
@@ -43,7 +43,11 @@ Pet project Klinika
 
 ## Docker
     docker tag klinika kirillkus/klinika //  Create tag
-    docker push kirillkus/klinika // Push container 
+    docker push kirillkus/klinika // Push container
+
+## Selenium ( webdriver chrome )
+
+    https://chromedriver.storage.googleapis.com/index.html?path=79.0.3945.36/
 
 
 
