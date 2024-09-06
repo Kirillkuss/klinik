@@ -108,7 +108,7 @@ public class RestToken {
     @DisplayName("Генерация документа")
     public static Document getDocument(){
         Document document = Instancio.of(Document.class)
-                                     .generate(field(Document::getTypeDocument),  gen -> gen.oneOf("Пасспорт", "Водительское уд.", "Свид. о рождении"))
+                                     .generate(field(Document::getTypeDocument),  gen -> gen.oneOf("Паспорт", "Водительское уд.", "Свид. о рождении"))
                                      .generate(field(Document::getSeria),  gen -> gen.oneOf("АМ", "ВМ", "КВ", "ЯС"))
                                      .generate(field(Document::getNumar),  gen -> gen.text().pattern("#d#d#d#d#d#d#d#d#d"))
                                      .generate(field(Document::getSnils ),  gen -> gen.text().pattern("#d#d#d-#d#d#d-#d#d#d-#d#d"))
@@ -129,7 +129,7 @@ public class RestToken {
         return doctor;                            
     }
 
-    public static List<Long> getStremValue( String query, String colum ){
+    public static List<Long> getStremValue( String query, String column ){
         List<Long> listLong = new ArrayList<>();
         String url = "jdbc:postgresql://localhost:5432/Klinika";
         String user = "postgres";
@@ -138,7 +138,7 @@ public class RestToken {
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                Long id = rs.getLong(colum);
+                Long id = rs.getLong(column);
                 listLong.add(id);
             }
         } catch (Exception e) {
