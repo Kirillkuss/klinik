@@ -97,8 +97,9 @@ function AddDocument() {
                     tr.push('<td>' + json.polis + '</td>');
                     tr.push('</tr>');
                     $('table').append($(tr.join('')));
-
-                    location.reload();
+                    $('#exampleModal').modal('hide');
+                    $('.modal-backdrop').remove(); 
+                    lazyDocument(1, 15);
                 }, error: function ( error ){
                     $('#errorToast').text( error.responseText ).show();
                     $('#liveToastBtn').click();

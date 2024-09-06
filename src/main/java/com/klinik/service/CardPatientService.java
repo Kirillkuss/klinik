@@ -8,8 +8,11 @@ import com.klinik.repositories.PatientRepository;
 import com.klinik.repositories.TypeComplaintRepository;
 import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+import java.util.Random;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -23,12 +26,14 @@ public class CardPatientService {
     private final CardPatientRepository   cardPatientRepository;
     private final PatientRepository       patientRepository;
     
+    @ExecuteTimeLog(operation = "saveCardPatient")
     public CardPatient saveCardPatient( CardPatient cardСatient,  Long idPatient ) throws Exception{
         if( cardPatientRepository.findByPatientId( idPatient ).isPresent()) throw new IllegalArgumentException( "Карта пациента с таким ИД пациента уже существует");
-        if( cardPatientRepository.findById( cardСatient.getIdCardPatient() ).isPresent() ) throw new IllegalArgumentException( "Карта с таким ИД уже существует");
+       // if( cardPatientRepository.findById( cardСatient.getIdCardPatient() ).isPresent() ) throw new IllegalArgumentException( "Карта с таким ИД уже существует");
         Optional<Patient> patient = patientRepository.findById( idPatient );
         if( patient.isEmpty() ) throw new IllegalArgumentException ( "Пациента с таким ИД не существует");
         cardСatient.setPatient( patient.get());
+        cardСatient.setIdCardPatient( new Random().nextLong());
         return cardPatientRepository.save( cardСatient );
     }
     @ExecuteTimeLog(operation = "findByPatientId")
@@ -64,6 +69,11 @@ public class CardPatientService {
     @ExecuteTimeLog(operation = "findByNPSCardPatient")
     public CardPatient findByNPS( String parametr ) throws Exception{
         return cardPatientRepository.findByNPS( parametr ).orElseThrow();
+    }
+
+    @ExecuteTimeLog(operation = "getLazyCardPatient")
+    public List<CardPatient> getLazyCardPatient(int page, int size ){
+        return cardPatientRepository.findAll( PageRequest.of( page - 1, size )).getContent();
     }
 
 

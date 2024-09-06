@@ -36,6 +36,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class CardPatient  implements Serializable {
 
         @Id
+        @Hidden
         @GeneratedValue( strategy = GenerationType.IDENTITY)
         @Column( name = "id_card_patient")
         @Schema( name        = "idCardPatient",

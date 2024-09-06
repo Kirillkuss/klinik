@@ -9,6 +9,7 @@
 		<link href="document.html" rel="import" />
 		<link href="patient.html" rel="import" />
 		<link href="doctor.html" rel="import" />
+		<link href="cardPatient.html" rel="import" />
 		<link rel="icon" href="data:;base64,=">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 		<style>	
@@ -22,7 +23,8 @@
 				let timer;
 				const resetTimer = () => {
 					clearTimeout(timer);
-					timer = setTimeout(logout, 100000); //5 min 300000
+					timer = setTimeout(logout, 100000); // 100 sec 
+					 //5 min 300000
 				}
 				const logout = () => {
 					window.location.href = "/web/login"; 
@@ -72,8 +74,11 @@
 			  </h2>
 			  <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
 				<div class="accordion-body">
-					<button type="button" class="btn btn-success btn-lg" id="buttonLazy"></button>
-					<script> 
+					<button type="button" class="btn btn-success btn-lg" id="buttonCard">Карты пациентов</button>
+					<script>
+						$("#buttonCard").click(function(){
+							$("#tableForm").load("cardPatient.html"); 
+						}); 
 					</script>
 				</div>
 			  </div>

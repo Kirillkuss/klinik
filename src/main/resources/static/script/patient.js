@@ -92,7 +92,9 @@ function AddPatient() {
                     tr.push('<td>' + json.phone + '</td>');
                     tr.push('<td>' + json.address + '</td>');
                     tr.push('</tr>');
-                    location.reload();
+                    $('#exampleModal').modal('hide');
+                    $('.modal-backdrop').remove(); 
+                    listPatient(1, 15);
                 }, error: function ( error ){
                     $('#errorToast').text( error.responseText ).show();
                     $('#liveToastBtn').click();
