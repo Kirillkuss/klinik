@@ -126,13 +126,15 @@ function AddDoctor() {
 
         async function switchTable() {
             let totalDoctors = await getCountDoctor();
-            let i = 2; 
+            let i = 2;
+            $('#currentPage').text(1); 
             $(document.getElementById("PreviousDoctor")).on("click", function() {
                 if (i < 2) {
                     i = 1;
                 } else {
                     i--;
                 }
+                $('#currentPage').text(i);
                 $('tbody:even').empty();
                 lazyDoctors(i, 15);
             });
@@ -142,24 +144,28 @@ function AddDoctor() {
                 } else {
                     i++;
                 }
+                $('#currentPage').text(i);
                 $('tbody:even').empty();
                 lazyDoctors(i, 15);
             });
         
             $(document.getElementById("firstDoctor")).on("click", function() {
                 i = 1;
+                $('#currentPage').text(i);
                 $('tbody:even').empty();
                 lazyDoctors(i, 15);
             });
         
             $(document.getElementById("secondDoctor")).on("click", function() {
                 i = 2;
+                $('#currentPage').text(i);
                 $('tbody:even').empty();
                 lazyDoctors(i, 15);
             });
         
             $(document.getElementById("thirdDoctor")).on("click", function() {
                 i = 3;
+                $('#currentPage').text(i);
                 $('tbody:even').empty();
                 lazyDoctors(i, 15);
             });
@@ -167,6 +173,7 @@ function AddDoctor() {
             $(document.getElementById("lastDoctor")).on("click", function() {
                 $('tbody:even').empty();
                 i  = Math.ceil(totalDoctors / 15);
+                $('#currentPage').text(i);
                 lazyDoctors(i, 15);
             });
         }

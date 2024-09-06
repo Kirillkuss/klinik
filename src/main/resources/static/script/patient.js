@@ -161,12 +161,14 @@ function getCountPatient() {
 async function switchTable(){
     let totalPatients = await getCountPatient();
     i = 2;
+    $('#currentPage').text(1);
     $(document.getElementById("PreviousPatient")).on( "click",function(){
         if( i < 2 ){
             i = 1;
         }else{
             i--;
         }
+        $('#currentPage').text(i);
         $('tbody:even').empty();
         lazyPatients(i, 15);
     });
@@ -177,6 +179,7 @@ async function switchTable(){
         }else{
             i++;
         }
+        $('#currentPage').text(i);
         $('tbody:even').empty();
         lazyPatients(i, 15);
     });
@@ -184,24 +187,28 @@ async function switchTable(){
     $(document.getElementById("firstPatient")).on( "click",function(){
         i = 1;
         $('tbody:even').empty();
+        $('#currentPage').text(i);
         lazyPatients(i, 15);
     });
 
     $(document.getElementById("secondPatient")).on( "click",function(){
         i = 2;
         $('tbody:even').empty();
+        $('#currentPage').text(i);
         lazyPatients(i, 15);
     });
 
     $(document.getElementById("thirdPatient")).on( "click",function(){
         i = 3;
         $('tbody:even').empty();
+        $('#currentPage').text(i);
         lazyPatients(i, 15);
     });
 
     $(document.getElementById("lastPatient")).on("click", function() {
         $('tbody:even').empty();
         i  = Math.ceil(totalPatients / 15);
+        $('#currentPage').text(i);
         lazyPatients(i, 15);
     });
 }

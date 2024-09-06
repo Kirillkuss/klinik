@@ -156,12 +156,14 @@ function AddDocument() {
     async function switchTable() {
         let totalDocuments = await getCountDocuments();
         i = 2;
+        $('#currentPage').text(1);
         $(document.getElementById("Previous")).on( "click",function(){
             if( i < 2 ){
                 i = 1;
             }else{
                 i--;
             }
+            $('#currentPage').text(i);
             $('tbody:even').empty();
             lazyDocument(i, 15);
         });
@@ -172,24 +174,28 @@ function AddDocument() {
             }else{
                 i++;
             }
+            $('#currentPage').text(i);
             $('tbody:even').empty();
             lazyDocument(i, 15);
         });
 
         $(document.getElementById("first")).on( "click",function(){
             i = 1;
+            $('#currentPage').text(i);
             $('tbody:even').empty();
             lazyDocument(i, 15);
         });
 
         $(document.getElementById("second")).on( "click",function(){
             i = 2;
+            $('#currentPage').text(i);
             $('tbody:even').empty();
             lazyDocument(i, 15);
         });
 
         $(document.getElementById("third")).on( "click",function(){
             i = 3;
+            $('#currentPage').text(i);
             $('tbody:even').empty();
             lazyDocument(i, 15);
         });
@@ -197,6 +203,7 @@ function AddDocument() {
         $(document.getElementById("last")).on("click", function() {
             $('tbody:even').empty();
             i  = Math.ceil(totalDocuments / 15);
+            $('#currentPage').text(i);
             lazyDocument(i, 15);
         });
     }

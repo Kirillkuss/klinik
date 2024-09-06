@@ -74,7 +74,6 @@
 			lazyDocument( 1, 15 );
 		</script>
 	</table>
-
 	<!--нижняя часть страницы-->
 	<div id = "fixedDiv" class="text-bg-success p-4">
 		<!-- Нумерация страниц-->
@@ -86,7 +85,11 @@
 				<li class="page-item"><a class="btn btn-outline-dark" href="#" id="third">3</a></li>
 				<li class="page-item"><a class="btn btn-outline-dark" href="#" id="Next">След.</a></li>
 				<li class="page-item"><a class="btn btn-outline-dark" href="#" id="last">Посл.</a></li>
+				<div id="pageNumberDisplay" class="text-bg-success p-2" style="position:fixed; left:1800px; top: 880px;">
+					№ стр.: <strong id="currentPage">1</strong>
+				</div>
 			</ul>
+
 		</nav>
 	</div>
 
