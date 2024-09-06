@@ -61,6 +61,7 @@ public class AddDocumentTest {
     }
 
     @Test
+    @DisplayName("Добавление доктора")
     public void testAddDocument(){
         getLoginTest( LOGIN, PASSWORD );
         try{
