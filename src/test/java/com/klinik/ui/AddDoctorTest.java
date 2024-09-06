@@ -67,9 +67,28 @@ public class AddDoctorTest {
         getLoginTest( LOGIN, PASSWORD );
         try{
             //driver.findElement( By.xpath( "//*[@id='accButtonOne']" )).click(); work
-            driver.findElement( By.xpath( "//*[@id='accButtonOne']" )).click();
+            driver.findElement( By.xpath( "//*[@id='accButtonDoctor']" )).click();
             new Actions( driver ).pause( Duration.ofSeconds(1)).perform();
             driver.findElement(By.id("buttonDoctor")).click();
+            new Actions( driver ).pause( Duration.ofSeconds(1)).perform();
+            driver.findElement(By.className("btn-outline-dark")).click();
+            new Actions( driver ).pause( Duration.ofSeconds(1)).perform();
+
+            driver.findElement( By.xpath( "//*[@id='surname']" )).click();
+            driver.findElement( By.xpath( "//*[@id='surname']" )).sendKeys( doctor.getSurname() );
+            driver.findElement(By.xpath("//*[@id='saveDoctor']" )).click();
+            new Actions( driver ).pause( Duration.ofSeconds(2)).perform();
+
+            driver.findElement( By.xpath( "//*[@id='name']" )).click();
+            driver.findElement( By.xpath( "//*[@id='name']" )).sendKeys( doctor.getName());
+            driver.findElement(By.xpath("//*[@id='saveDoctor']" )).click();
+            new Actions( driver ).pause( Duration.ofSeconds(2)).perform();
+
+            driver.findElement( By.xpath( "//*[@id='fullName']" )).click();
+            driver.findElement( By.xpath( "//*[@id='fullName']" )).sendKeys( doctor.getFullName() );
+            driver.findElement(By.xpath("//*[@id='saveDoctor']" )).click();
+            new Actions( driver ).pause( Duration.ofSeconds(2)).perform();
+
         }catch( Exception ex ){
             System.out.println( "ERROR " + ex.getMessage() );
         }    
