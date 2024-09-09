@@ -6,8 +6,6 @@ function findByWordDoctor() {
     $(document.getElementById("findByWordDoctor")).on( "click",function(){
         var word = $('#wordFound').val();
         if(  word.length  == 0 ){
-            $('tbody:even').empty();
-            lazyDocument(1, 15);
             $('#errorToast').text( 'Значение поля поиск не может быть пустым' ).show();
             $('#liveToastBtn').click();
         }else{
@@ -31,7 +29,8 @@ function findByWordDoctor() {
                     $('tbody:even').empty();
                     $('table').prepend($(tr.join('')));
                 }, error: function ( error ){
-                    $('#errorToast').text( error.responseText ).show();
+                    const response = JSON.parse(error.responseText);
+                    $('#errorToast').text( response.message ).show();
                     $('#liveToastBtn').click();
                 }
             });
@@ -70,6 +69,7 @@ function lazyDoctors( page, size) {
 /**
  * Добавить документ
  */
+
 function AddDoctor() {
     $("#testFormDoctor").submit(function (event) {
         event.preventDefault();
@@ -88,21 +88,13 @@ function AddDoctor() {
             data: JSON.stringify({ surname: surname, name: name, fullName: fullName }),
             cache: false,
             success: function (json) {
-                var tr = [];
-                tr.push('<tr>');
-                tr.push('<td>' + 1111 + '</td>');
-                tr.push('<td>' + json.surname + '</td>');
-                tr.push('<td>' + json.name + '</td>');
-                tr.push('<td>' + json.fullName + '</td>');
-                tr.push('</tr>');
-                $('table').append($(tr.join('')));
                 $('#exampleModal').modal('hide');
                 $('.modal-backdrop').remove(); 
-                lazyDoctors(1, 15);
+                $('#lastDoctor').click(); 
             },
-            
             error: function (error) {
-                $('#errorToast').text(error.responseText).show();
+                const response = JSON.parse(error.responseText);
+                $('#errorToast').text( response.message ).show();
                 $('#liveToastBtn').click();
             }
            

@@ -9,8 +9,6 @@ function findByWordDocument() {
     $(document.getElementById("findByWordDocument")).on( "click",function(){
         var word = $('#wordFound').val();
         if(  word.length  == 0 ){
-            $('tbody:even').empty();
-            lazyDocument(1, 15);
             $('#errorToast').text( 'Значение поля поиск не может быть пустым' ).show();
             $('#liveToastBtn').click();
         }else{
@@ -36,7 +34,8 @@ function findByWordDocument() {
                     $('tbody:even').empty();
                     $('table').prepend($(tr.join('')));
                 }, error: function ( error ){
-                    $('#errorToast').text( error.responseText ).show();
+                    const response = JSON.parse(error.responseText);
+                    $('#errorToast').text( response.message ).show();
                     $('#liveToastBtn').click();
                 }
             });
@@ -87,22 +86,21 @@ function AddDocument() {
                 data: JSON.stringify({typeDocument: typeDocument, seria: seria, numar: numar, snils: snils, polis: polis}),
                 cache: false,
                 success: function( json ) {
-                    var tr=[];
-                    tr.push('<tr>');
-                    //tr.push('<td>' + json.idDocument + '</td>');
-                    tr.push('<td>' + json.typeDocument + '</td>');
-                    tr.push('<td>' + json.seria + '</td>');
-                    tr.push('<td>' + json.numar + '</td>');
-                    tr.push('<td>' + json.snils + '</td>');
-                    tr.push('<td>' + json.polis + '</td>');
-                    tr.push('</tr>');
-                    $('table').append($(tr.join('')));
                     $('#exampleModal').modal('hide');
                     $('.modal-backdrop').remove(); 
-                    lazyDocument(1, 15);
+                    $('#last').click();
                 }, error: function ( error ){
-                    $('#errorToast').text( error.responseText ).show();
-                    $('#liveToastBtn').click();
+                    console.log( error.responseText );
+                    const response = JSON.parse(error.responseText);
+                    if ( response.code === 500 ){
+                        const messageMatch = response.message.match(/'([^']+)'/);
+                        $('#errorToast').text(messageMatch[1]).show();
+                        $('#liveToastBtn').click();
+                    }else{
+                        $('#errorToast').text( response.message ).show();
+                        $('#liveToastBtn').click();
+                    }
+
                 }
             });
         });

@@ -104,10 +104,13 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
 				</div>
 				<div class="modal-body">
-					<!--label for="document-id" class="col-form-label">ИД:</label>
-					<input type="text" class="form-control" id="idDocument" placeholder = "Ид документа"  required!-->
 					<label for="document-type" class="col-form-label">Тип документа:</label>
-					<input type="text" class="form-control" id="typeDocument" placeholder = "Тип документа" required>
+					<select class="form-control" id="typeDocument" required>
+						<option value="" disabled selected>Тип документа</option>
+						<option value="Паспорт">Паспорт</option>
+						<option value="Водительское уд.">Водительское уд.</option>
+						<option value="Свид. о рождении">Свид. о рождении</option>
+					  </select>
 					<label for="document-seria" class="col-form-label">Серия:</label>
 					<input type="text" class="form-control" id="seria" placeholder = "Серия" required>
 					<label for="document-numar" class="col-form-label">Номер:</label>

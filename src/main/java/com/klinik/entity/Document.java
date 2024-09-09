@@ -14,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table( name = "document")
@@ -22,7 +24,7 @@ import javax.persistence.Table;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Document  implements Serializable{
+public class Document implements Serializable{
 
     @Id
     @Hidden
@@ -46,6 +48,8 @@ public class Document  implements Serializable{
              description = "Серия документа",
              example     = "ВМ",
              required    = true )
+    @Size(min = 2, max = 2, message = "Серия документа должна содержать ровно 2 символа")
+    @Pattern(regexp = "^[A-Z]{2}$", message = "Серия документа должна состоять только из двух заглавных букв")
     private String seria;
 
     @Column( name = "numar")
@@ -53,6 +57,7 @@ public class Document  implements Serializable{
              description = "Номер документа",
              example     = "123243455",
              required    = true )
+    @Size(min = 9, max = 12, message = "Номер документа должен содержать от 9 до 12 символов")
     private String numar;
 
     @Column( name = "snils")
@@ -60,6 +65,7 @@ public class Document  implements Serializable{
              description = "СНИЛС",
              example     = "123-456-789-01",
              required    = true )
+    @Pattern(regexp = "^\\d{3}-\\d{3}-\\d{3}-\\d{2}$", message = "Некорректный формат для СНИЛСа: ###-###-###-##")
     private String snils;
 
     @Column( name = "polis")
@@ -67,6 +73,7 @@ public class Document  implements Serializable{
              description = "Полис",
              example     = "0000 0000 0000 0000",
              required    = true )
+    @Pattern(regexp = "^\\d{4} \\d{4} \\d{4} \\d{4}$", message = "Некорректный формат для ПОЛИСа: #### #### #### ####")
     private String polis;
 
 }

@@ -22,7 +22,7 @@ public class DoctorController implements IDoctor{
         return new ResponseEntity<>(  doctorService.saveDoctor( doctor ), HttpStatus.OK );
     }
     @Override
-    public ResponseEntity<List<Doctor>>  getLazyDoctors(int page, int size) {
+    public ResponseEntity<List<Doctor>> getLazyDoctors(int page, int size) {
         return new ResponseEntity<>( doctorService.getLazyDoctor( page, size ), HttpStatus.OK );
     }
     @Override

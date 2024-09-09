@@ -99,9 +99,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
               </div>
               <div class="modal-body">
-                    <!--label for="patient-id" class="col-form-label">ИД:</label>
-                    <input type="text" class="form-control" id="idPatient" placeholder = "Ид пацеинта"  required!-->
-
                     <label for="patient-surname" class="col-form-label">Фамилия:</label>
                     <input type="text" class="form-control" id="surname" placeholder = "Фимилия" required>
 
@@ -112,7 +109,11 @@
                     <input type="text" class="form-control" id="fullName" placeholder = "Отчество" required>
 
                     <label for="patient-gender" class="col-form-label">Пол:</label>
-                    <input type="text" class="form-control" id="gender" placeholder = "Пол" required>
+                    <select class="form-control" id="gender" required>
+                        <option value="" disabled selected>Пол</option>
+                        <option value="MAN">муж.</option>
+                        <option value="WOMAN">жен.</option>
+                    </select>
 
                     <label for="patient-phone" class="col-form-label">Телефон:</label>
                     <input type="text" class="form-control" id="phone" placeholder = "Телефон" required>

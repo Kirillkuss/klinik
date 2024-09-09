@@ -20,7 +20,11 @@ function lazyCard( page, size) {
             tr.push('<tr>');
             tr.push('<td>' + rowNumber + '</td>');
             tr.push('<td>' + json[i].diagnosis + '</td>');
-            tr.push('<td>' + json[i].allergy + '</td>');
+            if (json[i].allergy === true) {
+                tr.push('<td>' + "Да" + '</td>');
+            } else {
+                tr.push('<td>' + "Нет" + '</td>');
+            }
             tr.push('<td>' + json[i].note + '</td>');
             tr.push('<td>' + json[i].сonclusion + '</td>');
             tr.push('<td>' + json[i].patient.surname + ' ' + json[i].patient.name + ' ' + json[i].patient.fullName + '</td>');
@@ -58,24 +62,12 @@ function AddCardPatient() {
                                        сonclusion: сonclusion}), 
                 cache: false,
                 success: function( json ) {
-                    var tr=[];
-                    tr.push('<tr>');
-                    tr.push('<td>' + json.diagnosis + '</td>');
-                    tr.push('<td>' + json.allergy + '</td>');
-                    tr.push('<td>' + json.note + '</td>');
-                    tr.push('<td>' + json.сonclusion + '</td>');
-                    tr.push('<td>' + json.patient.surname + ' ' + json.patient.name + ' ' + json.patient.fullName + '</td>');
-                    tr.push('<td>' + json.patient.phone + '</td>');
-                    tr.push('<td>' + json.patient.address + '</td>');
-                    tr.push('<td>' + json.patient.document.numar + '</td>');
-                    tr.push('<td>' + json.patient.document.snils + '</td>');
-                    tr.push('<td>' + json.patient.document.polis + '</td>');
-                    tr.push('</tr>');
                     $('#exampleModal').modal('hide');
                     $('.modal-backdrop').remove(); 
-                    lazyCard(1, 9);
+                    $('#LastCard').click();
                 }, error: function ( error ){
-                    $('#errorToast').text( error.responseText ).show();
+                    const response = JSON.parse(error.responseText);
+                    $('#errorToast').text( response.message ).show();
                     $('#liveToastBtn').click();
                 }
         });
@@ -88,8 +80,6 @@ function findByDocumentCard() {
     $(document.getElementById("findByCardPatient")).on( "click",function(){
         var word = $('#wordParam').val();
         if(  word.length  == 0 ){
-            $('tbody:even').empty();
-            lazyPatients(1, 9);
             $('#errorToast').text( 'Значение поля поиск не может быть пустым' ).show();
             $('#liveToastBtn').click();
         }else{
@@ -117,7 +107,8 @@ function findByDocumentCard() {
                     $('tbody:even').empty();
                     $('table').prepend($(tr.join('')));
                 }, error: function ( error ){
-                    $('#errorToast').text( error.responseText ).show();
+                    const response = JSON.parse(error.responseText);
+                    $('#errorToast').text( response.message ).show();
                     $('#liveToastBtn').click();
                 }
             });

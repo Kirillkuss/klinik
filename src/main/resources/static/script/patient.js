@@ -22,7 +22,11 @@ function lazyPatients( page, size) {
             tr.push('<td>' + json[i].surname + '</td>');
             tr.push('<td>' + json[i].name + '</td>');
             tr.push('<td>' + json[i].fullName + '</td>');
-            tr.push('<td>' + json[i].gender + '</td>');
+            if (json[i].gender === "MAN") {
+                tr.push('<td>' + "муж." + '</td>');
+            } else {
+                tr.push('<td>' + "жен." + '</td>');
+            }
             tr.push('<td>' + json[i].phone + '</td>');
             tr.push('<td>' + json[i].address + '</td>');
             tr.push('</tr>');
@@ -47,7 +51,11 @@ function listPatient() {
             tr.push('<td>' + json[i].surname + '</td>');
             tr.push('<td>' + json[i].name + '</td>');
             tr.push('<td>' + json[i].fullName + '</td>');
-            tr.push('<td>' + json[i].gender + '</td>');
+            if (json[i].gender === "MAN") {
+                tr.push('<td>' + "мужской" + '</td>');
+            } else {
+                tr.push('<td>' + "женский" + '</td>');
+            }
             tr.push('<td>' + json[i].phone + '</td>');
             tr.push('<td>' + json[i].address + '</td>');
             tr.push('</tr>');
@@ -56,6 +64,7 @@ function listPatient() {
         });
     });
 };
+
 /**
  * Добавить пациента
  */
@@ -82,22 +91,19 @@ function AddPatient() {
                                        address: address}), 
                 cache: false,
                 success: function( json ) {
-                    var tr=[];
-                    tr.push('<tr>');
-                   // tr.push('<td>' + json.idPatient + '</td>');
-                    tr.push('<td>' + json.surname + '</td>');
-                    tr.push('<td>' + json.name + '</td>');
-                    tr.push('<td>' + json.fullName + '</td>');
-                    tr.push('<td>' + json.gender + '</td>');
-                    tr.push('<td>' + json.phone + '</td>');
-                    tr.push('<td>' + json.address + '</td>');
-                    tr.push('</tr>');
                     $('#exampleModal').modal('hide');
                     $('.modal-backdrop').remove(); 
-                    listPatient(1, 15);
+                    $('#lastPatient').click();
                 }, error: function ( error ){
-                    $('#errorToast').text( error.responseText ).show();
-                    $('#liveToastBtn').click();
+                    const response = JSON.parse(error.responseText);
+                    if ( response.code === 500 ){
+                        const messageMatch = response.message.match(/'([^']+)'/);
+                        $('#errorToast').text(messageMatch[1]).show();
+                        $('#liveToastBtn').click();
+                    }else{
+                        $('#errorToast').text( response.message ).show();
+                        $('#liveToastBtn').click();
+                    }
                 }
         });
     });
@@ -109,8 +115,6 @@ function findByWordPatient() {
     $(document.getElementById("findByPatient")).on( "click",function(){
         var word = $('#wordParam').val();
         if(  word.length  == 0 ){
-            $('tbody:even').empty();
-            lazyPatients(1, 15);
             $('#errorToast').text( 'Значение поля поиск не может быть пустым' ).show();
             $('#liveToastBtn').click();
         }else{
@@ -129,7 +133,11 @@ function findByWordPatient() {
                         tr.push('<td>' + json[i].surname + '</td>');
                         tr.push('<td>' + json[i].name + '</td>');
                         tr.push('<td>' + json[i].fullName + '</td>');
-                        tr.push('<td>' + json[i].gender + '</td>');
+                        if (json[i].gender === "MAN") {
+                            tr.push('<td>' + "муж." + '</td>');
+                        } else {
+                            tr.push('<td>' + "жен." + '</td>');
+                        }
                         tr.push('<td>' + json[i].phone + '</td>');
                         tr.push('<td>' + json[i].address + '</td>');
                         tr.push('</tr>');
@@ -137,7 +145,8 @@ function findByWordPatient() {
                     $('tbody:even').empty();
                     $('table').prepend($(tr.join('')));
                 }, error: function ( error ){
-                    $('#errorToast').text( error.responseText ).show();
+                    const response = JSON.parse( error.responseText );
+                    $('#errorToast').text( response.message ).show();
                     $('#liveToastBtn').click();
                 }
             });

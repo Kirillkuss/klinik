@@ -44,7 +44,7 @@ public class DoctorService {
     }
 
     @SuppressWarnings("unchecked")
-    @Cacheable("getLazyDoctorCache") 
+   // @Cacheable("getLazyDoctorCache") 
     @ExecuteTimeLog(operation = "getLazyDoctor")
     public List<Doctor> getLazyDoctor( int page, int size ){
         return entityManager.createNativeQuery( "select * from Doctor", Doctor.class)

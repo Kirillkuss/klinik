@@ -119,7 +119,11 @@
                     <input type="text" class="form-control" id="diagnosis" placeholder = "Диагноз" required>
 
                     <label for="patient-name" class="col-form-label">Ал. на препараты:</label>
-                    <input type="text" class="form-control" id="allergy" placeholder = "Ал. на препараты" required>
+                    <select class="form-control" id="allergy" required>
+                      <option value="" disabled selected>Да</option>
+                      <option value="True">Да</option>
+                      <option value="False">Нет</option>
+                    </select>
 
                     <label for="patient-fullName" class="col-form-label">Примечание:</label>
                     <input type="text" class="form-control" id="note" placeholder = "Примечание" required>

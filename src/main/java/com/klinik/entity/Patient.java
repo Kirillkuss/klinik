@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table( name = "patient")
@@ -71,6 +72,7 @@ public class Patient implements Serializable {
             description = "Номер телефона",
             example     = "+78998956184",
             required    = true )
+    @Pattern(regexp = "^\\+375(29|33|25|44)\\d{7}$", message = "Неверный формат номера телефона. Должно быть +375(29|33|25|44) и 7 цифр.")
     private String phone;
 
     @Column( name = "address")
