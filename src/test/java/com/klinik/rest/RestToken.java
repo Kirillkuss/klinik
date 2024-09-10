@@ -120,11 +120,11 @@ public class RestToken {
 
     public static String getAddPatientQuery( Patient patient, Long idDocument ){
         return String.format( "INSERT INTO Patient (surname, name, full_name, gender, phone, address, document_id) " +
-                              "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');",
+                              "VALUES ('%s', '%s', '%s', '%d', '%s', '%s', '%d');",
                               patient.getSurname(),
                               patient.getName(),
                               patient.getFullName(),
-                              patient.getGender(),
+                              patient.getGender().ordinal(),
                               patient.getPhone(),
                               patient.getAddress(),
                               idDocument );  
