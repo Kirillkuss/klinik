@@ -9,8 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import com.klinik.entity.Document;
+import org.openqa.selenium.support.ui.Select;
+import com.klinik.entity.Gender;
 import com.klinik.entity.Patient;
 import com.klinik.rest.RestToken;
 import com.klinik.ui.LoginSuccess;
@@ -39,21 +41,11 @@ public class AddPatientTest {
         driver.quit();
     }
 
-    private String getAddDocumentQuery( Document document ){
-        return String.format( "INSERT INTO Document (type_document, seria, numar, snils, polis) " +
-                              "VALUES ('%s', '%s', '%s', '%s', '%s');",
-                              document.getTypeDocument(),
-                              document.getSeria(),
-                              document.getNumar(),
-                              document.getSnils(),
-                              document.getPolis());  
-    }
-
     @Test
     @DisplayName("Добавление пациента")
     public void testAddPatient() throws Exception{
         List<Long> listDocumentId = RestToken.getStremValue( queryDocument, "id_document");
-        if ( listDocumentId.stream().count() < 2 ) RestToken.getStremValue( getAddDocumentQuery(RestToken.getDocument()), "id_document");
+        if ( listDocumentId.stream().count() < 2 ) RestToken.getStremValue( RestToken.getAddDocumentQuery( RestToken.getDocument() ), "id_document");
         try{
             driver.findElement( By.xpath( "//*[@id='accButtonPatient']" )).click();
             new Actions( driver ).pause( Duration.ofSeconds(1)).perform();
@@ -76,8 +68,13 @@ public class AddPatientTest {
             driver.findElement( By.xpath( "//*[@id='fullName']" )).sendKeys( patient.getFullName() );
             driver.findElement(By.xpath("//*[@id='savePatient']" )).click();
 
-            driver.findElement( By.xpath( "//*[@id='gender']" )).click();
-            driver.findElement( By.xpath( "//*[@id='gender']" )).sendKeys( patient.getGender().name() );
+            WebElement genderSelect =  driver.findElement( By.xpath( "//*[@id='gender']" ));
+            Select select = new Select(genderSelect);
+            if( patient.getGender() == Gender.MAN ){
+                select.selectByValue("MAN");
+            }else{
+                select.selectByValue("WOMAN");
+            }
             driver.findElement(By.xpath("//*[@id='savePatient']" )).click();
             new Actions( driver ).pause( Duration.ofSeconds(2)).perform();
 
@@ -94,7 +91,7 @@ public class AddPatientTest {
             driver.findElement( By.xpath( "//*[@id='idDocument']" )).click();
             driver.findElement( By.xpath( "//*[@id='idDocument']" )).sendKeys(  listDocumentId.stream().findFirst().orElseThrow().toString() );
             driver.findElement(By.xpath("//*[@id='savePatient']" )).click();
-            new Actions( driver ).pause( Duration.ofSeconds(2)).perform();
+           new Actions( driver ).pause( Duration.ofSeconds(2)).perform();
             
             new Actions( driver ).pause( Duration.ofSeconds(2)).perform();
 

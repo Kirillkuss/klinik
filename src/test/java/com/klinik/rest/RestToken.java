@@ -13,6 +13,7 @@ import org.instancio.Instancio;
 import org.instancio.Select;
 import org.junit.jupiter.api.DisplayName;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.klinik.entity.CardPatient;
 import com.klinik.entity.Doctor;
 import com.klinik.entity.Document;
 import com.klinik.entity.Gender;
@@ -66,6 +67,18 @@ public class RestToken {
         return code+number;
     }
 
+    public static CardPatient getCardPatient(){
+        CardPatient cardPatient = Instancio.of( CardPatient.class )
+                                    .generate( field( CardPatient::getAllergy), gen -> gen.oneOf( true, false ))
+                                    .generate( field( CardPatient::getDiagnosis), gen -> gen.oneOf( "клинический", "патологоанатомический", " эпидемиологический"))
+                                    .generate( field( CardPatient::getNote), gen -> gen.oneOf( "Аллергия на зеленку", "Аллергия на цитрамон","Аллергия на йод"))
+                                    .generate( field( CardPatient::getСonclusion), gen -> gen.oneOf( "Болен", "Здоров"))
+                                    .ignore( Select.field( CardPatient:: getTypeComplaint ))
+                                    .ignore( Select.field( CardPatient::getPatient ))
+                                    .ignore( Select.field( CardPatient:: getIdCardPatient )).create();
+        return cardPatient;
+    }
+
     public static Patient getPatientMan(){
         Patient man = Instancio.of(Patient.class)
                                     .generate(field(Patient::getSurname),  gen -> gen.oneOf("Петров", "Волков", "Попов", "Федоров"))
@@ -94,6 +107,29 @@ public class RestToken {
         return woman;
     }
 
+    public static String getAddDocumentQuery( Document document ){
+        return String.format( "INSERT INTO Document (type_document, seria, numar, snils, polis) " +
+                              "VALUES ('%s', '%s', '%s', '%s', '%s');",
+                              document.getTypeDocument(),
+                              document.getSeria(),
+                              document.getNumar(),
+                              document.getSnils(),
+                              document.getPolis());  
+    }
+
+
+    public static String getAddPatientQuery( Patient patient, Long idDocument ){
+        return String.format( "INSERT INTO Patient (surname, name, full_name, gender, phone, address, document_id) " +
+                              "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');",
+                              patient.getSurname(),
+                              patient.getName(),
+                              patient.getFullName(),
+                              patient.getGender(),
+                              patient.getPhone(),
+                              patient.getAddress(),
+                              idDocument );  
+    }
+
     
     @DisplayName("Генерация пациента")
     public static Patient getPatient(){
@@ -109,7 +145,7 @@ public class RestToken {
     public static Document getDocument(){
         Document document = Instancio.of(Document.class)
                                      .generate(field(Document::getTypeDocument),  gen -> gen.oneOf("Паспорт", "Водительское уд.", "Свид. о рождении"))
-                                     .generate(field(Document::getSeria),  gen -> gen.oneOf("АМ", "ВМ", "КВ", "ЯС"))
+                                     .generate(field(Document::getSeria),  gen -> gen.oneOf("TS", "AB", "AM", "CR"))
                                      .generate(field(Document::getNumar),  gen -> gen.text().pattern("#d#d#d#d#d#d#d#d#d"))
                                      .generate(field(Document::getSnils ),  gen -> gen.text().pattern("#d#d#d-#d#d#d-#d#d#d-#d#d"))
                                      .generate(field(Document::getPolis ),  gen -> gen.text().pattern("#d#d#d#d #d#d#d#d #d#d#d#d #d#d#d#d"))
