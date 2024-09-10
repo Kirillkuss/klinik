@@ -71,7 +71,7 @@ public class AddCardPatientTest {
 
             driver.findElement( By.xpath( "//*[@id='diagnosis']" )).click();
             driver.findElement( By.xpath( "//*[@id='diagnosis']" )).sendKeys( cardPatient.getDiagnosis());
-            driver.findElement(By.xpath("//*[@id='savePatient']" )).click();
+            driver.findElement(By.xpath("//*[@id='saveCardPatient']" )).click();
             new Actions( driver ).pause( Duration.ofSeconds(2)).perform();
 
             WebElement allergySelect =  driver.findElement( By.xpath( "//*[@id='allergy']" ));
@@ -81,17 +81,17 @@ public class AddCardPatientTest {
             }else{
                 select.selectByValue("False");
             }
-            driver.findElement(By.xpath("//*[@id='savePatient']" )).click();
+            driver.findElement(By.xpath("//*[@id='saveCardPatient']" )).click();
             new Actions( driver ).pause( Duration.ofSeconds(2)).perform();
 
             driver.findElement( By.xpath( "//*[@id='note']" )).click();
             driver.findElement( By.xpath( "//*[@id='note']" )).sendKeys( cardPatient.getNote() );
-            driver.findElement(By.xpath("//*[@id='savePatient']" )).click();
+            driver.findElement(By.xpath("//*[@id='saveCardPatient']" )).click();
             new Actions( driver ).pause( Duration.ofSeconds(2)).perform();
 
             driver.findElement( By.xpath( "//*[@id='сonclusion']" )).click();
             driver.findElement( By.xpath( "//*[@id='сonclusion']" )).sendKeys( cardPatient.getСonclusion() );
-            driver.findElement(By.xpath("//*[@id='savePatient']" )).click();
+            driver.findElement(By.xpath("//*[@id='saveCardPatient']" )).click();
             new Actions( driver ).pause( Duration.ofSeconds(2)).perform();
 
             driver.findElement( By.xpath( "//*[@id='idPatient']" )).click();
@@ -99,7 +99,7 @@ public class AddCardPatientTest {
                                                                                            .findFirst()
                                                                                            .orElseThrow()
                                                                                            .toString() );
-            driver.findElement(By.xpath("//*[@id='savePatient']" )).click();
+            driver.findElement(By.xpath("//*[@id='saveCardPatient']" )).click();
             new Actions( driver ).pause( Duration.ofSeconds(2)).perform();
             
         } catch (Exception e) {
