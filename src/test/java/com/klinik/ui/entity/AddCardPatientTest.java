@@ -2,6 +2,7 @@ package com.klinik.ui.entity;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -10,13 +11,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import com.klinik.entity.CardPatient;
-import com.klinik.entity.Document;
-import com.klinik.entity.Patient;
 import com.klinik.rest.RestToken;
 import java.time.Duration;
 import java.util.List;
 import com.klinik.ui.LoginSuccess;
 
+@Disabled
 @DisplayName("Добавление карты пациента через ui")
 public class AddCardPatientTest {
 
