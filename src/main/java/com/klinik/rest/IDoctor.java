@@ -1,9 +1,7 @@
 package com.klinik.rest;
 
 import java.util.List;
-
 import javax.ws.rs.core.MediaType;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,10 +38,11 @@ public interface IDoctor {
     public ResponseEntity<Doctor> addDoctor(@RequestBody Doctor doc ) throws Exception;
 
     @PostMapping("/lazy")
-    @Operation( description ="", summary = "")
+    @Operation( description ="Ленивая загурзка доктора", summary = "Ленивая загурзка доктора")
     public ResponseEntity<List<Doctor>> getLazyDoctors( int page, int size );
 
     @GetMapping("/counts")
+    @Operation( description ="Кол-во докторов", summary = "Кол-во докторов")
     public ResponseEntity<Long> getCountDoctors();
     
 }
