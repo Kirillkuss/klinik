@@ -14,6 +14,7 @@ Pet project Klinika
 9. **AOP** (Log, Transaction, Error, Cache, Security)
 10. **Cache**
 11. **Kubernetes (K8s)**
+12. **Mail**
 
 ## Add Keystore
 
@@ -58,4 +59,9 @@ Pet project Klinika
     kubectl apply -f k8s2.yaml ( executable file )
     kubectl logs klinika-765bb6f8f9-zl7cd  ( check log, where klinika-765bb6f8f9-zl7cd - name's pod)
     kubectl cp klinika.jks klinika-5c66d8b6b6-pg5ms:/app/keystore ( add klinika.jks to package /app/keystore in k8s)
+
+## Gmail
+    1. need app password
+    https://myaccount.google.com/apppasswords
+    2. add password to email.properties
 
