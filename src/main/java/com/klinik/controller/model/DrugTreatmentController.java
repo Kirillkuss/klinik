@@ -1,9 +1,9 @@
-package com.klinik.controller;
+package com.klinik.controller.model;
 
 import com.klinik.entity.Drug;
 import com.klinik.entity.DrugTreatment;
 import com.klinik.request.DrugRequest;
-import com.klinik.rest.IDrugTreatment;
+import com.klinik.rest.model.IDrugTreatment;
 import com.klinik.service.DrugService;
 import com.klinik.service.DrugTreatmentService;
 import lombok.RequiredArgsConstructor;

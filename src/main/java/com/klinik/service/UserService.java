@@ -4,6 +4,8 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,6 +16,8 @@ import com.klinik.entity.User;
 import com.klinik.repositories.UserRepository;
 import com.klinik.request.UserRequest;
 import com.klinik.response.UserResponse;
+import com.klinik.service.mail.PasswordGenerator;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +31,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final PasswordGenerator passwordGenerator;
 
     @PostConstruct
     protected void init(){
@@ -181,6 +186,22 @@ public class UserService {
 
             });
         return userResponse;
+    }
+
+    public String generateNewPasswordForUser( String word ){
+        User user = checkFindUserByLoginOrByMail(word);
+        String password = passwordGenerator.generateRandomPassword();
+        validatePassword( password );
+        String salt = generateSalt();
+        user.setPassword( passwordEncoder.encode( secret + password + salt ));
+        user.setSalt( salt );
+        userRepository.save( user );
+        return password;
+    }
+
+    private User checkFindUserByLoginOrByMail( String word ){
+        return userRepository.findUserByLoginOrByMail( word )
+                             .orElseThrow(() -> new NoSuchElementException("Invalid login or email, try again!"));
     }
 
 

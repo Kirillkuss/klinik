@@ -1,4 +1,4 @@
-package com.klinik.rest;
+package com.klinik.rest.login;
 
 import com.klinik.response.AuthResponse;
 import com.klinik.response.BaseResponseError;

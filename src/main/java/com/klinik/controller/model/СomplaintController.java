@@ -1,4 +1,4 @@
-package com.klinik.controller;
+package com.klinik.controller.model;
 
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import com.klinik.entity.TypeComplaint;
 import com.klinik.request.RequestTypeComplaint;
-import com.klinik.rest.IComplaint;
+import com.klinik.rest.model.IComplaint;
 import com.klinik.service.ComplaintService;
 import com.klinik.service.TypeComplaintService;
 import lombok.RequiredArgsConstructor;

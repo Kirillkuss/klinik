@@ -1,7 +1,7 @@
-package com.klinik.controller;
+package com.klinik.controller.model;
 
 import com.klinik.entity.Doctor;
-import com.klinik.rest.IDoctor;
+import com.klinik.rest.model.IDoctor;
 import com.klinik.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import java.util.List;

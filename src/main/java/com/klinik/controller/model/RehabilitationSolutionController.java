@@ -1,7 +1,7 @@
-package com.klinik.controller;
+package com.klinik.controller.model;
 
 import com.klinik.entity.RehabilitationSolution;
-import com.klinik.rest.IRehabilitationSolution;
+import com.klinik.rest.model.IRehabilitationSolution;
 import com.klinik.service.RehabilitationSolutionService;
 import lombok.RequiredArgsConstructor;
 import java.util.List;

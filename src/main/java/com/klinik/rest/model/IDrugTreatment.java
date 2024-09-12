@@ -1,9 +1,7 @@
-package com.klinik.rest;
+package com.klinik.rest.model;
 
 import java.util.List;
-
 import javax.ws.rs.core.MediaType;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

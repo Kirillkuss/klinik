@@ -1,9 +1,9 @@
-package com.klinik.controller;
+package com.klinik.controller.model;
 
 import com.klinik.entity.RecordPatient;
 import com.klinik.excep.MyException;
 import com.klinik.request.RequestRecordPatient;
-import com.klinik.rest.IRecordPatinet;
+import com.klinik.rest.model.IRecordPatinet;
 import com.klinik.service.RecordPatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

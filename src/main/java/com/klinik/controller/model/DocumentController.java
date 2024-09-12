@@ -1,9 +1,9 @@
-package com.klinik.controller;
+package com.klinik.controller.model;
 
 import com.klinik.entity.Document;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.DocumentRepository;
-import com.klinik.rest.IDocument;
+import com.klinik.rest.model.IDocument;
 import com.klinik.service.DocumentService;
 import lombok.RequiredArgsConstructor;
 import java.util.List;

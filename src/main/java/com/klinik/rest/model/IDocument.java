@@ -1,4 +1,4 @@
-package com.klinik.rest;
+package com.klinik.rest.model;
 
 import java.util.List;
 

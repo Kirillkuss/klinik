@@ -1,9 +1,9 @@
-package com.klinik.controller;
+package com.klinik.controller.model;
 
 import com.klinik.entity.Patient;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.PatientRepository;
-import com.klinik.rest.IPatient;
+import com.klinik.rest.model.IPatient;
 import com.klinik.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import java.util.List;

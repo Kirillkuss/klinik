@@ -3,9 +3,7 @@ package com.klinik.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
-
 import java.util.List;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -19,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.klinik.KlinikApplication;
+import com.klinik.controller.model.DoctorController;
 import com.klinik.entity.Doctor;
 import com.klinik.response.BaseResponse;
 import com.klinik.service.DoctorService;

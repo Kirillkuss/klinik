@@ -1,14 +1,10 @@
-package com.klinik.rest;
+package com.klinik.rest.model;
 
 import java.util.List;
-
 import javax.ws.rs.core.MediaType;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.klinik.aspect.security.annotation.SecuredControl;
 import com.klinik.request.UserRequest;
 import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;

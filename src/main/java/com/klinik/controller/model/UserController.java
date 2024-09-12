@@ -1,4 +1,4 @@
-package com.klinik.controller;
+package com.klinik.controller.model;
 
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,7 @@ import com.klinik.aspect.security.annotation.SecuredControl;
 import com.klinik.request.UserRequest;
 import com.klinik.response.BaseResponse;
 import com.klinik.response.UserResponse;
-import com.klinik.rest.IUser;
+import com.klinik.rest.model.IUser;
 import com.klinik.security.generate.GenerateEncryption;
 import com.klinik.security.generate.GenerateKeys;
 import com.klinik.security.generate.GenerateKeysDataBase;

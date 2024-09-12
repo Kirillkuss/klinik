@@ -3,9 +3,7 @@ package com.klinik.controller;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
-
 import java.util.List;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -18,9 +16,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
+import com.klinik.controller.model.DocumentController;
 import com.klinik.entity.Document;
 import com.klinik.repositories.DocumentRepository;
-import com.klinik.response.BaseResponse;
 import com.klinik.service.DocumentService;
 
 @Disabled

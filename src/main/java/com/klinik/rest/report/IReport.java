@@ -1,10 +1,8 @@
-package com.klinik.rest;
+package com.klinik.rest.report;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import javax.ws.rs.core.MediaType;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

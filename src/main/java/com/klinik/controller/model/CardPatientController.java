@@ -1,15 +1,13 @@
-package com.klinik.controller;
+package com.klinik.controller.model;
 
 import com.klinik.entity.CardPatient;
 import com.klinik.excep.MyException;
 import com.klinik.repositories.CardPatientRepository;
 import com.klinik.request.CoplaintRequest;
-import com.klinik.rest.ICardPatient;
+import com.klinik.rest.model.ICardPatient;
 import com.klinik.service.CardPatientService;
 import lombok.RequiredArgsConstructor;
-
 import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;

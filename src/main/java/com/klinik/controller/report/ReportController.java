@@ -1,18 +1,17 @@
-package com.klinik.controller;
+package com.klinik.controller.report;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.klinik.request.reports.ReportDrugTreatmentRequest;
 import com.klinik.request.reports.ReportPatientRequest;
 import com.klinik.response.ReportDrug;
 import com.klinik.response.report.CardPatinetReport;
 import com.klinik.response.report.RecordPatientReport;
 import com.klinik.response.report.ResponseReport;
-import com.klinik.rest.IReport;
+import com.klinik.rest.report.IReport;
 import com.klinik.service.report.ReportService;
 import lombok.RequiredArgsConstructor;
 
