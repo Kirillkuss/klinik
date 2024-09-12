@@ -8,11 +8,11 @@ import lombok.Setter;
 @Setter
 public class EmailRequest {
 
-    @Schema( name        = "to",
-             description = "От кого",
-             example     = "Mur245@gmail.com",
+    @Schema( name        = "login",
+             description = "login",
+             example     = "admin",
              required    = true )
-    private String to;
+    private String login;
 
     @Schema( name        = "subject",
              description = "тема сообщения",

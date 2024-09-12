@@ -1,6 +1,5 @@
 package com.klinik.controller.email;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import com.klinik.request.email.EmailRequest;
@@ -8,15 +7,14 @@ import com.klinik.response.BaseResponse;
 import com.klinik.rest.email.IEmail;
 import com.klinik.service.UserService;
 import com.klinik.service.mail.EmailService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 public class MailController implements IEmail {
 
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    private UserService userService;
+    private final EmailService emailService;
+    private final UserService  userService;
 
     @Override
     public ResponseEntity<BaseResponse> sendMessageToEmail( EmailRequest emailRequest ) {
