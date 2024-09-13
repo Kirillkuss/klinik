@@ -1,6 +1,7 @@
 package com.klinik.security.auth.handler;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import javax.servlet.ServletException;
@@ -14,6 +15,15 @@ public class KlinikaAuthenticationSuccessHandler implements AuthenticationSucces
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         request.getSession().removeAttribute("error"); 
-        response.sendRedirect("/web"); 
+        String role = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .findFirst()
+                .orElse("");
+
+        if (role.equals("ROLE_TEST")) {
+            response.sendRedirect("/web/swagger-ui/index.html");
+        } else {
+            response.sendRedirect("/web/index");
+        }
     }
 }

@@ -1,18 +1,24 @@
 package com.klinik.controller.login;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.MediaType;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.klinik.request.email.EmailRequest;
 import com.klinik.rest.login.IAuthentication;
+import com.klinik.service.mail.EmailService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class AuthenticationController implements IAuthentication  {
+
+    private final EmailService emailService;
 
     @Override
     public String login() {
@@ -20,20 +26,34 @@ public class AuthenticationController implements IAuthentication  {
     }
 
     @Override
+    public String index() {
+        return "redirect:/index.html";
+    }
+
+    @Override
+    public String changePassword() {
+        return "change-password";
+    }
+
+    @Override
     public String clearErrorMessage(HttpServletRequest request) {
         request.getSession().removeAttribute("error");
-        return "redirect:/web/login"; 
-    }
-
-    @GetMapping(value = "reset-password", produces = MediaType.APPLICATION_JSON)
-    public String resetPasswordPage() {
-        return "reset-password";
+        return "redirect:/login"; 
     }
     
-
-    @PostMapping(value = "reset-password")
-    public String requestPasswordReset(@RequestParam("identifier") String identifier, HttpServletRequest request) {
-        request.getSession().setAttribute("message", "Новый пароль отправлен на вашу почту!");
-        return "redirect:/web/login"; 
+    @Override
+    public String requestPasswordChange( String user, HttpServletRequest request,  RedirectAttributes redirectAttributes ) {
+        try{
+            EmailRequest emailRequest = new EmailRequest();
+            emailRequest.setLogin( user );
+            emailRequest.setSubject("Изменение пароля");
+            emailRequest.setBody("Ваш пароль был изменен, используйте этот: ");
+            emailService.sendSimpleEmailMessage(emailRequest);;
+            redirectAttributes.addFlashAttribute("message", "Новый пароль отправлен на вашу почту!");
+        }catch( Exception ex ){
+            redirectAttributes.addFlashAttribute("error", ex.getMessage() );
+        }
+        return "redirect:/change-password"; 
     }
+
 }

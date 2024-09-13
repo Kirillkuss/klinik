@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @ApiResponses(value = {
         @ApiResponse( responseCode = "200" , description = "Authentication success", content = { @Content(mediaType = MediaType.APPLICATION_JSON, array = @ArraySchema(schema = @Schema( implementation = AuthResponse.class ))) }),
@@ -18,16 +20,19 @@ import org.springframework.web.bind.annotation.PostMapping;
         @ApiResponse( responseCode = "500", description = "System malfunction",      content = { @Content(mediaType = MediaType.APPLICATION_JSON, array = @ArraySchema(schema = @Schema( implementation = BaseResponseError.class ))) })
 })
 public interface IAuthentication {
-    /**
-     * Страница входа
-     */
+
     @GetMapping(value = "login", produces = MediaType.APPLICATION_JSON)
     public String login();
-    /**
-     * Обработчик по очистке ошибке и перевод на страницу авторизации
-     * @param request
-     * @return
-     */
+
+    @GetMapping(value = "index", produces = MediaType.APPLICATION_JSON)
+    public String index();
+
+    @GetMapping(value = "change-password", produces = MediaType.APPLICATION_JSON)
+    public String changePassword();
+
+    @PostMapping(value = "change-password")
+    public String requestPasswordChange( @RequestParam("user") String user, HttpServletRequest request, RedirectAttributes redirectAttributes );
+    
     @PostMapping(value = "clear-error-message", produces = MediaType.APPLICATION_JSON)
     public String clearErrorMessage(HttpServletRequest request);
 }

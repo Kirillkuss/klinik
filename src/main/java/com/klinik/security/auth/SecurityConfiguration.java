@@ -24,27 +24,26 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeRequests(requests -> requests
-                .antMatchers("/login", "/klinika", "/swagger-ui/**", "/api/**", "/web/**")
-                .hasAnyRole(Role.ADMIN.name(), Role.USER.name())
-                .anyRequest()
-                .authenticated())
-                .formLogin(login -> login
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/web")
-                        .failureHandler( klinikaAuthenticationFailureHandler )
-                        .successHandler( klinikaAuthenticationSuccessHandler )
-                        .permitAll())
-                        .sessionManagement( session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                            .invalidSessionUrl("/login")
-                            .maximumSessions( 10 )) //300
-                        .logout(logout -> logout.logoutUrl("/logout")
-                            .logoutSuccessUrl("/web/login?logout=true")
-                            .invalidateHttpSession(true)
-                            .deleteCookies("JSESSIONID"))
-                            .csrf(csrf -> csrf.disable())
-                            .build();
-        
+                    .antMatchers("/login", "/change-password", "/logout").permitAll()
+                    .antMatchers("/web/swagger-ui/index.html").hasAnyRole( "TEST") 
+                    .antMatchers("/web/index.html", "/web", "/index", "/web/**","/klinika", "/").hasAnyRole( Role.ADMIN.name(),Role.USER.name() )
+                    .anyRequest().authenticated()) 
+                    .formLogin(login -> login
+                            .loginPage("/login")
+                            .loginProcessingUrl("/login")
+                            .defaultSuccessUrl("/web")
+                            .failureHandler( klinikaAuthenticationFailureHandler )
+                            .successHandler( klinikaAuthenticationSuccessHandler )
+                            .permitAll())
+                            .sessionManagement( session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                                .invalidSessionUrl("/login")
+                                .maximumSessions( 10 )) //300
+                            .logout(logout -> logout.logoutUrl("/logout")
+                                .logoutSuccessUrl("/web/login?logout=true")
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID"))
+                                .csrf(csrf -> csrf.disable())
+                                .build();
         
         /**return http.authorizeRequests(requests -> requests
                         .antMatchers("/")

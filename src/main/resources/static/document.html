@@ -7,6 +7,7 @@
 		<title>Document</title>
 		<link rel="stylesheet" href="css/color.css">
 		<script type = "text/javascript" src="script/document.js"></script>
+		<script type = "text/javascript" src="script/exit.js"></script>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 		<style>	
 			table, th, td, tr {
@@ -25,13 +26,14 @@
 		</style>
 		<script>
 			var url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/web/klinika";
-			document.getElementById("swagger").href = url;
+			document.getElementById("swagger").href = url
 		</script>
 	</head>	
   <body>
 	<h1></h1>
 	<div class="text-bg-success p-3">
-		<h1> Klinika </h1>
+		<h1 style="display: inline;">Klinika</h1>
+		<a class="btn btn-dark" href="#" onclick="logout()" style="margin-left: 1490px;">Выйти</a>
 		<h5><span class="badge bg-secondary">Version 1.0</span></h5>
 		<nav class="navbar" style="background-color: #e3f2fd;">
 			<div class="container-fluid">
