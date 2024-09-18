@@ -27,7 +27,9 @@ create client
 
 ![alt text](src/main/resources/images/image-5.png)
 
-Client scopes -> microprofile-jwt ->( Default )
+Clients -> ( klinika ) Client scopes -> microprofile-jwt ->( Default )
+
+![alt text](src/main/resources/images/image14.png)
 
 Create role 
 -------------------
