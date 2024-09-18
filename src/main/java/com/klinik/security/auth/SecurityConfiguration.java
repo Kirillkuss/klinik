@@ -1,5 +1,8 @@
 package com.klinik.security.auth;
 
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,7 +15,9 @@ import com.klinik.entity.Role;
 import com.klinik.security.auth.handler.KlinikaAuthenticationSuccessHandler;
 import com.klinik.security.auth.handler.KlinikaAuthenticationFailureHandler;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -37,7 +42,8 @@ public class SecurityConfiguration {
                             .permitAll())
                             .sessionManagement( session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                                 .invalidSessionUrl("/login")
-                                .maximumSessions( 10 )) //300
+                                .maximumSessions( 1 )//count session
+                                .maxSessionsPreventsLogin(false)) 
                             .logout(logout -> logout.logoutUrl("/logout")
                                 .logoutSuccessUrl("/web/login?logout=true")
                                 .invalidateHttpSession(true)
@@ -61,6 +67,21 @@ public class SecurityConfiguration {
                         .authenticated())
                         .httpBasic(Customizer.withDefaults())
                         .build();*/
+    }
+
+    @Bean
+    public HttpSessionListener httpSessionListener() {
+        return new HttpSessionListener() {
+            @Override
+            public void sessionCreated(HttpSessionEvent event) {
+                event.getSession().setMaxInactiveInterval( 10 * 60 ); // 10 минут неактивности
+            }
+
+            @Override
+            public void sessionDestroyed(HttpSessionEvent event) {
+                log.info("Session destroyed: " + event.getSession().getId());
+            }
+        };
     }
 
     @Bean
