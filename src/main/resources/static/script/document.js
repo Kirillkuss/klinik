@@ -43,6 +43,21 @@ function findByWordDocument() {
 
     });	
 };
+
+/**
+ * Обработчик события при нажатии на enter
+ */
+$(document).ready(function() {
+    $('#findByWordDocument').on("click", findByWordDocument());
+    $('#wordFound').on('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); 
+            document.getElementById("findByWordDocument").click();
+        }
+    });
+});
+
+
 /**
  * Список всех страниц
  */

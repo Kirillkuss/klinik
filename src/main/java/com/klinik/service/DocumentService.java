@@ -41,7 +41,7 @@ public class DocumentService {
 
     @ExecuteTimeLog(operation = "findByWord")
     public List<Document> findByWord( String word ){
-        List<Document> list = documentRepository.findByWord( word );
+        List<Document> list = documentRepository.findByWord( word + "%" ).stream().limit(100).toList();
         if( list.isEmpty() ) throw new NoSuchElementException("По данному запросму ничего не найдено");
         return list;
     }

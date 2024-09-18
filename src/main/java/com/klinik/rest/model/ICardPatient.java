@@ -32,8 +32,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public interface ICardPatient {
     
     @GetMapping(value = "/document")
-    @Operation( description = "Поиск карты пациента по документу пациента (СНИЛС, номер документа, ПОЛИС)", summary = "Поиск карты пациента по документу пациента")
-    public ResponseEntity<CardPatient> findByDocumentPatient( @Parameter( description = "Параметр поиска:", example = "123243453") String word) throws Exception, MyException;
+    @Operation( description = "Поиск карты пациента по документу пациента (СНИЛС, номер документа, ПОЛИС) или ФИО", summary = "Поиск карты пациента по документу пациента")
+    public ResponseEntity<List<CardPatient>> findByDocumentPatient( @Parameter( description = "Параметр поиска:", example = "123243453") String word) throws Exception, MyException;
     
     @GetMapping(value = "/card/{id}")
     @Operation( description = "Поиск карты пациента по ИД карты", summary = "Поиск карты пациента по ИД карты")

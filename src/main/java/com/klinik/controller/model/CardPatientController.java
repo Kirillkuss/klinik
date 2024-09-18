@@ -19,7 +19,7 @@ public class CardPatientController implements ICardPatient{
     private final CardPatientService  cardPatientService;
     private final CardPatientRepository cardPatientRepository;
     
-    public ResponseEntity<CardPatient> findByDocumentPatient( String word ) throws Exception, MyException {
+    public ResponseEntity<List<CardPatient> > findByDocumentPatient( String word ) throws Exception, MyException {
         return new ResponseEntity<>( cardPatientService.findByNPS( word ), HttpStatus.OK );
     } 
     public ResponseEntity<CardPatient> getByIdCard( Long id ) throws Exception, MyException {

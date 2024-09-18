@@ -10,6 +10,7 @@
 		<link href="patient.html" rel="import" />
 		<link href="doctor.html" rel="import" />
 		<link href="cardPatient.html" rel="import" />
+		<!--script type = "text/javascript" src="script/exit.js"></script!-->
 		<link rel="icon" href="data:;base64,=">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 		<style>	
@@ -19,22 +20,6 @@
 				$("#tableForm").load("document.html"); 
 			});
 
-			let inactivityTime = function () {
-				let timer;
-				const resetTimer = () => {
-					clearTimeout(timer);
-					timer = setTimeout(logout, 100000); // 100 sec 
-					 //5 min 300000
-				}
-				const logout = () => {
-					window.location.href = "/web/login"; 
-				}
-				window.onload = resetTimer;
-				document.onmousemove = resetTimer;
-				document.onkeypress = resetTimer;
-			};
-
-			inactivityTime();
 		</script>
 	</head>	
   <body>
@@ -53,7 +38,8 @@
 					<button type="button" class="btn btn-success btn-lg" id="buttonDocument">Документ</button>
 					<script> 
 						$("#buttonDocument").click(function(){
-							$("#tableForm").load("document.html"); 
+							$("#tableForm").load("document.html", function() {
+							});
 						});
 					</script>
 					<button type="button" class="btn btn-success btn-lg" id="buttonPatient">Пациент</button>

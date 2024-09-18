@@ -169,4 +169,17 @@ function AddDoctor() {
                 lazyDoctors(i, 15);
             });
         }
-        
+
+
+/**
+ * Обработчик события при нажатии на enter
+ */
+$(document).ready(function() {
+    $('#findByWordDoctor').on("click", findByWordDoctor());
+    $('#wordFound').on('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); 
+            document.getElementById("findByWordDoctor").click();
+        }
+    });
+});

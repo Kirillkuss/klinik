@@ -48,7 +48,7 @@ public class PatientService {
 
     @ExecuteTimeLog(operation = "findByWord")
     public List<Patient> findByWord( String word ) throws Exception{
-        List<Patient> response = patientRepository.findPatientByWord( word );
+        List<Patient> response = patientRepository.findPatientByWord( "%" + word + "%" );
         if ( response.isEmpty() == true ) throw new NoSuchElementException( "По данному запросу ничего не найдено");
         log.info( "findByWord Patient");
         return response;

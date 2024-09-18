@@ -223,3 +223,17 @@ async function switchTable(){
         lazyPatients(i, 15);
     });
 }
+
+/**
+ * Обработчик события при нажатии на enter
+ */
+$(document).ready(function() {
+    $('#findByPatient').on("click", findByWordPatient());
+    $('#wordParam').on('keypress', function(event) {
+        if (event.key === 'Enter') {
+            console.log( "PATIETN ")
+            event.preventDefault(); 
+            document.getElementById("findByPatient").click();
+        }
+    });
+});

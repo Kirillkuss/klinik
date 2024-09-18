@@ -91,19 +91,22 @@ function findByDocumentCard() {
                 cache: false,
                 success: function( json ) {
                     var tr=[];
+                    for (var i = 0; i < json.length; i++) {
+                        var rowNumber = 1 + i;
                         tr.push('<tr>');
-                        tr.push('<td>' + 1 + '</td>');
-                        tr.push('<td>' + json.diagnosis + '</td>');
-                        tr.push('<td>' + json.allergy + '</td>');
-                        tr.push('<td>' + json.note + '</td>');
-                        tr.push('<td>' + json.сonclusion + '</td>');
-                        tr.push('<td>' + json.patient.surname + ' ' + json.patient.name + ' ' + json.patient.fullName + '</td>');
-                        tr.push('<td>' + json.patient.phone + '</td>');
-                        tr.push('<td>' + json.patient.address + '</td>');
-                        tr.push('<td>' + json.patient.document.numar + '</td>');
-                        tr.push('<td>' + json.patient.document.snils + '</td>');
-                        tr.push('<td>' + json.patient.document.polis + '</td>');
+                        tr.push('<td>' + rowNumber + '</td>');
+                        tr.push('<td>' + json[i].diagnosis + '</td>');
+                        tr.push('<td>' + json[i].allergy + '</td>');
+                        tr.push('<td>' + json[i].note + '</td>');
+                        tr.push('<td>' + json[i].сonclusion + '</td>');
+                        tr.push('<td>' + json[i].patient.surname + ' ' + json[i].patient.name + ' ' + json[i].patient.fullName + '</td>');
+                        tr.push('<td>' + json[i].patient.phone + '</td>');
+                        tr.push('<td>' + json[i].patient.address + '</td>');
+                        tr.push('<td>' + json[i].patient.document.numar + '</td>');
+                        tr.push('<td>' + json[i].patient.document.snils + '</td>');
+                        tr.push('<td>' + json[i].patient.document.polis + '</td>');
                         tr.push('</tr>');
+                    }   
                     $('tbody:even').empty();
                     $('table').prepend($(tr.join('')));
                 }, error: function ( error ){
@@ -186,3 +189,16 @@ async function switchTable(){
         lazyCard(i, 9);
     });
 }
+
+/**
+ * Обработчик события при нажатии на enter
+ */
+$(document).ready(function() {
+    $('#findByCardPatient').on("click", findByDocumentCard());
+    $('#wordParam').on('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); 
+            document.getElementById("findByCardPatient").click();
+        }
+    });
+});

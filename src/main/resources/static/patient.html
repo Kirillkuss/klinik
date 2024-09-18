@@ -18,10 +18,20 @@
 				}
       #fixedDiv{
 				position: fixed;
-				top: 860px;
+				top: 880px;
 				width: 1718px;
-				height: 300px;   
-			}	       
+				height: 300px;  
+			}
+      .header-container {
+				display: flex;
+				justify-content: space-between;
+				align-items: center; 
+				margin-bottom: 20px;
+      }
+      .table-container {
+        max-height: 670px; /* Фиксированная высота контейнера */
+        overflow: auto; /* Добавление полос прокрутки при необходимости */
+      }	       
 		</style>
     <script>
       var url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/web/klinika";
@@ -31,8 +41,12 @@
   <body>
     <h1></h1>
     <div class="text-bg-success p-3" >
-      <h1 style="display: inline;">Klinika</h1>
-      <a class="btn btn-dark" href="#" onclick="logout()" style="margin-left: 1490px;">Выйти</a>
+        <div class="header-container">
+          <h1>Klinika</h1>
+          <div id="timerView" style = "position:relative; left: 900px;">Время окончания сессии:</div>
+          <div id="timer" style = "position:relative; left: 485px;">01:30</div>
+          <a class="btn btn-dark" href="#" onclick="exit()" style = "position:relative; top: 35px;">Выйти</a>
+       </div>
         <h5><span class="badge bg-secondary">Version 1.0</span></h5>
         <nav class="navbar" style="background-color: #e3f2fd;">
             <div class="container-fluid">

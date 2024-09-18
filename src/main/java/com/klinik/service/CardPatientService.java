@@ -61,14 +61,16 @@ public class CardPatientService {
         if ( cardPatientRepository.findByIdCardAndIdComplaint( idCard, idComplaint ).isPresent() ) throw new IllegalArgumentException ( "Под жалоба с таким ИД уже добавлена в карту пацинета");
     }
     /**
-     * Поиск карты пациента по документу пациента ( полис/снилс/номер )
+     * Поиск карты пациента по документу пациента ( полис/снилс/номер ) + ФИО
      * @param parametr - параметр поиска
      * @return Card_patient
      * @throws Exception
      */
     @ExecuteTimeLog(operation = "findByNPSCardPatient")
-    public CardPatient findByNPS( String parametr ) throws Exception{
-        return cardPatientRepository.findByNPS( parametr ).orElseThrow();
+    public List<CardPatient> findByNPS( String parametr ) throws Exception{
+        List<CardPatient> listCardPatients = cardPatientRepository.findByNPS( "%" + parametr + "%" );
+        if( listCardPatients.isEmpty() ) throw new NoSuchElementException( "По данному запросу ничего не найдено");
+        return listCardPatients;
     }
 
     @ExecuteTimeLog(operation = "getLazyCardPatient")
