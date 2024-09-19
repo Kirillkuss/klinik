@@ -41,7 +41,7 @@
                 logout(); 
             } else {
                 timeLeft--;
-                console.log("timeLeft >>> " + timeLeft);
+                //console.log("timeLeft >>> " + timeLeft);
             }
         }, 1000);
     }
@@ -89,3 +89,9 @@ function exit() {
         console.error('Ошибка сети:', error);
     });
 };
+
+$(document).ready(function() {
+    $('#swagger').on("click");
+        var url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/web/klinika";
+        document.getElementById("swagger").href = url;
+});

@@ -96,7 +96,11 @@ function findByDocumentCard() {
                         tr.push('<tr>');
                         tr.push('<td>' + rowNumber + '</td>');
                         tr.push('<td>' + json[i].diagnosis + '</td>');
-                        tr.push('<td>' + json[i].allergy + '</td>');
+                        if (json[i].allergy === true) {
+                            tr.push('<td>' + "Да" + '</td>');
+                        } else {
+                            tr.push('<td>' + "Нет" + '</td>');
+                        }
                         tr.push('<td>' + json[i].note + '</td>');
                         tr.push('<td>' + json[i].сonclusion + '</td>');
                         tr.push('<td>' + json[i].patient.surname + ' ' + json[i].patient.name + ' ' + json[i].patient.fullName + '</td>');

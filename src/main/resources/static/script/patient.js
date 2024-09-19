@@ -82,7 +82,7 @@ function AddPatient() {
             $.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                url: window.location.protocol + "//"+ hostname  +":" + port +"/web/patients/add?id=" + idDocument,
+                url: protocol + "//"+ hostname + ':' + port +  +"/web/patients/add?id=" + idDocument,
                 data: JSON.stringify ({surname: surname,
                                        name: name,
                                        fullName: fullName,
@@ -145,9 +145,17 @@ function findByWordPatient() {
                     $('tbody:even').empty();
                     $('table').prepend($(tr.join('')));
                 }, error: function ( error ){
-                    const response = JSON.parse( error.responseText );
-                    $('#errorToast').text( response.message ).show();
-                    $('#liveToastBtn').click();
+                    console.log( "ERROR findByWordPatient >>> " );
+                    console.log( error.responseText );
+                    const response = JSON.parse(error.responseText);
+                    if ( response.code === 500 ){
+                        const messageMatch = response.message.match(/'([^']+)'/);
+                        $('#errorToast').text(messageMatch[1]).show();
+                        $('#liveToastBtn').click();
+                    }else{
+                        $('#errorToast').text( response.message ).show();
+                        $('#liveToastBtn').click();
+                    }
                 }
             });
         }
@@ -231,7 +239,6 @@ $(document).ready(function() {
     $('#findByPatient').on("click", findByWordPatient());
     $('#wordParam').on('keypress', function(event) {
         if (event.key === 'Enter') {
-            console.log( "PATIETN ")
             event.preventDefault(); 
             document.getElementById("findByPatient").click();
         }
