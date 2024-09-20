@@ -5,7 +5,27 @@ form{
 }
 
 .accordion-collapse{
-    background-color: #d9ecd5;
+    background-color: #d9ecd5; /* внутри accordion*/
+}
+
+.accordion-header {
+    background-color: #28a745; /* Цвет фона, например зеленый */
+}
+
+.accordion-header .accordion-button {
+    color: white; /* Цвет текста заголовка */
+    font-weight: bold; /* Полужирный шрифт */
+    background-color: #5a705f; /* Цвет фона кнопки по умолчанию */
+    border: none; /* Убирает границу (по желанию) */
+}
+
+.accordion-header .accordion-button:not(.collapsed) {
+    background-color: #218838; /* Цвет фона для открытого состояния аккордеона */
+    color: white; /* Цвет текста для открытого состояния */
+}
+
+.accordion-header .accordion-button:hover {
+    background-color: #239a3c; /* Цвет фона при наведении (по желанию) */
 }
 
 #accButtonOne{
@@ -28,4 +48,36 @@ form{
 
 .accordion, .card-header.collapsed:after  {
     content: '\f068';
+}
+
+/**
+плавная загрузка страницы при загурзке
+*/
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+body.loaded {
+    opacity: 1;
+}
+/**
+плавная откртиые аккордиона
+*/
+.accordion .accordion-item {
+    overflow: hidden; /* Скрываем контент при закрытии */
+    transition: max-height 0.3s ease; /* Плавная анимация */
+}
+
+.accordion .accordion-collapse {
+    max-height: 0; /* Начальная высота при закрытии */
+    transition: max-height 0.3s ease; /* Плавная анимация */
+}
+
+.accordion .accordion-collapse.show {
+    max-height: 200px; /* Установите максимальную высоту, когда открыто */
 }
