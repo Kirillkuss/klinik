@@ -95,7 +95,8 @@ public class UserService {
      * @return boolean
      */
     private boolean isValidPassword(String password) {
-        return password.length() >= 8 && password.matches(".*[A-Za-z].*") && password.matches(".*\\d.*");
+        return password.matches("^(?=.*[A-ZА-Я])(?=.*[a-zа-яё])(?=.*\\d)(?=.*[@#$^&+=!№:?:%*(;_)}{])[A-Za-zА-Яа-яёЁ0-9@#$^&+=!№:?:%*(;_)}{]{8,}$");
+
     }
     /**
      * Провекра на корректность ввода почты
@@ -133,7 +134,7 @@ public class UserService {
      */
     private void validatePassword(String password) {
         if (!isValidPassword(password)) {
-            throw new IllegalArgumentException("Password does not meet complexity requirements!");
+            throw new IllegalArgumentException("Неверный формат пароля! Пароль должен сожедржать не менее 8 символов, 1 букву верхнего и нижнего реестра, 1 цифру и 1 спец. символ ( *[@#$^&+=!№:?:%*(;_)}{]" );
         }
     }
     /**
