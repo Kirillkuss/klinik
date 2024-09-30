@@ -15,6 +15,8 @@ Pet project Klinika
 10. **Cache**
 11. **Kubernetes (K8s)**
 12. **Mail**
+13. **DevTools**
+14. **Liquibase**
 
 ## Add Keystore
 
