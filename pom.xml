@@ -10,7 +10,7 @@
     </parent>
     <groupId>com</groupId>
     <artifactId>klinik</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>klinik</name>
     <description>klinik</description>
     <properties>
@@ -22,7 +22,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
-        </dependency>
+        </dependency> 
         <!-- Liquibase -->
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -197,6 +197,14 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <configuration>
+                    <propertyFile>liquibase.properties</propertyFile>
+                    <changeLogFile>db/changelog/changelog.xml</changeLogFile>
+                </configuration>
             </plugin>
         </plugins>
     </build>

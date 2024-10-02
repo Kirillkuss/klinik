@@ -67,3 +67,7 @@ Pet project Klinika
     https://myaccount.google.com/apppasswords
     2. add password to email.properties
 
+## Liquibase
+    1. Rollback ( in cmd )
+    mvn liquibase:rollback -Dliquibase.rollbackCount=1
+

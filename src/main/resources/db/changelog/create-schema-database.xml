@@ -3,8 +3,10 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <!-- Удаление поля -->
-    <changeSet id="delete_field" author="Barysevich">
-        <dropColumn tableName="doctor_liquibase" columnName="cabinet" />
+    <!-- Добавление схемы-->
+    <changeSet id="add_schema_klinik_schema" author="Barysevich">
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS klinik_schema;
+        </sql>
     </changeSet>
 </databaseChangeLog>
