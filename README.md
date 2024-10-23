@@ -17,6 +17,7 @@ Pet project Klinika
 12. **Mail**
 13. **DevTools**
 14. **Liquibase**
+15. **Apache Kafka with Zookeeper and KRaft**
 
 ## Add Keystore
 
@@ -70,4 +71,16 @@ Pet project Klinika
 ## Liquibase
     1. Rollback ( in cmd )
     mvn liquibase:rollback -Dliquibase.rollbackCount=1
+
+## Apache Kafka
+   1. setup container-internal port forwarding
+   # Connect to the container's bash (find out the name with 'docker ps')
+    docker exec -it --user=root kafka-iu /bin/sh
+   # Now, we are connected to the container's bash.
+   # Let's install 'socat'
+    apk add socat
+   # Use socat to create the port forwarding
+    socat tcp-listen:9092,fork tcp:host.docker.internal:9092
+   # This will lead to a running process that we don't kill as long as the container's runnin
+   ( Unfortunately, we need to run socat each time we start the container! )
 

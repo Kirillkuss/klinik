@@ -24,16 +24,33 @@ public class Topics {
     }
 
     @Bean
-    public NewTopic topicKllinikFirst() {
-        return TopicBuilder.name( "topicKllinikFirst")
+    public NewTopic topicKlinikFirst() {
+        return TopicBuilder.name( "topicKlinikFirst")
                            .partitions( 1 )
                            .replicas( 1 )
                            .build();
     }
 
     @Bean
-    public NewTopic topicKlinnikSecond(){
-        return TopicBuilder.name( "topicKlinnikSecond")
+    public NewTopic topicKlinikSecond(){
+        return TopicBuilder.name( "topicKlinikSecond")
+                           .partitions( 1 )
+                           .replicas( 1 )
+                           .build();
+    }
+
+    
+    @Bean
+    public NewTopic topicKlinikThird() {
+        return TopicBuilder.name( "topicKlinikThird")
+                           .partitions( 1 )
+                           .replicas( 1 )
+                           .build();
+    }
+
+    @Bean
+    public NewTopic topicKlinikFourth(){
+        return TopicBuilder.name( "topicKlinikFourth")
                            .partitions( 1 )
                            .replicas( 1 )
                            .build();
