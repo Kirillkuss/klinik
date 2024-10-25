@@ -25,7 +25,7 @@ public class Topics {
 
     @Bean
     public NewTopic topicKlinikFirst() {
-        return TopicBuilder.name( "topicKlinikFirst")
+        return TopicBuilder.name( "klinikFirst")
                            .partitions( 1 )
                            .replicas( 1 )
                            .build();
@@ -33,26 +33,10 @@ public class Topics {
 
     @Bean
     public NewTopic topicKlinikSecond(){
-        return TopicBuilder.name( "topicKlinikSecond")
+        return TopicBuilder.name( "klinikSecond")
                            .partitions( 1 )
                            .replicas( 1 )
                            .build();
     }
 
-    
-    @Bean
-    public NewTopic topicKlinikThird() {
-        return TopicBuilder.name( "topicKlinikThird")
-                           .partitions( 1 )
-                           .replicas( 1 )
-                           .build();
-    }
-
-    @Bean
-    public NewTopic topicKlinikFourth(){
-        return TopicBuilder.name( "topicKlinikFourth")
-                           .partitions( 1 )
-                           .replicas( 1 )
-                           .build();
-    }
 }

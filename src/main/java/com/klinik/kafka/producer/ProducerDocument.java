@@ -1,5 +1,7 @@
-package com.klinik.kafka;
+package com.klinik.kafka.producer;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,26 +10,26 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
-import java.util.HashMap;
-import java.util.Map;
+import com.klinik.entity.Document;
+import com.klinik.kafka.serializer.DocumentSerializer;
 
 @Configuration
-public class ProducerKlinika {
+public class ProducerDocument {
 
     @Value( value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
     @Bean
-    public ProducerFactory<String, String> producerFactory() {
+    public ProducerFactory<String, Document> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put( ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress );
         configProps.put( ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class );
-        configProps.put( ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class );
+        configProps.put( ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, DocumentSerializer.class );
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
+    public KafkaTemplate<String, Document> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
     

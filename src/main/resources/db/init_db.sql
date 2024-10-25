@@ -124,5 +124,13 @@ CREATE TABLE User_Blocking(
 	status_block int,
 	status BOOLEAN,
 	FOREIGN KEY (user_id) REFERENCES public.kl_user(id)
-)
+);
+
+CREATE TABLE klinik_animal(
+	id_animal serial PRIMARY KEY,
+	name_animal VARCHAR( 100 ),
+	amount int8 NOT NULL,
+	count int4 NOT NULL,
+	date_record timestamp(6) NOT NULL
+);
 

@@ -2,6 +2,7 @@ package com.klinik.entity;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import javax.validation.constraints.Size;
 @Table( name = "document")
 @Setter
 @Getter
+@AllArgsConstructor
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString

@@ -75,7 +75,7 @@ Pet project Klinika
 ## Apache Kafka
    1. setup container-internal port forwarding
    # Connect to the container's bash (find out the name with 'docker ps')
-    docker exec -it --user=root kafka-iu /bin/sh
+    docker exec -it --user=root kafka-ui /bin/sh
    # Now, we are connected to the container's bash.
    # Let's install 'socat'
     apk add socat
