@@ -10,26 +10,26 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
-import com.klinik.entity.Document;
-import com.klinik.kafka.serializer.DocumentSerializer;
+import com.klinik.kafka.message.SendMessageBroker;
+import com.klinik.kafka.serializer.MessageBrokerSerializer;
 
 @Configuration
-public class ProducerDocument {
+public class MessageBrokerProducer {
 
     @Value( value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
     @Bean
-    public ProducerFactory<String, Document> producerFactory() {
+    public ProducerFactory<String, SendMessageBroker> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put( ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress );
         configProps.put( ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class );
-        configProps.put( ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, DocumentSerializer.class );
+        configProps.put( ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, MessageBrokerSerializer.class );
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
     @Bean
-    public KafkaTemplate<String, Document> kafkaTemplate() {
+    public KafkaTemplate<String, SendMessageBroker> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
     
