@@ -18,6 +18,7 @@ Pet project Klinika
 13. **DevTools**
 14. **Liquibase**
 15. **Apache Kafka with Zookeeper and KRaft**
+16. ** Gradle **
 
 ## Add Keystore
 
