@@ -32,25 +32,21 @@ public class RestToken {
     public static final String rezult = "Результат: ";
     public static final String error  = "Ошибка: ";
     public static final String leadTime = "Время выполнения: ";
-    private static String token;
-    private static String bearer;
 
-    
-    @DisplayName("Получение токена") 
-    public static void getToken() {
-        AuthRequest authRequest = new AuthRequest();
-        authRequest.setLogin( "admin");
-        authRequest.setPassword("admin");
+    @DisplayName("Получение сессии") 
+    public static String getSessionId() {
         try{
-            RestAssured.baseURI = "http://localhost:8082";
+            RestAssured.baseURI = PATH;
             Response response = given().contentType(ContentType.URLENC) 
-                                       .formParam("username", authRequest.getLogin())
-                                       .formParam("password", authRequest.getPassword())
+                                       .formParam("username", "admin")
+                                       .formParam("password", "admin")
                                        .when()
                                        .post("/web/login");                         
-           // response.then().statusCode(200);
+            String sessionId = response.getCookie("JSESSIONID");
+            return sessionId;
         }catch( Exception ex ){
             ex.printStackTrace( System.err );
+            throw new RuntimeException("Ошибка при получении токена", ex); //Перекидываем исключение вверх по стеку
         }
     }
 

@@ -29,19 +29,17 @@ public class RestDoctorTest {
 
     private static String PATH;
     private static String TYPE;
-    private static String authorization;
     private static String rezult;
     private static String error;
-    private static String bearer;
+    private static String JSESSIONID;
     public static  String leadTime;
     
     @BeforeAll
     @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-        RestToken.getToken();
+        JSESSIONID    = RestToken.getSessionId();
         PATH          = RestToken.PATH;
         TYPE          = RestToken.TYPE;
-        authorization = RestToken.authorization;
         rezult        = RestToken.rezult;
         error         = RestToken.error;
         leadTime      = RestToken.leadTime;
@@ -54,18 +52,14 @@ public class RestDoctorTest {
     @TmsLink("TEST-3545")
     public void testGetDoctorCounts() throws Exception {
         try{
-            RestAssured.baseURI = "http://localhost:8082";
-            Response response = given().contentType(ContentType.URLENC) 
-                                       .formParam("username", "admin")
-                                       .formParam("password", "admin")
+            RestAssured.baseURI = PATH;
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .when()
-                                       .post("/web/login");    
-
-            String sessionId = response.getCookie("JSESSIONID");
-            Response responseTwo = given().cookie("JSESSIONID", sessionId).when().get("/web/doctors/counts");
-            responseTwo.then().statusCode(200);
-            Allure.addAttachment( rezult, TYPE, responseTwo.andReturn().asString() );
-            Allure.addAttachment( leadTime, TYPE, String.valueOf( responseTwo.time() + " ms."));
+                                       .get("/web/doctors/counts" );
+            response.then()
+                    .statusCode(200);
+            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
@@ -74,12 +68,13 @@ public class RestDoctorTest {
     @Description("Получение списка врачей (POST)")
     @DisplayName("Получение списка врачей (POST)")
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getLazyDoctors")
-   // @ParameterizedTest
+    @ParameterizedTest
     @CsvSource({"1, 14", "486, 50", "851, 12"})
     public void testGetDocumentsLazy( int page, int size ){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().queryParam("page", page)
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
+                                       .queryParam("page", page)
                                        .queryParam("size", size)
                                        .when()
                                        .post("/web/doctors/lazy");
@@ -99,12 +94,13 @@ public class RestDoctorTest {
     @Description("Добавить врача")
     @DisplayName("Добавить врача (POST)")
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/addDoctor")
-   // @ParameterizedTest
+    @ParameterizedTest
     @MethodSource("getParams")
     public void testAddDoctor( Doctor doctor ){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given()
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
+                                       .contentType( ContentType.JSON )
                                        .body( doctor )
                                        .post("/web/doctors/add");
                      response.then().statusCode(200);
@@ -124,7 +120,8 @@ public class RestDoctorTest {
     public void testGetByFIO(String word, int page, int size ) {
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().queryParam("word", word)
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
+                                       .queryParam("word", word)
                                        .queryParam("page", page)
                                        .queryParam("size", size)
                                        .when()
