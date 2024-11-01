@@ -54,11 +54,16 @@ public class RestDoctorTest {
     @TmsLink("TEST-3545")
     public void testGetDoctorCounts() throws Exception {
         try{
-            RestToken.getToken();
-            RestAssured.baseURI = PATH;
-            Response response = given().when()
-                                       .get("/web/doctors/counts");
-                     response.then().statusCode(200);
+            RestAssured.baseURI = "http://localhost:8082";
+            Response response = given().contentType(ContentType.URLENC) 
+                                       .formParam("username", "admin")
+                                       .formParam("password", "admin")
+                                       .when()
+                                       .post("/web/login");    
+
+
+             response = given().when().get("/web/doctors/counts");
+             response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
             Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
         }catch( Exception ex ){
