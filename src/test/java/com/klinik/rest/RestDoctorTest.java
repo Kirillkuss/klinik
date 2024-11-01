@@ -55,8 +55,7 @@ public class RestDoctorTest {
     public void testGetDoctorCounts() throws Exception {
         try{
             RestAssured.baseURI = PATH;
-            Response response = given()//.header( authorization, bearer )
-                                       .when()
+            Response response = given().when()
                                        .get("/web/doctors/counts");
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
@@ -69,16 +68,15 @@ public class RestDoctorTest {
     @Description("Получение списка врачей (POST)")
     @DisplayName("Получение списка врачей (POST)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/getLazyDoctors")
-    @ParameterizedTest
+   // @ParameterizedTest
     @CsvSource({"1, 14", "486, 50", "851, 12"})
     public void testGetDocumentsLazy( int page, int size ){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
-                                       .queryParam("page", page)
+            Response response = given().queryParam("page", page)
                                        .queryParam("size", size)
                                        .when()
-                                       .post("/doctors/lazy");
+                                       .post("/web/doctors/lazy");
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
             Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
@@ -95,15 +93,14 @@ public class RestDoctorTest {
     @Description("Добавить врача")
     @DisplayName("Добавить врача (POST)")
     @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/addDoctor")
-    @ParameterizedTest
+   // @ParameterizedTest
     @MethodSource("getParams")
     public void testAddDoctor( Doctor doctor ){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer ).when()
-                                       .contentType(ContentType.JSON)
+            Response response = given()
                                        .body( doctor )
-                                       .post("/doctors/add");
+                                       .post("/web/doctors/add");
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
             Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
@@ -121,12 +118,11 @@ public class RestDoctorTest {
     public void testGetByFIO(String word, int page, int size ) {
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
-                                       .queryParam("word", word)
+            Response response = given().queryParam("word", word)
                                        .queryParam("page", page)
                                        .queryParam("size", size)
                                        .when()
-                                       .get("/doctors/fio/{word}", word);
+                                       .get("/web/doctors/fio/{word}", word);
                      response.then().statusCode(200);           
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
             Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));

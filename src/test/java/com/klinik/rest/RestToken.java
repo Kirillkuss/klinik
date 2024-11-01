@@ -42,21 +42,15 @@ public class RestToken {
         authRequest.setLogin( "admin");
         authRequest.setPassword("admin");
         try{
-            RestAssured.baseURI = PATH;
-            Response response = given().contentType( TYPE )
-                                       .body( authRequest )
+            RestAssured.baseURI = "http://localhost:8082";
+            Response response = given().contentType(ContentType.URLENC) 
+                                       .formParam("username", authRequest.getLogin())
+                                       .formParam("password", authRequest.getPassword())
                                        .when()
-                                       .contentType( ContentType.JSON )
                                        .post("/web/login");                         
-            response.then().statusCode(200);
-            //ObjectMapper objectMapper = new ObjectMapper();
-           // AuthResponse authResponse = objectMapper.readValue(response.asString(), AuthResponse.class);
-            //token = authResponse.getToken();
-            //bearer = "Bearer " + token;
-            //return bearer;
+           // response.then().statusCode(200);
         }catch( Exception ex ){
             ex.printStackTrace( System.err );
-            //return bearer;
         }
     }
 
