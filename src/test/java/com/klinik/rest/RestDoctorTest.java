@@ -61,11 +61,11 @@ public class RestDoctorTest {
                                        .when()
                                        .post("/web/login");    
 
-
-             response = given().when().get("/web/doctors/counts");
-             response.then().statusCode(200);
-            Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
-            Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
+            String sessionId = response.getCookie("JSESSIONID");
+            Response responseTwo = given().cookie("JSESSIONID", sessionId).when().get("/web/doctors/counts");
+            responseTwo.then().statusCode(200);
+            Allure.addAttachment( rezult, TYPE, responseTwo.andReturn().asString() );
+            Allure.addAttachment( leadTime, TYPE, String.valueOf( responseTwo.time() + " ms."));
         }catch( Exception ex ){
             Allure.addAttachment( error, TYPE, ex.getMessage() );
         }
