@@ -22,7 +22,6 @@ import io.restassured.response.Response;
 import java.time.LocalDateTime;
 import static org.hamcrest.Matchers.lessThan;
 
-@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование АПИ - TreatmentController")
 @DisplayName("Тестирование АПИ - TreatmentController")
@@ -30,22 +29,20 @@ public class RestTreatmentTest {
 
     private static String PATH;
     private static String TYPE;
-    private static String authorization;
     private static String rezult;
     private static String error;
-    private static String bearer;
+    private static String JSESSIONID;
     public static  String leadTime;
     
     @BeforeAll
     @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-        //bearer        = RestToken.getToken();
-        PATH          = RestToken.PATH;
-        TYPE          = RestToken.TYPE;
-        authorization = RestToken.authorization;
-        rezult        = RestToken.rezult;
-        error         = RestToken.error;
-        leadTime      = RestToken.leadTime;
+        JSESSIONID = RestSession.getSessionId();
+        PATH       = RestSession.PATH;
+        TYPE       = RestSession.TYPE;
+        rezult     = RestSession.rezult;
+        error      = RestSession.error;
+        leadTime   = RestSession.leadTime;
     }
 
     @DisplayName("Параметры для тестирования")
@@ -64,7 +61,7 @@ public class RestTreatmentTest {
         try{
             DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
             RestAssured.baseURI = PATH;
-            Response response = given().header(authorization, bearer)
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .queryParam("id", idCard)
                                        .queryParam("dateFrom", from.format( formatter ))
                                        .queryParam("dateTo", to.format( formatter ))
@@ -91,7 +88,7 @@ public class RestTreatmentTest {
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       .header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .queryParam("idCard", idCard)
                                        .queryParam("idRehabilitationSolution", idRehabilitationSolution)
                                        .when()
@@ -129,7 +126,7 @@ public class RestTreatmentTest {
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       .header( authorization, bearer )
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .body( requestTreatment )
                                        .contentType(ContentType.JSON)

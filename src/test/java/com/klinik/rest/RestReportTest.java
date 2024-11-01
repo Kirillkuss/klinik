@@ -2,7 +2,6 @@ package com.klinik.rest;
 
 import static io.restassured.RestAssured.given;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,7 +22,6 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование АПИ - ReportController")
 @DisplayName("Тестирование АПИ - ReportController")
@@ -31,22 +29,20 @@ public class RestReportTest {
     
     private static String PATH;
     private static String TYPE;
-    private static String authorization;
     private static String rezult;
     private static String error;
-    private static String bearer;
+    private static String JSESSIONID;
     public static  String leadTime;
     
     @BeforeAll
     @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-        //bearer        = RestToken.getToken();
-        PATH          = RestToken.PATH;
-        TYPE          = RestToken.TYPE;
-        authorization = RestToken.authorization;
-        rezult        = RestToken.rezult;
-        error         = RestToken.error;
-        leadTime      = RestToken.leadTime;
+        JSESSIONID = RestSession.getSessionId();
+        PATH       = RestSession.PATH;
+        TYPE       = RestSession.TYPE;
+        rezult     = RestSession.rezult;
+        error      = RestSession.error;
+        leadTime   = RestSession.leadTime;
     }
 
     @DisplayName("Параметры для тестирования")
@@ -60,7 +56,7 @@ public class RestReportTest {
 
     @Description("Отчет по записям пациента к врачу за период времени ( GET )")
     @DisplayName("Отчет по записям пациента к врачу за период времени ( GET )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/Report/findInformationAboutRecordPatient")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/Report/findInformationAboutRecordPatient")
     @ParameterizedTest
     @MethodSource("getReportPatientRequest")
     public void testGetReportPatient( ReportPatientRequest reportPatientRequest ){
@@ -69,7 +65,7 @@ public class RestReportTest {
             DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
             Response response = given().log()
                                        .all()
-                                       //.header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .queryParam("idPatient", reportPatientRequest.getIdPatient())
                                        .queryParam("start", reportPatientRequest.getStart().format(formatter))
                                        .queryParam("end", reportPatientRequest.getEnd().format(formatter))
@@ -98,7 +94,7 @@ public class RestReportTest {
 
     @Description("Отчет о медикаментозном лечении за период времени ( GET )")
     @DisplayName("Отчет о медикаментозном лечении за период времени ( GET )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/Report/findInformationAboutRecordPatient")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/Report/findInformationAboutRecordPatient")
     @ParameterizedTest
     @MethodSource("getReportDrugTreatmentRequest")
     public void testGetDrugTreatment( ReportDrugTreatmentRequest reportDrugTreatmentRequest ){
@@ -107,7 +103,7 @@ public class RestReportTest {
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                         .all()
-                                        .header(authorization, bearer)
+                                        .cookie("JSESSIONID", JSESSIONID )
                                         .queryParam( "from",reportDrugTreatmentRequest.getFrom().format( formatter ))
                                         .queryParam( "to", reportDrugTreatmentRequest.getTo().format( formatter ))
                                         .when()
@@ -133,7 +129,7 @@ public class RestReportTest {
 
     @Description("Отчет о медикаментозном лечении за период времени ( GET )")
     @DisplayName("Отчет о медикаментозном лечении за период времени ( GET )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/Report/findInformationAboutRecordPatient")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/Report/findInformationAboutRecordPatient")
     @ParameterizedTest
     @MethodSource("getRehabilitationTreatments")
     public void testGetReportDrugTretment( LocalDateTime dateFrom,  LocalDateTime dateTo  ){
@@ -142,7 +138,7 @@ public class RestReportTest {
             DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
             Response response = given().log()
                                        .all()
-                                       .header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .queryParam( "dateFrom", dateFrom.format( formatter ))
                                        .queryParam( "dateTo", dateTo.format( formatter ) )
                                        .when()
@@ -162,7 +158,7 @@ public class RestReportTest {
 
     @Description("Отчет о полной информации по пациенту( GET )")
     @DisplayName("Отчет о полной информации по пациенту( GET )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/Report/fullInformationPatient")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/Report/fullInformationPatient")
     @ParameterizedTest
     @CsvSource({"1", "2"})
     public void testGetReportInfoPatient( Long id  ){
@@ -170,7 +166,7 @@ public class RestReportTest {
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       .header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .queryParam( "idCard", id )
                                        .when()
                                        .contentType( ContentType.JSON )

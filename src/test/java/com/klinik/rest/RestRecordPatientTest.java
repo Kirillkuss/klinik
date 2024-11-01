@@ -39,12 +39,12 @@ public class RestRecordPatientTest {
     @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
         //bearer        = RestToken.getToken();
-        PATH          = RestToken.PATH;
-        TYPE          = RestToken.TYPE;
-        authorization = RestToken.authorization;
-        rezult        = RestToken.rezult;
-        error         = RestToken.error;
-        leadTime      = RestToken.leadTime;
+        PATH          = RestSession.PATH;
+        TYPE          = RestSession.TYPE;
+        authorization = RestSession.authorization;
+        rezult        = RestSession.rezult;
+        error         = RestSession.error;
+        leadTime      = RestSession.leadTime;
     }
    /**  @DisplayName("Параметры для тестирования")
     public static Stream<Arguments> getParamsRecord() throws Exception{

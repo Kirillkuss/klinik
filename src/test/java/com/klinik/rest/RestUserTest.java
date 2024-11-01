@@ -5,7 +5,6 @@ import java.util.stream.Stream;
 import org.instancio.Instancio;
 import static org.instancio.Select.field;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +21,6 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование АПИ - ReportController")
 @DisplayName("Тестирование АПИ - ReportController")
@@ -30,22 +28,20 @@ public class RestUserTest {
 
     private static String PATH;
     private static String TYPE;
-    private static String authorization;
     private static String rezult;
     private static String error;
-    private static String bearer;
+    private static String JSESSIONID;
     public static  String leadTime;
     
     @BeforeAll
     @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-        //bearer        = RestToken.getToken();
-        PATH          = RestToken.PATH;
-        TYPE          = RestToken.TYPE;
-        authorization = RestToken.authorization;
-        rezult        = RestToken.rezult;
-        error         = RestToken.error;
-        leadTime      = RestToken.leadTime;
+        JSESSIONID = RestSession.getSessionId();
+        PATH       = RestSession.PATH;
+        TYPE       = RestSession.TYPE;
+        rezult     = RestSession.rezult;
+        error      = RestSession.error;
+        leadTime   = RestSession.leadTime;
     }
 
     @DisplayName("Параметры для тестирования")
@@ -60,15 +56,15 @@ public class RestUserTest {
 
     @Description("Добавить user ( POST )")
     @DisplayName("Добавить user ( POST )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/USERS/addUser")
-    @ParameterizedTest
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/USERS/addUser")
+    //@ParameterizedTest
     @MethodSource("getUser")
     public void testGetReportPatient(  UserRequest userRequest  ){
         try{
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       .header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .body( userRequest )
@@ -87,14 +83,14 @@ public class RestUserTest {
 
     @Description("Обновить keystore ( GET )")
     @DisplayName("Обновить keystore ( GET )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/USERS/updateKeystore")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/USERS/updateKeystore")
     @Test
     public void testUpdateKeystore( ){
         try{
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       .header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/users/keystore");
@@ -112,14 +108,14 @@ public class RestUserTest {
 
     @Description("Обновить ключи public.pem and private.pem ( GET )")
     @DisplayName("Обновить ключи public.pem and private.pem ( GET )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/USERS/updateKeys")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/USERS/updateKeys")
     @Test
     public void testUpdateKeys( ){
         try{
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       .header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/users/keys");
@@ -137,14 +133,14 @@ public class RestUserTest {
 
     @Description("Обновить encryption ( GET )")
     @DisplayName("Обновить encryption ( GET )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/USERS/updateEncryption")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/USERS/updateEncryption")
     @Test
     public void testUpdateEncription( ){
         try{
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       .header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/users/encrypt");
@@ -162,14 +158,14 @@ public class RestUserTest {
 
     @Description("Обновить ключи в базе ( GET )")
     @DisplayName("Обновить ключи в базе ( GET )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/USERS/updateDataBase")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/USERS/updateDataBase")
     @Test
     public void testUpdateKeysDataBase( ){
         try{
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       .header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/users/database/keys");

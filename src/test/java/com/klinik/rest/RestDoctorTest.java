@@ -37,12 +37,12 @@ public class RestDoctorTest {
     @BeforeAll
     @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-        JSESSIONID    = RestToken.getSessionId();
-        PATH          = RestToken.PATH;
-        TYPE          = RestToken.TYPE;
-        rezult        = RestToken.rezult;
-        error         = RestToken.error;
-        leadTime      = RestToken.leadTime;
+        JSESSIONID = RestSession.getSessionId();
+        PATH       = RestSession.PATH;
+        TYPE       = RestSession.TYPE;
+        rezult     = RestSession.rezult;
+        error      = RestSession.error;
+        leadTime   = RestSession.leadTime;
     }
     
     @Description("Получение количества врачей (GET)")
@@ -55,7 +55,7 @@ public class RestDoctorTest {
             RestAssured.baseURI = PATH;
             Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .when()
-                                       .get("/web/doctors/counts" );
+                                       .get("/doctors/counts" );
             response.then()
                     .statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
@@ -69,7 +69,7 @@ public class RestDoctorTest {
     @DisplayName("Получение списка врачей (POST)")
     @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getLazyDoctors")
     @ParameterizedTest
-    @CsvSource({"1, 14", "486, 50", "851, 12"})
+    @CsvSource({"1, 14", "32, 34", "53, 12"})
     public void testGetDocumentsLazy( int page, int size ){
         try{
             RestAssured.baseURI = PATH;
@@ -77,7 +77,7 @@ public class RestDoctorTest {
                                        .queryParam("page", page)
                                        .queryParam("size", size)
                                        .when()
-                                       .post("/web/doctors/lazy");
+                                       .post("/doctors/lazy");
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
             Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
@@ -88,7 +88,7 @@ public class RestDoctorTest {
 
     @DisplayName("Параметры для тестирования")
     public static Stream<Arguments> getParams() throws Exception{                 
-        return Stream.of( Arguments.of( RestToken.getDoctor() ));
+        return Stream.of( Arguments.of( RestSession.getDoctor() ));
     }
  
     @Description("Добавить врача")
@@ -102,7 +102,7 @@ public class RestDoctorTest {
             Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .contentType( ContentType.JSON )
                                        .body( doctor )
-                                       .post("/web/doctors/add");
+                                       .post("/doctors/add");
                      response.then().statusCode(200);
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
             Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));
@@ -125,7 +125,7 @@ public class RestDoctorTest {
                                        .queryParam("page", page)
                                        .queryParam("size", size)
                                        .when()
-                                       .get("/web/doctors/fio/{word}", word);
+                                       .get("/doctors/fio/{word}", word);
                      response.then().statusCode(200);           
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );
             Allure.addAttachment( leadTime, TYPE, String.valueOf( response.time() + " ms."));

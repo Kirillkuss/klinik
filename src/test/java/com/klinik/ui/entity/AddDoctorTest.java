@@ -10,7 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import com.klinik.entity.Doctor;
-import com.klinik.rest.RestToken;
+import com.klinik.rest.RestSession;
 import com.klinik.ui.LoginSuccess;
 
 @Disabled
@@ -22,7 +22,7 @@ public class AddDoctorTest {
     
     @BeforeEach
     public void setUp() {
-        doctor = RestToken.getDoctor();
+        doctor = RestSession.getDoctor();
         driver = LoginSuccess.getSuccessLogin();
     }
 

@@ -3,7 +3,6 @@ package com.klinik.rest;
 import static io.restassured.RestAssured.given;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,7 +20,6 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import java.util.List;
 
-@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование АПИ - CardPatientController")
 @DisplayName("Тестирование АПИ - CardPatientController")
@@ -29,22 +27,20 @@ public class RestCardPatientTest {
 
     private static String PATH;
     private static String TYPE;
-    private static String authorization;
     private static String rezult;
     private static String error;
-    private static String bearer;
+    private static String JSESSIONID;
     public static  String leadTime;
     
     @BeforeAll
     @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-        //bearer        = RestToken.getToken();
-        PATH          = RestToken.PATH;
-        TYPE          = RestToken.TYPE;
-        authorization = RestToken.authorization;
-        rezult        = RestToken.rezult;
-        error         = RestToken.error;
-        leadTime      = RestToken.leadTime;
+        JSESSIONID = RestSession.getSessionId();
+        PATH       = RestSession.PATH;
+        TYPE       = RestSession.TYPE;
+        rezult     = RestSession.rezult;
+        error      = RestSession.error;
+        leadTime   = RestSession.leadTime;
     }
 
     private static String queryDocument = "SELECT d.id_document \n" + 
@@ -59,7 +55,7 @@ public class RestCardPatientTest {
 
     @DisplayName("Параметры для тестирования")
     public static Stream<Arguments> getParamsCard() throws Exception{
-        List<Long> listPatient = RestToken.getStremValue( queryPatient, "id_patient");
+        List<Long> listPatient = RestSession.getStremValue( queryPatient, "id_patient");
         if ( listPatient.stream().count() < 2 ){
             addPatient();
         }
@@ -74,13 +70,13 @@ public class RestCardPatientTest {
 
     @Description("Добавить карту пациента (POST)")
     @DisplayName("Добавить пациента (POST)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/4.%20Card%20Patient/saveCardPatient")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/4.%20Card%20Patient/saveCardPatient")
     @ParameterizedTest
     @MethodSource("getParamsCard")
     public void testAddCardPatient( CardPatient cardPatient, Long idPatient ){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given()//.header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .queryParam("idPatient", idPatient ) 
                                        .when()
                                        .contentType( ContentType.JSON )
@@ -97,13 +93,13 @@ public class RestCardPatientTest {
 
     @Description("Поиск карты пациента по документу пациента (GET)")
     @DisplayName("Поиск карты пациента по документу пациента  (GET)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/2.%20Patient/getAllPatients")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/2.%20Patient/getAllPatients")
     @ParameterizedTest
     @CsvSource({"196763082", "664-728-075-36"})
     public void testGetCardPatientByDocument( String word ) throws Exception {
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .queryParam("word", word)
                                        .when()
                                        .contentType( ContentType.JSON )
@@ -118,13 +114,13 @@ public class RestCardPatientTest {
 
     @Description("Поиск карты пациента по ид пациента (GET)")
     @DisplayName("Поиск карты пациента по ид пациента (GET)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/2.%20Patient/getAllPatients")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/2.%20Patient/getAllPatients")
     @ParameterizedTest
     @CsvSource({"10", "8"})
     public void testGetCardPatientId( Long id ) throws Exception {
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .queryParam("id", id)
                                        .when()
                                        .contentType( ContentType.JSON )
@@ -139,13 +135,13 @@ public class RestCardPatientTest {
 
     @Description("Поиск карты пациента по ид карты (GET)")
     @DisplayName("Поиск карты пациента по ид карты (GET)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/2.%20Patient/getAllPatients")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/2.%20Patient/getAllPatients")
     @ParameterizedTest
     @CsvSource({"1", "3"})
     public void testGetCardId( Long id ) throws Exception {
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .queryParam("id", id )
                                        .when()
                                        .contentType( ContentType.JSON )
@@ -160,14 +156,14 @@ public class RestCardPatientTest {
 
     @Description("Добавление жалобы пациенту (POST)")
     @DisplayName("Добавление жалобы пациенту (POST)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/4.%20Card%20Patient/saveComplaintToCardPatient")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/4.%20Card%20Patient/saveComplaintToCardPatient")
     //@ParameterizedTest
     @CsvSource({"1, 1", "1, 2"})
     public void testAddCoplaintToCard( Long idCard, Long idCoplaint  ) throws Exception {
         CoplaintRequest coplaintRequest = new CoplaintRequest(idCard, idCoplaint);
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .body( coplaintRequest )
@@ -181,17 +177,17 @@ public class RestCardPatientTest {
     }
 
     private static void addPatient(){
-        List<Long> listDocumentId = RestToken.getStremValue( queryDocument, "id_document");
+        List<Long> listDocumentId = RestSession.getStremValue( queryDocument, "id_document");
         if ( listDocumentId.stream().count() < 2 ){
             addDocument();
         }
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .queryParam("id",listDocumentId.stream().findFirst().orElseThrow()) 
                                        .when()
                                        .contentType( ContentType.JSON )
-                                       .body( RestToken.getPatient() )
+                                       .body( RestSession.getPatient() )
                                        .post("/patients/add");
                      response.then().statusCode( 201 );
         }catch( Exception ex ){
@@ -203,10 +199,10 @@ public class RestCardPatientTest {
     private static void addDocument(){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType( ContentType.JSON )
-                                       .body( RestToken.getDocument() )
+                                       .body( RestSession.getDocument() )
                                        .post("/documents/add");
                      response.then().statusCode( 201 );
             Allure.addAttachment( rezult, TYPE, response.andReturn().asString() );

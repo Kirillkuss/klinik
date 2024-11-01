@@ -12,21 +12,18 @@ import java.util.Random;
 import org.instancio.Instancio;
 import org.instancio.Select;
 import org.junit.jupiter.api.DisplayName;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.klinik.entity.CardPatient;
 import com.klinik.entity.Doctor;
 import com.klinik.entity.Document;
 import com.klinik.entity.Gender;
 import com.klinik.entity.Patient;
-import com.klinik.request.AuthRequest;
-import com.klinik.response.AuthResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-public class RestToken {
+public class RestSession {
 
-    public static final String PATH = "http://localhost:8082";
+    public static final String PATH = "http://localhost:8082/web";
     public static final String TYPE = "application/json";
     public static final String authorization = "Authorization";
     public static final String rezult = "Результат: ";
@@ -41,12 +38,12 @@ public class RestToken {
                                        .formParam("username", "admin")
                                        .formParam("password", "admin")
                                        .when()
-                                       .post("/web/login");                         
+                                       .post("/login");                         
             String sessionId = response.getCookie("JSESSIONID");
             return sessionId;
         }catch( Exception ex ){
             ex.printStackTrace( System.err );
-            throw new RuntimeException("Ошибка при получении токена", ex); //Перекидываем исключение вверх по стеку
+            throw new RuntimeException("Ошибка при получении токена", ex); 
         }
     }
 

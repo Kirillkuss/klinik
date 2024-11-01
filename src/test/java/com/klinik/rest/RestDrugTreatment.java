@@ -5,7 +5,6 @@ import java.util.stream.Stream;
 import org.instancio.Instancio;
 import org.instancio.Select;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,7 +23,6 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование АПИ - DrugTreatmentController")
 @DisplayName("Тестирование АПИ - DrugTreatmentController")
@@ -32,34 +30,32 @@ public class RestDrugTreatment {
 
     private static String PATH;
     private static String TYPE;
-    private static String authorization;
     private static String rezult;
     private static String error;
-    private static String bearer;
+    private static String JSESSIONID;
     public static  String leadTime;
     
     @BeforeAll
     @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-       // bearer        = RestToken.getToken();
-        PATH          = RestToken.PATH;
-        TYPE          = RestToken.TYPE;
-        authorization = RestToken.authorization;
-        rezult        = RestToken.rezult;
-        error         = RestToken.error;
-        leadTime      = RestToken.leadTime;
+        JSESSIONID = RestSession.getSessionId();
+        PATH       = RestSession.PATH;
+        TYPE       = RestSession.TYPE;
+        rezult     = RestSession.rezult;
+        error      = RestSession.error;
+        leadTime   = RestSession.leadTime;
     }
 
     @Description("Список всех медикаментозных лечений ( GET )")
     @DisplayName("Список всех медикаментозных лечений ( GET )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/8.%20Drug%20Treatment/listAll")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/8.%20Drug%20Treatment/listAll")
     @RepeatedTest(2)
     public void testListDrugTretments(){
         try{
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       //.header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/drug-treatments/list");
@@ -77,7 +73,7 @@ public class RestDrugTreatment {
 
     @Description("Поиск по ИД медикаментозного лечения c препаратами ( GET )")
     @DisplayName("Поиск по ИД медикаментозного лечения c препаратами ( GET )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/8.%20Drug%20Treatment/findById")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/8.%20Drug%20Treatment/findById")
     @ParameterizedTest
     @CsvSource({"1", "3"})
     public void testListDrugTretmentsById( Long id ){
@@ -85,7 +81,7 @@ public class RestDrugTreatment {
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       .header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .queryParam( "id", id)
                                        .when()
                                        .contentType( ContentType.JSON )
@@ -111,7 +107,7 @@ public class RestDrugTreatment {
 
     @Description("Добавить медикаментозного лечения ( POST )")
     @DisplayName("Добавить медикаментозного лечения ( POST )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/8.%20Drug%20Treatment/addDrugTreatment")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/8.%20Drug%20Treatment/addDrugTreatment")
     @ParameterizedTest
     @MethodSource("getDrugTreatment")
     public void testAddDrugTreatment( DrugTreatment drugTreatment ){
@@ -119,7 +115,7 @@ public class RestDrugTreatment {
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       .header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .body( drugTreatment )
@@ -145,7 +141,7 @@ public class RestDrugTreatment {
 
     @Description("Добавить медикаментозного лечения ( POST )")
     @DisplayName("Добавить медикаментозного лечения ( POST )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/8.%20Drug%20Treatment/addDrugTreatment")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/8.%20Drug%20Treatment/addDrugTreatment")
     @ParameterizedTest
     @MethodSource("getDrugRequest")
     public void testAddDrug( DrugRequest drugRequest ){
@@ -153,7 +149,7 @@ public class RestDrugTreatment {
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       .header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .body( drugRequest )

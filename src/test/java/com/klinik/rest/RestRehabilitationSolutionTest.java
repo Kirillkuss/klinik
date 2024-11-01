@@ -2,7 +2,6 @@ package com.klinik.rest;
 
 import static io.restassured.RestAssured.given;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +21,6 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование АПИ - RehabilitationSolutionController")
 @DisplayName("Тестирование АПИ - RehabilitationSolutionController")
@@ -30,34 +28,32 @@ public class RestRehabilitationSolutionTest {
 
     private static String PATH;
     private static String TYPE;
-    private static String authorization;
     private static String rezult;
     private static String error;
-    private static String bearer;
+    private static String JSESSIONID;
     public static  String leadTime;
     
     @BeforeAll
     @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-        //bearer        = RestToken.getToken();
-        PATH          = RestToken.PATH;
-        TYPE          = RestToken.TYPE;
-        authorization = RestToken.authorization;
-        rezult        = RestToken.rezult;
-        error         = RestToken.error;
-        leadTime      = RestToken.leadTime;
+        JSESSIONID = RestSession.getSessionId();
+        PATH       = RestSession.PATH;
+        TYPE       = RestSession.TYPE;
+        rezult     = RestSession.rezult;
+        error      = RestSession.error;
+        leadTime   = RestSession.leadTime;
     }
 
     @Description("Список всех Реабилитационных лечений ( GET )")
     @DisplayName("Список всех Реабилитационных лечений ( GET )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/9.%20Rehabilitation%20Treatment/getAllRehabilitationSolution")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/9.%20Rehabilitation%20Treatment/getAllRehabilitationSolution")
     @RepeatedTest(2)
     public void testGetListRehabilitationSolutionAll(){
         try{
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       //.header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .get("/rehabilitation-treatments/all");
@@ -75,7 +71,7 @@ public class RestRehabilitationSolutionTest {
 
     @Description("Список всех Реабилитационных лечений ( GET )")
     @DisplayName("Список всех Реабилитационных лечений ( GET )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/9.%20Rehabilitation%20Treatment/getAllRehabilitationSolution")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/9.%20Rehabilitation%20Treatment/getAllRehabilitationSolution")
     @ParameterizedTest
     @CsvSource({"Кинезитерапия1", "Кинезитерапия6"})
     public void testGetRehabilitationSolutionFindName( String name ){
@@ -83,7 +79,7 @@ public class RestRehabilitationSolutionTest {
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       .header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .queryParam( "name", name )
                                        .when()
                                        .contentType(ContentType.JSON)
@@ -109,7 +105,7 @@ public class RestRehabilitationSolutionTest {
 
     @Description("Добавить способ лечения ( POST )")
     @DisplayName("Добавить способ лечения ( POST )")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/9.%20Rehabilitation%20Treatment/getAllRehabilitationSolution")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/9.%20Rehabilitation%20Treatment/getAllRehabilitationSolution")
     @ParameterizedTest
     @MethodSource("getRehabilitationSolution")
     public void testAddRehabilitationSolution( RehabilitationSolution rehabilitationSolution ){
@@ -117,7 +113,7 @@ public class RestRehabilitationSolutionTest {
             RestAssured.baseURI = PATH;
             Response response = given().log()
                                        .all()
-                                       .header(authorization, bearer)
+                                       .cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType(ContentType.JSON)
                                        .body( rehabilitationSolution )

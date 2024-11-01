@@ -3,7 +3,6 @@ package com.klinik.rest;
 import static io.restassured.RestAssured.given;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +20,6 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование АПИ - DocumentController")
 @DisplayName("Тестирование АПИ - DocumentController")
@@ -29,33 +27,31 @@ public class RestDocumentTest {
 
     private static String PATH;
     private static String TYPE;
-    private static String authorization;
     private static String rezult;
     private static String error;
-    private static String bearer;
+    private static String JSESSIONID;
     public static  String leadTime;
     
     @BeforeAll
     @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-       // bearer        = RestToken.getToken();
-        PATH          = RestToken.PATH;
-        TYPE          = RestToken.TYPE;
-        authorization = RestToken.authorization;
-        rezult        = RestToken.rezult;
-        error         = RestToken.error;
-        leadTime      = RestToken.leadTime;
+        JSESSIONID = RestSession.getSessionId();
+        PATH       = RestSession.PATH;
+        TYPE       = RestSession.TYPE;
+        rezult     = RestSession.rezult;
+        error      = RestSession.error;
+        leadTime   = RestSession.leadTime;
     }
 
     @Description("Получение всех документов (GET)")
     @DisplayName("Получение всех документов (GET)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/3.%20Documents/getAllDocuments")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/3.%20Documents/getAllDocuments")
     @RepeatedTest( 1 )
     @TmsLink("TEST-3545")
     public void testGetAllDocuments() throws Exception {
         try{
             RestAssured.baseURI = PATH;
-            Response response = given()//.header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .get("/documents/list");
@@ -69,13 +65,13 @@ public class RestDocumentTest {
 
     @Description("Получение всех документов (GET - Lazy)")
     @DisplayName("олучение всех документов  (GET - Lazy)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/3.%20Documents/getLazyDocumentt")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/3.%20Documents/getLazyDocumentt")
     @ParameterizedTest
     @CsvSource({" 1, 14", "2, 5", "8, 10"})
     public void testGetLazyDocuments( int page, int size ) throws Exception {
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .queryParam("page", page)
                                        .queryParam("size", size)
                                        .when()
@@ -91,13 +87,13 @@ public class RestDocumentTest {
 
     @Description("Получение документов по слову (GET)")
     @DisplayName("Получение документов по слову (GET)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/3.%20Documents/getLazyDocumentt")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/3.%20Documents/getLazyDocumentt")
     @ParameterizedTest
     @CsvSource({"757124751", "914-398-570-25"})
     public void testGetFindWord( String word ) throws Exception {
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .queryParam("word", word )
                                        .when()
                                        .contentType( ContentType.JSON )
@@ -112,18 +108,18 @@ public class RestDocumentTest {
 
     @DisplayName("Параметры для тестирования")
     public static Stream<Arguments> getParams() throws Exception{
-        return Stream.of( Arguments.of( RestToken.getDocument() ));
+        return Stream.of( Arguments.of( RestSession.getDocument() ));
     }
 
     @Description("Добавить документ")
     @DisplayName("Добавить документ (POST)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/3.%20Documents/addDocument")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/3.%20Documents/addDocument")
     @ParameterizedTest
     @MethodSource("getParams")
     public void testAddDocument( Document document ){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .body( document )

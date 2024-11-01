@@ -14,7 +14,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import com.klinik.entity.Gender;
 import com.klinik.entity.Patient;
-import com.klinik.rest.RestToken;
+import com.klinik.rest.RestSession;
 import com.klinik.ui.LoginSuccess;
 
 @Disabled
@@ -31,7 +31,7 @@ public class AddPatientTest {
     
     @BeforeEach
     public void setUp() {
-        patient = RestToken.getPatient();
+        patient = RestSession.getPatient();
         driver = LoginSuccess.getSuccessLogin();
     }
 
@@ -44,8 +44,8 @@ public class AddPatientTest {
     @Test
     @DisplayName("Добавление пациента")
     public void testAddPatient() throws Exception{
-        List<Long> listDocumentId = RestToken.getStremValue( queryDocument, "id_document");
-        if ( listDocumentId.stream().count() < 2 ) RestToken.getStremValue( RestToken.getAddDocumentQuery( RestToken.getDocument() ), "id_document");
+        List<Long> listDocumentId = RestSession.getStremValue( queryDocument, "id_document");
+        if ( listDocumentId.stream().count() < 2 ) RestSession.getStremValue( RestSession.getAddDocumentQuery( RestSession.getDocument() ), "id_document");
         try{
             driver.findElement( By.xpath( "//*[@id='accButtonPatient']" )).click();
             new Actions( driver ).pause( Duration.ofSeconds(1)).perform();

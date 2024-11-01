@@ -5,7 +5,6 @@ import java.util.stream.Stream;
 import org.instancio.Instancio;
 import org.instancio.Select;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,7 +22,6 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование АПИ - ComplaintController")
 @DisplayName("Тестирование АПИ - ComplaintController")
@@ -31,32 +29,30 @@ public class RestComplaintTest {
     
     private static String PATH;
     private static String TYPE;
-    private static String authorization;
     private static String rezult;
     private static String error;
-    private static String bearer;
+    private static String JSESSIONID;
     public static  String leadTime;
     
     @BeforeAll
     @DisplayName("Получение входных параметров для выполения запросов") 
     public static void setUpClass() {
-        //bearer        = RestToken.getToken();
-        PATH          = RestToken.PATH;
-        TYPE          = RestToken.TYPE;
-        authorization = RestToken.authorization;
-        rezult        = RestToken.rezult;
-        error         = RestToken.error;
-        leadTime      = RestToken.leadTime;
+        JSESSIONID    = RestSession.getSessionId();
+        PATH          = RestSession.PATH;
+        TYPE          = RestSession.TYPE;
+        rezult        = RestSession.rezult;
+        error         = RestSession.error;
+        leadTime      = RestSession.leadTime;
     }
 
     @Description("Получение справочника жалобы (GET)")
     @DisplayName("Получение справочника жалобы (GET)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/6.%20%D0%A1omplaint/findAll")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/6.%20%D0%A1omplaint/findAll")
     @Test
     public void testListComplaints(){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given()//.header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .get("/complaints/list");
@@ -71,13 +67,13 @@ public class RestComplaintTest {
     
     @Description("Получение жалобы с под жалобами (GET)")
     @DisplayName("Получение жалобы с под жалобами (GET)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/6.%20%D0%A1omplaint/listComplaintWithTypeComplaints")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/6.%20%D0%A1omplaint/listComplaintWithTypeComplaints")
     @ParameterizedTest
     @CsvSource({"1", "2" })
     public void testComplaintsTypeId( Long id ){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .queryParam( "id", id )
                                        .when()
                                        .contentType( ContentType.JSON )
@@ -99,13 +95,13 @@ public class RestComplaintTest {
 
     @Description("Добавление справочника жалобы (POST)")
     @DisplayName("Добавление справочника жалобы (POST)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/6.%20%D0%A1omplaint/listComplaintWithTypeComplaints")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/6.%20%D0%A1omplaint/listComplaintWithTypeComplaints")
     @ParameterizedTest
     @MethodSource("getComplaint")
     public void testAddComplaintsAndTypeComplaint( Complaint complaint ){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .body(complaint)
@@ -127,13 +123,13 @@ public class RestComplaintTest {
 
     @Description("Добавление под жалобы(POST)")
     @DisplayName("Добавление под жалобы(POST)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/6.%20%D0%A1omplaint/saveTypeComplaint")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/6.%20%D0%A1omplaint/saveTypeComplaint")
     @ParameterizedTest
     @MethodSource("getTypeComplaint")
     public void testFirst(RequestTypeComplaint requestTypeComplaint){
         try{
             RestAssured.baseURI = PATH;
-            Response response = given().header( authorization, bearer )
+            Response response = given().cookie("JSESSIONID", JSESSIONID )
                                        .when()
                                        .contentType( ContentType.JSON )
                                        .body( requestTypeComplaint )

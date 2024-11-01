@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import com.klinik.entity.CardPatient;
-import com.klinik.rest.RestToken;
+import com.klinik.rest.RestSession;
 import java.time.Duration;
 import java.util.List;
 import com.klinik.ui.LoginSuccess;
@@ -35,18 +35,18 @@ public class AddCardPatientTest {
 
     @BeforeEach
     public void setUp() {
-        lisIdPatients = RestToken.getStremValue( queryPatient, "id_patient" );
+        lisIdPatients = RestSession.getStremValue( queryPatient, "id_patient" );
         if ( lisIdPatients.stream().count() < 2 ){
-            List<Long> listIdDocument = RestToken.getStremValue( queryDocument, "id_document" );
+            List<Long> listIdDocument = RestSession.getStremValue( queryDocument, "id_document" );
             if( listIdDocument.stream().count()  < 2 ){
-                RestToken.getStremValue( RestToken.getAddDocumentQuery( RestToken.getDocument() ), "id_document" );
-                listIdDocument = RestToken.getStremValue( queryDocument, "id_document" );
+                RestSession.getStremValue( RestSession.getAddDocumentQuery( RestSession.getDocument() ), "id_document" );
+                listIdDocument = RestSession.getStremValue( queryDocument, "id_document" );
             }
-            RestToken.getStremValue( RestToken.getAddPatientQuery( RestToken.getPatient(), listIdDocument.stream()
+            RestSession.getStremValue( RestSession.getAddPatientQuery( RestSession.getPatient(), listIdDocument.stream()
                                                                                                .findFirst()
                                                                                                .orElseThrow() ), "id_patient"); 
         }
-        cardPatient   = RestToken.getCardPatient();
+        cardPatient   = RestSession.getCardPatient();
         driver        = LoginSuccess.getSuccessLogin();
     }
 
