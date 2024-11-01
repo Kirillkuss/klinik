@@ -49,11 +49,12 @@ public class RestDoctorTest {
     
     @Description("Получение количества врачей (GET)")
     @DisplayName("Получение количества врачей (GET)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/getCountDoctors")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getCountDoctors")
     @RepeatedTest( 2 )
     @TmsLink("TEST-3545")
     public void testGetDoctorCounts() throws Exception {
         try{
+            RestToken.getToken();
             RestAssured.baseURI = PATH;
             Response response = given().when()
                                        .get("/web/doctors/counts");
@@ -67,7 +68,7 @@ public class RestDoctorTest {
 
     @Description("Получение списка врачей (POST)")
     @DisplayName("Получение списка врачей (POST)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/getLazyDoctors")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/getLazyDoctors")
    // @ParameterizedTest
     @CsvSource({"1, 14", "486, 50", "851, 12"})
     public void testGetDocumentsLazy( int page, int size ){
@@ -92,7 +93,7 @@ public class RestDoctorTest {
  
     @Description("Добавить врача")
     @DisplayName("Добавить врача (POST)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/addDoctor")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/addDoctor")
    // @ParameterizedTest
     @MethodSource("getParams")
     public void testAddDoctor( Doctor doctor ){
@@ -111,7 +112,7 @@ public class RestDoctorTest {
 
     @Description("Получение врачей по ФИО")
     @DisplayName("Получение врачей по ФИО (GET)")
-    @Link(name = "swagger", url = "http://localhost:8082/swagger-ui/index.html#/1.%20Doctors/findByFIO")
+    @Link(name = "swagger", url = "http://localhost:8082/web/swagger-ui/index.html#/1.%20Doctors/findByFIO")
     @TmsLink("TEST-3545")
     @ParameterizedTest
     @CsvSource({"SECOND, 1, 14", "Mouse, 1, 5", "TEST, 1, 10"})
