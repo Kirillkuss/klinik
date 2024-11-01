@@ -20,7 +20,6 @@ import com.klinik.KlinikApplication;
 import com.klinik.controller.model.DoctorController;
 import com.klinik.entity.Doctor;
 import com.klinik.response.BaseResponse;
-import com.klinik.service.DoctorService;
 
 @Disabled
 @DisplayName("Тестирования сервиса DoctorController")

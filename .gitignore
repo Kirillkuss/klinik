@@ -6,6 +6,8 @@ build/
 !**/src/test/**/build/
 logs
 target
+data
+allure-results
 
 ### STS ###
 .apt_generated

@@ -1,6 +1,7 @@
 package com.klinik.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 @Table( name = "Drug_treatment")
 @Getter
 @Setter
+@AllArgsConstructor
 @RequiredArgsConstructor
 @ToString
 public class DrugTreatment  implements Serializable {

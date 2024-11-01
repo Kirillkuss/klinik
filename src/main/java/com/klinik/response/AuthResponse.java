@@ -21,6 +21,6 @@ public class AuthResponse {
     private String message = "успешно";
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Schema (description = "Токен", name = "Токен")
-    private String tocken;
+    private String token;
     
 }
