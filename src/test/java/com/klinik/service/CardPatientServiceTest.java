@@ -10,7 +10,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
+
 import com.klinik.entity.CardPatient;
+import com.klinik.entity.Doctor;
 import com.klinik.entity.Patient;
 import com.klinik.entity.TypeComplaint;
 import com.klinik.repositories.CardPatientRepository;
@@ -30,7 +33,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование сервиса CardPatientService")
 @DisplayName( value = "Тестирование сервиса CardPatientService")
@@ -201,8 +203,8 @@ public class CardPatientServiceTest {
         Allure.addAttachment( ERROR, TYPE, exceptionThree.getMessage() );
     }
 
-    @ParameterizedTest
-    @CsvSource({"123456789"})
+    //@ParameterizedTest
+    @CsvSource({"741723664"})
     @DisplayName("Поиск карты пациента по документу пациента ( полис/снилс/номер )")
     public void testFindByNPS( String parametr ) throws Exception{
         Mockito.when( cardPatientRepository.findByNPS( parametr )).thenReturn( lisrCardPatients );

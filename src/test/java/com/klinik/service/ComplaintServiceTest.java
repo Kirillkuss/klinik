@@ -1,7 +1,6 @@
 package com.klinik.service;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -19,7 +18,6 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Owner;
 
-@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование сервиса ComplaintService")
 @DisplayName( value = "Тестирование сервиса ComplaintService")

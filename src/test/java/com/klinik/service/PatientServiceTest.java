@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.NoSuchElementException;
 
-@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование сервиса PatientService")
 @DisplayName( value = "Тестирование сервиса PatientService")
@@ -121,16 +120,16 @@ public class PatientServiceTest {
         Allure.addAttachment( ERROR, TYPE, exceptionFour.getMessage() );
     }
 
-   // @ParameterizedTest
+    //@ParameterizedTest
     @CsvSource({"TEST"})
     @DisplayName("Поиск пациента по фио и номеру тел ")
     public void testFindByWord( String word ) throws Exception{
         String pattern = "%" + word + "%";
         Mockito.when( patientRepository.findPatientByWord( pattern )).thenReturn( List.of( patient ));
         Mockito.when( patientService.findByWord( pattern )).thenReturn( List.of( patient ));
-        //assertEquals( patientService.findByWord( word ), patientService.findByWord( word ));
-       // Allure.addAttachment( RESULT, TYPE, patientService.findByWord( word ).toString());
-        //Mockito.verify( patientRepository, times( 3)).findPatientByWord( word );
+        assertEquals( patientService.findByWord( word ), patientService.findByWord( word ));
+        Allure.addAttachment( RESULT, TYPE, patientService.findByWord( word ).toString());
+        Mockito.verify( patientRepository, times( 3)).findPatientByWord( word );
     }
 
     @ParameterizedTest

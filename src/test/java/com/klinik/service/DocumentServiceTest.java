@@ -3,14 +3,12 @@ package com.klinik.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,7 +24,6 @@ import io.qameta.allure.Owner;
 import java.util.Optional;
 import java.util.NoSuchElementException;
 
-//@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование сервиса DocumentService")
 @DisplayName( value = "Тестирование сервиса DocumentService")
@@ -106,7 +103,7 @@ public class DocumentServiceTest {
         Allure.addAttachment( ERROR, TYPE,exceptionFour.getMessage() );
     }
 
-    //@ParameterizedTest
+    @ParameterizedTest
     @CsvSource({"123456789"})
     @DisplayName("Поиск по слову")
     public void testGetFindByWord( String WORD ){

@@ -29,7 +29,6 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Owner;
 
-@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование сервиса UserService")
 @DisplayName( value = "Тестирование сервиса UserService")

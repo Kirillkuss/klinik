@@ -25,7 +25,6 @@ import io.qameta.allure.Owner;
 import java.util.Optional;
 import java.util.List;
 
-@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование сервиса TypeComplaintService")
 @DisplayName( value = "Тестирование сервиса TypeComplaintService")

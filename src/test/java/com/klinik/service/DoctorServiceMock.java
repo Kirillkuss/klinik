@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,7 +29,6 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Owner;
 import java.util.NoSuchElementException;
 
-//@Disabled
 @DataJpaTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)
 @Owner(value = "Barysevich K. A.")

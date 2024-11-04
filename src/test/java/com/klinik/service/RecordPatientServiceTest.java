@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование сервиса RecordPatientService")
 @DisplayName( value = "Тестирование сервиса RecordPatientService")
