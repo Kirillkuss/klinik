@@ -3,12 +3,14 @@ package com.klinik.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,6 +25,7 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Owner;
 import java.util.Optional;
 import java.util.NoSuchElementException;
+
 
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование сервиса DocumentService")
@@ -104,13 +107,12 @@ public class DocumentServiceTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"248469703"})
+    @CsvSource({"123456789"})
     @DisplayName("Поиск по слову")
     public void testGetFindByWord( String WORD ){
         Mockito.when( documentRepository.findByWord( WORD )).thenReturn( List.of( document ));
-        Allure.addAttachment( RESULT, TYPE, documentRepository.findByWord( WORD ).toString() );
-       // assertNotNull( documentService.findByWord( WORD ));
-        /**assertEquals( documentService.findByWord( WORD ), documentService.findByWord( WORD ));
+        /**assertNotNull( documentService.findByWord( WORD ));
+        assertEquals( documentService.findByWord( WORD ), documentService.findByWord( WORD ));
         Allure.addAttachment( RESULT, TYPE, documentService.findByWord( WORD ).toString() );
         verify( documentRepository, times(4 )).findByWord( WORD );*/
     }
