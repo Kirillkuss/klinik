@@ -6,6 +6,7 @@ allure-results/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+.gradle
 
 ### STS ###
 .apt_generated
