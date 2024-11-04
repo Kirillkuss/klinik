@@ -104,7 +104,7 @@ public class DocumentServiceTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"123456789"})
+    @CsvSource({"248469703"})
     @DisplayName("Поиск по слову")
     public void testGetFindByWord( String WORD ){
         Mockito.when( documentRepository.findByWord( WORD )).thenReturn( List.of( document ));
