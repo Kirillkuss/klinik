@@ -25,7 +25,7 @@ public class LoginTest {
 
     @BeforeEach
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "D:/chromedriver/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "D:/chromedriver-win64/chromedriver.exe");
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(chromeOptions);

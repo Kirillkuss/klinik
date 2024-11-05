@@ -26,7 +26,7 @@ import io.qameta.allure.Owner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@Disabled
+//@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование сервиса GenerateEncryption")
 @DisplayName( value = "Тестирование сервиса GenerateEncryption")

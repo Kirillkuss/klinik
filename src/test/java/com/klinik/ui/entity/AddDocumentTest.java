@@ -23,7 +23,7 @@ public class AddDocumentTest {
     @BeforeEach
     public void setUp() {
         document = RestSession.getDocument();
-         driver = LoginSuccess.getSuccessLogin();
+        driver = LoginSuccess.getSuccessLogin();
 
     }
     
@@ -38,7 +38,7 @@ public class AddDocumentTest {
     @DisplayName("Добавление доктора")
     public void testAddDocument(){
         try{
-            driver.findElement(By.className("btn-outline-dark")).click();
+            driver.findElement(By.xpath("//button[@data-bs-target='#exampleModal']")).click();
 
             driver.findElement( By.xpath( "//*[@id='typeDocument']" )).click();
             driver.findElement( By.xpath( "//*[@id='typeDocument']" )).sendKeys( document.getTypeDocument() );

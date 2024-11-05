@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Owner;
 
-@Disabled
+//@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование сервиса GenerateKeys")
 @DisplayName( value = "Тестирование сервиса GenerateKeys")

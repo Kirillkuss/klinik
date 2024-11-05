@@ -110,11 +110,12 @@ public class DocumentServiceTest {
     @CsvSource({"123456789"})
     @DisplayName("Поиск по слову")
     public void testGetFindByWord( String WORD ){
-        Mockito.when( documentRepository.findByWord( WORD )).thenReturn( List.of( document ));
-        /**assertNotNull( documentService.findByWord( WORD ));
+        String pattern = WORD + "%";
+        Mockito.when( documentRepository.findByWord( pattern )).thenReturn( List.of( document ));
+        assertNotNull( documentService.findByWord( WORD ));
         assertEquals( documentService.findByWord( WORD ), documentService.findByWord( WORD ));
         Allure.addAttachment( RESULT, TYPE, documentService.findByWord( WORD ).toString() );
-        verify( documentRepository, times(4 )).findByWord( WORD );*/
+        verify( documentRepository, times(4 )).findByWord( pattern );
     }
 
     @ParameterizedTest

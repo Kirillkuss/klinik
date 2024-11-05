@@ -40,7 +40,7 @@ public class AddDoctorTest {
             new Actions( driver ).pause( Duration.ofSeconds(1)).perform();
             driver.findElement(By.id("buttonDoctor")).click();
             new Actions( driver ).pause( Duration.ofSeconds(1)).perform();
-            driver.findElement(By.className("btn-outline-dark")).click();
+            driver.findElement(By.xpath("//button[@data-bs-target='#exampleModal']")).click();
             new Actions( driver ).pause( Duration.ofSeconds(1)).perform();
 
             driver.findElement( By.xpath( "//*[@id='surname']" )).click();

@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Owner;
 
-@Disabled
+//@Disabled
 @Owner(value = "Barysevich K. A.")
 @Epic(value = "Тестирование сервиса TextEncryptorGenerate")
 @DisplayName( value = "Тестирование сервиса TextEncryptorGenerate")

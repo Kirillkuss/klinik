@@ -24,6 +24,7 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Owner;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.NoSuchElementException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -203,15 +204,16 @@ public class CardPatientServiceTest {
         Allure.addAttachment( ERROR, TYPE, exceptionThree.getMessage() );
     }
 
-    //@ParameterizedTest
+    @ParameterizedTest
     @CsvSource({"741723664"})
     @DisplayName("Поиск карты пациента по документу пациента ( полис/снилс/номер )")
     public void testFindByNPS( String parametr ) throws Exception{
-        Mockito.when( cardPatientRepository.findByNPS( parametr )).thenReturn( lisrCardPatients );
+        String pattern = "%" + parametr + "%";
+        Mockito.when( cardPatientRepository.findByNPS( pattern )).thenReturn( Arrays.asList( new CardPatient()) );
         assertNotNull( cardPatientService.findByNPS( parametr ));
         assertEquals( cardPatientService.findByNPS( parametr ), cardPatientService.findByNPS( parametr ));
         Allure.addAttachment( RESULT, TYPE,  cardPatientService.findByNPS( parametr ).toString() );
-        verify( cardPatientRepository, times(4 )).findByNPS( parametr );
+        verify( cardPatientRepository, times(4 )).findByNPS( pattern );
     }
 
 

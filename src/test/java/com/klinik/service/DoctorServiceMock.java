@@ -94,7 +94,6 @@ public class DoctorServiceMock {
         Mockito.verify( doctorService, times(3 )).findByFIO( WORD, PAGE, SIZE );
     }
 
-    @SuppressWarnings("unchecked")
     @ParameterizedTest
     @CsvSource({"KHSAUIPHFUISJNCZXJKCBHYS, 1, 2"})
     @DisplayName("Поиск доктора по фио - ошибка")
