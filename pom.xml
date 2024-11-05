@@ -128,7 +128,8 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-        </dependency> 
+            <!--version>4.26.0</version!-->
+        </dependency>
     </dependencies>
 
     <build>

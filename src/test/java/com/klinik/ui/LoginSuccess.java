@@ -13,7 +13,7 @@ public class LoginSuccess {
     public static WebDriver getSuccessLogin(){
         WebDriver driver; 
         try{
-            System.setProperty("webdriver.chrome.driver", "D:/chromedriver/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "D:/chromedriver-win64/chromedriver.exe");
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--remote-allow-origins=*");
             driver = new ChromeDriver(chromeOptions);
@@ -28,7 +28,7 @@ public class LoginSuccess {
             new Actions( driver ).pause( Duration.ofSeconds(2)).perform();
             return driver;
         }catch( Exception ex ){
-            System.setProperty("webdriver.chrome.driver", "D:/chromedriver/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "D:/chromedriver-win64/chromedriver.exe");
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--remote-allow-origins=*");
             driver = new ChromeDriver(chromeOptions);

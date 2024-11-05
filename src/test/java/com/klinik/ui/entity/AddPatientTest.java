@@ -17,7 +17,7 @@ import com.klinik.entity.Patient;
 import com.klinik.rest.RestToken;
 import com.klinik.ui.LoginSuccess;
 
-@Disabled
+//@Disabled
 @DisplayName("Добавление пациента через ui")
 public class AddPatientTest {
 
@@ -51,7 +51,7 @@ public class AddPatientTest {
             new Actions( driver ).pause( Duration.ofSeconds(1)).perform();
             driver.findElement(By.id("buttonPatient")).click();
             new Actions( driver ).pause( Duration.ofSeconds(1)).perform();
-            driver.findElement(By.className("btn-outline-dark")).click();
+            driver.findElement(By.xpath("//button[@data-bs-target='#exampleModal']")).click();
             new Actions( driver ).pause( Duration.ofSeconds(1)).perform();
 
             driver.findElement( By.xpath( "//*[@id='surname']" )).click();
