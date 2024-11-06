@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@ImportResource("classpath:config/security-config.xml")
 public class SecurityConfiguration {
 
     private final KlinikaAuthenticationFailureHandler klinikaAuthenticationFailureHandler;
@@ -83,9 +85,9 @@ public class SecurityConfiguration {
         };
     }
 
-    @Bean
+    /**@Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
-    }
+    }*/
 
 }

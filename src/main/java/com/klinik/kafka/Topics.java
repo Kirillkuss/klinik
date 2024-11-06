@@ -23,7 +23,7 @@ public class Topics {
         return new KafkaAdmin(configs);
     }
 
-    @Bean
+    /**@Bean
     public NewTopic topicKlinikFirst() {
         return TopicBuilder.name( "klinikFirst")
                            .partitions( 1 )
@@ -37,6 +37,6 @@ public class Topics {
                            .partitions( 1 )
                            .replicas( 1 )
                            .build();
-    }
+    }*/
 
 }

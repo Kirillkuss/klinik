@@ -19,6 +19,7 @@ Pet project Klinika
 14. **Liquibase**
 15. **Apache Kafka with Zookeeper and KRaft**
 16. **Gradle**
+17. **CI/DI (Jenkins)**
 
 ## Add Keystore
 
