@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@ImportResource("classpath:config/security-config.xml")
+//@ImportResource("classpath:config/security-config.xml")
 public class SecurityConfiguration {
 
     private final KlinikaAuthenticationFailureHandler klinikaAuthenticationFailureHandler;
@@ -85,9 +85,9 @@ public class SecurityConfiguration {
         };
     }
 
-    /**@Bean
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
-    }*/
+    }
 
 }

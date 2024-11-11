@@ -1,5 +1,5 @@
 package com.klinik.kafka.serializer;
-
+/** 
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,4 +24,4 @@ public class MessageBrokerDeserializer implements Deserializer<SendMessageBroker
         }
     }
     
-}
+}*/

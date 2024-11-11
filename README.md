@@ -12,7 +12,7 @@ Pet project Klinika
 7. **Docker-compose**
 8. **Backup DB**
 9. **AOP** (Log, Transaction, Error, Cache, Security)
-10. **Cache**
+10. **Cache - Caffeine**
 11. **Kubernetes (K8s)**
 12. **Mail**
 13. **DevTools**

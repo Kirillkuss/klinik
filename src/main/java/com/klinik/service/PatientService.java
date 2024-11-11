@@ -8,6 +8,8 @@ import com.klinik.repositories.PatientRepository;
 import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import java.util.NoSuchElementException;
 import org.springframework.util.StopWatch;
@@ -57,6 +59,7 @@ public class PatientService {
 
     @SuppressWarnings("unchecked")
     @ExecuteTimeLog(operation = "getLazyPatients")
+    @Cacheable(cacheNames = "cachePatient")
     public List<Patient> getLazyLoad( int page, int size){
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();

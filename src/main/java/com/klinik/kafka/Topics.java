@@ -1,5 +1,5 @@
 package com.klinik.kafka;
-
+/** 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ public class Topics {
         return new KafkaAdmin(configs);
     }
 
-    /**@Bean
+    @Bean
     public NewTopic topicKlinikFirst() {
         return TopicBuilder.name( "klinikFirst")
                            .partitions( 1 )
@@ -37,6 +37,6 @@ public class Topics {
                            .partitions( 1 )
                            .replicas( 1 )
                            .build();
-    }*/
+    }
 
-}
+}*/

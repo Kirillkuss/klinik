@@ -1,5 +1,5 @@
 package com.klinik.kafka;
-
+/** 
 import java.time.LocalDateTime;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -29,4 +29,4 @@ public class ListenerKlinika {
         } 
     }
 
-}
+}*/

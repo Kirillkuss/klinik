@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import org.springframework.kafka.core.KafkaTemplate;
+//import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,11 +24,11 @@ public class DocumentController implements IDocument{
 
     private final DocumentService documentService;
     private final DocumentRepository documentRepository;
-    private final KafkaTemplate<String,SendMessageBroker> kafkaTemplate;
+    /** private final KafkaTemplate<String,SendMessageBroker> kafkaTemplate;
 
     private void sendMessage( SendMessageBroker sendMessageBroker ){
         kafkaTemplate.send("klinikFirst", sendMessageBroker );
-    }
+    }*/ 
     /**
      * for soap 
      */
@@ -43,15 +43,15 @@ public class DocumentController implements IDocument{
     @Override
     public ResponseEntity<List<Document>> findByWord(String word) {
         List<Document> response = documentService.findByWord( word );
-        response.stream()
-                .forEach( document -> sendMessage( new SendMessageBroker<Document>( LocalDateTime.now(), "klinik", "SpringPro", document )));
+        /**response.stream()
+                .forEach( document -> sendMessage( new SendMessageBroker<Document>( LocalDateTime.now(), "klinik", "SpringPro", document )));*/
         return new ResponseEntity<>( response, HttpStatus.OK ); 
     }
 
     @Override
     public ResponseEntity<List<Document>> getLazyDocument(int page, int size) {
         List<Document> response = documentService.getLazyDocuments( page, size );
-        response.stream().forEach( document -> sendMessage( new SendMessageBroker<Document>( LocalDateTime.now(), "klinik", "SpringPro", document )));
+        //response.stream().forEach( document -> sendMessage( new SendMessageBroker<Document>( LocalDateTime.now(), "klinik", "SpringPro", document )));
         return new ResponseEntity<>( response, HttpStatus.OK ); 
     }
     @Override
