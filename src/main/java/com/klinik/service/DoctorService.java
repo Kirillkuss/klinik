@@ -4,17 +4,11 @@ import com.klinik.aspect.logger.annotation.ExecuteTimeLog;
 import com.klinik.entity.Doctor;
 import com.klinik.repositories.DoctorRerository;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.NoSuchElementException;
 

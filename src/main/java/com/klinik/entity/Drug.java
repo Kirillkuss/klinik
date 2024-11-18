@@ -31,7 +31,7 @@ public class Drug implements Serializable{
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
-    @Column( name = "id_dr")
+    @Column( name = "id_drug")
     @Schema( name        = "idDrug",
              description = "ИД лекарства",
              example     = "100",
@@ -47,7 +47,7 @@ public class Drug implements Serializable{
 
     @Hidden
     @OneToOne( cascade = CascadeType.ALL )
-    @JoinColumn( name = "drug_id", referencedColumnName = "id_drug" )
+    @JoinColumn( name = "drug_treatment_id", referencedColumnName = "id_drug_treatment" )
     private DrugTreatment drugTreatment ;
     
 }
