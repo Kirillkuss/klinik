@@ -24,6 +24,9 @@ public interface IAuthentication {
     @GetMapping(value = "login", produces = MediaType.APPLICATION_JSON)
     public String login();
 
+    @GetMapping(value = "error")
+    public String error();
+
     @GetMapping(value = "index", produces = MediaType.APPLICATION_JSON)
     public String index();
 

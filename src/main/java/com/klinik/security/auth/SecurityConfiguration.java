@@ -28,8 +28,8 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeRequests(requests -> requests
-                    .antMatchers("/login", "/change-password", "/logout", "/icon/**").permitAll()
-                    .antMatchers("/web/swagger-ui/index.html").hasAnyRole( "TEST") 
+                    .antMatchers("/login", "/change-password", "/logout", "/icon/**", "/error").permitAll()
+                    .antMatchers("/web/swagger-ui/index.html", "/web/klinika","/klinika").hasAnyRole( "TEST") 
                     .antMatchers("/web/index.html", "/web", "/index", "/web/**","/klinika", "/").hasAnyRole( Role.ADMIN.name(),Role.USER.name() )
                     .anyRequest().authenticated()) 
                     .formLogin(login -> login

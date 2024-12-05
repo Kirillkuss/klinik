@@ -1,11 +1,7 @@
 package com.klinik.controller.login;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.klinik.request.email.EmailRequest;
 import com.klinik.rest.login.IAuthentication;
@@ -27,7 +23,7 @@ public class AuthenticationController implements IAuthentication  {
 
     @Override
     public String index() {
-        return "redirect:/index.html";
+        return "index";
     }
 
     @Override
@@ -54,6 +50,11 @@ public class AuthenticationController implements IAuthentication  {
             redirectAttributes.addFlashAttribute("error", ex.getMessage() );
         }
         return "redirect:/change-password"; 
+    }
+
+    @Override
+    public String error() {
+        return "error";
     }
 
 }
