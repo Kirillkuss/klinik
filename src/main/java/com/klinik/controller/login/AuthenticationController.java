@@ -52,9 +52,4 @@ public class AuthenticationController implements IAuthentication  {
         return "redirect:/change-password"; 
     }
 
-    @Override
-    public String error() {
-        return "error";
-    }
-
 }
