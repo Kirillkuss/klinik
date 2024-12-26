@@ -46,15 +46,15 @@ CREATE TABLE Card_patient(
 );
 
 CREATE TABLE Drug_treatment(
-    id_drug serial PRIMARY KEY,
+    id_drug_treatment serial PRIMARY KEY,
     name VARCHAR ( 255 ) NOT NULL
 );
 
 CREATE TABLE Drug(
-	id_dr serial PRIMARY KEY,
+	id_drug serial PRIMARY KEY,
 	name VARCHAR ( 255 ) NOT NULL UNIQUE,
-	drug_id int8 NOT NULL,
-	FOREIGN KEY (drug_id) REFERENCES public.Drug_treatment(id_drug)
+	drug_treatment_id int8 NOT NULL,
+	FOREIGN KEY (drug_treatment_id) REFERENCES public.Drug_treatment(id_drug_treatment)
 );
 
 CREATE TABLE Treatment (
@@ -68,7 +68,7 @@ CREATE TABLE Treatment (
 	FOREIGN KEY (rehabilitation_solution_id) REFERENCES public.Rehabilitation_solution(id_rehabilitation_solution),
 	FOREIGN KEY (doctor_id) REFERENCES public.Doctor(id_doctor),
     FOREIGN KEY (card_patient_id) REFERENCES public.Card_patient(id_card_patient),
-    FOREIGN KEY (drug_id) REFERENCES public.Drug(id_dr)
+    FOREIGN KEY (drug_id) REFERENCES public.Drug(id_drug)
 );
 
 CREATE TABLE Record_patient(
