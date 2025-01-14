@@ -4,11 +4,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.data.redis.core.RedisKeyValueAdapter.EnableKeyspaceEvents;
 
 @Configuration
 @ComponentScan("com.klinik.redis")
 @PropertySource(value = { "classpath:redis.properties" })
-@EnableRedisRepositories( basePackages = "com.klinik.redis.repository")
+@EnableRedisRepositories( basePackages = "com.klinik.redis.repository",
+                          enableKeyspaceEvents = EnableKeyspaceEvents.ON_STARTUP)
 public class RedisConfig {
      
     /**
