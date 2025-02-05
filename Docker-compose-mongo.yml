@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+#DB MONGO  
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - klinika-es
+volumes:
+  mongodb_data:
+
+#NETWORK      
+networks:
+  klinika-es:

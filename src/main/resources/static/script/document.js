@@ -1,3 +1,6 @@
+var protocol = window.location.protocol
+var hostname = window.location.hostname;
+var port = window.location.port;
 /**
  * Поиск документов по параметрам
  */
@@ -13,7 +16,7 @@ function findByWordDocument() {
             $.ajax({
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
-                url: "https://localhost:8082/web/documents/find/{word}",
+                url: protocol + '//'+ hostname + ':' + port +"/web/documents/find/{word}",
                 data:{ word: word } ,
                 cache: false,
                 success: function( json ) {
@@ -47,7 +50,7 @@ function listDocument() {
     $('table tbody').on('mousedown', 'tr', function(e) {
         $(this).addClass('highlight').siblings().removeClass('highlight');
     });
-    $.getJSON('https://localhost:8082/web/documents/list', function(json) {
+    $.getJSON(protocol + '//'+ hostname + ':' + port +'/web/documents/list', function(json) {
         var tr=[];
         for (var i = 0; i < json.length; i++) {
             tr.push('<tr>');
@@ -78,7 +81,7 @@ function AddDocument() {
             $.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                url: "https://localhost:8082/web/documents/add",
+                url: protocol + '//'+ hostname + ':' + port +"/web/documents/add",
                 data: JSON.stringify({idDocument: idDocument, typeDocument: typeDocument, seria: seria, numar: numar, snils: snils, polis: polis}),
                 cache: false,
                 success: function( json ) {
@@ -111,7 +114,7 @@ function AddDocument() {
         $('table tbody').on('mousedown', 'tr', function(e) {
             $(this).addClass('highlight').siblings().removeClass('highlight');
         });
-        $.getJSON('https://localhost:8082/web/documents/list/{page}{size}?page='+page+'&size='+size, function(json) {
+        $.getJSON(protocol + '//'+ hostname + ':' + port +'/web/documents/list/{page}{size}?page='+page+'&size='+size, function(json) {
             var tr=[];
             for (var i = 0; i < json.length; i++) {
                 tr.push('<tr>');

@@ -3,19 +3,26 @@ package com.klinik.mongo.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
-
 import org.springframework.stereotype.Service;
-
 import com.klinik.aspect.GlobalOperation;
 import com.klinik.mongo.model.Document;
 import com.klinik.mongo.repository.DocumentRepositiryMongo;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class DocumentServiceMongo {
     
     private final DocumentRepositiryMongo documentRepositiryMongo;
+
+    /**@PostConstruct
+    public void init(){
+        documentRepositiryMongo.deleteAll();
+        log.info( "delete all documentRepositiryMongo !!!!");
+    }*/
 
     @GlobalOperation(operation = "Document all mongo")
     public List<Document> findAll(){

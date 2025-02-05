@@ -21,6 +21,7 @@ public class CardPatientService {
     private final TypeComplaintRepository typeComplaintRepository;
     private final CardPatientRepository   cardPatientRepository;
     private final PatientRepository       patientRepository;
+    
     public CardPatient saveCardPatient( CardPatient cardСatient,  Long idPatient ) throws Exception{
         if( cardPatientRepository.findByPatientId( idPatient ).isPresent()) throw new IllegalArgumentException( "Карта пациента с таким ИД пациента уже существует");
         if( cardPatientRepository.findById( cardСatient.getIdCardPatient() ).isPresent() ) throw new IllegalArgumentException( "Карта с таким ИД уже существует");

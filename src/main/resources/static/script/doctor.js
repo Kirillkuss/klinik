@@ -1,3 +1,7 @@
+var protocol = window.location.protocol
+var hostname = window.location.hostname;
+var port = window.location.port;
+
 function findByWordDoctor() {
     $(document.getElementById("findByWordDoctor")).on( "click",function(){
         var word = $('#wordFound').val();
@@ -6,11 +10,11 @@ function findByWordDoctor() {
             lazyDocument(1, 15);
             $('#errorToast').text( 'Значение поля поиск не может быть пустым' ).show();
             $('#liveToastBtn').click();
-        }else{
+        }else{ 
             $.ajax({
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
-                url: "https://localhost:8082/web/doctors/fio/{word}{page}{size}",
+                url: protocol + '//'+ hostname + ':' + port + '/web/doctors/fio/{word}{page}{size}',
                 data:{ word: word, page: 1, size: 100 } ,
                 cache: false,
                 success: function( json ) {
@@ -44,7 +48,7 @@ function lazyDoctors( page, size) {
     $('table tbody').on('mousedown', 'tr', function(e) {
         $(this).addClass('highlight').siblings().removeClass('highlight');
     });
-        $.post('https://localhost:8082/web/doctors/lazy?page='+page+'&size='+size, function(json) {
+        $.post(protocol + '//'+ hostname + ':' + port +'/web/doctors/lazy?page='+page+'&size='+size, function(json) {
         //$.get('https://localhost:8082/web/doctors/?page='+page+'&size='+size, function(json) {
         var tr=[];
         for (var i = 0; i < json.length; i++) {
@@ -72,7 +76,7 @@ function AddDoctor() {
             $.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                url: "https://localhost:8082/web/doctors/add",
+                url: protocol + '//'+ hostname + ':' + port +'/web/doctors/add',
                 data: JSON.stringify({idDoctor: idDoctor, surname: surname, name: name, fullName: fullName}),
                 cache: false,
                 success: function( json ) {

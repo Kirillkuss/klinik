@@ -23,7 +23,7 @@ public class DrugTreatment  implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
-    @Column( name = "id_drug")
+    @Column( name = "id_drug_treatment")
     @Schema( name        = "idDrugTreatment",
              description = "ИД медикаментозного лечения",
              example     = "100",

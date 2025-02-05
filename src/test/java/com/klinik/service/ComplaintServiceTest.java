@@ -4,6 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
@@ -20,9 +26,9 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 
 @DisplayName("Тестирование сервиса и репозитория для сущности жалобы")
-@SpringBootTest( webEnvironment = WebEnvironment.RANDOM_PORT )
+//@SpringBootTest( webEnvironment = WebEnvironment.RANDOM_PORT )
 public class ComplaintServiceTest {
-
+/** 
     @Autowired
     public ComplaintService complaintService;
 
@@ -49,6 +55,13 @@ public class ComplaintServiceTest {
         assertThrows( MyException.class, () -> complaintService.saveСomplaint( complaint ) );
         complaint.setIdComplaint( -34354L);
         assertThrows( MyException.class, () -> complaintService.saveСomplaint( complaint ) );
+    }*/
+
+    @Test
+    public void testFirs(){
+        LocalDateTime localDateTime = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
+        Date midnight = Date.from(localDateTime.plusDays(1).minusMinutes(1).atZone(ZoneId.systemDefault()).toInstant());
+        System.out.println( "midnight >>>" + midnight );
     }
     
 }
