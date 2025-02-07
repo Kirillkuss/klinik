@@ -76,6 +76,12 @@ public class User implements Serializable {
     @Column( name = "status")
     private Boolean status;
 
+    @Column(name = "mfa_enabled", nullable = false)
+    private Boolean mfaEnabled;
+
+    @Column(name = "mfa_secret")
+    private String mfaSecret;
+
     public User ( String login, String password, Role role, String email , String salt,Boolean status ){
         this.login = login;
         this.password = password;
@@ -84,5 +90,17 @@ public class User implements Serializable {
         this.salt = salt;
         this.status = status;
     }
+
+    public User ( String login, String password, Role role, String email , String salt,Boolean status, Boolean mfaEnabled, String mfaSecret ){
+        this.login = login;
+        this.password = password;
+        this.role = role;
+        this.email = email;
+        this.salt = salt;
+        this.status = status;
+        this.mfaEnabled = mfaEnabled;
+        this.mfaSecret = mfaSecret;
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.klinik.service;
 
+import java.awt.image.BufferedImage;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -15,6 +16,7 @@ import com.klinik.entity.User;
 import com.klinik.repositories.UserRepository;
 import com.klinik.request.UserRequest;
 import com.klinik.response.UserResponse;
+import com.klinik.security.googleauthentication.GoogleAuthenticationService;
 import com.klinik.service.mail.PasswordGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,17 +32,19 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final PasswordGenerator passwordGenerator;
+    private final GoogleAuthenticationService googleAuthenticationService;
 
     @PostConstruct
     protected void init(){
         String salt = generateSalt();
-        User user = new User(null,
-                          "admin",
+        User user = new User("admin",
                                 passwordEncoder.encode( secret + "admin" + salt ),
                                 Role.ADMIN,
-                          "Admin@mail.com",
+                          "borisevich96@list.ru",
                                 salt,
-                                false );
+                                false,
+                                true,
+                                googleAuthenticationService.generateKey()  );
         if ( userRepository.findByLogin( user.getLogin() ).isEmpty() ){
             userRepository.save(  user );
             log.info( "init main user");
@@ -65,14 +69,15 @@ public class UserService {
         validateUsername( userRequest.getLogin() );
         validateEmail( userRequest.getEmail());
         validatePassword( userRequest.getPassword() );
-        validRole(userRequest.getRole() );
+       // validRole(userRequest.getRole() );
         String salt = generateSalt();
         User user =  userRepository.save( new User( userRequest.getLogin(),
                                               passwordEncoder.encode( secret + userRequest.getPassword() + salt ),
                                               Role.valueOf( userRequest.getRole() ),
                                               userRequest.getEmail(),
                                               salt,
-                                              false ));
+                                              false, true,  googleAuthenticationService.generateKey() ));
+
         return new UserResponse( user.getLogin(),
                                  user.getEmail(),
                                  user.getRole(),
@@ -204,5 +209,9 @@ public class UserService {
                              .orElseThrow(() -> new NoSuchElementException("Invalid login or email, try again!"));
     }
 
+    public BufferedImage generateTotpQR(String username) {
+        User user = userRepository.findByLogin(username).orElseThrow();
+        return googleAuthenticationService.generateQRImage(user.getMfaSecret(), username);
+    }
 
 }

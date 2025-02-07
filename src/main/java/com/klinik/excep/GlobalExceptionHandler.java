@@ -1,8 +1,6 @@
 package com.klinik.excep;
 
 import java.util.NoSuchElementException;
-
-import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

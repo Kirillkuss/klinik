@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Random;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,6 +14,7 @@ import com.klinik.entity.Blocking;
 import com.klinik.entity.User;
 import com.klinik.repositories.BlockingRepository;
 import com.klinik.repositories.UserRepository;
+import com.klinik.security.googleauthentication.GoogleAuthenticationService;
 import com.klinik.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,7 @@ public class AuthService {
     private final UserRepository     userRepository;
     private final UserService        userService;
     private final BlockingRepository blockingRepository;
+    private final GoogleAuthenticationService googleAuthenticationService;
 
     private final String messageError      = "Слишком много неудачных попыток входа, попробуйте позже!";
     private final String messageErrorCount = "Неправильное имя пользователя или пароль, количество попыток: ";
@@ -143,4 +146,9 @@ public class AuthService {
         }
     }
 
+    public User verifyUserTotp( String username, Integer code) {
+        User user = userRepository.findByLogin( username ).orElseThrow(() -> new NoSuchElementException("Not found user!"));
+        if( ! googleAuthenticationService.isValid( user.getMfaSecret(), code ) ) throw new BadCredentialsException("Invalid code!");
+        return user;
+    }
 }

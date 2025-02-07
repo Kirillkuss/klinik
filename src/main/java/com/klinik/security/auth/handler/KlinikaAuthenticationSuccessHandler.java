@@ -19,11 +19,10 @@ public class KlinikaAuthenticationSuccessHandler implements AuthenticationSucces
                 .map(GrantedAuthority::getAuthority)
                 .findFirst()
                 .orElse("");
-
         if (role.equals("ROLE_TEST")) {
             response.sendRedirect("/web/swagger-ui/index.html");
         } else {
             response.sendRedirect("/web/index");
-        }
+        } 
     }
 }

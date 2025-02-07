@@ -15,7 +15,8 @@ public class KlinikaAuthenticationFailureHandler  implements AuthenticationFailu
     public void onAuthenticationFailure( HttpServletRequest request, HttpServletResponse response,
                                          AuthenticationException exception) throws IOException, ServletException {
         request.getSession().setAttribute("error", exception.getMessage());
-        response.sendRedirect("/web/login?error=true");
+        //response.sendRedirect("/web/login?error=true");
+        response.sendRedirect("/web/code");
     }
 
     
