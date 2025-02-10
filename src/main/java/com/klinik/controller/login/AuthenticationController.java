@@ -80,7 +80,7 @@ public class AuthenticationController implements IAuthentication  {
             emailRequest.setLogin( user );
             emailRequest.setSubject("Изменение пароля");
             emailRequest.setBody("Ваш пароль был изменен, используйте этот: ");
-            emailService.sendSimpleEmailMessage(emailRequest);;
+            emailService.sendSimpleEmailMessage( emailRequest );
             redirectAttributes.addFlashAttribute("message", "Новый пароль отправлен на вашу почту!");
         }catch( Exception ex ){
             redirectAttributes.addFlashAttribute("error", ex.getMessage() );

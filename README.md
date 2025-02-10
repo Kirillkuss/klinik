@@ -6,7 +6,7 @@ Pet project Klinika
 1. **Spring Boot**
 2. **Spring Boot MVC**
 3. **Swagger UI**
-4. **Spring Boot Security**
+4. **Spring Boot Security** (Two Factor Auth)
 5. **Postgres**
 6. **RESTful API**
 7. **Docker-compose**
