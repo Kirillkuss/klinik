@@ -4,6 +4,8 @@ import com.klinik.entity.DrugTreatment;
 import com.klinik.repositories.DrugTreatmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -15,6 +17,8 @@ public class DrugTreatmentService {
     public List<DrugTreatment> getAll(){
         return drugTreatmentRepository.findAll();
     }
+    
+    @Transactional
     public DrugTreatment addDrugTreatment( DrugTreatment drugTreatment ) throws Exception{
         checkDrugTreatment(drugTreatment );
         return drugTreatmentRepository.save( drugTreatment );

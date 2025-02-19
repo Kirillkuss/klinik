@@ -10,6 +10,8 @@ import java.util.Random;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.klinik.entity.Blocking;
 import com.klinik.entity.User;
 import com.klinik.repositories.BlockingRepository;
@@ -110,6 +112,7 @@ public class AuthService {
      * Блокировка пользователя 
      * @param login - логин
      */
+    @Transactional
     private void addBlocking( String login ){
         userService.blockUser( login );
         User user = userRepository.findByLogin(login).orElseThrow();
@@ -127,6 +130,7 @@ public class AuthService {
      * Разблокировка пользователя по таймеру
      */
     @Scheduled(initialDelay = 5000, fixedRate = 60000) 
+    @Transactional
     public void unblockUser() { 
         blockingRepository.unblockBlocking();
         List<Long> userId =  blockingRepository.getBlockStatus( LocalDateTime.now().minusMinutes( 15 ), LocalDateTime.now() );

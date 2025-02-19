@@ -1,6 +1,8 @@
 package com.klinik.rest.model;
 
 import java.util.List;
+
+import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +35,7 @@ public interface IUser {
 
     @RequestMapping(method = RequestMethod.POST)
     @Operation( description = "Добавить user", summary = "Добавить user")
-    public ResponseEntity<UserResponse> addUser( @RequestBody UserRequest userRequest);
+    public ResponseEntity<UserResponse> addUser( @RequestBody @Valid UserRequest userRequest);
 
     @RequestMapping(method = RequestMethod.GET, path = "/keys")
     @Operation( description = "Обновить ключи public.pem and private.pem", summary = "Обновить ключи public.pem and private.pem")

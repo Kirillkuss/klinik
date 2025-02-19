@@ -11,9 +11,10 @@ import com.klinik.repositories.DrugRepository;
 import com.klinik.repositories.RehabilitationSolutionRepository;
 import com.klinik.repositories.TreatmentRepository;
 import com.klinik.request.RequestTreatment;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +43,7 @@ public class TreatmentService {
      * @return Treatment
      * @throws Exception
      */
+    @Transactional
     public Treatment addTreatment( RequestTreatment requestTreatment ) throws Exception{
         Optional<Drug> drug = drugRepository.findById( requestTreatment.getIdDrug());
         Optional<Doctor> doctor = doctorRerository.findById( requestTreatment.getIdDoctor() );

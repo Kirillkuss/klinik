@@ -1,6 +1,7 @@
 package com.klinik.request;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,7 +25,8 @@ public class UserRequest {
              description = "admin",
              example     = "admin",
              required    = true )
-    @NotNull         
+    @NotNull
+    @NotBlank(message = "Логин не долже быть пустым!")         
     private String login;
 
     @Column( name = "password")
@@ -40,6 +42,7 @@ public class UserRequest {
              description = "роль",
              example     = "ADMIN",
              required    = true )
+    @NotNull         
     private String role;
 
     
@@ -49,6 +52,7 @@ public class UserRequest {
              example     = "jseuertne@mail.com",
              required    = true )
     @NotNull
+    
     private String email;
     
 }

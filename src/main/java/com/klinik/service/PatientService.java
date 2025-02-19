@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.NoSuchElementException;
 import org.springframework.util.StopWatch;
 import java.util.List;
@@ -30,6 +31,7 @@ public class PatientService {
         return patientRepository.findAll();
     }
 
+    @Transactional
     public Patient addPatient( Patient patient, Long id ) throws Exception{
         patient.setIdPatient( new Random().nextLong() );
         checkPatient( patient, id );

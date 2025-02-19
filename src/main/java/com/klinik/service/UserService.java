@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.klinik.entity.Role;
 import com.klinik.entity.User;
 import com.klinik.repositories.UserRepository;
@@ -65,6 +67,7 @@ public class UserService {
      * @param user - пользователь 
      * @return User
      */
+    @Transactional
     public UserResponse addUser( UserRequest userRequest   ){
         validateUsername( userRequest.getLogin() );
         validateEmail( userRequest.getEmail());
@@ -168,6 +171,7 @@ public class UserService {
      * Блокировка пользователя 
      * @param login - логин 
      */
+    @Transactional
     public void blockUser(String login){ 
         User user =  userRepository.findByLogin( login )
                                    .orElseThrow( () -> new BadCredentialsException( "Not found user!" ));
@@ -193,6 +197,7 @@ public class UserService {
         return userResponse;
     }
 
+    @Transactional
     public String generateNewPasswordForUser( String word ){
         User user = checkFindUserByLoginOrByMail(word);
         String password = passwordGenerator.generateRandomPassword();

@@ -7,6 +7,8 @@ import com.klinik.repositories.RecordPatientRepository;
 import com.klinik.request.RequestRecordPatient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -22,7 +24,8 @@ public class RecordPatientService {
     public List<RecordPatient> findAll() {
         return recordPatientRepository.findAll();
     }
-    
+
+    @Transactional
     public RecordPatient saveRecordPatient( RequestRecordPatient requestRecordPatient  ) throws Exception{
         RecordPatient recordPatient = new RecordPatient();
         if ( requestRecordPatient.getDateAppointment().isBefore( requestRecordPatient.getDateRecord()) ) throw new IllegalArgumentException( "Дата приема не может быть раньше даты записи");
@@ -33,7 +36,8 @@ public class RecordPatientService {
         recordPatient.setCardPatientId( cardPatientRepository.findById( requestRecordPatient.getIdCardPatient() ).map( s -> s.getIdCardPatient()).orElseThrow(() -> new NoSuchElementException( "Указан неверный идентификатор карты пациента") ));
         return recordPatientRepository.save( recordPatient );
     }
+
     public List<RecordPatient> findByParam( Long id, LocalDateTime dateFrom, LocalDateTime dateTo ) throws Exception{
-     return recordPatientRepository.findByParamTwo(id, dateFrom, dateTo);
+        return recordPatientRepository.findByParamTwo(id, dateFrom, dateTo);
     }
 }

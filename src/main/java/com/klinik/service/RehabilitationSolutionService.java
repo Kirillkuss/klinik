@@ -4,6 +4,8 @@ import com.klinik.entity.RehabilitationSolution;
 import com.klinik.repositories.RehabilitationSolutionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -16,10 +18,13 @@ public class RehabilitationSolutionService {
     public List<RehabilitationSolution> getAll() {
         return rehabilitationSolutionRepository.findAll();
     }
+    
     public RehabilitationSolution findByName( String name ){
         return rehabilitationSolutionRepository.findByName( name )
                                                .orElseThrow(() ->new NoSuchElementException("Ребилитационное лечение c таким наименованием не существует"));
     }
+
+    @Transactional
     public RehabilitationSolution saveRehabilitationSolution(RehabilitationSolution solution) throws Exception{
         solution.setIdRehabilitationSolution( -1L );
         checkSaveRehabilitationSolution( solution );

@@ -5,8 +5,8 @@ import com.klinik.entity.Complaint;
 import com.klinik.repositories.ComplaintRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -18,6 +18,8 @@ public class ComplaintService {
     public List<Complaint> listComplaints(){
         return complaintRepository.findAll();
     }
+
+    @Transactional
     public Complaint saveСomplaint( Complaint сomplaint ) throws Exception{
         log.info("сomplaint >> " + сomplaint);
         if( complaintRepository.findById( сomplaint.getIdComplaint() ).isEmpty() == false) throw new IllegalArgumentException( "Справочник жалоба с таким ИД уже существует");

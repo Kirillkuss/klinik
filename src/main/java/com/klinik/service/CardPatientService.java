@@ -27,6 +27,7 @@ public class CardPatientService {
     private final PatientRepository       patientRepository;
     
     @ExecuteTimeLog(operation = "saveCardPatient")
+    @Transactional
     public CardPatient saveCardPatient( CardPatient cardСatient,  Long idPatient ) throws Exception{
         if( cardPatientRepository.findByPatientId( idPatient ).isPresent()) throw new IllegalArgumentException( "Карта пациента с таким ИД пациента уже существует");
        // if( cardPatientRepository.findById( cardСatient.getIdCardPatient() ).isPresent() ) throw new IllegalArgumentException( "Карта с таким ИД уже существует");

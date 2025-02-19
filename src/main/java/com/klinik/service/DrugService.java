@@ -3,12 +3,12 @@ package com.klinik.service;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.klinik.entity.Drug;
 import com.klinik.entity.DrugTreatment;
 import com.klinik.repositories.DrugRepository;
 import com.klinik.repositories.DrugTreatmentRepository;
 import com.klinik.request.DrugRequest;
-
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 
@@ -18,9 +18,12 @@ public class DrugService {
 
     private final DrugRepository          drugRepository;
     private final DrugTreatmentRepository drugTreatmentRepository;
+
     public List<Drug> findAll(){
         return drugRepository.findAll();
     }
+
+    @Transactional
     public Drug saveDrug( DrugRequest drugRequest ) throws Exception{
         Optional<DrugTreatment> drugTreatment = drugTreatmentRepository.findById( drugRequest.getIdDrugTreatment());
         checkSaveDrug( drugRequest, drugTreatment );

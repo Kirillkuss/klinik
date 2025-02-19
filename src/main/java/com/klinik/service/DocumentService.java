@@ -24,6 +24,7 @@ public class DocumentService {
     public List<Document> getAllDocuments(){
         return documentRepository.findAll();
     }
+    
     @Transactional
     public Document addDocument( Document document ) throws Exception{
         document.setIdDocument( new Random().nextLong() );
