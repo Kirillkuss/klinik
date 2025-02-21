@@ -9,14 +9,14 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.stereotype.Component;
 
 @Component
-public class KlinikaAuthenticationFailureHandler  implements AuthenticationFailureHandler{
+public class KlinikaAuthenticationFailureHandler implements AuthenticationFailureHandler{
 
     @Override
     public void onAuthenticationFailure( HttpServletRequest request, HttpServletResponse response,
                                          AuthenticationException exception) throws IOException, ServletException {
+
         request.getSession().setAttribute("error", exception.getMessage());
-        //response.sendRedirect("/web/login?error=true");
-        response.sendRedirect("/web/code");
+        response.sendRedirect("/web/code?error=true");
     }
 
     

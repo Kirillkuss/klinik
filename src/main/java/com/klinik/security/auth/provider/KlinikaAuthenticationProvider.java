@@ -28,11 +28,11 @@ public class KlinikaAuthenticationProvider implements AuthenticationProvider{
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String code = authentication.getCredentials().toString();
-        Integer parsedCode;
-        if( login == null ) throw new BadCredentialsException("User not found!!!");
+        Integer parsedCode; 
+        if( login == null ) throw new BadCredentialsException("User not found 1111 !!!");
         try {
             parsedCode = Integer.parseInt( code ); 
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             throw new BadCredentialsException("Invalid code!!!");
         }
         User user = authService.verifyUserTotp( login, parsedCode );
@@ -44,6 +44,4 @@ public class KlinikaAuthenticationProvider implements AuthenticationProvider{
 	public boolean supports(Class<?> authentication) {
 		return authentication.equals(UsernamePasswordAuthenticationToken.class);
 	}
-
-
 }

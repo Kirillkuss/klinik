@@ -25,7 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public interface IAuthentication {
 
     @GetMapping(value = "code", produces = MediaType.APPLICATION_JSON)
-    public String code(HttpServletRequest request);
+    public String code();
 
     @GetMapping(value = "login", produces = MediaType.APPLICATION_JSON)
     public String login();

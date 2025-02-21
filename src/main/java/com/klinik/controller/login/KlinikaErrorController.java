@@ -21,6 +21,10 @@ public class KlinikaErrorController implements ErrorController {
         if( status.equals( HttpStatus.FORBIDDEN.value() ) ){
             message = " Нет прав к доступу! ";
         }
+
+        if( status.equals( HttpStatus.INTERNAL_SERVER_ERROR.value() ) ){
+            message = "Что-то пошло не так! ";
+        }
         model.addAttribute("status", status);
         model.addAttribute("message", message);
         return "error";

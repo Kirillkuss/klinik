@@ -6,12 +6,10 @@ import java.io.OutputStream;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.klinik.entity.User;
 import com.klinik.request.UserRequest;
-import com.klinik.request.email.EmailRequest;
 import com.klinik.response.UserResponse;
 import com.klinik.rest.login.IAuthentication;
 import com.klinik.security.auth.AuthService;
@@ -32,11 +30,16 @@ public class AuthenticationController implements IAuthentication  {
     private final KlinikaAuthenticationProvider klinikaAuthenticationProvider;
 
     @Override
-    public String code( HttpServletRequest request ) {
-        request.getSession().removeAttribute("error");
+    public String code( ) {
         return "code";
     }
-
+    
+    @Override
+    public String clearErrorMessage(HttpServletRequest request) {
+        request.getSession().removeAttribute("error");
+        return "redirect:/code"; 
+    }
+    
     @Override
     public String login() {
         return "login";
@@ -51,7 +54,6 @@ public class AuthenticationController implements IAuthentication  {
                 return "redirect:/code";
             }
         }catch( Exception ex ) {
-            System.out.println( ex.getMessage() );
             redirectAttributes.addFlashAttribute("error", ex.getMessage() );
         }
         return "redirect:/login";
@@ -67,20 +69,11 @@ public class AuthenticationController implements IAuthentication  {
         return "change-password";
     }
 
-    @Override
-    public String clearErrorMessage(HttpServletRequest request) {
-        request.getSession().removeAttribute("error");
-        return "redirect:/code"; 
-    }
-    
+
     @Override
     public String requestPasswordChange( String user, HttpServletRequest request,  RedirectAttributes redirectAttributes ) {
         try{
-            EmailRequest emailRequest = new EmailRequest();
-            emailRequest.setLogin( user );
-            emailRequest.setSubject("Изменение пароля");
-            emailRequest.setBody("Ваш пароль был изменен, используйте этот: ");
-            emailService.sendSimpleEmailMessage( emailRequest );
+            emailService.sendNewPasswordToMail( user );
             redirectAttributes.addFlashAttribute("message", "Новый пароль отправлен на вашу почту!");
         }catch( Exception ex ){
             redirectAttributes.addFlashAttribute("error", ex.getMessage() );
@@ -114,7 +107,7 @@ public class AuthenticationController implements IAuthentication  {
     public void getQrImage(String login, HttpServletRequest request, HttpServletResponse response) {
         BufferedImage qrImage = userService.generateTotpQR(login);
          if (qrImage != null) {
-            response.setContentType(MediaType.IMAGE_PNG_VALUE);
+            response.setContentType(org.springframework.http.MediaType.IMAGE_PNG_VALUE);
             try (OutputStream outputStream = response.getOutputStream()) {
                 ImageIO.write(qrImage, "png", outputStream);
                 outputStream.flush();

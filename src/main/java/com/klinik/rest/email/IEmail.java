@@ -1,7 +1,9 @@
 package com.klinik.rest.email;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,7 @@ import com.klinik.response.AuthResponse;
 import com.klinik.response.BaseResponse;
 import com.klinik.response.BaseResponseError;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,10 +31,15 @@ public interface IEmail {
 
     @PostMapping( value = "send", produces = MediaType.APPLICATION_JSON )
     @Operation( description = "Отрпавить письмо на почту", summary = "Отрпавить письмо на почту")
-    public ResponseEntity<BaseResponse> sendMessageToEmail(@RequestBody EmailRequest emailRequest);
+    public ResponseEntity<BaseResponse> sendMessageToEmail( @RequestBody EmailRequest emailRequest);
 
     @PostMapping( value = "update", produces = MediaType.APPLICATION_JSON )
     @Operation( description = "Обновить пароль для пользователя", summary = "Обновить пароль для пользователя")
-    public ResponseEntity<BaseResponse> updatePasswordUser( String word );
+    public ResponseEntity<BaseResponse> updatePasswordUser( @Parameter(description = "Логин или почта пользователя",example = "test2142", required = true ) String word );
+
+
+    @GetMapping( value = "qr-code" )
+    @Operation( description = "Получение QR для Google Auth", summary = "Получение QR для Google Auth")
+    public void getQr( @Parameter(description = "Логин или почта пользователя",example = "test2142", required = true ) String username, HttpServletResponse response );
     
 }

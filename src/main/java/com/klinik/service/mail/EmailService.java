@@ -25,7 +25,17 @@ public class EmailService {
                               simpleMailMessage.setFrom( "borisevich711@gmail.com" );
             javaMailSender.send( simpleMailMessage );
         }
-        
+    }
 
+    public void sendNewPasswordToMail( String param ){
+        User user = userService.checkFindUserByLoginOrByMail( param  );
+        if ( user != null ){
+            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+                              simpleMailMessage.setTo( user.getEmail());
+                              simpleMailMessage.setSubject( "Изменение пароля" );
+                              simpleMailMessage.setText( "Ваш пароль был изменен, используйте этот: " + userService.generateNewPasswordForUser( user.getLogin() ) );
+                              simpleMailMessage.setFrom( "borisevich711@gmail.com" );
+            javaMailSender.send( simpleMailMessage );
+        }
     }
 }

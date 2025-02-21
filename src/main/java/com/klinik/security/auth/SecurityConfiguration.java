@@ -29,7 +29,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeRequests(requests -> requests
-                .antMatchers("/login", "/change-password", "/logout", "/icon/", "/error", "/register", "/image-access-qr").permitAll()
+                .antMatchers("/login", "/change-password", "/logout", "/icon/", "/error", "/register", "/image-access-qr", "/code", "/clear-error-message").permitAll()
                 .antMatchers("/web/swagger-ui/index.html", "/web/klinika", "/klinika").hasAnyRole("TEST")
                 .antMatchers("/web/index.html", "/web", "/index", "/web/**", "/klinika", "/").hasAnyRole(Role.ADMIN.name(), Role.USER.name()) 
                 .anyRequest().authenticated()) 
@@ -42,12 +42,12 @@ public class SecurityConfiguration {
                         .permitAll())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) 
-                        .invalidSessionUrl("/login") 
+                        .invalidSessionUrl("/code") 
                         .maximumSessions(1) 
                         .maxSessionsPreventsLogin(false))
                 .logout(logout -> logout
                         .logoutUrl("/logout") 
-                        .logoutSuccessUrl("/login?logout=true") 
+                        .logoutSuccessUrl("/code?logout=true") 
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID"))
                 .csrf(csrf -> csrf.disable()) 

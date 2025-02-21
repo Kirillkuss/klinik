@@ -22,23 +22,29 @@ public class CardPatientController implements ICardPatient{
     public ResponseEntity<List<CardPatient> > findByDocumentPatient( String word ) throws Exception, MyException {
         return new ResponseEntity<>( cardPatientService.findByNPS( word ), HttpStatus.OK );
     } 
+
     public ResponseEntity<CardPatient> getByIdCard( Long id ) throws Exception, MyException {
         return new ResponseEntity<>(cardPatientService.findByIdCard( id ), HttpStatus.OK);
     }
+
     public ResponseEntity<CardPatient> getByIdPatient ( Long id ) throws Exception, MyException {
         return new ResponseEntity<>( cardPatientService.findByPatientId( id ), HttpStatus.OK );
     }
+
     public ResponseEntity<CardPatient> saveCardPatient( CardPatient cardPatient, Long idPatient) throws Exception, MyException{
         return new ResponseEntity<>( cardPatientService.saveCardPatient( cardPatient, idPatient ), HttpStatus.OK);
     }
+
     public ResponseEntity saveComplaintToCardPatient(  CoplaintRequest coplaintRequest ) throws Exception, MyException{
         cardPatientService.addCardPatientComplaint( coplaintRequest.getIdCard(), coplaintRequest.getIdComplaint() );
         return new ResponseEntity<>( HttpStatus.CREATED );
     }
+
     @Override
     public ResponseEntity<List<CardPatient>> getLazyCardPatient(int page, int size) {
         return new ResponseEntity<>( cardPatientService.getLazyCardPatient( page, size ), HttpStatus.OK);
     }
+    
     @Override
     public ResponseEntity<Long> getCountCardPatient() {
         return new ResponseEntity<>( cardPatientRepository.count(), HttpStatus.OK);
