@@ -3,10 +3,8 @@ package com.klinik.controller.email;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import com.klinik.request.email.EmailRequest;
@@ -15,7 +13,6 @@ import com.klinik.rest.email.IEmail;
 import com.klinik.service.UserService;
 import com.klinik.service.mail.EmailService;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.io.IOUtils;
 
 @RestController
 @RequiredArgsConstructor
