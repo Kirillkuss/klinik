@@ -42,4 +42,9 @@ public interface IEmail {
     @Operation( description = "Получение QR для Google Auth", summary = "Получение QR для Google Auth")
     public void getQr( @Parameter(description = "Логин или почта пользователя",example = "test2142", required = true ) String username, HttpServletResponse response );
     
+
+    @GetMapping ( value = "send-qr-code")
+    @Operation( description = "Отправить Qr-code на почту", summary = "Отправить Qr-code на почту")
+    public ResponseEntity<BaseResponse> sendQrCodeToMail( @Parameter(description = "Логин или почта пользователя",example = "admin", required = true ) String username ) throws Exception; 
+
 }

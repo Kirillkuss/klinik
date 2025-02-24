@@ -45,4 +45,10 @@ public class MailController implements IEmail {
                  }
             }
     }
+
+    @Override
+    public ResponseEntity<BaseResponse> sendQrCodeToMail(String username) throws Exception {
+        emailService.sendQrCodeToMail( username );
+        return ResponseEntity.ok( new BaseResponse( 200 , "success" ));
+    }
 }
